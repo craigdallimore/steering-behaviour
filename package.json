@@ -1,8 +1,9 @@
 {
   "dependencies": {
-    "node-static": "^0.7.11",
     "rollup": "^2.51.0",
-    "rollup-plugin-flow": "^1.1.1"
+    "rollup-plugin-flow": "^1.1.1",
+    "rollup-plugin-serve": "^1.1.0",
+    "rollup-plugin-sourcemaps": "^0.6.3"
   },
   "scripts": {
     "build": "rollup -c",

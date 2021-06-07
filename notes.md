@@ -6,15 +6,17 @@
 
 `nix-shell`
 
-### To start static server
+### Development
 
-```
+```shell
+# install deps
 yarn
-static .
+# start watching files for changes
+yarn dev
 ```
 
 ## todo
 
 - [x] Draw a character (an arrow maybe)
-- [ ] Draw a target
+- [x] Draw a target
 - [ ] Get an animation loop going
