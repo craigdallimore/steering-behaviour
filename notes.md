@@ -1,7 +1,20 @@
-# To start shell
+# Steering behaviours
+
+## Development
+
+### To start shell
 
 `nix-shell`
 
-# To start statc server
+### To start static server
 
-`static .`
+```
+yarn
+static .
+```
+
+## todo
+
+- [x] Draw a character (an arrow maybe)
+- [ ] Draw a target
+- [ ] Get an animation loop going

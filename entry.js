@@ -1,11 +1,21 @@
 // @flow
-import drawGrid from "./drawGrid.js";
+import drawScene from "./drawScene.js";
 
 function main(canvas /* :HTMLCanvasElement */) {
   const ctx = canvas.getContext("2d");
-  console.log("hello world", ctx);
+  ctx.translate(0.5, 0.5);
 
-  drawGrid(ctx);
+  drawScene(
+    ctx,
+    {
+      x: 100,
+      z: 100,
+    },
+    {
+      x: 140,
+      z: 140,
+    }
+  );
 }
 
 const c = document.querySelector("#can");

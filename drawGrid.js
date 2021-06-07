@@ -3,8 +3,7 @@
 export default function drawGrid(
   ctx /*:CanvasRenderingContext2D*/
 ) /*:CanvasRenderingContext2D*/ {
-  ctx.strokeStyle = "rgba(227, 242, 253, 1)";
-  ctx.translate(0.5, 0.5);
+  ctx.strokeStyle = "rgb(227, 242, 253)";
   for (let x = 10; x < 300; x += 10) {
     ctx.beginPath();
     ctx.moveTo(x, 0);
