@@ -1,5 +1,5 @@
 // @flow
-import drawScene from "./drawScene.js";
+import drawScene from "../lib/drawScene.js";
 
 function main(canvas /* :HTMLCanvasElement */) {
   const ctx = canvas.getContext("2d");
