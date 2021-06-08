@@ -19,4 +19,4 @@ yarn dev
 
 - [x] Draw a character (an arrow maybe)
 - [x] Draw a target
-- [ ] Get an animation loop going
+- [x] Get an animation loop going
