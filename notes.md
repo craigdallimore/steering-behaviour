@@ -17,6 +17,5 @@ yarn dev
 
 ## todo
 
-- [x] Draw a character (an arrow maybe)
-- [x] Draw a target
-- [x] Get an animation loop going
+- [ ] Draw character at different orientations
+- [ ] Create a steering behaviour
