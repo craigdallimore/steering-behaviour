@@ -1,7 +1,15 @@
 // @flow
 
 import type { Kinematic } from "../lib/kinematic.js";
-import { add, multiply, length, type Vector } from "../lib/vector.js";
+import {
+  add,
+  subtract,
+  bearing,
+  multiply,
+  length,
+  normalise,
+  type Vector,
+} from "../lib/vector.js";
 
 export type State = {
   character: Kinematic,
@@ -9,17 +17,15 @@ export type State = {
 };
 
 type Steering = {
+  // Negative x is Left
+  // Negative z is Up
   linear: Vector,
   angular: number,
 };
 
-const steering = {
-  //     -L +R   -U +D
-  linear: [0.1, 0.1],
-  angular: 0,
-};
-
 const pre = document.getElementById("pre");
+
+// HELPERS --------------------------------------------------------------------
 
 const normaliseOrientation = (o: number): number => {
   if (o > 2 * Math.PI) {
@@ -30,58 +36,68 @@ const normaliseOrientation = (o: number): number => {
   }
   return o;
 };
+
 const normalisePosition = ([x, z]: Vector): Vector => {
-  const nextX = x < 0 ? 0 : x > 300 ? 300 : x;
-  const nextZ = z < 0 ? 0 : z > 300 ? 300 : z;
+  const nextX = x < 10 ? 10 : x > 290 ? 290 : x;
+  const nextZ = z < 10 ? 10 : z > 290 ? 290 : z;
   return [nextX, nextZ];
 };
 
 function getNewOrientation(o: number, velocity: Vector): number {
   if (length(velocity) > 0) {
-    return Math.atan2(velocity[0], -velocity[1]);
+    return bearing(velocity);
   }
   return o;
 }
 
+// ----------------------------------------------------------------------------
+
+const maxAcceleration = 10;
+const maxSpeed = 25;
+
+function getSeekSteering(character: Kinematic, target: Kinematic): Steering {
+  const linear = multiply(
+    normalise(subtract(target.position, character.position)),
+    maxAcceleration
+  );
+
+  return {
+    angular: 0,
+    linear,
+  };
+}
+
 export function update(time: number, state: State): State {
+  const steering = getSeekSteering(state.character, state.target);
   const { velocity, position, orientation, rotation } = state.character;
 
   const nextPosition = add(position, multiply(velocity, time));
-  const nextVelocity = steering.linear;
-  const nextOrientation = getNewOrientation(orientation, nextVelocity);
-  const nextRotation = steering.angular;
+  const nextOrientation = orientation + rotation * time;
+
+  const nextVelocity = add(velocity, multiply(steering.linear, time));
+  const nextRotation = steering.angular * time;
+
+  const finalVelocity =
+    length(nextVelocity) > maxSpeed
+      ? multiply(normalise(nextVelocity), time)
+      : multiply(nextVelocity, maxSpeed);
+
+  const finalPosition = normalisePosition(nextPosition);
+  const finalOrientation = normaliseOrientation(nextOrientation);
+  const finalRotation = nextRotation;
 
   // $FlowIgnoreError
   pre.textContent = `
-Time: ${time}
-
-${length(velocity)}
-
-Curr
-----
-Pos:  [${position[0]}
-      ,${position[1]}]
-Vel:  [${velocity.join(",")}]
-Ori:  ${orientation}
-Rot:  ${rotation}
-
-
-Next
-----
-Pos:  [${nextPosition[0]}
-      ,${nextPosition[1]}]
-Vel:  [${nextVelocity.join(",")}]
-Ori:  ${nextOrientation}
-Rot:  ${nextRotation}
-
+Velocity: ${length(finalVelocity).toFixed()}
+Steering: ${length(steering.linear)}
 `;
 
   const nextChar: Kinematic = {
     ...state.character,
-    position: normalisePosition(nextPosition),
-    velocity: nextVelocity,
-    orientation: normaliseOrientation(nextOrientation),
-    rotation: nextRotation,
+    position: finalPosition,
+    velocity: finalVelocity,
+    orientation: finalOrientation,
+    rotation: finalRotation,
   };
 
   return {

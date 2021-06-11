@@ -17,5 +17,6 @@ yarn dev
 
 ## todo
 
-- [ ] Draw character at different orientations
+- [ ] stop when close
+- [ ] Show speed/time
 - [ ] Create a steering behaviour

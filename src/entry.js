@@ -10,7 +10,7 @@ function main(canvas: HTMLCanvasElement) {
     return function (time) {
       ctx.clearRect(0, 0, 300, 300);
       drawScene(ctx, state);
-      const nextState = update(time - prevtime, state);
+      const nextState = update((time - prevtime) / 1000, state);
       window.requestAnimationFrame(frame(nextState, time));
     };
   }
