@@ -23,16 +23,22 @@ type Steering = {
   angular: number,
 };
 
-const pre = document.getElementById("pre");
-const chart: CanvasRenderingContext2D = document
-  .getElementById("chart")
-  //$FlowIgnoreError
-  .getContext("2d");
+// ----------------------------------------------------------------------------
 
-chart.translate(0.5, 0.5);
-let cx = 0;
-let cy = 0;
-let cz = 0;
+export const initialState: State = {
+  target: {
+    position: [10, 10],
+    velocity: [0, 0],
+    orientation: 0,
+    rotation: 0,
+  },
+  character: {
+    position: [250, 250],
+    velocity: [0, 0],
+    orientation: 0.5 * Math.PI,
+    rotation: 0,
+  },
+};
 
 // HELPERS --------------------------------------------------------------------
 
@@ -61,8 +67,8 @@ function getNewOrientation(o: number, velocity: Vector): number {
 
 // ----------------------------------------------------------------------------
 
-const maxAcceleration = 10;
-const maxSpeed = 25;
+const maxAcceleration = 25;
+const maxSpeed = 55;
 
 function getSeekSteering(character: Kinematic, target: Kinematic): Steering {
   const linear = multiply(
@@ -85,6 +91,13 @@ export function update(time: number, state: State): State {
   const steering = getSeekSteering(state.character, state.target);
   const { velocity, position, orientation, rotation } = state.character;
 
+  if (
+    position[0] === state.target.position[0] &&
+    position[1] === state.target.position[1]
+  ) {
+    return initialState;
+  }
+
   // Here we multiply the velocity with time (giving a vector) and add that to
   // the current position vector.
   // Suppose the velocity has a length of 2 pixels, and the time is 2 seconds.
@@ -104,10 +117,10 @@ export function update(time: number, state: State): State {
   const nextVelocity = add(velocity, multiply(steering.linear, time));
   const nextRotation = steering.angular * time;
 
-  const finalVelocity = nextVelocity;
-  //length(nextVelocity) > maxSpeed
-  //  ? normalise(nextVelocity)
-  //  : multiply(nextVelocity, maxSpeed);
+  const finalVelocity =
+    length(nextVelocity) > maxSpeed
+      ? multiply(normalise(nextVelocity), maxSpeed)
+      : nextVelocity;
 
   const finalPosition = limitPosition(nextPosition);
   const finalOrientation = limitOrientation(nextOrientation);
@@ -121,55 +134,8 @@ export function update(time: number, state: State): State {
     rotation: finalRotation,
   };
 
-  // LOGGING ------------------------------------------------------------------
-
-  cx += time + 0.1;
-
-  // Draw velocity
-  cy = 100 - length(finalVelocity);
-  chart.save();
-  chart.fillStyle = "rgb(240, 8, 6)";
-  chart.transform(1, 0, 0, 1, cx, cy);
-  chart.fillRect(cx, cy, 1, 1);
-  chart.restore();
-
-  // Draw velocity
-  cz = position[0] * 0.2 + 50;
-  chart.save();
-  chart.fillStyle = "rgb(8, 240, 6)";
-  chart.transform(1, 0, 0, 1, cx, cy);
-  chart.fillRect(cx, cz, 1, 1);
-  chart.restore();
-
-  // $FlowIgnoreError
-  pre.textContent = `
-
-
-Velocity: ${length(finalVelocity).toFixed()}
-Steering: ${length(steering.linear)}
-          ${steering.angular}
-Rot:      ${nextRotation}
-`;
-
   return {
     ...state,
     character: nextChar,
   };
 }
-
-//const toRadian = (degree) => (degree * Math.PI) / 180;
-
-export const initialState: State = {
-  target: {
-    position: [10, 10],
-    velocity: [0, 0],
-    orientation: 0,
-    rotation: 0,
-  },
-  character: {
-    position: [250, 250],
-    velocity: [0, 0],
-    orientation: 0.5 * Math.PI,
-    rotation: 0,
-  },
-};
