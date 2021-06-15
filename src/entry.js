@@ -1,7 +1,7 @@
 // @flow
 import { initialState, type State } from "./seek/state.js";
 import { update } from "./seek/update.js";
-import drawScene from "./seek/drawScene.js";
+import runEffects from "./seek/runEffects.js";
 
 function main(canvas: HTMLCanvasElement, chart: HTMLCanvasElement) {
   const ctx = canvas.getContext("2d");
@@ -12,7 +12,7 @@ function main(canvas: HTMLCanvasElement, chart: HTMLCanvasElement) {
   function frame(state, prevtime: number) {
     return function (time) {
       const t = (time - prevtime) / 1000;
-      drawScene(ctx, chartCtx, state, t);
+      runEffects(ctx, chartCtx, state, t);
       const nextState = update(t, state);
       window.requestAnimationFrame(frame(nextState, time));
     };
