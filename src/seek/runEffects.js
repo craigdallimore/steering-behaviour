@@ -1,6 +1,7 @@
 // @flow
 
 import type { Kinematic } from "../../lib/kinematic.js";
+import drawCircle from "../../lib/drawCircle.js";
 import drawArrow from "../../lib/drawArrow.js";
 import drawTarget from "../../lib/drawTarget.js";
 import drawGrid from "../../lib/drawGrid.js";
@@ -15,7 +16,7 @@ export default function runEffects(
 ): void {
   dom.main.clearRect(0, 0, 300, 300);
   drawGrid(dom.main);
-  drawArrow(dom.main, state.character);
+  drawCircle(dom.main, state.character);
   drawTarget(dom.main, state.target);
   drawMeta(dom.chart, state, time);
 }
