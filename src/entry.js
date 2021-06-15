@@ -1,7 +1,7 @@
 // @flow
 import drawScene from "../lib/drawScene.js";
-import drawMeta from "../lib/drawMeta.js";
-import { update, initialState, type State } from "./scene.js";
+import { initialState, type State } from "./seek/state.js";
+import { update } from "./seek/update.js";
 
 function main(canvas: HTMLCanvasElement, chart: HTMLCanvasElement) {
   const ctx = canvas.getContext("2d");
@@ -12,9 +12,7 @@ function main(canvas: HTMLCanvasElement, chart: HTMLCanvasElement) {
   function frame(state, prevtime: number) {
     return function (time) {
       const t = (time - prevtime) / 1000;
-      ctx.clearRect(0, 0, 300, 300);
-      drawScene(ctx, state);
-      drawMeta(chartCtx, state, t);
+      drawScene(ctx, chartCtx, state, t);
       const nextState = update(t, state);
       window.requestAnimationFrame(frame(nextState, time));
     };

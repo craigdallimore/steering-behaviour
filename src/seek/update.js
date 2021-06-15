@@ -1,7 +1,6 @@
 // @flow
 
-import type { Kinematic } from "../lib/kinematic.js";
-import { initialState, type State } from "./seek/state.js";
+import type { Kinematic } from "../../lib/kinematic.js";
 import {
   add,
   subtract,
@@ -10,7 +9,8 @@ import {
   length,
   normalise,
   type Vector,
-} from "../lib/vector.js";
+} from "../../lib/vector.js";
+import { initialState, type State } from "./state.js";
 
 type Steering = {
   // Negative x is Left
