@@ -10,7 +10,10 @@ import drawMeta from "./drawMeta.js";
 import type { State } from "./state.js";
 
 export default function runEffects(
-  dom: { main: CanvasRenderingContext2D, chart: CanvasRenderingContext2D },
+  dom: {
+    main: CanvasRenderingContext2D,
+    chart: CanvasRenderingContext2D,
+  },
   state: State,
   time: number
 ): void {

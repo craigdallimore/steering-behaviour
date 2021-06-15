@@ -4,29 +4,18 @@
     <meta charset="utf-8"/>
     <title>Steering behaviours</title>
     <style>
-      #can {
+      canvas {
         border: 2px solid rgba(227, 242, 253, 1);
         margin: 3rem;
         box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.05);
       }
-      #chart {
-        border: 2px solid rgba(227, 242, 253, 1);
-        margin: 3rem;
-        box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.05);
-      }
-      /*
-      #pre {
-        margin: 3rem;
-      }
-      */
     </style>
   </head>
   <body>
-    <canvas width="300" height="300" id="can"></canvas>
-    <canvas width="300" height="200" id="chart"></canvas>
-    <!--
-    <pre id="pre">PRE</pre>
-    -->
+    <h2>Seek</h2>
+    <canvas width="300" height="300" id="seek-main"></canvas>
+    <canvas width="300" height="200" id="seek-chart"></canvas>
+    <button id="seek-play" role="button">pause</button>
     <noscript>This is a JavaScript demo, so JavaScript should be turned on</noscript>
     <script type="module" src="./bundle.js"></script>
   </body>
