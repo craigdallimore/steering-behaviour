@@ -1,18 +1,23 @@
 // @flow
-import { initialState, type State } from "./seek/state.js";
-import { update } from "./seek/update.js";
-import runEffects from "./seek/runEffects.js";
+import {
+  init,
+  update,
+  runEffects,
+  initialState,
+  type State,
+} from "./seek/index.js";
 
-function main(canvas: HTMLCanvasElement, chart: HTMLCanvasElement) {
-  const ctx = canvas.getContext("2d");
-  const chartCtx = chart.getContext("2d");
-  ctx.translate(0.5, 0.5);
-  chartCtx.translate(0.5, 0.5);
+function main() {
+  const dom = init();
+
+  if (!dom) {
+    return;
+  }
 
   function frame(state, prevtime: number) {
     return function (time) {
       const t = (time - prevtime) / 1000;
-      runEffects(ctx, chartCtx, state, t);
+      runEffects(dom, state, t);
       const nextState = update(t, state);
       window.requestAnimationFrame(frame(nextState, time));
     };
@@ -21,9 +26,4 @@ function main(canvas: HTMLCanvasElement, chart: HTMLCanvasElement) {
   window.requestAnimationFrame(frame(initialState, 0));
 }
 
-const c = document.querySelector("#can");
-const chart = document.getElementById("chart");
-
-if (c instanceof HTMLCanvasElement && chart instanceof HTMLCanvasElement) {
-  main(c, chart);
-}
+main();

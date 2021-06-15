@@ -8,15 +8,14 @@ import drawGrid from "../../lib/drawGrid.js";
 import drawMeta from "./drawMeta.js";
 import type { State } from "./state.js";
 
-export default function drawScene(
-  ctx: CanvasRenderingContext2D,
-  chartCtx: CanvasRenderingContext2D,
+export default function runEffects(
+  dom: { main: CanvasRenderingContext2D, chart: CanvasRenderingContext2D },
   state: State,
   time: number
 ): void {
-  ctx.clearRect(0, 0, 300, 300);
-  drawGrid(ctx);
-  drawArrow(ctx, state.character);
-  drawTarget(ctx, state.target);
-  drawMeta(chartCtx, state, time);
+  dom.main.clearRect(0, 0, 300, 300);
+  drawGrid(dom.main);
+  drawArrow(dom.main, state.character);
+  drawTarget(dom.main, state.target);
+  drawMeta(dom.chart, state, time);
 }
