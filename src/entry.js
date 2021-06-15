@@ -1,7 +1,7 @@
 // @flow
-import drawScene from "../lib/drawScene.js";
 import { initialState, type State } from "./seek/state.js";
 import { update } from "./seek/update.js";
+import drawScene from "./seek/drawScene.js";
 
 function main(canvas: HTMLCanvasElement, chart: HTMLCanvasElement) {
   const ctx = canvas.getContext("2d");

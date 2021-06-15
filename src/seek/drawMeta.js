@@ -1,7 +1,7 @@
 // @flow
 
-import { type State } from "../src/scene.js";
-import { length } from "./vector.js";
+import { type State } from "./state.js";
+import { length } from "../../lib/vector.js";
 
 let cx = 0;
 let cy = 0;
