@@ -16,13 +16,13 @@ const TICK = "TICK";
 const PLAY_BUTTON_CLICKED = "PLAY_BUTTON_CLICKED";
 
 export type Action =
-  | {
+  | {|
       type: typeof TICK,
       payload: number,
-    }
-  | {
+    |}
+  | {|
       type: typeof PLAY_BUTTON_CLICKED,
-    };
+    |};
 
 type Steering = {
   // Negative x is Left
