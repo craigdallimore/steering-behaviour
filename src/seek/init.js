@@ -1,10 +1,13 @@
 // @flow
 
+import { type Store } from "../events.js";
 const $main = document.getElementById("seek-main");
 const $chart = document.getElementById("seek-chart");
 const $btn = document.getElementById("seek-play");
 
-export default function init(): {
+export default function init<State, Action>(
+  store: Store<State, Action>
+): {
   main: CanvasRenderingContext2D,
   chart: CanvasRenderingContext2D,
 } | null {
@@ -19,7 +22,11 @@ export default function init(): {
     main.translate(0.5, 0.5);
     chart.translate(0.5, 0.5);
 
-    $btn.addEventListener("click", () => {});
+    $btn.addEventListener("click", () => {
+      store.dispatch({
+        type: "PLAY_BUTTON_CLICKED",
+      });
+    });
 
     return { main, chart };
   }

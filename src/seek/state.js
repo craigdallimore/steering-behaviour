@@ -2,11 +2,13 @@
 import type { Kinematic } from "../../lib/kinematic.js";
 
 export type State = {
+  isPaused: boolean,
   character: Kinematic,
   target: Kinematic,
 };
 
 export const initialState: State = {
+  isPaused: false,
   target: {
     position: [10, 10],
     velocity: [0, 0],

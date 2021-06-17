@@ -1,29 +1,31 @@
 // @flow
-import {
-  init,
-  update,
-  runEffects,
-  initialState,
-  type State,
-} from "./seek/index.js";
+import { init, update, runEffects, initialState } from "./seek/index.js";
+import type { Action, State } from "./seek/index.js";
+import { createStore, type Store } from "./events.js";
+
+const store: Store<State, Action> = createStore(update, initialState);
 
 function main() {
-  const dom = init();
+  const dom = init(store);
 
   if (!dom) {
     return;
   }
 
-  function frame(state, prevtime: number) {
+  function frame(prevtime: number) {
     return function (time) {
       const t = (time - prevtime) / 1000;
+      const state = store.dispatch({
+        type: "TICK",
+        payload: t,
+      });
       runEffects(dom, state, t);
-      const nextState = update(t, state);
-      window.requestAnimationFrame(frame(nextState, time));
+
+      window.requestAnimationFrame(frame(time));
     };
   }
 
-  window.requestAnimationFrame(frame(initialState, 0));
+  window.requestAnimationFrame(frame(0));
 }
 
 main();
