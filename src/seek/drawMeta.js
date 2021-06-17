@@ -21,7 +21,7 @@ export default function drawMeta(
     cx = 0;
   }
 
-  cx += time + 0.3;
+  cx += state.isPaused ? 0 : time + 0.3;
 
   // Draw velocity
   cy = 100 - length(character.velocity);

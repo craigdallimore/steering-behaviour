@@ -90,7 +90,8 @@ export function update(state: State, action: Action): State {
       const time = action.payload;
 
       // Here we expose the current state of the character and the steering.
-      // Steering has a linear vector giving maximum velocity towards the target.
+      // Steering has a linear vector giving maximum velocity towards the
+      // target.
       // It is flooring it.
       const steering = getSeekSteering(state.character, state.target);
       const { velocity, position, orientation, rotation } = state.character;
@@ -102,18 +103,18 @@ export function update(state: State, action: Action): State {
         return initialState;
       }
 
-      // Here we multiply the velocity with time (giving a vector) and add that to
-      // the current position vector.
-      // Suppose the velocity has a length of 2 pixels, and the time is 2 seconds.
-      // This would give us 4 pixels of movement.
+      // Here we multiply the velocity with time (giving a vector) and add that
+      // to the current position vector.
+      // Suppose the velocity has a length of 2 pixels, and the time is 2
+      // seconds.  This would give us 4 pixels of movement.
       const nextPosition = add(position, multiply(velocity, time));
 
       // Orientation:
       //  0        = Up
       //  0.5 * PI = ->
       // -0.5 * PI = ->
-      // Like velocity, the rotation is multiplied by time to give the difference in
-      // radians from the previous orientation.
+      // Like velocity, the rotation is multiplied by time to give the
+      // difference in radians from the previous orientation.
       const nextOrientation = orientation + rotation * time;
 
       // The velocity is increased by a difference of the maximum acceleration
