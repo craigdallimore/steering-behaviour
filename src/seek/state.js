@@ -10,7 +10,7 @@ export type State = {
 export const initialState: State = {
   isPaused: false,
   target: {
-    position: [10, 10],
+    position: [50, 50],
     velocity: [0, 0],
     orientation: 0,
     rotation: 0,

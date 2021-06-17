@@ -100,7 +100,16 @@ export function update(state: State, action: Action): State {
         position[0] === state.target.position[0] &&
         position[1] === state.target.position[1]
       ) {
-        return initialState;
+        return {
+          ...state,
+          target: {
+            ...state.target,
+            position: [
+              Math.floor(Math.random() * 280 + 10),
+              Math.floor(Math.random() * 280 + 10),
+            ],
+          },
+        };
       }
 
       // Here we multiply the velocity with time (giving a vector) and add that
@@ -112,7 +121,7 @@ export function update(state: State, action: Action): State {
       // Orientation:
       //  0        = Up
       //  0.5 * PI = ->
-      // -0.5 * PI = ->
+      // -0.5 * PI = <-
       // Like velocity, the rotation is multiplied by time to give the
       // difference in radians from the previous orientation.
       const nextOrientation = orientation + rotation * time;
