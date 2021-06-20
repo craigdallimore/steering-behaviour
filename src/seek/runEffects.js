@@ -3,6 +3,7 @@
 import type { Kinematic } from "../../lib/kinematic.js";
 import drawCircle from "../../lib/drawCircle.js";
 import drawArrow from "../../lib/drawArrow.js";
+import drawVector from "../../lib/drawVector.js";
 import drawTarget from "../../lib/drawTarget.js";
 import drawGrid from "../../lib/drawGrid.js";
 
@@ -19,6 +20,7 @@ export default function runEffects(
 ): void {
   dom.main.clearRect(0, 0, 300, 300);
   drawGrid(dom.main);
+  drawVector(dom.main, state.character.position, state.character.velocity);
   drawCircle(dom.main, state.character);
   drawTarget(dom.main, state.target);
   drawMeta(dom.chart, state, time);
