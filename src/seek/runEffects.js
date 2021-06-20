@@ -1,8 +1,6 @@
 // @flow
 
-import type { Kinematic } from "../../lib/kinematic.js";
 import drawCircle from "../../lib/drawCircle.js";
-import drawArrow from "../../lib/drawArrow.js";
 import drawVector from "../../lib/drawVector.js";
 import drawTarget from "../../lib/drawTarget.js";
 import drawGrid from "../../lib/drawGrid.js";

@@ -1,16 +1,6 @@
 // @flow
 
-import type { Kinematic } from "../../lib/kinematic.js";
-import {
-  add,
-  subtract,
-  bearing,
-  multiply,
-  length,
-  normalise,
-  type Vector,
-} from "../../lib/vector.js";
-import { initialState, type State } from "./state.js";
+import { type State } from "./state.js";
 import seek from "./seekBehaviour.js";
 
 const TICK = "TICK";

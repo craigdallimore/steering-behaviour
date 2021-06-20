@@ -4,7 +4,6 @@ import type { Kinematic } from "../../lib/kinematic.js";
 import {
   add,
   subtract,
-  bearing,
   multiply,
   length,
   normalise,
