@@ -1,8 +1,8 @@
 // @flow
 
-import type { Kinematic } from "../../lib/kinematic.js";
-import type { Steering } from "../steering.js";
-import { add, length, multiply, normalise } from "../../lib/vector.js";
+import type { Kinematic } from "../lib/kinematic.js";
+import { add, length, multiply, normalise } from "../lib/vector.js";
+import type { Steering } from "./steering.js";
 const maxSpeed = 55;
 
 export default function updateKinematic(

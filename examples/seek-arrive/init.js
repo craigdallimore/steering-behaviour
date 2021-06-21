@@ -1,6 +1,6 @@
 // @flow
 
-import { type Store } from "../events.js";
+import { type Store } from "../../src/events.js";
 import { type Action } from "./update.js";
 import { type State } from "./state.js";
 const $main = document.getElementById("seek-main");

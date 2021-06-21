@@ -1,6 +1,11 @@
 // @flow
-import { init, update, runEffects, initialState } from "./seek/index.js";
-import type { Action, State } from "./seek/index.js";
+import {
+  init,
+  update,
+  runEffects,
+  initialState,
+} from "../examples/seek-arrive/index.js";
+import type { Action, State } from "../examples/seek-arrive/index.js";
 import { createStore, type Store } from "./events.js";
 
 const store: Store<State, Action> = createStore(update, initialState);

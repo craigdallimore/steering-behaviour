@@ -1,8 +1,8 @@
 // @flow
 
 import { type State } from "./state.js";
-import { getSeekSteering } from "../steering.js";
-import updateKinematic from "./updateKinematic.js";
+import { getSeekSteering } from "../../src/steering.js";
+import updateKinematic from "../../src/updateKinematic.js";
 
 const TICK = "TICK";
 const PLAY_BUTTON_CLICKED = "PLAY_BUTTON_CLICKED";
