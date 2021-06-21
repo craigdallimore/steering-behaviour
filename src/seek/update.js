@@ -1,7 +1,8 @@
 // @flow
 
 import { type State } from "./state.js";
-import seek from "./seekBehaviour.js";
+import { getSeekSteering } from "../steering.js";
+import updateKinematic from "./updateKinematic.js";
 
 const TICK = "TICK";
 const PLAY_BUTTON_CLICKED = "PLAY_BUTTON_CLICKED";
@@ -27,7 +28,15 @@ export function update(state: State, action: Action): State {
       if (state.isPaused) {
         return state;
       }
-      return seek(state, action.payload);
+      const time = action.payload;
+
+      const steering = getSeekSteering(state.character, state.target);
+      const nextCharacter = updateKinematic(steering, state.character, time);
+
+      return {
+        ...state,
+        character: nextCharacter,
+      };
     }
 
     default:
