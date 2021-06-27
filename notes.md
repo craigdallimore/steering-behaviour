@@ -17,5 +17,11 @@ yarn dev
 
 ## todo
 
-- [ ] stop when close
 - [ ] add notes describing seek/arrive
+
+## Vector directions
+
+`[20, 0]` To East
+`[-20, 0]` To West
+`[0, -20]` To North
+`[0, 20]` To South
