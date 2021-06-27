@@ -1,7 +1,8 @@
 // @flow
 
 import { type State } from "./state.js";
-import { getSeekSteering } from "../../src/steering.js";
+import { distance } from "../../lib/vector.js";
+import { getSeekSteering, getArriveSteering } from "../../src/steering.js";
 import updateKinematic from "../../src/updateKinematic.js";
 
 const TICK = "TICK";
@@ -30,12 +31,24 @@ export function update(state: State, action: Action): State {
       }
       const time = action.payload;
 
-      const steering = getSeekSteering(state.character, state.target);
-      const nextCharacter = updateKinematic(steering, state.character, time);
+      const seekSteering = getSeekSteering(state.character, state.target);
+      const arriveSteering = getArriveSteering(state.character, state.target);
+
+      const gap = distance(state.target.position, state.character.position);
+      const inArrivalZone = gap < 60 || true;
+
+      if (inArrivalZone) {
+        return {
+          ...state,
+          character: arriveSteering
+            ? updateKinematic(arriveSteering, state.character, time)
+            : state.character,
+        };
+      }
 
       return {
         ...state,
-        character: nextCharacter,
+        character: updateKinematic(seekSteering, state.character, time),
       };
     }
 

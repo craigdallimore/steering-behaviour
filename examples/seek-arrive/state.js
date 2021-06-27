@@ -10,14 +10,14 @@ export type State = {
 export const initialState: State = {
   isPaused: false,
   target: {
-    position: [50, 50],
+    position: [150, 150],
     velocity: [0, 0],
     orientation: 0,
     rotation: 0,
   },
   character: {
-    position: [250, 250],
-    velocity: [0, 0],
+    position: [110, 10],
+    velocity: [0, 180],
     orientation: 0.5 * Math.PI,
     rotation: 0,
   },

@@ -24,8 +24,17 @@ export default function runEffects(
   drawTarget(dom.main, state.target);
 
   // Character
-  drawVector(dom.main, state.character.position, state.character.velocity);
   drawCircle(dom.main, state.character, 2.5, "rgb(240, 98, 146)");
+
+  // Blue: Character velocity
+  drawVector(
+    dom.main,
+    state.character.position,
+    state.character.velocity,
+    "rgb(100, 181, 246)"
+  );
+
+  // --------------------------------------------------------------------------
 
   drawMeta(dom.chart, state, time);
 }

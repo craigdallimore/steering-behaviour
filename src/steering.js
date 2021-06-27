@@ -22,8 +22,7 @@ export type Steering = {
 const maxAcceleration = 25;
 const maxSpeed = 55;
 const targetRadius = 5;
-const slowRadius = 30;
-const timeToTarget = 0.1;
+const slowRadius = 60;
 
 export function getSeekSteering(
   character: Kinematic,
@@ -47,29 +46,29 @@ export function getArriveSteering(
   target: Kinematic
 ): Steering | null {
   const distanceToTarget = distance(character.position, target.position);
+  const directionToTarget = subtract(target.position, character.position);
 
   if (distanceToTarget < targetRadius) {
-    // Arrived
     return null;
   }
 
   const idealSpeed =
     distanceToTarget > slowRadius
       ? maxSpeed
-      : (maxSpeed * distanceToTarget) / slowRadius;
+      : maxSpeed * (distanceToTarget / slowRadius);
 
-  const idealVelocity = multiply(
-    normalise(subtract(character.position, target.position)),
-    idealSpeed
-  );
+  // Here we appear to take a vector from the two points, and relate it to
+  // the ideal speed
+  const idealVelocity = multiply(normalise(directionToTarget), idealSpeed);
+
   const reduced = subtract(idealVelocity, character.velocity);
 
-  const linear = multiply(reduced, 1 / timeToTarget);
+  const linear = multiply(reduced, 1.1);
 
   const finalLinear =
     length(linear) > maxAcceleration
-      ? normalise(linear)
-      : multiply(linear, maxAcceleration);
+      ? multiply(normalise(linear), maxAcceleration)
+      : linear;
 
   return {
     angular: 0,
