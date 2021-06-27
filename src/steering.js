@@ -63,7 +63,8 @@ export function getArriveSteering(
 
   const reduced = subtract(idealVelocity, character.velocity);
 
-  const linear = multiply(reduced, 1.1);
+  // A higher value will arrive sooner
+  const linear = multiply(reduced, 0.3);
 
   const finalLinear =
     length(linear) > maxAcceleration

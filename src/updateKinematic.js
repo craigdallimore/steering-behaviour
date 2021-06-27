@@ -3,7 +3,7 @@
 import type { Kinematic } from "../lib/kinematic.js";
 import { add, length, multiply, normalise } from "../lib/vector.js";
 import type { Steering } from "./steering.js";
-const maxSpeed = 55;
+const maxSpeed = 45;
 
 export default function updateKinematic(
   steering: Steering,

@@ -16,8 +16,8 @@ export const initialState: State = {
     rotation: 0,
   },
   character: {
-    position: [110, 10],
-    velocity: [0, 180],
+    position: [100, 20],
+    velocity: [100, -20],
     orientation: 0.5 * Math.PI,
     rotation: 0,
   },

@@ -20,7 +20,7 @@ export default function runEffects(
   drawGrid(dom.main);
 
   // Target
-  drawCircle(dom.main, state.target, 30, "rgba(255, 112, 67, 0.1)");
+  drawCircle(dom.main, state.target, 25, "rgba(255, 112, 67, 0.1)");
   drawTarget(dom.main, state.target);
 
   // Character

@@ -35,7 +35,7 @@ export function update(state: State, action: Action): State {
       const arriveSteering = getArriveSteering(state.character, state.target);
 
       const gap = distance(state.target.position, state.character.position);
-      const inArrivalZone = gap < 60 || true;
+      const inArrivalZone = gap < 50;
 
       if (inArrivalZone) {
         return {
