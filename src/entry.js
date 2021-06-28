@@ -1,30 +1,35 @@
 // @flow
-import {
-  init,
-  update,
-  runEffects,
-  initialState,
-} from "../examples/seek-arrive/index.js";
-import type { Action, State } from "../examples/seek-arrive/index.js";
-import { createStore, type Store } from "./events.js";
+import * as seekArrive from "../examples/seek-arrive/index.js";
+import * as align from "../examples/align/index.js";
+import { createStore } from "./events.js";
 
-const store: Store<State, Action> = createStore(update, initialState);
+const seekArriveStore = createStore(seekArrive.update, seekArrive.initialState);
+const alignStore = createStore(align.update, align.initialState);
 
 function main() {
-  const dom = init(store);
+  const seekArriveDom = seekArrive.init(seekArriveStore);
+  const alignDom = align.init();
 
-  if (!dom) {
+  if (!seekArriveDom) {
+    return;
+  }
+  if (!alignDom) {
     return;
   }
 
   function frame(prevtime: number) {
     return function (time) {
       const t = (time - prevtime) / 1000;
-      const state = store.dispatch({
+      const seekArriveState = seekArriveStore.dispatch({
         type: "TICK",
         payload: t,
       });
-      runEffects(dom, state, t);
+      const alignState = alignStore.dispatch({
+        type: "TICK",
+        payload: t,
+      });
+      seekArrive.runEffects(seekArriveDom, seekArriveState, t);
+      align.runEffects(alignDom, alignState);
 
       window.requestAnimationFrame(frame(time));
     };
