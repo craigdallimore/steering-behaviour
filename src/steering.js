@@ -21,8 +21,6 @@ export type Steering = {
 
 const maxAcceleration = 25;
 const maxSpeed = 55;
-const maxAngularAcceleration = 1;
-const maxRotation = 2;
 const targetRadius = 5;
 const slowRadius = 60;
 
@@ -84,36 +82,54 @@ export function getArriveSteering(
 // ALIGN ----------------------------------------------------------------------
 
 function mapToRange(orientation: number): number {
-  return (orientation % Math.PI) * 2;
+  // To rotate all the way clockwise, use the value 6.283
+  // 6.3 is (I expect) NE 0.01...
+  const nextOrientation =
+    Math.abs(orientation) > Math.PI
+      ? orientation - Math.PI * 2 * Math.sign(orientation)
+      : orientation;
+
+  return nextOrientation % (Math.PI * 2);
 }
 
 export function getAlignSteering(
   character: Kinematic,
   target: Kinematic
-): Steering | null {
-  const rotation = mapToRange(target.orientation - character.orientation);
-  const rotationSize = Math.abs(rotation); // book uses "rotationDirection"?
+): Steering {
+  // TODO move these out from the function
+  const timeToTarget = 0.1;
+  const maxAngularAcceleration = 140;
+  const maxRotation = 120;
+  const decelerationTolerance = 2;
+  const alignTolerance = 0.01;
 
-  if (rotationSize < targetRadius) {
-    return null;
+  const linear = [0, 0];
+
+  const rotation = mapToRange(target.orientation - character.orientation);
+  const rotationSize = Math.abs(rotation);
+
+  if (rotationSize < alignTolerance) {
+    return {
+      linear,
+      angular: 0,
+    };
   }
 
-  const idealRotation =
-    rotationSize > slowRadius
-      ? maxRotation
-      : (maxRotation * rotationSize) / slowRadius;
+  const isSlowed = rotationSize <= decelerationTolerance;
+
+  const idealRotation = isSlowed
+    ? (maxRotation * rotationSize) / decelerationTolerance
+    : maxRotation;
 
   const nextIdealRotation = idealRotation * (rotation / rotationSize);
 
-  const angular = (nextIdealRotation - character.rotation) / 0.5;
+  const angular = (nextIdealRotation - character.rotation) / timeToTarget;
 
   const angularAcceleration = Math.abs(angular);
   const finalAngular =
     angularAcceleration > maxAngularAcceleration
-      ? angular / maxAngularAcceleration
-      : angular * maxAngularAcceleration;
-
-  const linear = [0, 0];
+      ? (angular * maxAngularAcceleration) / angularAcceleration
+      : angular;
 
   return {
     angular: finalAngular,
