@@ -4,16 +4,95 @@
     <meta charset="utf-8"/>
     <title>Steering behaviours</title>
     <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: sans;
+      }
+      main {
+        display: flex;
+        align-items: flex-start;
+      }
       canvas {
         border: 2px solid rgba(227, 242, 253, 1);
         margin: 3rem;
         box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.05);
       }
+      form {
+
+        margin-top: 2rem;
+      }
+      legend {
+        padding: 0.5rem;
+        background: black;
+        color: white;
+      }
+      label {
+        align-self: center;
+        text-align: right;
+      }
+      fieldset {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        grid-gap: 0.5rem;
+        margin-bottom: 1rem;
+        padding: 1rem;
+      }
+      [type="reset"] {
+        float: right;
+      }
+
     </style>
   </head>
   <body>
-    <h2>Align</h2>
-    <canvas width="300" height="300" id="align-main"></canvas>
+    <main>
+      <canvas width="300" height="300" id="align-main"></canvas>
+      <form>
+        <fieldset>
+          <legend>Character</legend>
+
+          <label for="character-orientation">Orientation</label>
+          <input id="character-orientation" type="range" min="-2" max="2"/>
+
+          <label for="character-rotation">Rotation</label>
+          <input id="character-rotation" type="number" />
+
+          <label for="character-position-x">Horizontal position</label>
+          <input id="character-position-x" type="number" min="0" max="300"/>
+
+          <label for="character-position-z">Vertical position</label>
+          <input id="character-position-z" type="number" min="0" max="300" />
+
+          <label for="character-behaviour">Behaviour</label>
+          <select id="character-behaviour">
+            <option value="seek">Seek</option>>
+            <option value="arrive">Arrive</option>>
+            <option value="align">Align</option>>
+          </select>
+        </fieldset>
+
+        <fieldset>
+          <legend>Target</legend>
+
+          <label for="target-orientation">Orientation</label>
+          <input id="target-orientation" type="range" min="-2" max="2"/>
+
+          <label for="target-rotaraion">Rotation</label>
+          <input id="target-rotation" type="number" />
+
+          <label for="target-position-x">Horizontal position</label>
+          <input id="target-position-x" type="number" min="0" max="300"/>
+
+          <label for="target-position-z">Vertical position</label>
+          <input id="target-position-z" type="number" min="0" max="300" />
+        </fieldset>
+
+        <button id="play-pause">Play</button>
+        <input id="reset" type="reset"/>
+
+      </form>
+    </main>
     <h2>Seek</h2>
     <canvas width="300" height="300" id="seek-main"></canvas>
     <canvas width="300" height="200" id="seek-chart"></canvas>

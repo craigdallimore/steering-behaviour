@@ -21,7 +21,20 @@ https://github.com/libgdx/gdx-ai/wiki/Steering-Behaviors
 
 ## todo
 
-- [ ] add notes describing seek/arrive
+- [ ] Simulator improvements
+
+  - [ ] Add play/pause and reset buttons
+  - [ ] Enable manual switching of the seek behaviour
+  - [ ] Track mouse as target?
+  - [ ] Enable configuration of the initial target / character state
+
+- [ ] Describe the various behaviours
+
+- [ ] Implement Match velocity
+- [ ] Implement Wander
+- [ ] Implement Pursue
+- [ ] Implement Face
+- [ ] Implement follow path
 
 ## Vector directions
 
