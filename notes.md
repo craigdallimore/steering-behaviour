@@ -21,12 +21,12 @@ https://github.com/libgdx/gdx-ai/wiki/Steering-Behaviors
 
 ## todo
 
-- [ ] Simulator improvements
+- [O] Simulator improvements
 
-  - [ ] Add play/pause and reset buttons
-  - [ ] Enable manual switching of the seek behaviour
+  - [x] Add play/pause and reset buttons
+  - [x] Enable manual switching of the seek behaviour
   - [ ] Track mouse as target?
-  - [ ] Enable configuration of the initial target / character state
+  - [x] Enable configuration of the initial target / character state
 
 - [ ] Describe the various behaviours
 

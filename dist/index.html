@@ -39,7 +39,7 @@
         margin-bottom: 1rem;
         padding: 1rem;
       }
-      [type="reset"] {
+      button + button {
         float: right;
       }
 
@@ -47,13 +47,13 @@
   </head>
   <body>
     <main>
-      <canvas width="300" height="300" id="align-main"></canvas>
+      <canvas width="300" height="300" id="canvas-main"></canvas>
       <form>
         <fieldset>
           <legend>Character</legend>
 
           <label for="character-orientation">Orientation</label>
-          <input id="character-orientation" type="range" min="-2" max="2"/>
+          <input id="character-orientation" type="range" min="-2" max="2" step="0.1"/>
 
           <label for="character-rotation">Rotation</label>
           <input id="character-rotation" type="number" />
@@ -65,10 +65,10 @@
           <input id="character-position-z" type="number" min="0" max="300" />
 
           <label for="character-behaviour">Behaviour</label>
-          <select id="character-behaviour">
-            <option value="seek">Seek</option>>
-            <option value="arrive">Arrive</option>>
-            <option value="align">Align</option>>
+          <select id="character-behaviour" size="3">
+            <option value="SEEK">Seek</option>>
+            <option value="ARRIVE">Arrive</option>>
+            <option value="ALIGN">Align</option>>
           </select>
         </fieldset>
 
@@ -76,7 +76,7 @@
           <legend>Target</legend>
 
           <label for="target-orientation">Orientation</label>
-          <input id="target-orientation" type="range" min="-2" max="2"/>
+          <input id="target-orientation" type="range" min="-2" max="2" step="0.1"/>
 
           <label for="target-rotaraion">Rotation</label>
           <input id="target-rotation" type="number" />
@@ -88,11 +88,12 @@
           <input id="target-position-z" type="number" min="0" max="300" />
         </fieldset>
 
-        <button id="play-pause">Play</button>
-        <input id="reset" type="reset"/>
+        <button type="button" id="play-pause">Play</button>
+        <button type="button" id="reset">Reset</button>
 
       </form>
     </main>
+      <canvas width="300" height="300" id="align-main"></canvas>
     <h2>Seek</h2>
     <canvas width="300" height="300" id="seek-main"></canvas>
     <canvas width="300" height="200" id="seek-chart"></canvas>

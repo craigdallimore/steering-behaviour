@@ -8,5 +8,6 @@ export default {
   output: {
     file: "dist/bundle.js",
   },
+  // $FlowIgnoreError
   plugins: [flow(), serve("dist"), sourcemaps()],
 };
