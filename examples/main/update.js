@@ -33,7 +33,7 @@ export type Action =
     |}
   | {|
       type: typeof CHARACTER_BEHAVIOUR_CHANGED,
-      payload: string,
+      payload: "SEEK" | "ARRIVE" | "ALIGN",
     |}
   | {|
       type: typeof CHARACTER_ORIENTATION_CHANGED,
@@ -61,7 +61,7 @@ export type Action =
     |}
   | {|
       type: typeof POS_MOUSE_CHANGED,
-      payload: string,
+      payload: "TARGET" | "CHARACTER",
     |}
   | {|
       type: typeof CANVAS_CLICKED,
@@ -89,33 +89,24 @@ export function update(state: State, action: Action): State {
     case "POS_MOUSE_CHANGED":
       return {
         ...state,
-        // $FlowFixMe
         positionWithMouse: action.payload,
       };
     case "CANVAS_CLICKED":
       return {
         ...state,
-        // $FlowFixMe
         target:
           state.positionWithMouse === "TARGET"
-            ? {
-                ...state.target,
-                position: action.payload,
-              }
+            ? { ...state.target, position: action.payload }
             : state.target,
         character:
           state.positionWithMouse === "CHARACTER"
-            ? {
-                ...state.character,
-                position: action.payload,
-              }
+            ? { ...state.character, position: action.payload }
             : state.character,
       };
 
     case "CHARACTER_BEHAVIOUR_CHANGED":
       return {
         ...state,
-        // $FlowFixMe
         selectedBehaviour: action.payload,
       };
     case "CHARACTER_ORIENTATION_CHANGED":

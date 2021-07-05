@@ -76,9 +76,10 @@ export default function init(
     // ------------------------------------------------------------------------
     $cBehaviour.addEventListener("change", (e: Event) => {
       const target: HTMLSelectElement = (e.target: any);
+      const payload = target.value === "CHARACTER" ? "CHARACTER" : "TARGET";
       store.dispatch({
         type: "CHARACTER_BEHAVIOUR_CHANGED",
-        payload: (target.value: string),
+        payload,
       });
     });
 
