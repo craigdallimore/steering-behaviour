@@ -20,9 +20,6 @@ export type Steering = {
 // SEEK -----------------------------------------------------------------------
 
 const maxAcceleration = 25;
-const maxSpeed = 55;
-const targetRadius = 5;
-const slowRadius = 60;
 
 export function getSeekSteering(
   character: Kinematic,
@@ -42,6 +39,10 @@ export function getSeekSteering(
 }
 
 // ARRIVE ---------------------------------------------------------------------
+
+const maxSpeed = 55;
+const targetRadius = 5;
+const slowRadius = 60;
 
 export function getArriveSteering(
   character: Kinematic,
@@ -92,17 +93,18 @@ function mapToRange(orientation: number): number {
   return nextOrientation % (Math.PI * 2);
 }
 
+// ALIGN ----------------------------------------------------------------------
+
+const timeToTarget = 0.1;
+const maxAngularAcceleration = 140;
+const maxRotation = 120;
+const decelerationTolerance = 2;
+const alignTolerance = 0.01;
+
 export function getAlignSteering(
   character: Kinematic,
   target: Kinematic
 ): Steering {
-  // TODO move these out from the function
-  const timeToTarget = 0.1;
-  const maxAngularAcceleration = 140;
-  const maxRotation = 120;
-  const decelerationTolerance = 2;
-  const alignTolerance = 0.01;
-
   const linear = [0, 0];
 
   const rotation = mapToRange(target.orientation - character.orientation);
