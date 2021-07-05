@@ -4,6 +4,7 @@ import type { Kinematic } from "../../lib/kinematic.js";
 export type State = {|
   isPaused: boolean,
   selectedBehaviour: "SEEK" | "ARRIVE" | "ALIGN",
+  positionWithMouse: "CHARACTER" | "TARGET",
   character: Kinematic,
   target: Kinematic,
 |};
@@ -11,6 +12,7 @@ export type State = {|
 export const initialState: State = {
   isPaused: true,
   selectedBehaviour: "SEEK",
+  positionWithMouse: "CHARACTER",
   target: {
     position: [10, 10],
     velocity: [0, 0],

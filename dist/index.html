@@ -64,6 +64,9 @@
           <label for="character-position-z">Vertical position</label>
           <input id="character-position-z" type="number" min="0" max="300" />
 
+          <label for="character-position-mouse">Position with mouse</label>
+          <input type="radio" name="position-mouse" id="character-position-mouse"/>
+
           <label for="character-behaviour">Behaviour</label>
           <select id="character-behaviour" size="3">
             <option value="SEEK">Seek</option>>
@@ -86,6 +89,9 @@
 
           <label for="target-position-z">Vertical position</label>
           <input id="target-position-z" type="number" min="0" max="300" />
+
+          <label for="target-position-mouse">Position with mouse</label>
+          <input type="radio" name="position-mouse" id="target-position-mouse"/>
         </fieldset>
 
         <button type="button" id="play-pause">Play</button>
@@ -93,11 +99,6 @@
 
       </form>
     </main>
-      <canvas width="300" height="300" id="align-main"></canvas>
-    <h2>Seek</h2>
-    <canvas width="300" height="300" id="seek-main"></canvas>
-    <canvas width="300" height="200" id="seek-chart"></canvas>
-    <button id="seek-play" role="button">pause</button>
     <noscript>This is a JavaScript demo, so JavaScript should be turned on</noscript>
     <script type="module" src="./bundle.js"></script>
   </body>

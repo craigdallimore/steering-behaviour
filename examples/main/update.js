@@ -2,6 +2,7 @@
 
 import { initialState } from "./state.js";
 import { type State } from "./state.js";
+import { type Vector } from "../../lib/vector.js";
 import {
   getAlignSteering,
   getArriveSteering,
@@ -13,6 +14,8 @@ const TICK = "TICK";
 
 const PLAY_BUTTON_CLICKED = "PLAY_BUTTON_CLICKED";
 const RESET_BUTTON_CLICKED = "RESET_BUTTON_CLICKED";
+const POS_MOUSE_CHANGED = "POS_MOUSE_CHANGED";
+const CANVAS_CLICKED = "CANVAS_CLICKED";
 
 const CHARACTER_BEHAVIOUR_CHANGED = "CHARACTER_BEHAVIOUR_CHANGED";
 const CHARACTER_ORIENTATION_CHANGED = "CHARACTER_ORIENTATION_CHANGED";
@@ -57,6 +60,14 @@ export type Action =
       payload: number,
     |}
   | {|
+      type: typeof POS_MOUSE_CHANGED,
+      payload: string,
+    |}
+  | {|
+      type: typeof CANVAS_CLICKED,
+      payload: Vector,
+    |}
+  | {|
       type: typeof PLAY_BUTTON_CLICKED,
     |}
   | {|
@@ -74,6 +85,31 @@ export function update(state: State, action: Action): State {
       return {
         ...state,
         isPaused: !state.isPaused,
+      };
+    case "POS_MOUSE_CHANGED":
+      return {
+        ...state,
+        // $FlowFixMe
+        positionWithMouse: action.payload,
+      };
+    case "CANVAS_CLICKED":
+      return {
+        ...state,
+        // $FlowFixMe
+        target:
+          state.positionWithMouse === "TARGET"
+            ? {
+                ...state.target,
+                position: action.payload,
+              }
+            : state.target,
+        character:
+          state.positionWithMouse === "CHARACTER"
+            ? {
+                ...state.character,
+                position: action.payload,
+              }
+            : state.character,
       };
 
     case "CHARACTER_BEHAVIOUR_CHANGED":
