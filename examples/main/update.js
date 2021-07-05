@@ -7,6 +7,7 @@ import {
   getAlignSteering,
   getArriveSteering,
   getSeekSteering,
+  getMatchVelocitySteering,
 } from "../../src/steering.js";
 import updateKinematic from "../../src/updateKinematic.js";
 
@@ -33,7 +34,7 @@ export type Action =
     |}
   | {|
       type: typeof CHARACTER_BEHAVIOUR_CHANGED,
-      payload: "SEEK" | "ARRIVE" | "ALIGN",
+      payload: "SEEK" | "ARRIVE" | "ALIGN" | "MATCH_VELOCITY",
     |}
   | {|
       type: typeof CHARACTER_ORIENTATION_CHANGED,
@@ -167,34 +168,47 @@ export function update(state: State, action: Action): State {
 
       switch (state.selectedBehaviour) {
         case "ARRIVE": {
-          const arriveSteering = getArriveSteering(
-            state.character,
-            state.target
-          );
+          const steering = getArriveSteering(state.character, state.target);
           return {
             ...state,
-            character: arriveSteering
-              ? updateKinematic(arriveSteering, state.character, time)
+            character: steering
+              ? updateKinematic(steering, state.character, time)
               : state.character,
           };
         }
         case "ALIGN": {
-          const alignSteering = getAlignSteering(state.character, state.target);
+          const steering = getAlignSteering(state.character, state.target);
 
-          if (!alignSteering) {
+          if (!steering) {
             return state;
           }
 
           return {
             ...state,
-            character: updateKinematic(alignSteering, state.character, time),
+            character: updateKinematic(steering, state.character, time),
           };
         }
         case "SEEK": {
-          const seekSteering = getSeekSteering(state.character, state.target);
+          const steering = getSeekSteering(state.character, state.target);
           return {
             ...state,
-            character: updateKinematic(seekSteering, state.character, time),
+            character: updateKinematic(steering, state.character, time),
+          };
+        }
+        case "MATCH_VELOCITY": {
+          const steering = getMatchVelocitySteering(
+            state.character,
+            state.target
+          );
+          console.log(1);
+          return {
+            ...state,
+            target: updateKinematic(
+              { angular: 0, linear: [0, 0] },
+              state.target,
+              time
+            ),
+            character: updateKinematic(steering, state.character, time),
           };
         }
         default:

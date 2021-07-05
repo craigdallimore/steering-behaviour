@@ -7,10 +7,10 @@ const maxSpeed = 45;
 
 export default function updateKinematic(
   steering: Steering,
-  character: Kinematic,
+  kinematic: Kinematic,
   time: number
 ): Kinematic {
-  const { velocity, position, orientation, rotation } = character;
+  const { velocity, position, orientation, rotation } = kinematic;
 
   const nextPosition = add(position, multiply(velocity, time));
   // The velocity is increased by a difference of the maximum acceleration

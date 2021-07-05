@@ -138,3 +138,18 @@ export function getAlignSteering(
     linear,
   };
 }
+
+// MATCH VELOCITY -------------------------------------------------------------
+
+export function getMatchVelocitySteering(
+  character: Kinematic,
+  target: Kinematic
+): Steering {
+  const linear = [0, 0];
+  const angular = 0;
+
+  return {
+    angular,
+    linear,
+  };
+}
