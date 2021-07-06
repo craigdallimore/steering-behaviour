@@ -165,3 +165,18 @@ export function getMatchVelocitySteering(
     linear: finalLinear,
   };
 }
+
+// PURSUE ---------------------------------------------------------------------
+
+export function getPursueSteering(
+  character: Kinematic,
+  target: Kinematic
+): Steering {
+  // Config
+  const angular = 0;
+
+  return {
+    angular,
+    linear: [0, 0],
+  };
+}

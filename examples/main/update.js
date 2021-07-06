@@ -7,22 +7,20 @@ import {
   getAlignSteering,
   getArriveSteering,
   getSeekSteering,
+  getPursueSteering,
   getMatchVelocitySteering,
 } from "../../src/steering.js";
 import updateKinematic from "../../src/updateKinematic.js";
 
 const TICK = "TICK";
-
 const PLAY_BUTTON_CLICKED = "PLAY_BUTTON_CLICKED";
 const RESET_BUTTON_CLICKED = "RESET_BUTTON_CLICKED";
 const POS_MOUSE_CHANGED = "POS_MOUSE_CHANGED";
 const CANVAS_CLICKED = "CANVAS_CLICKED";
-
 const CHARACTER_BEHAVIOUR_CHANGED = "CHARACTER_BEHAVIOUR_CHANGED";
 const CHARACTER_ORIENTATION_CHANGED = "CHARACTER_ORIENTATION_CHANGED";
 const CHARACTER_POSX_CHANGED = "CHARACTER_POSX_CHANGED";
 const CHARACTER_POSZ_CHANGED = "CHARACTER_POSZ_CHANGED";
-
 const TARGET_ORIENTATION_CHANGED = "TARGET_ORIENTATION_CHANGED";
 const TARGET_POSX_CHANGED = "TARGET_POSX_CHANGED";
 const TARGET_POSZ_CHANGED = "TARGET_POSZ_CHANGED";
@@ -74,6 +72,8 @@ export type Action =
   | {|
       type: typeof RESET_BUTTON_CLICKED,
     |};
+
+const emptySteering = { angular: 0, linear: [0, 0] };
 
 export function update(state: State, action: Action): State {
   switch (action.type) {
@@ -171,6 +171,7 @@ export function update(state: State, action: Action): State {
           const steering = getArriveSteering(state.character, state.target);
           return {
             ...state,
+            target: updateKinematic(emptySteering, state.target, time),
             character: steering
               ? updateKinematic(steering, state.character, time)
               : state.character,
@@ -185,6 +186,7 @@ export function update(state: State, action: Action): State {
 
           return {
             ...state,
+            target: updateKinematic(emptySteering, state.target, time),
             character: updateKinematic(steering, state.character, time),
           };
         }
@@ -192,6 +194,7 @@ export function update(state: State, action: Action): State {
           const steering = getSeekSteering(state.character, state.target);
           return {
             ...state,
+            target: updateKinematic(emptySteering, state.target, time),
             character: updateKinematic(steering, state.character, time),
           };
         }
@@ -202,11 +205,15 @@ export function update(state: State, action: Action): State {
           );
           return {
             ...state,
-            target: updateKinematic(
-              { angular: 0, linear: [0, 0] },
-              state.target,
-              time
-            ),
+            target: updateKinematic(emptySteering, state.target, time),
+            character: updateKinematic(steering, state.character, time),
+          };
+        }
+        case "PURSUE": {
+          const steering = getPursueSteering(state.character, state.target);
+          return {
+            ...state,
+            target: updateKinematic(emptySteering, state.target, time),
             character: updateKinematic(steering, state.character, time),
           };
         }

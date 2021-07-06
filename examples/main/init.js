@@ -82,6 +82,7 @@ export default function init(
         case "ALIGN":
         case "ARRIVE":
         case "MATCH_VELOCITY":
+        case "PURSUE":
           store.dispatch({
             type: "CHARACTER_BEHAVIOUR_CHANGED",
             payload: (value: SteeringBehaviour),

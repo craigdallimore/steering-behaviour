@@ -27,7 +27,7 @@ https://github.com/libgdx/gdx-ai/wiki/Steering-Behaviors
 
 - [ ] Describe the various behaviours
 
-- [ ] Implement Match velocity
+- [x] Implement Match velocity
 - [ ] Implement Wander
 - [ ] Implement Pursue
 - [ ] Implement Face
