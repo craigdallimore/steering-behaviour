@@ -1,7 +1,7 @@
 // @flow
 
 import { initialState } from "./state.js";
-import { type State } from "./state.js";
+import { type State, type SteeringBehaviour } from "./state.js";
 import { type Vector } from "../../lib/vector.js";
 import {
   getAlignSteering,
@@ -34,7 +34,7 @@ export type Action =
     |}
   | {|
       type: typeof CHARACTER_BEHAVIOUR_CHANGED,
-      payload: "SEEK" | "ARRIVE" | "ALIGN" | "MATCH_VELOCITY",
+      payload: SteeringBehaviour,
     |}
   | {|
       type: typeof CHARACTER_ORIENTATION_CHANGED,
@@ -90,17 +90,17 @@ export function update(state: State, action: Action): State {
     case "POS_MOUSE_CHANGED":
       return {
         ...state,
-        positionWithMouse: action.payload,
+        selectedItem: action.payload,
       };
     case "CANVAS_CLICKED":
       return {
         ...state,
         target:
-          state.positionWithMouse === "TARGET"
+          state.selectedItem === "TARGET"
             ? { ...state.target, position: action.payload }
             : state.target,
         character:
-          state.positionWithMouse === "CHARACTER"
+          state.selectedItem === "CHARACTER"
             ? { ...state.character, position: action.payload }
             : state.character,
       };
@@ -200,7 +200,6 @@ export function update(state: State, action: Action): State {
             state.character,
             state.target
           );
-          console.log(1);
           return {
             ...state,
             target: updateKinematic(

@@ -2,7 +2,7 @@
 
 import { type Store } from "../../src/events.js";
 import { type Action } from "./update.js";
-import { type State, initialState } from "./state.js";
+import { type State, type SteeringBehaviour, initialState } from "./state.js";
 import { type Vector } from "../../lib/vector.js";
 
 const $canvas = document.getElementById("canvas-main");
@@ -48,13 +48,13 @@ export default function init(
       $cRotate.value = state.character.rotation.toString();
       $cPosX.value = state.character.position[0].toString();
       $cPosZ.value = state.character.position[1].toString();
-      $cPosMouse.checked = state.positionWithMouse === "CHARACTER";
+      $cPosMouse.checked = state.selectedItem === "CHARACTER";
       $cBehaviour.value = state.selectedBehaviour;
       $tOrient.value = state.target.orientation.toString();
       $tRotate.value = state.target.rotation.toString();
       $tPosX.value = state.target.position[0].toString();
       $tPosZ.value = state.target.position[1].toString();
-      $tPosMouse.checked = state.positionWithMouse === "TARGET";
+      $tPosMouse.checked = state.selectedItem === "TARGET";
     };
 
     setDomValuesFromState(initialState);
@@ -76,11 +76,18 @@ export default function init(
     // ------------------------------------------------------------------------
     $cBehaviour.addEventListener("change", (e: Event) => {
       const target: HTMLSelectElement = (e.target: any);
-      const payload = target.value === "CHARACTER" ? "CHARACTER" : "TARGET";
-      store.dispatch({
-        type: "CHARACTER_BEHAVIOUR_CHANGED",
-        payload,
-      });
+      const value = target.value;
+      switch (value) {
+        case "SEEK":
+        case "ALIGN":
+        case "ARRIVE":
+        case "MATCH_VELOCITY":
+          store.dispatch({
+            type: "CHARACTER_BEHAVIOUR_CHANGED",
+            payload: (value: SteeringBehaviour),
+          });
+          return;
+      }
     });
 
     // ------------------------------------------------------------------------

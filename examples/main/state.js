@@ -1,10 +1,13 @@
 // @flow
 import type { Kinematic } from "../../lib/kinematic.js";
 
+export type SteeringBehaviour = "ARRIVE" | "ALIGN" | "SEEK" | "MATCH_VELOCITY";
+type Item = "CHARACTER" | "TARGET";
+
 export type State = {|
   isPaused: boolean,
-  selectedBehaviour: "SEEK" | "ARRIVE" | "ALIGN" | "MATCH_VELOCITY",
-  positionWithMouse: "CHARACTER" | "TARGET",
+  selectedBehaviour: SteeringBehaviour,
+  selectedItem: Item,
   character: Kinematic,
   target: Kinematic,
 |};
@@ -12,7 +15,7 @@ export type State = {|
 export const initialState: State = {
   isPaused: true,
   selectedBehaviour: "MATCH_VELOCITY",
-  positionWithMouse: "CHARACTER",
+  selectedItem: "CHARACTER",
   target: {
     position: [10, 10],
     velocity: [30, 0],

@@ -47,7 +47,7 @@ export function getArriveSteering(
 ): Steering | null {
   // Config
   const maxAcceleration = 25;
-  const timeToTarget = 30;
+  const timeToTarget = 3;
   const maxSpeed = 55;
   const targetRadius = 5;
   const slowRadius = 60;
