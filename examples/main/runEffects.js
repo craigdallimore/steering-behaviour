@@ -11,7 +11,7 @@ export default function runEffects(
   },
   state: State
 ): void {
-  dom.main.clearRect(0, 0, 300, 300);
+  dom.main.clearRect(0, 0, 800, 800);
   drawGrid(dom.main);
 
   // Target

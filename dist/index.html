@@ -47,7 +47,7 @@
   </head>
   <body>
     <main>
-      <canvas width="300" height="300" id="canvas-main"></canvas>
+      <canvas width="800" height="800" id="canvas-main"></canvas>
       <form>
         <fieldset>
           <legend>Character</legend>
@@ -59,16 +59,16 @@
           <input id="character-rotation" type="number" />
 
           <label for="character-position-x">Horizontal position</label>
-          <input id="character-position-x" type="number" min="0" max="300"/>
+          <input id="character-position-x" type="number" min="0" max="800"/>
 
           <label for="character-position-z">Vertical position</label>
-          <input id="character-position-z" type="number" min="0" max="300" />
+          <input id="character-position-z" type="number" min="0" max="800" />
 
           <label for="character-position-mouse">Position with mouse</label>
           <input type="radio" name="position-mouse" id="character-position-mouse"/>
 
           <label for="character-behaviour">Behaviour</label>
-          <select id="character-behaviour" size="5">
+          <select id="character-behaviour" size="7">
             <option value="SEEK">Seek</option>>
             <option value="ARRIVE">Arrive</option>>
             <option value="ALIGN">Align</option>>
@@ -89,10 +89,10 @@
           <input id="target-rotation" type="number" />
 
           <label for="target-position-x">Horizontal position</label>
-          <input id="target-position-x" type="number" min="0" max="300"/>
+          <input id="target-position-x" type="number" min="0" max="800"/>
 
           <label for="target-position-z">Vertical position</label>
-          <input id="target-position-z" type="number" min="0" max="300" />
+          <input id="target-position-z" type="number" min="0" max="800" />
 
           <label for="target-position-mouse">Position with mouse</label>
           <input type="radio" name="position-mouse" id="target-position-mouse"/>

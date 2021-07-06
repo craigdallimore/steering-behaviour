@@ -24,13 +24,13 @@ export const initialState: State = {
   selectedBehaviour: "PURSUE",
   selectedItem: "CHARACTER",
   target: {
-    position: [10, 30],
+    position: [10, 50],
     velocity: [30, 0],
     orientation: 0.5 * Math.PI,
     rotation: 0,
   },
   character: {
-    position: [150, 150],
+    position: [400, 400],
     velocity: [-30, -30],
     orientation: 1.75 * Math.PI,
     rotation: 0,
