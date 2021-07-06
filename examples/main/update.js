@@ -7,8 +7,10 @@ import {
   getAlignSteering,
   getArriveSteering,
   getSeekSteering,
-  getPursueSteering,
   getMatchVelocitySteering,
+  getPursueSteering,
+  getWanderSteering,
+  getFaceSteering,
 } from "../../src/steering.js";
 import updateKinematic from "../../src/updateKinematic.js";
 
@@ -211,6 +213,22 @@ export function update(state: State, action: Action): State {
         }
         case "PURSUE": {
           const steering = getPursueSteering(state.character, state.target);
+          return {
+            ...state,
+            target: updateKinematic(emptySteering, state.target, time),
+            character: updateKinematic(steering, state.character, time),
+          };
+        }
+        case "WANDER": {
+          const steering = getWanderSteering(state.character, state.target);
+          return {
+            ...state,
+            target: updateKinematic(emptySteering, state.target, time),
+            character: updateKinematic(steering, state.character, time),
+          };
+        }
+        case "FACE": {
+          const steering = getFaceSteering(state.character, state.target);
           return {
             ...state,
             target: updateKinematic(emptySteering, state.target, time),

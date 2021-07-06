@@ -180,3 +180,33 @@ export function getPursueSteering(
     linear: [0, 0],
   };
 }
+
+// WANDER ---------------------------------------------------------------------
+
+export function getWanderSteering(
+  character: Kinematic,
+  target: Kinematic
+): Steering {
+  // Config
+  const angular = 0;
+
+  return {
+    angular,
+    linear: [0, 0],
+  };
+}
+
+// FACE ---------------------------------------------------------------------
+
+export function getFaceSteering(
+  character: Kinematic,
+  target: Kinematic
+): Steering {
+  // Config
+  const angular = 0;
+
+  return {
+    angular,
+    linear: [0, 0],
+  };
+}
