@@ -18,6 +18,8 @@ export type Steering = {
   angular: number,
 };
 
+export const emptySteering: Steering = { angular: 0, linear: [0, 0] };
+
 // SEEK -----------------------------------------------------------------------
 
 export function getSeekSteering(
@@ -202,14 +204,17 @@ export function getLookWhereYouAreGoingSteering(
   character: Kinematic,
   target: Kinematic
 ): Steering {
-  // Config
-  const angular = 0;
-  console.log(character, target);
+  if (length(character.velocity) === 0) {
+    return emptySteering;
+  }
 
-  return {
-    angular,
-    linear: [0, 0],
+  const orientation = Math.atan2(character.velocity[0], -character.velocity[1]);
+  const nextTarget = {
+    ...target,
+    orientation,
   };
+
+  return getAlignSteering(character, nextTarget);
 }
 
 // WANDER ---------------------------------------------------------------------
@@ -237,10 +242,7 @@ export function getFaceSteering(
   const direction = subtract(target.position, character.position);
 
   if (length(direction) === 0) {
-    return {
-      angular: 0,
-      linear: [0, 0],
-    };
+    return emptySteering;
   }
 
   const nextOrientation = Math.atan2(direction[0], -direction[1]);

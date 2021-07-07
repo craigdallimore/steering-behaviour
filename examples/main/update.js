@@ -4,6 +4,7 @@ import { initialState } from "./state.js";
 import { type State, type SteeringBehaviour } from "./state.js";
 import { type Vector } from "../../lib/vector.js";
 import {
+  emptySteering,
   getAlignSteering,
   getArriveSteering,
   getFaceSteering,
@@ -75,8 +76,6 @@ export type Action =
   | {|
       type: typeof RESET_BUTTON_CLICKED,
     |};
-
-const emptySteering = { angular: 0, linear: [0, 0] };
 
 export function update(state: State, action: Action): State {
   switch (action.type) {
