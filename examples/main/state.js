@@ -2,13 +2,14 @@
 import type { Kinematic } from "../../lib/kinematic.js";
 
 export type SteeringBehaviour =
-  | "ARRIVE"
   | "ALIGN"
-  | "SEEK"
+  | "ARRIVE"
+  | "FACE"
+  | "LOOK_WHERE_YOU_ARE_GOING"
   | "MATCH_VELOCITY"
   | "PURSUE"
-  | "WANDER"
-  | "FACE";
+  | "SEEK"
+  | "WANDER";
 type Item = "CHARACTER" | "TARGET";
 
 export type State = {|

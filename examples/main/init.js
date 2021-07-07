@@ -78,11 +78,14 @@ export default function init(
       const target: HTMLSelectElement = (e.target: any);
       const value = target.value;
       switch (value) {
-        case "SEEK":
         case "ALIGN":
         case "ARRIVE":
+        case "FACE":
+        case "LOOK_WHERE_YOU_ARE_GOING":
         case "MATCH_VELOCITY":
         case "PURSUE":
+        case "SEEK":
+        case "WANDER":
           store.dispatch({
             type: "CHARACTER_BEHAVIOUR_CHANGED",
             payload: (value: SteeringBehaviour),

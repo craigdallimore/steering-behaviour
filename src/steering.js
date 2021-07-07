@@ -196,13 +196,31 @@ export function getPursueSteering(
   return getSeekSteering(character, nextTarget);
 }
 
-// WANDER ---------------------------------------------------------------------
+// LOOK_WHERE_YOU_ARE_GOING ---------------------------------------------------
 
-export function getWanderSteering(): Steering {
-  //character: Kinematic,
-  //target: Kinematic
+export function getLookWhereYouAreGoingSteering(
+  character: Kinematic,
+  target: Kinematic
+): Steering {
   // Config
   const angular = 0;
+  console.log(character, target);
+
+  return {
+    angular,
+    linear: [0, 0],
+  };
+}
+
+// WANDER ---------------------------------------------------------------------
+
+export function getWanderSteering(
+  character: Kinematic,
+  target: Kinematic
+): Steering {
+  // Config
+  const angular = 0;
+  console.log(character, target);
 
   return {
     angular,

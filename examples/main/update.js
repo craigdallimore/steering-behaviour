@@ -6,11 +6,12 @@ import { type Vector } from "../../lib/vector.js";
 import {
   getAlignSteering,
   getArriveSteering,
-  getSeekSteering,
+  getFaceSteering,
+  getLookWhereYouAreGoingSteering,
   getMatchVelocitySteering,
   getPursueSteering,
+  getSeekSteering,
   getWanderSteering,
-  getFaceSteering,
 } from "../../src/steering.js";
 import updateKinematic from "../../src/updateKinematic.js";
 
@@ -169,6 +170,17 @@ export function update(state: State, action: Action): State {
       const time = action.payload;
 
       switch (state.selectedBehaviour) {
+        case "ALIGN": {
+          const steering = getAlignSteering(state.character, state.target);
+          if (!steering) {
+            return state;
+          }
+          return {
+            ...state,
+            target: updateKinematic(emptySteering, state.target, time),
+            character: updateKinematic(steering, state.character, time),
+          };
+        }
         case "ARRIVE": {
           const steering = getArriveSteering(state.character, state.target);
           return {
@@ -179,21 +191,19 @@ export function update(state: State, action: Action): State {
               : state.character,
           };
         }
-        case "ALIGN": {
-          const steering = getAlignSteering(state.character, state.target);
-
-          if (!steering) {
-            return state;
-          }
-
+        case "FACE": {
+          const steering = getFaceSteering(state.character, state.target);
           return {
             ...state,
             target: updateKinematic(emptySteering, state.target, time),
             character: updateKinematic(steering, state.character, time),
           };
         }
-        case "SEEK": {
-          const steering = getSeekSteering(state.character, state.target);
+        case "LOOK_WHERE_YOU_ARE_GOING": {
+          const steering = getLookWhereYouAreGoingSteering(
+            state.character,
+            state.target
+          );
           return {
             ...state,
             target: updateKinematic(emptySteering, state.target, time),
@@ -219,16 +229,16 @@ export function update(state: State, action: Action): State {
             character: updateKinematic(steering, state.character, time),
           };
         }
-        case "WANDER": {
-          const steering = getWanderSteering(state.character, state.target);
+        case "SEEK": {
+          const steering = getSeekSteering(state.character, state.target);
           return {
             ...state,
             target: updateKinematic(emptySteering, state.target, time),
             character: updateKinematic(steering, state.character, time),
           };
         }
-        case "FACE": {
-          const steering = getFaceSteering(state.character, state.target);
+        case "WANDER": {
+          const steering = getWanderSteering(state.character, state.target);
           return {
             ...state,
             target: updateKinematic(emptySteering, state.target, time),
