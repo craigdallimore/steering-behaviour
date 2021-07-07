@@ -31,9 +31,9 @@ export const initialState: State = {
     rotation: 0,
   },
   character: {
-    position: [400, 400],
-    velocity: [0, 0],
-    orientation: 1.75 * Math.PI,
+    position: [10, 400],
+    velocity: [10, 0],
+    orientation: 1.5 * Math.PI,
     rotation: 0,
   },
 };

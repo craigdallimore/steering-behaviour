@@ -237,7 +237,7 @@ export function update(state: State, action: Action): State {
           };
         }
         case "WANDER": {
-          const steering = getWanderSteering(state.character, state.target);
+          const steering = getWanderSteering(state.character);
           return {
             ...state,
             target: updateKinematic(emptySteering, state.target, time),
