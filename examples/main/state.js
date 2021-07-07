@@ -21,7 +21,7 @@ export type State = {|
 
 export const initialState: State = {
   isPaused: true,
-  selectedBehaviour: "PURSUE",
+  selectedBehaviour: "FACE",
   selectedItem: "CHARACTER",
   target: {
     position: [10, 50],
@@ -31,7 +31,7 @@ export const initialState: State = {
   },
   character: {
     position: [400, 400],
-    velocity: [-30, -30],
+    velocity: [0, 0],
     orientation: 1.75 * Math.PI,
     rotation: 0,
   },

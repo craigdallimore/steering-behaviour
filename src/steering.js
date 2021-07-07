@@ -2,6 +2,7 @@
 
 import type { Kinematic } from "../lib/kinematic.js";
 import {
+  add,
   distance,
   subtract,
   length,
@@ -173,20 +174,33 @@ export function getPursueSteering(
   target: Kinematic
 ): Steering {
   // Config
-  const angular = 0;
+  const maxPrediction = 1;
 
-  return {
-    angular,
-    linear: [0, 0],
+  const direction = subtract(target.position, character.position);
+  const distance = length(direction);
+  const speed = length(character.velocity);
+
+  const prediction =
+    speed <= distance / maxPrediction ? maxPrediction : distance / speed;
+
+  const nextTargetPosition = add(
+    target.position,
+    multiply(target.velocity, prediction)
+  );
+
+  const nextTarget = {
+    ...target,
+    position: nextTargetPosition,
   };
+
+  return getSeekSteering(character, nextTarget);
 }
 
 // WANDER ---------------------------------------------------------------------
 
-export function getWanderSteering(
-  character: Kinematic,
-  target: Kinematic
-): Steering {
+export function getWanderSteering(): Steering {
+  //character: Kinematic,
+  //target: Kinematic
   // Config
   const angular = 0;
 
@@ -202,11 +216,21 @@ export function getFaceSteering(
   character: Kinematic,
   target: Kinematic
 ): Steering {
-  // Config
-  const angular = 0;
+  const direction = subtract(target.position, character.position);
 
-  return {
-    angular,
-    linear: [0, 0],
+  if (length(direction) === 0) {
+    return {
+      angular: 0,
+      linear: [0, 0],
+    };
+  }
+
+  const nextOrientation = Math.atan2(direction[0], -direction[1]);
+
+  const nextTarget = {
+    ...target,
+    orientation: nextOrientation,
   };
+
+  return getAlignSteering(character, nextTarget);
 }
