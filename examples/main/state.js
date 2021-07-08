@@ -22,17 +22,17 @@ export type State = {|
 
 export const initialState: State = {
   isPaused: true,
-  selectedBehaviour: "FACE",
+  selectedBehaviour: "WANDER",
   selectedItem: "CHARACTER",
   target: {
     position: [10, 50],
-    velocity: [30, 0],
+    velocity: [0, 0],
     orientation: 0.5 * Math.PI,
     rotation: 0,
   },
   character: {
-    position: [10, 400],
-    velocity: [10, 0],
+    position: [400, 400],
+    velocity: [0, 0],
     orientation: 1.5 * Math.PI,
     rotation: 0,
   },

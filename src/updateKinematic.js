@@ -2,6 +2,7 @@
 
 import type { Kinematic } from "../lib/kinematic.js";
 import { add, length, multiply, normalise } from "../lib/vector.js";
+import limitOrientation from "../lib/limitOrientation.js";
 import type { Steering } from "./steering.js";
 const maxSpeed = 45;
 
@@ -20,7 +21,7 @@ export default function updateKinematic(
   // time is going to be a decimal between 0 and 1 (probably).
   // Here we multiply the rotation speed by time (giving a time-proportional
   // value) and add it to the current orientation.
-  const nextOrientation = orientation + rotation * time;
+  const nextOrientation = limitOrientation(orientation + rotation * time);
 
   const nextRotation = steering.angular * time;
 

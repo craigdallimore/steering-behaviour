@@ -7,7 +7,8 @@ import {
   subtract,
   length,
   multiply,
-  toVector,
+  degreesToVector,
+  radiansToVector,
   normalise,
   type Vector,
 } from "../lib/vector.js";
@@ -225,79 +226,31 @@ export function getWanderSteering(character: Kinematic): Steering {
 
   const wanderOffset = 50;
   const wanderRadius = 20;
-  const wanderRate = 1;
-  // class Wander (Face):
-
-  // Holds the radius and forward offset of the wander circle.
-  // wanderOffset
-  // wanderRadius
-
-  // Holds the maximum rate at which the wander orientation can change
-
-  // wanderRate
-
-  // Holds the current orientation of the wander target
-
-  // wanderOrientation
-
-  // Holds the maximum acceleration of the character
-
-  // maxAcceleration
   const maxAcceleration = 25;
 
-  // # Again we don’t need a new target
-
-  // # ... Other data is derived from the superclass ...
-
-  // def getSteering():
-
-  // Calculate the target to delegate to face
-  // Update the wander orientation
-
-  // wanderOrientation += randomBinomial() * wanderRate
-  const wanderOrientation = Math.random() * wanderRate;
-
-  // Calculate the combined target orientation
-  const targetOrientation = wanderOrientation + character.orientation;
-
-  // targetOrientation = wanderOrientation + character.orientation
-
-  // # Calculate the center of the wander circle
-  // target = character.position + wanderOffset * character.orientation.asVector()
-  const target: Vector = add(
+  const wanderPosition: Vector = add(
     character.position,
-    multiply(toVector(character.orientation), wanderOffset)
+    multiply(radiansToVector(character.orientation), wanderOffset)
   );
 
-  // # Calculate the target location
-  // target += wanderRadius * targetOrientation.asVector()
-  const nextTarget = add(
-    target,
-    multiply(toVector(targetOrientation), wanderRadius)
+  const wanderOrientation = Math.random() * 360;
+
+  const nextTargetPosition = add(
+    wanderPosition,
+    multiply(degreesToVector(wanderOrientation), wanderRadius * 2)
   );
 
   const { angular } = getFaceSteering(character, {
-    position: nextTarget,
+    position: nextTargetPosition,
     velocity: [0, 0],
     orientation: 0,
     rotation: 0,
   });
-  // # . Delegate to face
 
-  // steering = Face.getSteering()
-  const linear = multiply(toVector(character.orientation), maxAcceleration);
-
-  console.log(angular);
-  // #
-  // . Now set the linear acceleration to be at full
-
-  // # acceleration in the direction of the orientation
-
-  // steering.linear = maxAcceleration * character.orientation.asVector()
-
-  // # Return it
-
-  // return steering
+  const linear = multiply(
+    radiansToVector(character.orientation),
+    maxAcceleration
+  );
 
   return {
     angular,
