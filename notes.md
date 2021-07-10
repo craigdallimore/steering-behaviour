@@ -1,37 +1,18 @@
-# Steering behaviours
-
-## Development
-
-### To start shell
-
-`nix-shell`
-
-### Development
-
-```shell
-# install deps
-yarn
-# start watching files for changes
-yarn dev
-```
-
 ## References
 
 https://github.com/libgdx/gdx-ai/wiki/Steering-Behaviors
 
-## todo
+Closest point algorithms for various path geometries:
+Schneider and Eberly [2003].
 
-- [O] Simulator improvements
-
-  - [ ] Track mouse as target?
+## Todo
 
 - [ ] Describe the various behaviours
-
-- [x] Implement Match velocity
-- [ ] Implement Wander
-- [ ] Implement Pursue
-- [ ] Implement Face
+- [ ] Fix Wander implementation
 - [ ] Implement follow path
+  - [ ] Create a path and a path draw function
+  - [ ] Chase the rabbit
+  - [ ] Predictive path following
 
 ## Vector directions
 
