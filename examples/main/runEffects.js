@@ -3,8 +3,24 @@
 import drawArrow from "../../lib/drawArrow.js";
 import drawGrid from "../../lib/drawGrid.js";
 import drawPath from "../../lib/drawPath.js";
+import drawCircle from "../../lib/drawCircle.js";
+import findClosestPointOnPath from "../../lib/findClosestPointOnPath";
 
 import type { State } from "./state.js";
+
+const path = [
+  [600, 50],
+  [300, 150],
+  [200, 350],
+  [300, 600],
+  [600, 650],
+];
+const dot = {
+  rotation: 0,
+  orientation: 0,
+  position: [480, 60],
+  velocity: [0, 0],
+};
 
 export default function runEffects(
   dom: {
@@ -21,14 +37,19 @@ export default function runEffects(
   // Character
   drawArrow(dom.main, state.character);
 
-  drawPath(
+  drawPath(dom.main, path, "rgba(55,71,79,1)");
+
+  drawCircle(dom.main, dot, 3, "rgba(144, 164, 174, 1)");
+
+  const point = findClosestPointOnPath(path, dot.position);
+
+  drawCircle(
     dom.main,
-    [
-      [500, 10],
-      [410, 40],
-      [140, 270],
-      [650, 600],
-    ],
-    "rgba(0,0,0,0.5)"
+    {
+      ...dot,
+      position: point,
+    },
+    3,
+    "rgba(255, 138, 128, 1)"
   );
 }

@@ -25,15 +25,15 @@ export const initialState: State = {
   selectedBehaviour: "WANDER",
   selectedItem: "CHARACTER",
   target: {
-    position: [10, 50],
+    position: [30, 30],
     velocity: [0, 0],
     orientation: 0.5 * Math.PI,
     rotation: 0,
   },
   character: {
-    position: [400, 400],
+    position: [30, 60],
     velocity: [0, 0],
-    orientation: 1.5 * Math.PI,
+    orientation: 0.5 * Math.PI,
     rotation: 0,
   },
 };
