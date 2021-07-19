@@ -10,12 +10,12 @@ export type SteeringBehaviour =
   | "PURSUE"
   | "SEEK"
   | "WANDER";
-type Item = "CHARACTER" | "TARGET";
+type Item = "CHARACTER-CLICK" | "TARGET-CLICK" | "TARGET-MOVE";
 
 export type State = {|
   isPaused: boolean,
   selectedBehaviour: SteeringBehaviour,
-  selectedItem: Item,
+  xxxfield: Item,
   character: Kinematic,
   target: Kinematic,
 |};
@@ -23,7 +23,7 @@ export type State = {|
 export const initialState: State = {
   isPaused: true,
   selectedBehaviour: "WANDER",
-  selectedItem: "CHARACTER",
+  xxxfield: "CHARACTER-CLICK",
   target: {
     position: [30, 30],
     velocity: [0, 0],

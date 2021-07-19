@@ -19,8 +19,9 @@ import updateKinematic from "../../src/updateKinematic.js";
 const TICK = "TICK";
 const PLAY_BUTTON_CLICKED = "PLAY_BUTTON_CLICKED";
 const RESET_BUTTON_CLICKED = "RESET_BUTTON_CLICKED";
-const POS_MOUSE_CHANGED = "POS_MOUSE_CHANGED";
+const MOUSE_CONTROL_CHANGED = "MOUSE_CONTROL_CHANGED";
 const CANVAS_CLICKED = "CANVAS_CLICKED";
+const CANVAS_MOUSE_MOVE = "CANVAS_MOUSE_MOVE";
 const CHARACTER_BEHAVIOUR_CHANGED = "CHARACTER_BEHAVIOUR_CHANGED";
 const CHARACTER_ORIENTATION_CHANGED = "CHARACTER_ORIENTATION_CHANGED";
 const CHARACTER_POSX_CHANGED = "CHARACTER_POSX_CHANGED";
@@ -63,11 +64,15 @@ export type Action =
       payload: number,
     |}
   | {|
-      type: typeof POS_MOUSE_CHANGED,
-      payload: "TARGET" | "CHARACTER",
+      type: typeof MOUSE_CONTROL_CHANGED,
+      payload: "TARGET-CLICK" | "TARGET-MOVE" | "CHARACTER-CLICK",
     |}
   | {|
       type: typeof CANVAS_CLICKED,
+      payload: Vector,
+    |}
+  | {|
+      type: typeof CANVAS_MOUSE_MOVE,
       payload: Vector,
     |}
   | {|
@@ -89,22 +94,32 @@ export function update(state: State, action: Action): State {
         ...state,
         isPaused: !state.isPaused,
       };
-    case "POS_MOUSE_CHANGED":
+    case "MOUSE_CONTROL_CHANGED":
+      console.log("mouse con change", action.payload);
       return {
         ...state,
-        selectedItem: action.payload,
+        xxxfield: action.payload,
       };
     case "CANVAS_CLICKED":
       return {
         ...state,
         target:
-          state.selectedItem === "TARGET"
+          state.xxxfield === "TARGET-CLICK"
             ? { ...state.target, position: action.payload }
             : state.target,
         character:
-          state.selectedItem === "CHARACTER"
+          state.xxxfield === "CHARACTER-CLICK"
             ? { ...state.character, position: action.payload }
             : state.character,
+      };
+    case "CANVAS_MOUSE_MOVE":
+      console.log("canv mouse move");
+      return {
+        ...state,
+        target:
+          state.xxxfield === "TARGET-MOVE"
+            ? { ...state.target, position: action.payload }
+            : state.target,
       };
 
     case "CHARACTER_BEHAVIOUR_CHANGED":

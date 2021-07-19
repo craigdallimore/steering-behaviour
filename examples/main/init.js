@@ -10,13 +10,16 @@ const $cOrient = document.querySelector("#character-orientation");
 const $cRotate = document.querySelector("#character-rotation");
 const $cPosX = document.querySelector("#character-position-x");
 const $cPosZ = document.querySelector("#character-position-z");
-const $cPosMouse = document.querySelector("#character-position-mouse");
+const $cPosMouseClick = document.querySelector(
+  "#character-position-mouse-click"
+);
 const $cBehaviour = document.querySelector("#character-behaviour");
 const $tOrient = document.querySelector("#target-orientation");
 const $tRotate = document.querySelector("#target-rotation");
 const $tPosX = document.querySelector("#target-position-x");
 const $tPosZ = document.querySelector("#target-position-z");
-const $tPosMouse = document.querySelector("#target-position-mouse");
+const $tPosMouseClick = document.querySelector("#target-position-mouse-click");
+const $tPosMouseMove = document.querySelector("#target-position-mouse-move");
 const $btnPlay = document.querySelector("#play-pause");
 const $btnReset = document.querySelector("#reset");
 
@@ -31,13 +34,14 @@ export default function init(
     $cRotate instanceof HTMLInputElement &&
     $cPosX instanceof HTMLInputElement &&
     $cPosZ instanceof HTMLInputElement &&
-    $cPosMouse instanceof HTMLInputElement &&
+    $cPosMouseClick instanceof HTMLInputElement &&
     $cBehaviour instanceof HTMLSelectElement &&
     $tOrient instanceof HTMLInputElement &&
     $tRotate instanceof HTMLInputElement &&
     $tPosX instanceof HTMLInputElement &&
     $tPosZ instanceof HTMLInputElement &&
-    $tPosMouse instanceof HTMLInputElement &&
+    $tPosMouseClick instanceof HTMLInputElement &&
+    $tPosMouseMove instanceof HTMLInputElement &&
     $btnPlay instanceof HTMLButtonElement &&
     $btnReset instanceof HTMLButtonElement
   ) {
@@ -48,13 +52,14 @@ export default function init(
       $cRotate.value = state.character.rotation.toString();
       $cPosX.value = state.character.position[0].toString();
       $cPosZ.value = state.character.position[1].toString();
-      $cPosMouse.checked = state.selectedItem === "CHARACTER";
+      $cPosMouseClick.checked = state.xxxfield === "CHARACTER-CLICK";
       $cBehaviour.value = state.selectedBehaviour;
       $tOrient.value = state.target.orientation.toString();
       $tRotate.value = state.target.rotation.toString();
       $tPosX.value = state.target.position[0].toString();
       $tPosZ.value = state.target.position[1].toString();
-      $tPosMouse.checked = state.selectedItem === "TARGET";
+      $tPosMouseClick.checked = state.xxxfield === "TARGET-CLICK";
+      $tPosMouseMove.checked = state.xxxfield === "TARGET-MOVE";
     };
 
     setDomValuesFromState(initialState);
@@ -69,6 +74,16 @@ export default function init(
 
       store.dispatch({
         type: "CANVAS_CLICKED",
+        payload: ([e.clientX - left, e.clientY - top]: Vector),
+      });
+    });
+    $canvas.addEventListener("mousemove", (e: MouseEvent) => {
+      const target: HTMLElement = (e.target: any);
+
+      const { top, left }: ClientRect = target.getBoundingClientRect();
+
+      store.dispatch({
+        type: "CANVAS_MOUSE_MOVE",
         payload: ([e.clientX - left, e.clientY - top]: Vector),
       });
     });
@@ -116,10 +131,10 @@ export default function init(
         payload: (parseFloat(target.value): number),
       });
     });
-    $cPosMouse.addEventListener("change", () => {
+    $cPosMouseClick.addEventListener("change", () => {
       store.dispatch({
         type: "POS_MOUSE_CHANGED",
-        payload: "CHARACTER",
+        payload: "CHARACTER-CLICK",
       });
     });
 
@@ -145,10 +160,16 @@ export default function init(
         payload: (parseFloat(target.value): number),
       });
     });
-    $tPosMouse.addEventListener("change", () => {
+    $tPosMouseClick.addEventListener("change", () => {
       store.dispatch({
-        type: "POS_MOUSE_CHANGED",
-        payload: "TARGET",
+        type: "MOUSE_CONTROL_CHANGED",
+        payload: "TARGET-CLICK",
+      });
+    });
+    $tPosMouseMove.addEventListener("change", () => {
+      store.dispatch({
+        type: "MOUSE_CONTROL_CHANGED",
+        payload: "TARGET-MOVE",
       });
     });
 
