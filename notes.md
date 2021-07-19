@@ -10,7 +10,6 @@ Schneider and Eberly [2003].
 - [ ] Describe the various behaviours
 - [ ] Fix Wander implementation
 - [ ] Implement follow path
-  - [ ] Create a path and a path draw function
   - [ ] Chase the rabbit
   - [ ] Predictive path following
 

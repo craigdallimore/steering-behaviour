@@ -18,7 +18,7 @@ const path = [
 const dot = {
   rotation: 0,
   orientation: 0,
-  position: [480, 60],
+  position: [280, 460],
   velocity: [0, 0],
 };
 
