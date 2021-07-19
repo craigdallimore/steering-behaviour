@@ -41,9 +41,7 @@ export default function runEffects(
 
   drawPath(dom.main, path, "rgba(55,71,79,1)");
 
-  drawCircle(dom.main, dot, 3, "rgba(144, 164, 174, 1)");
-
-  const point = findClosestPointOnPath(path, state.character.position);
+  const point = findClosestPointOnPath(path, state.target.position);
 
   drawCircle(
     dom.main,

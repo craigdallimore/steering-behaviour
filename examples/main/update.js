@@ -95,7 +95,6 @@ export function update(state: State, action: Action): State {
         isPaused: !state.isPaused,
       };
     case "MOUSE_CONTROL_CHANGED":
-      console.log("mouse con change", action.payload);
       return {
         ...state,
         xxxfield: action.payload,
@@ -113,7 +112,6 @@ export function update(state: State, action: Action): State {
             : state.character,
       };
     case "CANVAS_MOUSE_MOVE":
-      console.log("canv mouse move");
       return {
         ...state,
         target:
