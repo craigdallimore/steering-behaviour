@@ -4,7 +4,9 @@ import drawArrow from "../../lib/drawArrow.js";
 import drawGrid from "../../lib/drawGrid.js";
 import drawPath from "../../lib/drawPath.js";
 import drawCircle from "../../lib/drawCircle.js";
-import findClosestPointOnPath from "../../lib/findClosestPointOnPath";
+import findClosestPointOnPath, {
+  distanceToSegment,
+} from "../../lib/findClosestPointOnPath";
 
 import type { State } from "./state.js";
 
@@ -18,7 +20,7 @@ const path = [
 const dot = {
   rotation: 0,
   orientation: 0,
-  position: [280, 460],
+  position: [480, 60],
   velocity: [0, 0],
 };
 
@@ -41,7 +43,7 @@ export default function runEffects(
 
   drawCircle(dom.main, dot, 3, "rgba(144, 164, 174, 1)");
 
-  const point = findClosestPointOnPath(path, dot.position);
+  const point = findClosestPointOnPath(path, state.character.position);
 
   drawCircle(
     dom.main,
