@@ -7,6 +7,7 @@ Schneider and Eberly [2003].
 
 ## Todo
 
+- [ ] Add steering configs
 - [ ] Describe the various behaviours
 - [ ] Fix Wander implementation
 - [ ] Implement follow path
