@@ -97,17 +97,17 @@ export function update(state: State, action: Action): State {
     case "MOUSE_CONTROL_CHANGED":
       return {
         ...state,
-        xxxfield: action.payload,
+        mouseEffect: action.payload,
       };
     case "CANVAS_CLICKED":
       return {
         ...state,
         target:
-          state.xxxfield === "TARGET-CLICK"
+          state.mouseEffect === "TARGET-CLICK"
             ? { ...state.target, position: action.payload }
             : state.target,
         character:
-          state.xxxfield === "CHARACTER-CLICK"
+          state.mouseEffect === "CHARACTER-CLICK"
             ? { ...state.character, position: action.payload }
             : state.character,
       };
@@ -115,7 +115,7 @@ export function update(state: State, action: Action): State {
       return {
         ...state,
         target:
-          state.xxxfield === "TARGET-MOVE"
+          state.mouseEffect === "TARGET-MOVE"
             ? { ...state.target, position: action.payload }
             : state.target,
       };

@@ -7,7 +7,6 @@ Schneider and Eberly [2003].
 
 ## Todo
 
-- [ ] rename xxxfield
 - [ ] Describe the various behaviours
 - [ ] Fix Wander implementation
 - [ ] Implement follow path
