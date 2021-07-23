@@ -4,9 +4,7 @@ import drawArrow from "../../lib/drawArrow.js";
 import drawGrid from "../../lib/drawGrid.js";
 import drawPath from "../../lib/drawPath.js";
 import drawCircle from "../../lib/drawCircle.js";
-import findClosestPointOnPath, {
-  distanceToSegment,
-} from "../../lib/findClosestPointOnPath";
+import findClosestPointOnPath from "../../lib/findClosestPointOnPath";
 
 import type { State } from "./state.js";
 
