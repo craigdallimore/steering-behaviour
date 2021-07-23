@@ -52,14 +52,14 @@ export default function init(
       $cRotate.value = state.character.rotation.toString();
       $cPosX.value = state.character.position[0].toString();
       $cPosZ.value = state.character.position[1].toString();
-      $cPosMouseClick.checked = state.xxxfield === "CHARACTER-CLICK";
+      $cPosMouseClick.checked = state.mouseEffect === "CHARACTER-CLICK";
       $cBehaviour.value = state.selectedBehaviour;
       $tOrient.value = state.target.orientation.toString();
       $tRotate.value = state.target.rotation.toString();
       $tPosX.value = state.target.position[0].toString();
       $tPosZ.value = state.target.position[1].toString();
-      $tPosMouseClick.checked = state.xxxfield === "TARGET-CLICK";
-      $tPosMouseMove.checked = state.xxxfield === "TARGET-MOVE";
+      $tPosMouseClick.checked = state.mouseEffect === "TARGET-CLICK";
+      $tPosMouseMove.checked = state.mouseEffect === "TARGET-MOVE";
     };
 
     setDomValuesFromState(initialState);
