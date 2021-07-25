@@ -4,7 +4,7 @@ import drawArrow from "../../lib/drawArrow.js";
 import drawGrid from "../../lib/drawGrid.js";
 import drawPath from "../../lib/drawPath.js";
 import drawCircle from "../../lib/drawCircle.js";
-import findClosestPointOnPath from "../../lib/path.js";
+import { findClosestPointOnPath } from "../../lib/path.js";
 
 import type { State } from "./state.js";
 
@@ -14,6 +14,7 @@ const path = [
   [200, 350],
   [300, 600],
   [600, 650],
+  [625, 500],
 ];
 const dot = {
   rotation: 0,
