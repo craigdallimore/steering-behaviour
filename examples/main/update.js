@@ -12,6 +12,7 @@ import {
   getLookWhereYouAreGoingSteering,
   getMatchVelocitySteering,
   getPredictiveFollowSteering,
+  getSeparationSteering,
   getPursueSteering,
   getSeekSteering,
   getWanderSteering,
@@ -220,6 +221,16 @@ export function update(state: State, action: Action): State {
             state.character,
             state.path
           );
+          return {
+            ...state,
+            target: updateKinematic(emptySteering, state.target, time),
+            character: steering
+              ? updateKinematic(steering, state.character, time)
+              : state.character,
+          };
+        }
+        case "SEPARATION": {
+          const steering = getSeparationSteering(state.character, state.target);
           return {
             ...state,
             target: updateKinematic(emptySteering, state.target, time),

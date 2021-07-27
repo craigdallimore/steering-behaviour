@@ -354,3 +354,43 @@ export function getPredictiveFollowSteering(
   const { linear } = getSeekSteering(character, target);
   return { angular, linear };
 }
+
+// SEPARATION -----------------------------------------------------------------
+
+export function getSeparationSteering(
+  character: Kinematic,
+  target: Kinematic
+): Steering {
+  // config
+
+  // The threshold to take action
+  const threshold = 250;
+  // Holds the constant coefficient of decay for the inverse square law force
+  const decayCoefficient = 1500;
+  // Holds the maximum acceleration of the character
+  const maxAcceleration = 25;
+
+  const direction = subtract(character.position, target.position);
+  const distance = length(direction);
+  const { angular } = getLookWhereYouAreGoingSteering(character, target);
+
+  if (distance < threshold) {
+    const strength = Math.min(
+      decayCoefficient / distance ** 2,
+      maxAcceleration
+    );
+
+    const normalDirection = normalise(direction);
+    const linear = multiply(normalDirection, strength);
+
+    return {
+      linear,
+      angular,
+    };
+  }
+
+  return {
+    linear: [0, 0],
+    angular,
+  };
+}

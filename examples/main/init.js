@@ -102,6 +102,7 @@ export default function init(
         case "MATCH_VELOCITY":
         case "PURSUE":
         case "SEEK":
+        case "SEPARATION":
         case "WANDER":
           store.dispatch({
             type: "CHARACTER_BEHAVIOUR_CHANGED",

@@ -10,6 +10,7 @@ export type SteeringBehaviour =
   | "MATCH_VELOCITY"
   | "PURSUE"
   | "SEEK"
+  | "SEPARATION"
   | "FOLLOW_PATH_CHASE_RABBIT"
   | "FOLLOW_PATH_PREDICT"
   | "WANDER";
@@ -26,18 +27,18 @@ export type State = {|
 
 export const initialState: State = {
   isPaused: true,
-  selectedBehaviour: "WANDER",
+  selectedBehaviour: "SEPARATION",
   mouseEffect: "CHARACTER-CLICK",
   target: {
-    position: [30, 30],
+    position: [500, 100],
     velocity: [0, 0],
     orientation: 0.5 * Math.PI,
     rotation: 0,
   },
   character: {
-    position: [600, 50],
-    velocity: [0, 0],
-    orientation: 1.25 * Math.PI,
+    position: [380, 90],
+    velocity: [20, 0],
+    orientation: 0.5 * Math.PI,
     rotation: 0,
   },
   path: [

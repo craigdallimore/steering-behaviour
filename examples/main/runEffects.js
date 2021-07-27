@@ -2,7 +2,6 @@
 
 import drawArrow from "../../lib/drawArrow.js";
 import drawGrid from "../../lib/drawGrid.js";
-import drawPath from "../../lib/drawPath.js";
 
 import type { State } from "./state.js";
 
@@ -20,6 +19,4 @@ export default function runEffects(
 
   // Character
   drawArrow(dom.main, state.character);
-
-  drawPath(dom.main, state.path, "rgba(55,71,79,1)");
 }
