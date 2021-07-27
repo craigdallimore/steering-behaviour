@@ -1,5 +1,6 @@
 // @flow
 import type { Kinematic } from "../../lib/kinematic.js";
+import type { Path } from "../../lib/path.js";
 
 export type SteeringBehaviour =
   | "ALIGN"
@@ -9,6 +10,7 @@ export type SteeringBehaviour =
   | "MATCH_VELOCITY"
   | "PURSUE"
   | "SEEK"
+  | "CHASE_RABBIT"
   | "WANDER";
 type MouseEffect = "CHARACTER-CLICK" | "TARGET-CLICK" | "TARGET-MOVE";
 
@@ -18,6 +20,7 @@ export type State = {|
   mouseEffect: MouseEffect,
   character: Kinematic,
   target: Kinematic,
+  path: Path,
 |};
 
 export const initialState: State = {
@@ -31,9 +34,17 @@ export const initialState: State = {
     rotation: 0,
   },
   character: {
-    position: [30, 60],
+    position: [600, 50],
     velocity: [0, 0],
-    orientation: 0.5 * Math.PI,
+    orientation: 1.25 * Math.PI,
     rotation: 0,
   },
+  path: [
+    [600, 50],
+    [300, 150],
+    [200, 350],
+    [300, 600],
+    [600, 650],
+    [625, 500],
+  ],
 };

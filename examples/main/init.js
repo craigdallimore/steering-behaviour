@@ -95,6 +95,7 @@ export default function init(
       switch (value) {
         case "ALIGN":
         case "ARRIVE":
+        case "CHASE_RABBIT":
         case "FACE":
         case "LOOK_WHERE_YOU_ARE_GOING":
         case "MATCH_VELOCITY":

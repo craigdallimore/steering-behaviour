@@ -7,6 +7,7 @@ import {
   emptySteering,
   getAlignSteering,
   getArriveSteering,
+  getChaseRabbitSteering,
   getFaceSteering,
   getLookWhereYouAreGoingSteering,
   getMatchVelocitySteering,
@@ -195,6 +196,16 @@ export function update(state: State, action: Action): State {
         }
         case "ARRIVE": {
           const steering = getArriveSteering(state.character, state.target);
+          return {
+            ...state,
+            target: updateKinematic(emptySteering, state.target, time),
+            character: steering
+              ? updateKinematic(steering, state.character, time)
+              : state.character,
+          };
+        }
+        case "CHASE_RABBIT": {
+          const steering = getChaseRabbitSteering(state.character, state.path);
           return {
             ...state,
             target: updateKinematic(emptySteering, state.target, time),
