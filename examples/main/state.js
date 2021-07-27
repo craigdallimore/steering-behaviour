@@ -10,7 +10,8 @@ export type SteeringBehaviour =
   | "MATCH_VELOCITY"
   | "PURSUE"
   | "SEEK"
-  | "CHASE_RABBIT"
+  | "FOLLOW_PATH_CHASE_RABBIT"
+  | "FOLLOW_PATH_PREDICT"
   | "WANDER";
 type MouseEffect = "CHARACTER-CLICK" | "TARGET-CLICK" | "TARGET-MOVE";
 

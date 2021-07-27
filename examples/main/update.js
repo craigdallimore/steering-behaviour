@@ -11,6 +11,7 @@ import {
   getFaceSteering,
   getLookWhereYouAreGoingSteering,
   getMatchVelocitySteering,
+  getPredictiveFollowSteering,
   getPursueSteering,
   getSeekSteering,
   getWanderSteering,
@@ -204,8 +205,21 @@ export function update(state: State, action: Action): State {
               : state.character,
           };
         }
-        case "CHASE_RABBIT": {
+        case "FOLLOW_PATH_CHASE_RABBIT": {
           const steering = getChaseRabbitSteering(state.character, state.path);
+          return {
+            ...state,
+            target: updateKinematic(emptySteering, state.target, time),
+            character: steering
+              ? updateKinematic(steering, state.character, time)
+              : state.character,
+          };
+        }
+        case "FOLLOW_PATH_PREDICT": {
+          const steering = getPredictiveFollowSteering(
+            state.character,
+            state.path
+          );
           return {
             ...state,
             target: updateKinematic(emptySteering, state.target, time),

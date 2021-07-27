@@ -316,48 +316,41 @@ export function getChaseRabbitSteering(
 
 // FOLLOW PATH (Predictive) ---------------------------------------------------
 
-//export function getPredictiveFollowSteering(): Steering {
-/*
+export function getPredictiveFollowSteering(
+  character: Kinematic,
+  path: Path
+): Steering {
+  // config
+  // Holds the distance along the path to generate the target. Can be negative
+  // if the character is to move along the reverse direction
+  const pathOffset = 30;
 
-  class FollowPath (Seek):
+  // Holds the time in the future to predict the character position
+  const predictTime = 0.1;
 
-  # Holds the path to follow
-  path
+  // Find the predicted future location
+  const futurePos = add(
+    character.position,
+    multiply(character.velocity, predictTime)
+  );
 
-  # Holds the distance along the path to generate the
-  # target. Can be negative if the character is to move
-  # along the reverse direction.
-  pathOffset
+  // Find the predicted position on the path
+  const currentParam = getParam(path, futurePos);
 
-  # Holds the current position on the path
-  currentParam
+  // Offset it
+  const targetParam = currentParam + pathOffset;
 
-  # Holds the time in the future to predict the
+  // Get the target position
+  const targetPosition = getPosition(path, targetParam);
 
-  # character’s position
-  predictTime = 0.1
+  const target = {
+    orientation: 0,
+    rotation: 0,
+    position: targetPosition,
+    velocity: [0, 0],
+  };
 
-  # ... Other data is derived from the superclass ...
-
-  def getSteering():
-
-  # 1. Calculate the target to delegate to face
-
-  # Find the predicted future location
-  futurePos = character.position + character.velocity * predictTime
-
-  # Find the current position on the path
-  currentParam =  path.getParam(futurePos, currentPos)
-
-  # Offset it
-  targetParam = currentParam + pathOffset
-
-  # Get the target position
-  target.position = path.getPosition(targetParam)
-
-  # 2. Delegate to seek
-
-  return Seek.getSteering()
-
-  */
-//}
+  const { angular } = getLookWhereYouAreGoingSteering(character, target);
+  const { linear } = getSeekSteering(character, target);
+  return { angular, linear };
+}
