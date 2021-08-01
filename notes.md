@@ -7,6 +7,18 @@ Schneider and Eberly [2003].
 
 ## Todo
 
+- [ ] Add mouse selection
+
+  - [x] Add a target reticule thing
+  - [ ] Clicking a mouse on a character will 'focus' it
+  - [ ] Clicking off a character will unfocus it
+  - [ ] The form will relate to the focussed character
+  - [ ] The form will update when the game is paused
+  - [ ] Add velocity and orientation controls
+  - [ ] State will have a hash of characters
+  - [ ] State will have a focussed character id
+  - [ ] State updates include iterating over all characters and updating their steering
+
 - [ ] Add steering configs
 - [ ] Describe the various behaviours
 - [ ] Fix Wander implementation

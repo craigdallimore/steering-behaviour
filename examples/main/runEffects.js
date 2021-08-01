@@ -2,6 +2,7 @@
 
 import drawArrow from "../../lib/drawArrow.js";
 import drawGrid from "../../lib/drawGrid.js";
+import drawSelectionBox from "../../lib/drawSelectionBox.js";
 
 import type { State } from "./state.js";
 
@@ -19,4 +20,5 @@ export default function runEffects(
 
   // Character
   drawArrow(dom.main, state.character);
+  drawSelectionBox(dom.main, state.character.position);
 }
