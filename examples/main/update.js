@@ -1,8 +1,13 @@
 // @flow
 
 import { initialState } from "./state.js";
-import { type State, type SteeringBehaviour } from "./state.js";
+import {
+  type State,
+  type SteeringBehaviour,
+  type CharacterId,
+} from "./state.js";
 import { type Vector } from "../../lib/vector.js";
+import { type Kinematic } from "../../lib/kinematic.js";
 import {
   emptySteering,
   getAlignSteering,
@@ -19,19 +24,30 @@ import {
 } from "../../src/steering.js";
 import updateKinematic from "../../src/updateKinematic.js";
 
+const updateCharacter = (
+  fn: (CharacterId, Kinematic) => Kinematic,
+  map: Map<CharacterId, Kinematic>
+): Map<CharacterId, Kinematic> =>
+  new Map([...map].map(([key, cha]) => [key, fn(key, cha)]));
+
+const getFocussedCharacter = (state: State): Kinematic | null => {
+  if (!state.focussedCharacterId) {
+    return null;
+  }
+  const focussedCharacter = state.characters.get(state.focussedCharacterId);
+  return focussedCharacter || null;
+};
+
 const TICK = "TICK";
 const PLAY_BUTTON_CLICKED = "PLAY_BUTTON_CLICKED";
 const RESET_BUTTON_CLICKED = "RESET_BUTTON_CLICKED";
-const MOUSE_CONTROL_CHANGED = "MOUSE_CONTROL_CHANGED";
+//const MOUSE_CONTROL_CHANGED = "MOUSE_CONTROL_CHANGED";
 const CANVAS_CLICKED = "CANVAS_CLICKED";
 const CANVAS_MOUSE_MOVE = "CANVAS_MOUSE_MOVE";
-const CHARACTER_BEHAVIOUR_CHANGED = "CHARACTER_BEHAVIOUR_CHANGED";
-const CHARACTER_ORIENTATION_CHANGED = "CHARACTER_ORIENTATION_CHANGED";
-const CHARACTER_POSX_CHANGED = "CHARACTER_POSX_CHANGED";
-const CHARACTER_POSZ_CHANGED = "CHARACTER_POSZ_CHANGED";
-const TARGET_ORIENTATION_CHANGED = "TARGET_ORIENTATION_CHANGED";
-const TARGET_POSX_CHANGED = "TARGET_POSX_CHANGED";
-const TARGET_POSZ_CHANGED = "TARGET_POSZ_CHANGED";
+const BEHAVIOUR_CHANGED = "BEHAVIOUR_CHANGED";
+const ORIENTATION_CHANGED = "ORIENTATION_CHANGED";
+const POSX_CHANGED = "POSX_CHANGED";
+const POSZ_CHANGED = "POSZ_CHANGED";
 
 export type Action =
   | {|
@@ -39,37 +55,27 @@ export type Action =
       payload: number,
     |}
   | {|
-      type: typeof CHARACTER_BEHAVIOUR_CHANGED,
+      type: typeof BEHAVIOUR_CHANGED,
       payload: SteeringBehaviour,
     |}
   | {|
-      type: typeof CHARACTER_ORIENTATION_CHANGED,
+      type: typeof ORIENTATION_CHANGED,
       payload: number,
     |}
   | {|
-      type: typeof CHARACTER_POSX_CHANGED,
+      type: typeof POSX_CHANGED,
       payload: number,
     |}
   | {|
-      type: typeof CHARACTER_POSZ_CHANGED,
+      type: typeof POSZ_CHANGED,
       payload: number,
     |}
-  | {|
-      type: typeof TARGET_ORIENTATION_CHANGED,
-      payload: number,
-    |}
-  | {|
-      type: typeof TARGET_POSX_CHANGED,
-      payload: number,
-    |}
-  | {|
-      type: typeof TARGET_POSZ_CHANGED,
-      payload: number,
-    |}
+  /*
   | {|
       type: typeof MOUSE_CONTROL_CHANGED,
       payload: "TARGET-CLICK" | "TARGET-MOVE" | "CHARACTER-CLICK",
     |}
+*/
   | {|
       type: typeof CANVAS_CLICKED,
       payload: Vector,
@@ -97,6 +103,7 @@ export function update(state: State, action: Action): State {
         ...state,
         isPaused: !state.isPaused,
       };
+    /*
     case "MOUSE_CONTROL_CHANGED":
       return {
         ...state,
@@ -122,60 +129,55 @@ export function update(state: State, action: Action): State {
             ? { ...state.target, position: action.payload }
             : state.target,
       };
+      */
 
-    case "CHARACTER_BEHAVIOUR_CHANGED":
+    case "BEHAVIOUR_CHANGED":
       return {
         ...state,
         selectedBehaviour: action.payload,
       };
-    case "CHARACTER_ORIENTATION_CHANGED":
-      return {
-        ...state,
-        character: {
-          ...state.character,
-          orientation: Math.PI * action.payload,
-        },
-      };
-    case "CHARACTER_POSX_CHANGED":
-      return {
-        ...state,
-        character: {
-          ...state.character,
-          position: [action.payload, state.character.position[1]],
-        },
-      };
-    case "CHARACTER_POSZ_CHANGED":
-      return {
-        ...state,
-        character: {
-          ...state.character,
-          position: [state.character.position[0], action.payload],
-        },
-      };
 
-    case "TARGET_ORIENTATION_CHANGED":
+    case "ORIENTATION_CHANGED":
       return {
         ...state,
-        target: {
-          ...state.target,
-          orientation: Math.PI * action.payload,
-        },
+        characters: updateCharacter(
+          (key, char) =>
+            key === state.focussedCharacterId
+              ? {
+                  ...char,
+                  orientation: Math.PI * action.payload,
+                }
+              : char,
+          state.characters
+        ),
       };
-    case "TARGET_POSX_CHANGED":
+    case "POSX_CHANGED":
       return {
         ...state,
-        target: {
-          ...state.target,
-          position: [action.payload, state.target.position[1]],
-        },
+        characters: updateCharacter(
+          (key, char) =>
+            key === state.focussedCharacterId
+              ? {
+                  ...char,
+                  position: [action.payload, char.position[1]],
+                }
+              : char,
+          state.characters
+        ),
       };
-    case "TARGET_POSZ_CHANGED":
+    case "POSZ_CHANGED":
       return {
         ...state,
-        target: {
-          ...state.target,
-          position: [state.target.position[0], action.payload],
-        },
+        characters: updateCharacter(
+          (key, char) =>
+            key === state.focussedCharacterId
+              ? {
+                  ...char,
+                  position: [char.position[0], action.payload],
+                }
+              : char,
+          state.characters
+        ),
       };
 
     case "TICK": {
@@ -185,6 +187,7 @@ export function update(state: State, action: Action): State {
       const time = action.payload;
 
       switch (state.selectedBehaviour) {
+        /*
         case "ALIGN": {
           const steering = getAlignSteering(state.character, state.target);
           if (!steering) {
@@ -196,6 +199,8 @@ export function update(state: State, action: Action): State {
             character: updateKinematic(steering, state.character, time),
           };
         }
+        */
+        /*
         case "ARRIVE": {
           const steering = getArriveSteering(state.character, state.target);
           return {
@@ -285,12 +290,17 @@ export function update(state: State, action: Action): State {
             character: updateKinematic(steering, state.character, time),
           };
         }
+                     */
         case "WANDER": {
-          const steering = getWanderSteering(state.character);
           return {
             ...state,
-            target: updateKinematic(emptySteering, state.target, time),
-            character: updateKinematic(steering, state.character, time),
+            characters: updateCharacter((key, char) => {
+              if (key === state.focussedCharacterId) {
+                const steering = getWanderSteering(char);
+                return updateKinematic(steering, char, time);
+              }
+              return char;
+            }, state.characters),
           };
         }
         default:

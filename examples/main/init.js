@@ -11,7 +11,7 @@ const $orient = document.querySelector("#orientation");
 const $rotate = document.querySelector("#rotation");
 const $posX = document.querySelector("#position-x");
 const $posZ = document.querySelector("#position-z");
-const $posMouseClick = document.querySelector("#position-mouse-click");
+//const $posMouseClick = document.querySelector("#position-mouse-click");
 const $behaviour = document.querySelector("#behaviour");
 
 const $btnPlay = document.querySelector("#play-pause");
@@ -28,7 +28,7 @@ export default function init(
     $rotate instanceof HTMLInputElement &&
     $posX instanceof HTMLInputElement &&
     $posZ instanceof HTMLInputElement &&
-    $posMouseClick instanceof HTMLInputElement &&
+    //$posMouseClick instanceof HTMLInputElement &&
     $behaviour instanceof HTMLSelectElement &&
     $btnPlay instanceof HTMLButtonElement &&
     $btnReset instanceof HTMLButtonElement
@@ -46,7 +46,7 @@ export default function init(
         $posX.value = focussedCharacter.position[0].toString();
         $posZ.value = focussedCharacter.position[1].toString();
       }
-      $posMouseClick.checked = state.mouseEffect === "CHARACTER-CLICK";
+      //$posMouseClick.checked = state.mouseEffect === "CHARACTER-CLICK";
       $behaviour.value = state.selectedBehaviour;
     };
 
@@ -122,12 +122,14 @@ export default function init(
         payload: (parseFloat(target.value): number),
       });
     });
-    $posMouseClick.addEventListener("change", () => {
-      store.dispatch({
-        type: "POS_MOUSE_CHANGED",
-        payload: "CHARACTER-CLICK",
-      });
-    });
+    /*
+     *$posMouseClick.addEventListener("change", () => {
+     *  store.dispatch({
+     *    type: "POS_MOUSE_CHANGED",
+     *    payload: "CHARACTER-CLICK",
+     *  });
+     *});
+     */
 
     // ------------------------------------------------------------------------
     $btnPlay.addEventListener("click", () => {

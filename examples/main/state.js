@@ -16,22 +16,22 @@ export type SteeringBehaviour =
   | "FOLLOW_PATH_CHASE_RABBIT"
   | "FOLLOW_PATH_PREDICT"
   | "WANDER";
-type MouseEffect = "CHARACTER-CLICK" | "TARGET-CLICK" | "TARGET-MOVE";
+//type MouseEffect = "CHARACTER-CLICK" | "TARGET-CLICK" | "TARGET-MOVE";
 
 export type State = {|
   isPaused: boolean,
   selectedBehaviour: SteeringBehaviour,
   focussedCharacterId: null | CharacterId,
   characters: Map<CharacterId, Kinematic>,
-  mouseEffect: MouseEffect,
+  //mouseEffect: MouseEffect,
   path: Path,
 |};
 
 export const initialState: State = {
   isPaused: true,
-  focussedCharacterId: null,
+  focussedCharacterId: "aa",
   selectedBehaviour: "SEPARATION",
-  mouseEffect: "CHARACTER-CLICK",
+  //mouseEffect: "CHARACTER-CLICK",
   characters: new Map([
     [
       "aa",
