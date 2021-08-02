@@ -6,20 +6,14 @@ import { type State, type SteeringBehaviour, initialState } from "./state.js";
 import { type Vector } from "../../lib/vector.js";
 
 const $canvas = document.getElementById("canvas-main");
-const $cOrient = document.querySelector("#character-orientation");
-const $cRotate = document.querySelector("#character-rotation");
-const $cPosX = document.querySelector("#character-position-x");
-const $cPosZ = document.querySelector("#character-position-z");
-const $cPosMouseClick = document.querySelector(
-  "#character-position-mouse-click"
-);
-const $cBehaviour = document.querySelector("#character-behaviour");
-const $tOrient = document.querySelector("#target-orientation");
-const $tRotate = document.querySelector("#target-rotation");
-const $tPosX = document.querySelector("#target-position-x");
-const $tPosZ = document.querySelector("#target-position-z");
-const $tPosMouseClick = document.querySelector("#target-position-mouse-click");
-const $tPosMouseMove = document.querySelector("#target-position-mouse-move");
+
+const $orient = document.querySelector("#orientation");
+const $rotate = document.querySelector("#rotation");
+const $posX = document.querySelector("#position-x");
+const $posZ = document.querySelector("#position-z");
+const $posMouseClick = document.querySelector("#position-mouse-click");
+const $behaviour = document.querySelector("#behaviour");
+
 const $btnPlay = document.querySelector("#play-pause");
 const $btnReset = document.querySelector("#reset");
 
@@ -30,36 +24,30 @@ export default function init(
 } | null {
   if (
     $canvas instanceof HTMLCanvasElement &&
-    $cOrient instanceof HTMLInputElement &&
-    $cRotate instanceof HTMLInputElement &&
-    $cPosX instanceof HTMLInputElement &&
-    $cPosZ instanceof HTMLInputElement &&
-    $cPosMouseClick instanceof HTMLInputElement &&
-    $cBehaviour instanceof HTMLSelectElement &&
-    $tOrient instanceof HTMLInputElement &&
-    $tRotate instanceof HTMLInputElement &&
-    $tPosX instanceof HTMLInputElement &&
-    $tPosZ instanceof HTMLInputElement &&
-    $tPosMouseClick instanceof HTMLInputElement &&
-    $tPosMouseMove instanceof HTMLInputElement &&
+    $orient instanceof HTMLInputElement &&
+    $rotate instanceof HTMLInputElement &&
+    $posX instanceof HTMLInputElement &&
+    $posZ instanceof HTMLInputElement &&
+    $posMouseClick instanceof HTMLInputElement &&
+    $behaviour instanceof HTMLSelectElement &&
     $btnPlay instanceof HTMLButtonElement &&
     $btnReset instanceof HTMLButtonElement
   ) {
     const main = $canvas.getContext("2d");
 
     const setDomValuesFromState = (state: State): void => {
-      $cOrient.value = state.character.orientation.toString();
-      $cRotate.value = state.character.rotation.toString();
-      $cPosX.value = state.character.position[0].toString();
-      $cPosZ.value = state.character.position[1].toString();
-      $cPosMouseClick.checked = state.mouseEffect === "CHARACTER-CLICK";
-      $cBehaviour.value = state.selectedBehaviour;
-      $tOrient.value = state.target.orientation.toString();
-      $tRotate.value = state.target.rotation.toString();
-      $tPosX.value = state.target.position[0].toString();
-      $tPosZ.value = state.target.position[1].toString();
-      $tPosMouseClick.checked = state.mouseEffect === "TARGET-CLICK";
-      $tPosMouseMove.checked = state.mouseEffect === "TARGET-MOVE";
+      const focussedCharacter = state.focussedCharacterId
+        ? state.characters.get(state.focussedCharacterId)
+        : null;
+
+      if (focussedCharacter) {
+        $orient.value = focussedCharacter.orientation.toString();
+        $rotate.value = focussedCharacter.rotation.toString();
+        $posX.value = focussedCharacter.position[0].toString();
+        $posZ.value = focussedCharacter.position[1].toString();
+      }
+      $posMouseClick.checked = state.mouseEffect === "CHARACTER-CLICK";
+      $behaviour.value = state.selectedBehaviour;
     };
 
     setDomValuesFromState(initialState);
@@ -89,7 +77,7 @@ export default function init(
     });
 
     // ------------------------------------------------------------------------
-    $cBehaviour.addEventListener("change", (e: Event) => {
+    $behaviour.addEventListener("change", (e: Event) => {
       const target: HTMLSelectElement = (e.target: any);
       const value = target.value;
       switch (value) {
@@ -105,7 +93,7 @@ export default function init(
         case "SEPARATION":
         case "WANDER":
           store.dispatch({
-            type: "CHARACTER_BEHAVIOUR_CHANGED",
+            type: "BEHAVIOUR_CHANGED",
             payload: (value: SteeringBehaviour),
           });
           return;
@@ -113,66 +101,31 @@ export default function init(
     });
 
     // ------------------------------------------------------------------------
-    $cOrient.addEventListener("input", (e: Event) => {
+    $orient.addEventListener("input", (e: Event) => {
       const target: HTMLInputElement = (e.target: any);
       store.dispatch({
-        type: "CHARACTER_ORIENTATION_CHANGED",
+        type: "ORIENTATION_CHANGED",
         payload: (parseFloat(target.value): number),
       });
     });
-    $cPosX.addEventListener("input", (e: Event) => {
+    $posX.addEventListener("input", (e: Event) => {
       const target: HTMLInputElement = (e.target: any);
       store.dispatch({
-        type: "CHARACTER_POSX_CHANGED",
+        type: "POSX_CHANGED",
         payload: (parseFloat(target.value): number),
       });
     });
-    $cPosZ.addEventListener("input", (e: Event) => {
+    $posZ.addEventListener("input", (e: Event) => {
       const target: HTMLInputElement = (e.target: any);
       store.dispatch({
-        type: "CHARACTER_POSZ_CHANGED",
+        type: "POSZ_CHANGED",
         payload: (parseFloat(target.value): number),
       });
     });
-    $cPosMouseClick.addEventListener("change", () => {
+    $posMouseClick.addEventListener("change", () => {
       store.dispatch({
         type: "POS_MOUSE_CHANGED",
         payload: "CHARACTER-CLICK",
-      });
-    });
-
-    // ------------------------------------------------------------------------
-    $tOrient.addEventListener("input", (e: Event) => {
-      const target: HTMLInputElement = (e.target: any);
-      store.dispatch({
-        type: "TARGET_ORIENTATION_CHANGED",
-        payload: (parseFloat(target.value): number),
-      });
-    });
-    $tPosX.addEventListener("input", (e: Event) => {
-      const target: HTMLInputElement = (e.target: any);
-      store.dispatch({
-        type: "TARGET_POSX_CHANGED",
-        payload: (parseFloat(target.value): number),
-      });
-    });
-    $tPosZ.addEventListener("input", (e: Event) => {
-      const target: HTMLInputElement = (e.target: any);
-      store.dispatch({
-        type: "TARGET_POSZ_CHANGED",
-        payload: (parseFloat(target.value): number),
-      });
-    });
-    $tPosMouseClick.addEventListener("change", () => {
-      store.dispatch({
-        type: "MOUSE_CONTROL_CHANGED",
-        payload: "TARGET-CLICK",
-      });
-    });
-    $tPosMouseMove.addEventListener("change", () => {
-      store.dispatch({
-        type: "MOUSE_CONTROL_CHANGED",
-        payload: "TARGET-MOVE",
       });
     });
 

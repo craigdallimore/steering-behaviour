@@ -52,23 +52,23 @@
         <fieldset>
           <legend>Character</legend>
 
-          <label for="character-orientation">Orientation</label>
-          <input id="character-orientation" type="range" min="-2" max="2" step="0.1"/>
+          <label for="orientation">Orientation</label>
+          <input id="orientation" type="range" min="-2" max="2" step="0.1"/>
 
-          <label for="character-rotation">Rotation</label>
-          <input id="character-rotation" type="number" />
+          <label for="rotation">Rotation</label>
+          <input id="rotation" type="number" />
 
-          <label for="character-position-x">Horizontal position</label>
-          <input id="character-position-x" type="number" min="0" max="800"/>
+          <label for="position-x">Horizontal position</label>
+          <input id="position-x" type="number" min="0" max="800"/>
 
-          <label for="character-position-z">Vertical position</label>
-          <input id="character-position-z" type="number" min="0" max="800" />
+          <label for="position-z">Vertical position</label>
+          <input id="position-z" type="number" min="0" max="800" />
 
-          <label for="character-position-mouse">Position with mouse click</label>
-          <input type="radio" name="position-mouse" id="character-position-mouse-click"/>
+          <label for="position-mouse">Position with mouse click</label>
+          <input type="radio" name="position-mouse" id="position-mouse-click"/>
 
-          <label for="character-behaviour">Behaviour</label>
-          <select id="character-behaviour" size="10">
+          <label for="behaviour">Behaviour</label>
+          <select id="behaviour" size="11">
             <option value="ALIGN">Align</option>>
             <option value="ARRIVE">Arrive</option>>
             <option value="FACE">Face</option>>
@@ -81,28 +81,6 @@
             <option value="FOLLOW_PATH_PREDICT">Follow path (predictive)</option>>
             <option value="SEPARATION">Separation</option>>
           </select>
-        </fieldset>
-
-        <fieldset>
-          <legend>Target</legend>
-
-          <label for="target-orientation">Orientation</label>
-          <input id="target-orientation" type="range" min="-2" max="2" step="0.1"/>
-
-          <label for="target-rotaraion">Rotation</label>
-          <input id="target-rotation" type="number" />
-
-          <label for="target-position-x">Horizontal position</label>
-          <input id="target-position-x" type="number" min="0" max="800"/>
-
-          <label for="target-position-z">Vertical position</label>
-          <input id="target-position-z" type="number" min="0" max="800" />
-
-          <label for="target-position-mouse">Position with mouse click</label>
-          <input type="radio" name="position-mouse" id="target-position-mouse-click"/>
-
-          <label for="target-position-mouse">Position with mouse move</label>
-          <input type="radio" name="position-mouse" id="target-position-mouse-move"/>
         </fieldset>
 
         <button type="button" id="play-pause">Play</button>
