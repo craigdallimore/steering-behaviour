@@ -2,6 +2,8 @@
 import type { Kinematic } from "../../lib/kinematic.js";
 import type { Path } from "../../lib/path.js";
 
+export type CharacterId = string;
+
 export type SteeringBehaviour =
   | "ALIGN"
   | "ARRIVE"
@@ -19,28 +21,37 @@ type MouseEffect = "CHARACTER-CLICK" | "TARGET-CLICK" | "TARGET-MOVE";
 export type State = {|
   isPaused: boolean,
   selectedBehaviour: SteeringBehaviour,
+  focussedCharacterId: null | CharacterId,
+  characters: Map<CharacterId, Kinematic>,
   mouseEffect: MouseEffect,
-  character: Kinematic,
-  target: Kinematic,
   path: Path,
 |};
 
 export const initialState: State = {
   isPaused: true,
+  focussedCharacterId: null,
   selectedBehaviour: "SEPARATION",
   mouseEffect: "CHARACTER-CLICK",
-  target: {
-    position: [500, 100],
-    velocity: [0, 0],
-    orientation: 0.5 * Math.PI,
-    rotation: 0,
-  },
-  character: {
-    position: [380, 90],
-    velocity: [20, 0],
-    orientation: 0.5 * Math.PI,
-    rotation: 0,
-  },
+  characters: new Map([
+    [
+      "aa",
+      {
+        position: [380, 90],
+        velocity: [20, 0],
+        orientation: 0.5 * Math.PI,
+        rotation: 0,
+      },
+    ],
+    [
+      "bb",
+      {
+        position: [500, 100],
+        velocity: [0, 0],
+        orientation: 0.5 * Math.PI,
+        rotation: 0,
+      },
+    ],
+  ]),
   path: [
     [600, 50],
     [300, 150],
