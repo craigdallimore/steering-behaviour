@@ -4,6 +4,11 @@ import type { Path } from "../../lib/path.js";
 
 export type CharacterId = string;
 
+export type Character = {
+  kinematic: Kinematic,
+  target: CharacterId | null,
+};
+
 export type SteeringBehaviour =
   | "ALIGN"
   | "ARRIVE"
@@ -22,7 +27,7 @@ export type State = {|
   isPaused: boolean,
   selectedBehaviour: SteeringBehaviour,
   focussedCharacterId: null | CharacterId,
-  characters: Map<CharacterId, Kinematic>,
+  characters: Map<CharacterId, Character>,
   //mouseEffect: MouseEffect,
   path: Path,
 |};
@@ -36,19 +41,25 @@ export const initialState: State = {
     [
       "aa",
       {
-        position: [380, 90],
-        velocity: [20, 0],
-        orientation: 0.5 * Math.PI,
-        rotation: 0,
+        kinematic: {
+          position: [380, 90],
+          velocity: [20, 0],
+          orientation: 0.5 * Math.PI,
+          rotation: 0,
+        },
+        target: null,
       },
     ],
     [
       "bb",
       {
-        position: [500, 100],
-        velocity: [0, 0],
-        orientation: 0.5 * Math.PI,
-        rotation: 0,
+        kinematic: {
+          position: [500, 100],
+          velocity: [0, 0],
+          orientation: 0.5 * Math.PI,
+          rotation: 0,
+        },
+        target: null,
       },
     ],
   ]),

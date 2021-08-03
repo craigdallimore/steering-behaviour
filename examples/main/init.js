@@ -41,10 +41,10 @@ export default function init(
         : null;
 
       if (focussedCharacter) {
-        $orient.value = focussedCharacter.orientation.toString();
-        $rotate.value = focussedCharacter.rotation.toString();
-        $posX.value = focussedCharacter.position[0].toString();
-        $posZ.value = focussedCharacter.position[1].toString();
+        $orient.value = focussedCharacter.kinematic.orientation.toString();
+        $rotate.value = focussedCharacter.kinematic.rotation.toString();
+        $posX.value = focussedCharacter.kinematic.position[0].toString();
+        $posZ.value = focussedCharacter.kinematic.position[1].toString();
       }
       //$posMouseClick.checked = state.mouseEffect === "CHARACTER-CLICK";
       $behaviour.value = state.selectedBehaviour;

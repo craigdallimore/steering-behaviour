@@ -5,9 +5,10 @@ import {
   type State,
   type SteeringBehaviour,
   type CharacterId,
+  type Character,
 } from "./state.js";
 import { type Vector } from "../../lib/vector.js";
-import { type Kinematic } from "../../lib/kinematic.js";
+//import { type Kinematic } from "../../lib/kinematic.js";
 import {
   emptySteering,
   getAlignSteering,
@@ -25,18 +26,20 @@ import {
 import updateKinematic from "../../src/updateKinematic.js";
 
 const updateCharacter = (
-  fn: (CharacterId, Kinematic) => Kinematic,
-  map: Map<CharacterId, Kinematic>
-): Map<CharacterId, Kinematic> =>
+  fn: (CharacterId, Character) => Character,
+  map: Map<CharacterId, Character>
+): Map<CharacterId, Character> =>
   new Map([...map].map(([key, cha]) => [key, fn(key, cha)]));
 
-const getFocussedCharacter = (state: State): Kinematic | null => {
+/*
+const getFocussedCharacter = (state: State): Character | null => {
   if (!state.focussedCharacterId) {
     return null;
   }
   const focussedCharacter = state.characters.get(state.focussedCharacterId);
   return focussedCharacter || null;
 };
+*/
 
 const TICK = "TICK";
 const PLAY_BUTTON_CLICKED = "PLAY_BUTTON_CLICKED";
@@ -159,7 +162,7 @@ export function update(state: State, action: Action): State {
             key === state.focussedCharacterId
               ? {
                   ...char,
-                  position: [action.payload, char.position[1]],
+                  position: [action.payload, char.kinematic.position[1]],
                 }
               : char,
           state.characters
@@ -173,7 +176,7 @@ export function update(state: State, action: Action): State {
             key === state.focussedCharacterId
               ? {
                   ...char,
-                  position: [char.position[0], action.payload],
+                  position: [char.kinematic.position[0], action.payload],
                 }
               : char,
           state.characters
@@ -294,10 +297,13 @@ export function update(state: State, action: Action): State {
         case "WANDER": {
           return {
             ...state,
-            characters: updateCharacter((key, char) => {
+            characters: updateCharacter((key, char: Character) => {
               if (key === state.focussedCharacterId) {
-                const steering = getWanderSteering(char);
-                return updateKinematic(steering, char, time);
+                const steering = getWanderSteering(char.kinematic);
+                return {
+                  ...char,
+                  kinematic: updateKinematic(steering, char.kinematic, time),
+                };
               }
               return char;
             }, state.characters),

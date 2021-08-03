@@ -1,11 +1,10 @@
 // @flow
 
-import type { Kinematic } from "../../lib/kinematic.js";
 import drawArrow from "../../lib/drawArrow.js";
 import drawGrid from "../../lib/drawGrid.js";
 import drawSelectionBox from "../../lib/drawSelectionBox.js";
 
-import type { State } from "./state.js";
+import type { State, Character } from "./state.js";
 
 export default function runEffects(
   dom: {
@@ -16,14 +15,14 @@ export default function runEffects(
   dom.main.clearRect(0, 0, 800, 800);
   drawGrid(dom.main);
 
-  state.characters.forEach((cha: Kinematic) => {
-    drawArrow(dom.main, cha);
+  state.characters.forEach((cha: Character) => {
+    drawArrow(dom.main, cha.kinematic);
   });
 
   if (state.focussedCharacterId) {
     const focussedCharacter = state.characters.get(state.focussedCharacterId);
     if (focussedCharacter) {
-      drawSelectionBox(dom.main, focussedCharacter.position);
+      drawSelectionBox(dom.main, focussedCharacter.kinematic.position);
     }
   }
 }
