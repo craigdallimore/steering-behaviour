@@ -31,15 +31,16 @@ const updateCharacter = (
 ): Map<CharacterId, Character> =>
   new Map([...map].map(([key, cha]) => [key, fn(key, cha)]));
 
-/*
-const getFocussedCharacter = (state: State): Character | null => {
-  if (!state.focussedCharacterId) {
+const getCharacter = (
+  id: ?CharacterId,
+  characters: Map<CharacterId, Character>
+): Character | null => {
+  if (!id) {
     return null;
   }
-  const focussedCharacter = state.characters.get(state.focussedCharacterId);
-  return focussedCharacter || null;
+  const char = characters.get(id);
+  return char || null;
 };
-*/
 
 const TICK = "TICK";
 const PLAY_BUTTON_CLICKED = "PLAY_BUTTON_CLICKED";
@@ -285,15 +286,28 @@ export function update(state: State, action: Action): State {
             character: updateKinematic(steering, state.character, time),
           };
         }
+                     */
+
         case "SEEK": {
-          const steering = getSeekSteering(state.character, state.target);
           return {
             ...state,
-            target: updateKinematic(emptySteering, state.target, time),
-            character: updateKinematic(steering, state.character, time),
+            characters: updateCharacter((key, char: Character) => {
+              const target = getCharacter(char.target, state.characters);
+
+              if (key === state.focussedCharacterId && target) {
+                const steering = getSeekSteering(
+                  char.kinematic,
+                  target.kinematic
+                );
+                return {
+                  ...char,
+                  kinematic: updateKinematic(steering, char.kinematic, time),
+                };
+              }
+              return char;
+            }, state.characters),
           };
         }
-                     */
         case "WANDER": {
           return {
             ...state,

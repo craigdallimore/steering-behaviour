@@ -47,15 +47,15 @@ export const initialState: State = {
           orientation: 0.5 * Math.PI,
           rotation: 0,
         },
-        target: null,
+        target: "bb",
       },
     ],
     [
       "bb",
       {
         kinematic: {
-          position: [500, 100],
-          velocity: [0, 0],
+          position: [100, 100],
+          velocity: [40, 0],
           orientation: 0.5 * Math.PI,
           rotation: 0,
         },

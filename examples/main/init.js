@@ -134,6 +134,8 @@ export default function init(
     // ------------------------------------------------------------------------
     $btnPlay.addEventListener("click", () => {
       store.dispatch({ type: "PLAY_BUTTON_CLICKED" });
+      const state = store.getState();
+      setDomValuesFromState(state);
       $btnPlay.textContent = $btnPlay.textContent === "Play" ? "Pause" : "Play";
     });
 

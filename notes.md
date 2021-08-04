@@ -7,6 +7,7 @@ Schneider and Eberly [2003].
 
 ## Todo
 
+- [ ] Why dont input changes get reflected?
 - [ ] Add mouse selection
 
   - [x] Add a target reticule thing
