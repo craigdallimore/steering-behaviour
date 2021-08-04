@@ -6,6 +6,7 @@ import { type State, type SteeringBehaviour, initialState } from "./state.js";
 import { type Vector } from "../../lib/vector.js";
 
 const $canvas = document.getElementById("canvas-main");
+const $legend = document.querySelector("legend");
 
 const $orient = document.querySelector("#orientation");
 const $rotate = document.querySelector("#rotation");
@@ -26,6 +27,7 @@ export default function init(
 } | null {
   if (
     $canvas instanceof HTMLCanvasElement &&
+    $legend instanceof HTMLElement &&
     $orient instanceof HTMLInputElement &&
     $rotate instanceof HTMLInputElement &&
     $posX instanceof HTMLInputElement &&
@@ -45,6 +47,9 @@ export default function init(
         : null;
 
       if (focussedCharacter) {
+        $legend.textContent = `Character ${
+          state.focussedCharacterId || "(not selected)"
+        }`;
         $orient.value = focussedCharacter.kinematic.orientation.toString();
         $rotate.value = focussedCharacter.kinematic.rotation.toString();
         $posX.value = focussedCharacter.kinematic.position[0].toString();
@@ -69,6 +74,8 @@ export default function init(
         type: "CANVAS_CLICKED",
         payload: ([e.clientX - left, e.clientY - top]: Vector),
       });
+      const state = store.getState();
+      setDomValuesFromState(state);
     });
 
     // ------------------------------------------------------------------------
@@ -83,6 +90,7 @@ export default function init(
         case "FACE":
         case "LOOK_WHERE_YOU_ARE_GOING":
         case "MATCH_VELOCITY":
+        case "NONE":
         case "PURSUE":
         case "SEEK":
         case "SEPARATION":

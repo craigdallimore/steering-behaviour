@@ -223,7 +223,6 @@ const applyBehaviour = (
         kinematic: updateKinematic(steering, char.kinematic, time),
       };
     }
-
     case "SEEK": {
       const target = getCharacter(char.target, characters);
       if (!target) {
@@ -242,7 +241,6 @@ const applyBehaviour = (
         kinematic: updateKinematic(steering, char.kinematic, time),
       };
     }
-
     case "NONE": {
       return {
         ...char,
