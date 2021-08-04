@@ -7,7 +7,7 @@ import {
   type CharacterId,
   type Character,
 } from "./state.js";
-import { type Vector } from "../../lib/vector.js";
+import { distance, type Vector } from "../../lib/vector.js";
 import {
   getAlignSteering,
   getArriveSteering,
@@ -240,20 +240,25 @@ export function update(state: State, action: Action): State {
         ...state,
         isPaused: !state.isPaused,
       };
-    /*
-    case "CANVAS_CLICKED":
+    case "CANVAS_CLICKED": {
+      const clickPosition: Vector = action.payload;
+
+      const focussedCharacterId = [...state.characters].reduce(
+        (acc, [id, char]) => {
+          const distanceToClick = distance(
+            clickPosition,
+            char.kinematic.position
+          );
+          return distanceToClick < 15 ? id : acc;
+        },
+        null
+      );
+
       return {
         ...state,
-        target:
-          state.mouseEffect === "TARGET-CLICK"
-            ? { ...state.target, position: action.payload }
-            : state.target,
-        character:
-          state.mouseEffect === "CHARACTER-CLICK"
-            ? { ...state.character, position: action.payload }
-            : state.character,
+        focussedCharacterId,
       };
-      */
+    }
 
     case "BEHAVIOUR_CHANGED":
       return {
