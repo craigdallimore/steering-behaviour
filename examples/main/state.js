@@ -6,10 +6,12 @@ export type CharacterId = string;
 
 export type Character = {
   kinematic: Kinematic,
+  behaviour: SteeringBehaviour,
   target: CharacterId | null,
 };
 
 export type SteeringBehaviour =
+  | "NONE"
   | "ALIGN"
   | "ARRIVE"
   | "FACE"
@@ -25,7 +27,6 @@ export type SteeringBehaviour =
 
 export type State = {|
   isPaused: boolean,
-  selectedBehaviour: SteeringBehaviour,
   focussedCharacterId: null | CharacterId,
   characters: Map<CharacterId, Character>,
   //mouseEffect: MouseEffect,
@@ -35,7 +36,6 @@ export type State = {|
 export const initialState: State = {
   isPaused: true,
   focussedCharacterId: "aa",
-  selectedBehaviour: "SEPARATION",
   //mouseEffect: "CHARACTER-CLICK",
   characters: new Map([
     [
@@ -47,6 +47,7 @@ export const initialState: State = {
           orientation: 0.5 * Math.PI,
           rotation: 0,
         },
+        behaviour: "NONE",
         target: "bb",
       },
     ],
@@ -59,6 +60,7 @@ export const initialState: State = {
           orientation: 0.5 * Math.PI,
           rotation: 0,
         },
+        behaviour: "NONE",
         target: null,
       },
     ],

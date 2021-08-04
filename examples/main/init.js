@@ -45,9 +45,9 @@ export default function init(
         $rotate.value = focussedCharacter.kinematic.rotation.toString();
         $posX.value = focussedCharacter.kinematic.position[0].toString();
         $posZ.value = focussedCharacter.kinematic.position[1].toString();
+        $behaviour.value = focussedCharacter.behaviour;
       }
       //$posMouseClick.checked = state.mouseEffect === "CHARACTER-CLICK";
-      $behaviour.value = state.selectedBehaviour;
     };
 
     setDomValuesFromState(initialState);
