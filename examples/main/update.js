@@ -9,6 +9,7 @@ import {
 } from "./state.js";
 import { distance, type Vector } from "../../lib/vector.js";
 import {
+  emptySteering,
   getAlignSteering,
   getArriveSteering,
   //getChaseRabbitSteering,
@@ -242,7 +243,12 @@ const applyBehaviour = (
       };
     }
 
-    case "NONE":
+    case "NONE": {
+      return {
+        ...char,
+        kinematic: updateKinematic(emptySteering, char.kinematic, time),
+      };
+    }
     default: {
       return char;
     }
