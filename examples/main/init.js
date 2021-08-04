@@ -11,7 +11,6 @@ const $orient = document.querySelector("#orientation");
 const $rotate = document.querySelector("#rotation");
 const $posX = document.querySelector("#position-x");
 const $posZ = document.querySelector("#position-z");
-//const $posMouseClick = document.querySelector("#position-mouse-click");
 const $behaviour = document.querySelector("#behaviour");
 
 const $btnPlay = document.querySelector("#play-pause");
@@ -28,7 +27,6 @@ export default function init(
     $rotate instanceof HTMLInputElement &&
     $posX instanceof HTMLInputElement &&
     $posZ instanceof HTMLInputElement &&
-    //$posMouseClick instanceof HTMLInputElement &&
     $behaviour instanceof HTMLSelectElement &&
     $btnPlay instanceof HTMLButtonElement &&
     $btnReset instanceof HTMLButtonElement
@@ -47,7 +45,6 @@ export default function init(
         $posZ.value = focussedCharacter.kinematic.position[1].toString();
         $behaviour.value = focussedCharacter.behaviour;
       }
-      //$posMouseClick.checked = state.mouseEffect === "CHARACTER-CLICK";
     };
 
     setDomValuesFromState(initialState);
@@ -62,16 +59,6 @@ export default function init(
 
       store.dispatch({
         type: "CANVAS_CLICKED",
-        payload: ([e.clientX - left, e.clientY - top]: Vector),
-      });
-    });
-    $canvas.addEventListener("mousemove", (e: MouseEvent) => {
-      const target: HTMLElement = (e.target: any);
-
-      const { top, left }: ClientRect = target.getBoundingClientRect();
-
-      store.dispatch({
-        type: "CANVAS_MOUSE_MOVE",
         payload: ([e.clientX - left, e.clientY - top]: Vector),
       });
     });
@@ -122,14 +109,6 @@ export default function init(
         payload: (parseFloat(target.value): number),
       });
     });
-    /*
-     *$posMouseClick.addEventListener("change", () => {
-     *  store.dispatch({
-     *    type: "POS_MOUSE_CHANGED",
-     *    payload: "CHARACTER-CLICK",
-     *  });
-     *});
-     */
 
     // ------------------------------------------------------------------------
     $btnPlay.addEventListener("click", () => {

@@ -30,9 +30,7 @@ type CharacterMap = Map<CharacterId, Character>;
 const TICK = "TICK";
 const PLAY_BUTTON_CLICKED = "PLAY_BUTTON_CLICKED";
 const RESET_BUTTON_CLICKED = "RESET_BUTTON_CLICKED";
-//const MOUSE_CONTROL_CHANGED = "MOUSE_CONTROL_CHANGED";
 const CANVAS_CLICKED = "CANVAS_CLICKED";
-const CANVAS_MOUSE_MOVE = "CANVAS_MOUSE_MOVE";
 const BEHAVIOUR_CHANGED = "BEHAVIOUR_CHANGED";
 const ORIENTATION_CHANGED = "ORIENTATION_CHANGED";
 const POSX_CHANGED = "POSX_CHANGED";
@@ -59,18 +57,8 @@ export type Action =
       type: typeof POSZ_CHANGED,
       payload: number,
     |}
-  /*
-  | {|
-      type: typeof MOUSE_CONTROL_CHANGED,
-      payload: "TARGET-CLICK" | "TARGET-MOVE" | "CHARACTER-CLICK",
-    |}
-*/
   | {|
       type: typeof CANVAS_CLICKED,
-      payload: Vector,
-    |}
-  | {|
-      type: typeof CANVAS_MOUSE_MOVE,
       payload: Vector,
     |}
   | {|
@@ -253,11 +241,6 @@ export function update(state: State, action: Action): State {
         isPaused: !state.isPaused,
       };
     /*
-    case "MOUSE_CONTROL_CHANGED":
-      return {
-        ...state,
-        mouseEffect: action.payload,
-      };
     case "CANVAS_CLICKED":
       return {
         ...state,
@@ -269,14 +252,6 @@ export function update(state: State, action: Action): State {
           state.mouseEffect === "CHARACTER-CLICK"
             ? { ...state.character, position: action.payload }
             : state.character,
-      };
-    case "CANVAS_MOUSE_MOVE":
-      return {
-        ...state,
-        target:
-          state.mouseEffect === "TARGET-MOVE"
-            ? { ...state.target, position: action.payload }
-            : state.target,
       };
       */
 

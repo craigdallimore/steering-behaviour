@@ -23,20 +23,17 @@ export type SteeringBehaviour =
   | "FOLLOW_PATH_CHASE_RABBIT"
   | "FOLLOW_PATH_PREDICT"
   | "WANDER";
-//type MouseEffect = "CHARACTER-CLICK" | "TARGET-CLICK" | "TARGET-MOVE";
 
 export type State = {|
   isPaused: boolean,
   focussedCharacterId: null | CharacterId,
   characters: Map<CharacterId, Character>,
-  //mouseEffect: MouseEffect,
   path: Path,
 |};
 
 export const initialState: State = {
   isPaused: true,
   focussedCharacterId: "aa",
-  //mouseEffect: "CHARACTER-CLICK",
   characters: new Map([
     [
       "aa",
