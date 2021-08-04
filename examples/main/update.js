@@ -8,39 +8,24 @@ import {
   type Character,
 } from "./state.js";
 import { type Vector } from "../../lib/vector.js";
-//import { type Kinematic } from "../../lib/kinematic.js";
 import {
-  emptySteering,
   getAlignSteering,
   getArriveSteering,
-  getChaseRabbitSteering,
+  //getChaseRabbitSteering,
   getFaceSteering,
   getLookWhereYouAreGoingSteering,
   getMatchVelocitySteering,
-  getPredictiveFollowSteering,
-  getSeparationSteering,
+  //getPredictiveFollowSteering,
   getPursueSteering,
   getSeekSteering,
+  getSeparationSteering,
   getWanderSteering,
 } from "../../src/steering.js";
 import updateKinematic from "../../src/updateKinematic.js";
 
-const updateCharacter = (
-  fn: (CharacterId, Character) => Character,
-  map: Map<CharacterId, Character>
-): Map<CharacterId, Character> =>
-  new Map([...map].map(([key, cha]) => [key, fn(key, cha)]));
+// TYPES ----------------------------------------------------------------------
 
-const getCharacter = (
-  id: ?CharacterId,
-  characters: Map<CharacterId, Character>
-): Character | null => {
-  if (!id) {
-    return null;
-  }
-  const char = characters.get(id);
-  return char || null;
-};
+type CharacterMap = Map<CharacterId, Character>;
 
 const TICK = "TICK";
 const PLAY_BUTTON_CLICKED = "PLAY_BUTTON_CLICKED";
@@ -95,6 +80,166 @@ export type Action =
       type: typeof RESET_BUTTON_CLICKED,
     |};
 
+// HELPERS --------------------------------------------------------------------
+
+const updateCharacter = (
+  fn: (CharacterId, Character) => Character,
+  map: CharacterMap
+): CharacterMap => new Map([...map].map(([key, cha]) => [key, fn(key, cha)]));
+
+const getCharacter = (
+  id: ?CharacterId,
+  characters: CharacterMap
+): Character | null => {
+  if (!id) {
+    return null;
+  }
+  const char = characters.get(id);
+  return char || null;
+};
+
+const applyBehaviour = (
+  char: Character,
+  time: number,
+  characters: CharacterMap
+): Character => {
+  switch (char.behaviour) {
+    case "ALIGN": {
+      const target = getCharacter(char.target, characters);
+      if (!target) {
+        return char;
+      }
+      const steering = getAlignSteering(char.kinematic, target.kinematic);
+      if (!steering) {
+        return char;
+      }
+      return {
+        ...char,
+        kinematic: updateKinematic(steering, char.kinematic, time),
+      };
+    }
+    case "ARRIVE": {
+      const target = getCharacter(char.target, characters);
+      if (!target) {
+        return char;
+      }
+      const steering = getArriveSteering(char.kinematic, target.kinematic);
+      if (!steering) {
+        return char;
+      }
+      return {
+        ...char,
+        kinematic: updateKinematic(steering, char.kinematic, time),
+      };
+    }
+    /*
+    case "FOLLOW_PATH_CHASE_RABBIT": {
+      const steering = getChaseRabbitSteering(char.kinematic, state.path);
+      return {
+        ...char,
+        kinematic: updateKinematic(steering, char.kinematic, time),
+      };
+    }
+    case "FOLLOW_PATH_PREDICT": {
+      const steering = getPredictiveFollowSteering(
+        char.kinematic,
+        state.path
+      );
+      return {
+        ...char,
+        kinematic: updateKinematic(steering, char.kinematic, time),
+      };
+    }
+    */
+    case "SEPARATION": {
+      const target = getCharacter(char.target, characters);
+      if (!target) {
+        return char;
+      }
+      const steering = getSeparationSteering(char.kinematic, target.kinematic);
+      return {
+        ...char,
+        kinematic: updateKinematic(steering, char.kinematic, time),
+      };
+    }
+    case "FACE": {
+      const target = getCharacter(char.target, characters);
+      if (!target) {
+        return char;
+      }
+      const steering = getFaceSteering(char.kinematic, target.kinematic);
+      return {
+        ...char,
+        kinematic: updateKinematic(steering, char.kinematic, time),
+      };
+    }
+    case "LOOK_WHERE_YOU_ARE_GOING": {
+      const target = getCharacter(char.target, characters);
+      if (!target) {
+        return char;
+      }
+      const steering = getLookWhereYouAreGoingSteering(
+        char.kinematic,
+        target.kinematic
+      );
+      return {
+        ...char,
+        kinematic: updateKinematic(steering, char.kinematic, time),
+      };
+    }
+    case "MATCH_VELOCITY": {
+      const target = getCharacter(char.target, characters);
+      if (!target) {
+        return char;
+      }
+
+      const steering = getMatchVelocitySteering(
+        char.kinematic,
+        target.kinematic
+      );
+      return {
+        ...char,
+        kinematic: updateKinematic(steering, char.kinematic, time),
+      };
+    }
+    case "PURSUE": {
+      const target = getCharacter(char.target, characters);
+      if (!target) {
+        return char;
+      }
+      const steering = getPursueSteering(char.kinematic, target.kinematic);
+      return {
+        ...char,
+        kinematic: updateKinematic(steering, char.kinematic, time),
+      };
+    }
+
+    case "SEEK": {
+      const target = getCharacter(char.target, characters);
+      if (!target) {
+        return char;
+      }
+      const steering = getSeekSteering(char.kinematic, target.kinematic);
+      return {
+        ...char,
+        kinematic: updateKinematic(steering, char.kinematic, time),
+      };
+    }
+    case "WANDER": {
+      const steering = getWanderSteering(char.kinematic);
+      return {
+        ...char,
+        kinematic: updateKinematic(steering, char.kinematic, time),
+      };
+    }
+
+    case "NONE":
+    default: {
+      return char;
+    }
+  }
+};
+
 export function update(state: State, action: Action): State {
   switch (action.type) {
     case "RESET_BUTTON_CLICKED":
@@ -138,7 +283,16 @@ export function update(state: State, action: Action): State {
     case "BEHAVIOUR_CHANGED":
       return {
         ...state,
-        selectedBehaviour: action.payload,
+        characters: updateCharacter(
+          (key, char) =>
+            key === state.focussedCharacterId
+              ? {
+                  ...char,
+                  behaviour: action.payload,
+                }
+              : char,
+          state.characters
+        ),
       };
 
     case "ORIENTATION_CHANGED":
@@ -190,142 +344,13 @@ export function update(state: State, action: Action): State {
       }
       const time = action.payload;
 
-      switch (state.selectedBehaviour) {
-        /*
-        case "ALIGN": {
-          const steering = getAlignSteering(state.character, state.target);
-          if (!steering) {
-            return state;
-          }
-          return {
-            ...state,
-            target: updateKinematic(emptySteering, state.target, time),
-            character: updateKinematic(steering, state.character, time),
-          };
-        }
-        */
-        /*
-        case "ARRIVE": {
-          const steering = getArriveSteering(state.character, state.target);
-          return {
-            ...state,
-            target: updateKinematic(emptySteering, state.target, time),
-            character: steering
-              ? updateKinematic(steering, state.character, time)
-              : state.character,
-          };
-        }
-        case "FOLLOW_PATH_CHASE_RABBIT": {
-          const steering = getChaseRabbitSteering(state.character, state.path);
-          return {
-            ...state,
-            target: updateKinematic(emptySteering, state.target, time),
-            character: steering
-              ? updateKinematic(steering, state.character, time)
-              : state.character,
-          };
-        }
-        case "FOLLOW_PATH_PREDICT": {
-          const steering = getPredictiveFollowSteering(
-            state.character,
-            state.path
-          );
-          return {
-            ...state,
-            target: updateKinematic(emptySteering, state.target, time),
-            character: steering
-              ? updateKinematic(steering, state.character, time)
-              : state.character,
-          };
-        }
-        case "SEPARATION": {
-          const steering = getSeparationSteering(state.character, state.target);
-          return {
-            ...state,
-            target: updateKinematic(emptySteering, state.target, time),
-            character: steering
-              ? updateKinematic(steering, state.character, time)
-              : state.character,
-          };
-        }
-        case "FACE": {
-          const steering = getFaceSteering(state.character, state.target);
-          return {
-            ...state,
-            target: updateKinematic(emptySteering, state.target, time),
-            character: updateKinematic(steering, state.character, time),
-          };
-        }
-        case "LOOK_WHERE_YOU_ARE_GOING": {
-          const steering = getLookWhereYouAreGoingSteering(
-            state.character,
-            state.target
-          );
-          return {
-            ...state,
-            target: updateKinematic(emptySteering, state.target, time),
-            character: updateKinematic(steering, state.character, time),
-          };
-        }
-        case "MATCH_VELOCITY": {
-          const steering = getMatchVelocitySteering(
-            state.character,
-            state.target
-          );
-          return {
-            ...state,
-            target: updateKinematic(emptySteering, state.target, time),
-            character: updateKinematic(steering, state.character, time),
-          };
-        }
-        case "PURSUE": {
-          const steering = getPursueSteering(state.character, state.target);
-          return {
-            ...state,
-            target: updateKinematic(emptySteering, state.target, time),
-            character: updateKinematic(steering, state.character, time),
-          };
-        }
-                     */
-
-        case "SEEK": {
-          return {
-            ...state,
-            characters: updateCharacter((key, char: Character) => {
-              const target = getCharacter(char.target, state.characters);
-
-              if (key === state.focussedCharacterId && target) {
-                const steering = getSeekSteering(
-                  char.kinematic,
-                  target.kinematic
-                );
-                return {
-                  ...char,
-                  kinematic: updateKinematic(steering, char.kinematic, time),
-                };
-              }
-              return char;
-            }, state.characters),
-          };
-        }
-        case "WANDER": {
-          return {
-            ...state,
-            characters: updateCharacter((key, char: Character) => {
-              if (key === state.focussedCharacterId) {
-                const steering = getWanderSteering(char.kinematic);
-                return {
-                  ...char,
-                  kinematic: updateKinematic(steering, char.kinematic, time),
-                };
-              }
-              return char;
-            }, state.characters),
-          };
-        }
-        default:
-          return state;
-      }
+      state.characters = new Map(
+        [...state.characters].map(([id, char]) => {
+          const nextChar = applyBehaviour(char, time, state.characters);
+          return [id, nextChar];
+        })
+      );
+      return state;
     }
 
     default:
