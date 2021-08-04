@@ -11,9 +11,12 @@ const $orient = document.querySelector("#orientation");
 const $rotate = document.querySelector("#rotation");
 const $posX = document.querySelector("#position-x");
 const $posZ = document.querySelector("#position-z");
+const $velX = document.querySelector("#velocity-x");
+const $velZ = document.querySelector("#velocity-z");
 const $behaviour = document.querySelector("#behaviour");
 
 const $btnPlay = document.querySelector("#play-pause");
+const $btnRefresh = document.querySelector("#refresh");
 const $btnReset = document.querySelector("#reset");
 
 export default function init(
@@ -27,8 +30,11 @@ export default function init(
     $rotate instanceof HTMLInputElement &&
     $posX instanceof HTMLInputElement &&
     $posZ instanceof HTMLInputElement &&
+    $velX instanceof HTMLInputElement &&
+    $velZ instanceof HTMLInputElement &&
     $behaviour instanceof HTMLSelectElement &&
     $btnPlay instanceof HTMLButtonElement &&
+    $btnRefresh instanceof HTMLButtonElement &&
     $btnReset instanceof HTMLButtonElement
   ) {
     const main = $canvas.getContext("2d");
@@ -43,6 +49,8 @@ export default function init(
         $rotate.value = focussedCharacter.kinematic.rotation.toString();
         $posX.value = focussedCharacter.kinematic.position[0].toString();
         $posZ.value = focussedCharacter.kinematic.position[1].toString();
+        $velX.value = focussedCharacter.kinematic.velocity[0].toString();
+        $velZ.value = focussedCharacter.kinematic.velocity[1].toString();
         $behaviour.value = focussedCharacter.behaviour;
       }
     };
@@ -109,6 +117,20 @@ export default function init(
         payload: (parseFloat(target.value): number),
       });
     });
+    $velX.addEventListener("input", (e: Event) => {
+      const target: HTMLInputElement = (e.target: any);
+      store.dispatch({
+        type: "VELX_CHANGED",
+        payload: (parseFloat(target.value): number),
+      });
+    });
+    $velZ.addEventListener("input", (e: Event) => {
+      const target: HTMLInputElement = (e.target: any);
+      store.dispatch({
+        type: "VELZ_CHANGED",
+        payload: (parseFloat(target.value): number),
+      });
+    });
 
     // ------------------------------------------------------------------------
     $btnPlay.addEventListener("click", () => {
@@ -116,6 +138,11 @@ export default function init(
       const state = store.getState();
       setDomValuesFromState(state);
       $btnPlay.textContent = $btnPlay.textContent === "Play" ? "Pause" : "Play";
+    });
+
+    $btnRefresh.addEventListener("click", () => {
+      const state = store.getState();
+      setDomValuesFromState(state);
     });
 
     $btnReset.addEventListener("click", () => {

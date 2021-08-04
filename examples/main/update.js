@@ -35,6 +35,8 @@ const BEHAVIOUR_CHANGED = "BEHAVIOUR_CHANGED";
 const ORIENTATION_CHANGED = "ORIENTATION_CHANGED";
 const POSX_CHANGED = "POSX_CHANGED";
 const POSZ_CHANGED = "POSZ_CHANGED";
+const VELX_CHANGED = "VELX_CHANGED";
+const VELZ_CHANGED = "VELZ_CHANGED";
 
 export type Action =
   | {|
@@ -58,6 +60,14 @@ export type Action =
       payload: number,
     |}
   | {|
+      type: typeof VELX_CHANGED,
+      payload: number,
+    |}
+  | {|
+      type: typeof VELZ_CHANGED,
+      payload: number,
+    |}
+  | {|
       type: typeof CANVAS_CLICKED,
       payload: Vector,
     |}
@@ -70,10 +80,21 @@ export type Action =
 
 // HELPERS --------------------------------------------------------------------
 
-const updateCharacter = (
-  fn: (CharacterId, Character) => Character,
-  map: CharacterMap
-): CharacterMap => new Map([...map].map(([key, cha]) => [key, fn(key, cha)]));
+const updateFocussedCharacter = (
+  state: State,
+  fn: (Character) => Character
+): State => {
+  if (!state.focussedCharacterId) {
+    return state;
+  }
+  const id = state.focussedCharacterId;
+  const char = state.characters.get(state.focussedCharacterId);
+  if (!char) {
+    return state;
+  }
+  state.characters.set(id, fn(char));
+  return state;
+};
 
 const getCharacter = (
   id: ?CharacterId,
@@ -261,62 +282,63 @@ export function update(state: State, action: Action): State {
     }
 
     case "BEHAVIOUR_CHANGED":
-      return {
-        ...state,
-        characters: updateCharacter(
-          (key, char) =>
-            key === state.focussedCharacterId
-              ? {
-                  ...char,
-                  behaviour: action.payload,
-                }
-              : char,
-          state.characters
-        ),
-      };
+      return updateFocussedCharacter(state, (char) => {
+        return {
+          ...char,
+          behaviour: action.payload,
+        };
+      });
 
     case "ORIENTATION_CHANGED":
-      return {
-        ...state,
-        characters: updateCharacter(
-          (key, char) =>
-            key === state.focussedCharacterId
-              ? {
-                  ...char,
-                  orientation: Math.PI * action.payload,
-                }
-              : char,
-          state.characters
-        ),
-      };
+      return updateFocussedCharacter(state, (char) => {
+        return {
+          ...char,
+          kinematic: {
+            ...char.kinematic,
+            orientation: Math.PI * action.payload,
+          },
+        };
+      });
     case "POSX_CHANGED":
-      return {
-        ...state,
-        characters: updateCharacter(
-          (key, char) =>
-            key === state.focussedCharacterId
-              ? {
-                  ...char,
-                  position: [action.payload, char.kinematic.position[1]],
-                }
-              : char,
-          state.characters
-        ),
-      };
+      return updateFocussedCharacter(state, (char) => {
+        return {
+          ...char,
+          kinematic: {
+            ...char.kinematic,
+            position: [action.payload, char.kinematic.position[1]],
+          },
+        };
+      });
     case "POSZ_CHANGED":
-      return {
-        ...state,
-        characters: updateCharacter(
-          (key, char) =>
-            key === state.focussedCharacterId
-              ? {
-                  ...char,
-                  position: [char.kinematic.position[0], action.payload],
-                }
-              : char,
-          state.characters
-        ),
-      };
+      return updateFocussedCharacter(state, (char) => {
+        return {
+          ...char,
+          kinematic: {
+            ...char.kinematic,
+            position: [char.kinematic.position[0], action.payload],
+          },
+        };
+      });
+    case "VELX_CHANGED":
+      return updateFocussedCharacter(state, (char) => {
+        return {
+          ...char,
+          kinematic: {
+            ...char.kinematic,
+            velocity: [action.payload, char.kinematic.velocity[1]],
+          },
+        };
+      });
+    case "VELZ_CHANGED":
+      return updateFocussedCharacter(state, (char) => {
+        return {
+          ...char,
+          kinematic: {
+            ...char.kinematic,
+            velocity: [char.kinematic.velocity[0], action.payload],
+          },
+        };
+      });
 
     case "TICK": {
       if (state.isPaused) {
