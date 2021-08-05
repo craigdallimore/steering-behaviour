@@ -47,15 +47,16 @@ export default function init(
         : null;
 
       if (focussedCharacter) {
+        const { kinematic } = focussedCharacter;
         $legend.textContent = `Character ${
           state.focussedCharacterId || "(not selected)"
         }`;
-        $orient.value = focussedCharacter.kinematic.orientation.toString();
-        $rotate.value = focussedCharacter.kinematic.rotation.toString();
-        $posX.value = focussedCharacter.kinematic.position[0].toString();
-        $posZ.value = focussedCharacter.kinematic.position[1].toString();
-        $velX.value = focussedCharacter.kinematic.velocity[0].toString();
-        $velZ.value = focussedCharacter.kinematic.velocity[1].toString();
+        $orient.value = Math.round(kinematic.orientation).toString();
+        $rotate.value = Math.round(kinematic.rotation).toString();
+        $posX.value = Math.round(kinematic.position[0]).toString();
+        $posZ.value = Math.round(kinematic.position[1]).toString();
+        $velX.value = Math.round(kinematic.velocity[0]).toString();
+        $velZ.value = Math.round(kinematic.velocity[1]).toString();
         $behaviour.value = focussedCharacter.behaviour;
       }
     };
