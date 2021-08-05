@@ -31,6 +31,7 @@ type CharacterMap = Map<CharacterId, Character>;
 const TICK = "TICK";
 const PLAY_BUTTON_CLICKED = "PLAY_BUTTON_CLICKED";
 const RESET_BUTTON_CLICKED = "RESET_BUTTON_CLICKED";
+const SET_TARGET_BUTTON_CLICKED = "SET_TARGET_BUTTON_CLICKED";
 const CANVAS_CLICKED = "CANVAS_CLICKED";
 const BEHAVIOUR_CHANGED = "BEHAVIOUR_CHANGED";
 const ORIENTATION_CHANGED = "ORIENTATION_CHANGED";
@@ -71,6 +72,9 @@ export type Action =
   | {|
       type: typeof CANVAS_CLICKED,
       payload: Vector,
+    |}
+  | {|
+      type: typeof SET_TARGET_BUTTON_CLICKED,
     |}
   | {|
       type: typeof PLAY_BUTTON_CLICKED,
@@ -255,9 +259,13 @@ const applyBehaviour = (
 
 export function update(state: State, action: Action): State {
   switch (action.type) {
+    case "SET_TARGET_BUTTON_CLICKED":
+      return {
+        ...state,
+        isSettingTarget: true,
+      };
     case "RESET_BUTTON_CLICKED":
       return {
-        isPaused: true,
         ...initialState,
       };
     case "PLAY_BUTTON_CLICKED":
@@ -268,7 +276,7 @@ export function update(state: State, action: Action): State {
     case "CANVAS_CLICKED": {
       const clickPosition: Vector = action.payload;
 
-      const focussedCharacterId = [...state.characters].reduce(
+      const clickedCharacterId = [...state.characters].reduce(
         (acc, [id, char]) => {
           const distanceToClick = distance(
             clickPosition,
@@ -279,9 +287,22 @@ export function update(state: State, action: Action): State {
         null
       );
 
+      if (state.isSettingTarget) {
+        const nextState = updateFocussedCharacter(state, (char) => {
+          return {
+            ...char,
+            target: clickedCharacterId,
+          };
+        });
+        return {
+          ...nextState,
+          isSettingTarget: false,
+        };
+      }
+
       return {
         ...state,
-        focussedCharacterId,
+        focussedCharacterId: clickedCharacterId,
       };
     }
 

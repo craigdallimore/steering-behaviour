@@ -26,6 +26,7 @@ export type SteeringBehaviour =
 
 export type State = {|
   isPaused: boolean,
+  isSettingTarget: boolean,
   focussedCharacterId: null | CharacterId,
   characters: Map<CharacterId, Character>,
   path: Path,
@@ -33,6 +34,7 @@ export type State = {|
 
 export const initialState: State = {
   isPaused: true,
+  isSettingTarget: false,
   focussedCharacterId: "aa",
   characters: new Map([
     [
