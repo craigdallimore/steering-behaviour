@@ -172,11 +172,9 @@ const applyBehaviour = (
       };
     }
     case "SEPARATION": {
-      const target = getCharacter(char.target, characters);
-      if (!target) {
-        return char;
-      }
-      const others = characters.entries.filter((ent) => ent !== char);
+      const others = [...characters.values()]
+        .filter((ent) => ent !== char)
+        .map((char) => char.kinematic);
       const steering = separation(char.kinematic, others);
       return {
         ...char,
