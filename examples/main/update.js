@@ -10,19 +10,19 @@ import {
 import { distance, type Vector } from "../../lib/vector.js";
 import type { PathId, Path } from "../../lib/path.js";
 import {
+  align,
+  arrive,
+  chaseRabbit,
   emptySteering,
-  getAlignSteering,
-  getArriveSteering,
-  getChaseRabbitSteering,
-  getFaceSteering,
-  getLookWhereYouAreGoingSteering,
-  getMatchVelocitySteering,
-  getPredictiveFollowSteering,
-  getPursueSteering,
-  getSeekSteering,
-  getSeparationSteering,
-  getWanderSteering,
-} from "../../src/steering.js";
+  face,
+  lookWhereYouAreGoing,
+  matchVelocity,
+  predictiveFollow,
+  pursue,
+  seek,
+  separation,
+  wander,
+} from "../../src/steering/index.js";
 import updateKinematic from "../../src/updateKinematic.js";
 
 // TYPES ----------------------------------------------------------------------
@@ -126,7 +126,7 @@ const applyBehaviour = (
       if (!target) {
         return char;
       }
-      const steering = getAlignSteering(char.kinematic, target.kinematic);
+      const steering = align(char.kinematic, target.kinematic);
       if (!steering) {
         return char;
       }
@@ -140,7 +140,7 @@ const applyBehaviour = (
       if (!target) {
         return char;
       }
-      const steering = getArriveSteering(char.kinematic, target.kinematic);
+      const steering = arrive(char.kinematic, target.kinematic);
       if (!steering) {
         return char;
       }
@@ -154,7 +154,7 @@ const applyBehaviour = (
       if (!path) {
         return char;
       }
-      const steering = getChaseRabbitSteering(char.kinematic, path);
+      const steering = chaseRabbit(char.kinematic, path);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
@@ -165,7 +165,7 @@ const applyBehaviour = (
       if (!path) {
         return char;
       }
-      const steering = getPredictiveFollowSteering(char.kinematic, path);
+      const steering = predictiveFollow(char.kinematic, path);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
@@ -176,7 +176,7 @@ const applyBehaviour = (
       if (!target) {
         return char;
       }
-      const steering = getSeparationSteering(char.kinematic, target.kinematic);
+      const steering = separation(char.kinematic, target.kinematic);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
@@ -187,7 +187,7 @@ const applyBehaviour = (
       if (!target) {
         return char;
       }
-      const steering = getFaceSteering(char.kinematic, target.kinematic);
+      const steering = face(char.kinematic, target.kinematic);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
@@ -198,10 +198,7 @@ const applyBehaviour = (
       if (!target) {
         return char;
       }
-      const steering = getLookWhereYouAreGoingSteering(
-        char.kinematic,
-        target.kinematic
-      );
+      const steering = lookWhereYouAreGoing(char.kinematic, target.kinematic);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
@@ -213,10 +210,7 @@ const applyBehaviour = (
         return char;
       }
 
-      const steering = getMatchVelocitySteering(
-        char.kinematic,
-        target.kinematic
-      );
+      const steering = matchVelocity(char.kinematic, target.kinematic);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
@@ -227,7 +221,7 @@ const applyBehaviour = (
       if (!target) {
         return char;
       }
-      const steering = getPursueSteering(char.kinematic, target.kinematic);
+      const steering = pursue(char.kinematic, target.kinematic);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
@@ -238,14 +232,14 @@ const applyBehaviour = (
       if (!target) {
         return char;
       }
-      const steering = getSeekSteering(char.kinematic, target.kinematic);
+      const steering = seek(char.kinematic, target.kinematic);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
       };
     }
     case "WANDER": {
-      const steering = getWanderSteering(char.kinematic);
+      const steering = wander(char.kinematic);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
