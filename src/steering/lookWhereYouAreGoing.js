@@ -6,19 +6,12 @@ import type { Steering } from "./index.js";
 import { align } from "./align.js";
 import { emptySteering } from "./index.js";
 
-export function lookWhereYouAreGoing(
-  character: Kinematic,
-  target: Kinematic
-): Steering {
+export function lookWhereYouAreGoing(character: Kinematic): Steering {
   if (length(character.velocity) === 0) {
     return emptySteering;
   }
 
   const orientation = Math.atan2(character.velocity[0], -character.velocity[1]);
-  const nextTarget = {
-    ...target,
-    orientation,
-  };
 
-  return align(character, nextTarget);
+  return align(character, orientation);
 }

@@ -38,7 +38,7 @@ export function predictiveFollow(character: Kinematic, path: Path): Steering {
     velocity: [0, 0],
   };
 
-  const { angular } = lookWhereYouAreGoing(character, target);
+  const { angular } = lookWhereYouAreGoing(character);
   const { linear } = seek(character, target);
   return { angular, linear };
 }

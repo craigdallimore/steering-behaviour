@@ -126,7 +126,7 @@ const applyBehaviour = (
       if (!target) {
         return char;
       }
-      const steering = align(char.kinematic, target.kinematic);
+      const steering = align(char.kinematic, target.kinematic.orientation);
       if (!steering) {
         return char;
       }
@@ -176,7 +176,8 @@ const applyBehaviour = (
       if (!target) {
         return char;
       }
-      const steering = separation(char.kinematic, target.kinematic);
+      const others = characters.entries.filter((ent) => ent !== char);
+      const steering = separation(char.kinematic, others);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
@@ -194,11 +195,7 @@ const applyBehaviour = (
       };
     }
     case "LOOK_WHERE_YOU_ARE_GOING": {
-      const target = getCharacter(char.target, characters);
-      if (!target) {
-        return char;
-      }
-      const steering = lookWhereYouAreGoing(char.kinematic, target.kinematic);
+      const steering = lookWhereYouAreGoing(char.kinematic);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),

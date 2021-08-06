@@ -14,7 +14,7 @@ function mapToRange(orientation: number): number {
   return nextOrientation % (Math.PI * 2);
 }
 
-export function align(character: Kinematic, target: Kinematic): Steering {
+export function align(character: Kinematic, orientation: number): Steering {
   const maxAngularAcceleration = 140;
   const maxRotation = 120;
   const decelerationTolerance = 2;
@@ -22,7 +22,7 @@ export function align(character: Kinematic, target: Kinematic): Steering {
   const timeToTarget = 0.1;
   const linear = [0, 0];
 
-  const rotation = mapToRange(target.orientation - character.orientation);
+  const rotation = mapToRange(orientation - character.orientation);
   const rotationSize = Math.abs(rotation);
 
   if (rotationSize < alignTolerance) {

@@ -15,10 +15,5 @@ export function face(character: Kinematic, target: Kinematic): Steering {
 
   const nextOrientation = Math.atan2(direction[0], -direction[1]);
 
-  const nextTarget = {
-    ...target,
-    orientation: nextOrientation,
-  };
-
-  return align(character, nextTarget);
+  return align(character, nextOrientation);
 }
