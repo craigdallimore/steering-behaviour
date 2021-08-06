@@ -15,14 +15,16 @@ export type SteeringBehaviour =
   | "NONE"
   | "ALIGN"
   | "ARRIVE"
+  | "EVADE"
   | "FACE"
+  | "FLEE"
+  | "FOLLOW_PATH_CHASE_RABBIT"
+  | "FOLLOW_PATH_PREDICT"
   | "LOOK_WHERE_YOU_ARE_GOING"
   | "MATCH_VELOCITY"
   | "PURSUE"
   | "SEEK"
   | "SEPARATION"
-  | "FOLLOW_PATH_CHASE_RABBIT"
-  | "FOLLOW_PATH_PREDICT"
   | "WANDER";
 
 export type State = {|

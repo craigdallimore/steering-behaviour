@@ -13,11 +13,11 @@ Schneider and Eberly [2003].
   - [ ] Describe the various behaviours
 
 - [ ] Fix Wander implementation
-- [ ] Separation behaviour should work with all targets
 - [ ] Add collision avoidance
 - [ ] Add obstacle avoidance
-- [ ] Add evade
-- [ ] Add flee
+- [x] Separation behaviour should work with all targets
+- [x] Add evade
+- [x] Add flee
 
 ## Vector directions
 

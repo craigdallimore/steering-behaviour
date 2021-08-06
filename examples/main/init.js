@@ -27,9 +27,9 @@ const getClassname = (behaviour: SteeringBehaviour): string => {
   switch (behaviour) {
     case "ALIGN":
     case "ARRIVE":
-    case "SEPARATION":
+    case "EVADE":
+    case "FLEE":
     case "FACE":
-    case "LOOK_WHERE_YOU_ARE_GOING":
     case "MATCH_VELOCITY":
     case "PURSUE":
     case "SEEK":
@@ -126,9 +126,11 @@ export default function init(
       switch (value) {
         case "ALIGN":
         case "ARRIVE":
+        case "EVADE":
+        case "FACE":
+        case "FLEE":
         case "FOLLOW_PATH_CHASE_RABBIT":
         case "FOLLOW_PATH_PREDICT":
-        case "FACE":
         case "LOOK_WHERE_YOU_ARE_GOING":
         case "MATCH_VELOCITY":
         case "NONE":

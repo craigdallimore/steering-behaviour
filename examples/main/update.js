@@ -14,7 +14,9 @@ import {
   arrive,
   chaseRabbit,
   emptySteering,
+  evade,
   face,
+  flee,
   lookWhereYouAreGoing,
   matchVelocity,
   predictiveFollow,
@@ -217,6 +219,28 @@ const applyBehaviour = (
         return char;
       }
       const steering = pursue(char.kinematic, target.kinematic);
+      return {
+        ...char,
+        kinematic: updateKinematic(steering, char.kinematic, time),
+      };
+    }
+    case "EVADE": {
+      const target = getCharacter(char.target, characters);
+      if (!target) {
+        return char;
+      }
+      const steering = evade(char.kinematic, target.kinematic);
+      return {
+        ...char,
+        kinematic: updateKinematic(steering, char.kinematic, time),
+      };
+    }
+    case "FLEE": {
+      const target = getCharacter(char.target, characters);
+      if (!target) {
+        return char;
+      }
+      const steering = flee(char.kinematic, target.kinematic);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
