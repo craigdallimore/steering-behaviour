@@ -8,7 +8,7 @@ import {
   type Vector,
 } from "../../lib/vector.js";
 import type { Kinematic } from "../../lib/kinematic.js";
-import type { Steering } from "./index.js";
+import type { Steering } from "./steering.js";
 import { face } from "./face.js";
 
 export function wander(character: Kinematic): Steering {

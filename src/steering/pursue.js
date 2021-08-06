@@ -2,7 +2,7 @@
 
 import { subtract, multiply, add, length } from "../../lib/vector.js";
 import type { Kinematic } from "../../lib/kinematic.js";
-import type { Steering } from "./index.js";
+import type { Steering } from "./steering.js";
 import { seek } from "./seek.js";
 
 export function pursue(character: Kinematic, target: Kinematic): Steering {

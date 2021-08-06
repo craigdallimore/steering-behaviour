@@ -1,7 +1,7 @@
 // @flow
 
 import type { Kinematic } from "../../lib/kinematic.js";
-import type { Steering } from "./index.js";
+import type { Steering } from "./steering.js";
 
 function mapToRange(orientation: number): number {
   // To rotate all the way clockwise, use the value 6.283

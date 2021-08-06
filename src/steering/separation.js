@@ -8,7 +8,7 @@ import {
   normalise,
 } from "../../lib/vector.js";
 import type { Kinematic } from "../../lib/kinematic.js";
-import type { Steering } from "./index.js";
+import type { Steering } from "./steering.js";
 import { lookWhereYouAreGoing } from "./lookWhereYouAreGoing.js";
 
 export function separation(
