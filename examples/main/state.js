@@ -1,6 +1,6 @@
 // @flow
 import type { Kinematic } from "../../lib/kinematic.js";
-import type { Path } from "../../lib/path.js";
+import type { Path, PathId } from "../../lib/path.js";
 
 export type CharacterId = string;
 
@@ -8,6 +8,7 @@ export type Character = {
   kinematic: Kinematic,
   behaviour: SteeringBehaviour,
   target: CharacterId | null,
+  path: PathId | null,
 };
 
 export type SteeringBehaviour =
@@ -29,7 +30,7 @@ export type State = {|
   isSettingTarget: boolean,
   focussedCharacterId: null | CharacterId,
   characters: Map<CharacterId, Character>,
-  path: Path,
+  paths: Map<PathId, Path>,
 |};
 
 export const initialState: State = {
@@ -46,8 +47,9 @@ export const initialState: State = {
           orientation: 0.5 * Math.PI,
           rotation: 0,
         },
-        behaviour: "NONE",
+        behaviour: "FOLLOW_PATH_PREDICT",
         target: "bb",
+        path: "p1",
       },
     ],
     [
@@ -59,17 +61,23 @@ export const initialState: State = {
           orientation: 0.5 * Math.PI,
           rotation: 0,
         },
-        behaviour: "NONE",
-        target: null,
+        behaviour: "PURSUE",
+        target: "aa",
+        path: null,
       },
     ],
   ]),
-  path: [
-    [600, 50],
-    [300, 150],
-    [200, 350],
-    [300, 600],
-    [600, 650],
-    [625, 500],
-  ],
+  paths: new Map([
+    [
+      "p1",
+      [
+        [600, 50],
+        [300, 150],
+        [200, 350],
+        [300, 600],
+        [600, 650],
+        [625, 500],
+      ],
+    ],
+  ]),
 };

@@ -7,16 +7,17 @@ Schneider and Eberly [2003].
 
 ## Todo
 
-- [x] Clicking off a character will unfocus it
 - [ ] Add steering configs
 
   - [ ] Choosing a behaviour will display a behaviour-specific fieldset
   - [ ] Describe the various behaviours
 
 - [ ] Fix Wander implementation
-- [ ] Implement follow path
-  - [ ] Chase the rabbit
-  - [ ] Predictive path following
+- [ ] Separation behaviour should work with all targets
+- [ ] Add collision avoidance
+- [ ] Add obstacle avoidance
+- [ ] Add evade
+- [ ] Add flee
 
 ## Vector directions
 

@@ -2,9 +2,11 @@
 
 import drawArrow from "../../lib/drawArrow.js";
 import drawGrid from "../../lib/drawGrid.js";
+import drawPath from "../../lib/drawPath.js";
 import drawSelectionBox from "../../lib/drawSelectionBox.js";
 
 import type { State, Character } from "./state.js";
+import type { Path } from "../../lib/path.js";
 
 export default function runEffects(
   dom: {
@@ -17,6 +19,10 @@ export default function runEffects(
 
   state.characters.forEach((cha: Character) => {
     drawArrow(dom.main, cha.kinematic);
+  });
+
+  state.paths.forEach((p: Path) => {
+    drawPath(dom.main, p, "rgba(178, 223, 219, 1)");
   });
 
   if (state.focussedCharacterId) {

@@ -8,15 +8,16 @@ import {
   type Character,
 } from "./state.js";
 import { distance, type Vector } from "../../lib/vector.js";
+import type { PathId, Path } from "../../lib/path.js";
 import {
   emptySteering,
   getAlignSteering,
   getArriveSteering,
-  //getChaseRabbitSteering,
+  getChaseRabbitSteering,
   getFaceSteering,
   getLookWhereYouAreGoingSteering,
   getMatchVelocitySteering,
-  //getPredictiveFollowSteering,
+  getPredictiveFollowSteering,
   getPursueSteering,
   getSeekSteering,
   getSeparationSteering,
@@ -27,6 +28,7 @@ import updateKinematic from "../../src/updateKinematic.js";
 // TYPES ----------------------------------------------------------------------
 
 type CharacterMap = Map<CharacterId, Character>;
+type PathMap = Map<PathId, Path>;
 
 const TICK = "TICK";
 const PLAY_BUTTON_CLICKED = "PLAY_BUTTON_CLICKED";
@@ -115,7 +117,8 @@ const getCharacter = (
 const applyBehaviour = (
   char: Character,
   time: number,
-  characters: CharacterMap
+  characters: CharacterMap,
+  paths: PathMap
 ): Character => {
   switch (char.behaviour) {
     case "ALIGN": {
@@ -146,25 +149,28 @@ const applyBehaviour = (
         kinematic: updateKinematic(steering, char.kinematic, time),
       };
     }
-    /*
     case "FOLLOW_PATH_CHASE_RABBIT": {
-      const steering = getChaseRabbitSteering(char.kinematic, state.path);
+      const path = char.path ? paths.get(char.path) : null;
+      if (!path) {
+        return char;
+      }
+      const steering = getChaseRabbitSteering(char.kinematic, path);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
       };
     }
     case "FOLLOW_PATH_PREDICT": {
-      const steering = getPredictiveFollowSteering(
-        char.kinematic,
-        state.path
-      );
+      const path = char.path ? paths.get(char.path) : null;
+      if (!path) {
+        return char;
+      }
+      const steering = getPredictiveFollowSteering(char.kinematic, path);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
       };
     }
-    */
     case "SEPARATION": {
       const target = getCharacter(char.target, characters);
       if (!target) {
@@ -373,7 +379,12 @@ export function update(state: State, action: Action): State {
 
       state.characters = new Map(
         [...state.characters].map(([id, char]) => {
-          const nextChar = applyBehaviour(char, time, state.characters);
+          const nextChar = applyBehaviour(
+            char,
+            time,
+            state.characters,
+            state.paths
+          );
           return [id, nextChar];
         })
       );
