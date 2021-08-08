@@ -11,7 +11,7 @@ import type { Kinematic } from "../../lib/kinematic.js";
 import type { Steering } from "./steering.js";
 import { face } from "./face.js";
 
-export function wander(character: Kinematic): Steering {
+export function wander(kinematic: Kinematic): Steering {
   // Config
 
   const wanderOffset = 50;
@@ -19,8 +19,8 @@ export function wander(character: Kinematic): Steering {
   const maxAcceleration = 25;
 
   const wanderPosition: Vector = add(
-    character.position,
-    multiply(radiansToVector(character.orientation), wanderOffset)
+    kinematic.position,
+    multiply(radiansToVector(kinematic.orientation), wanderOffset)
   );
 
   const wanderOrientation = Math.random() * 360;
@@ -30,10 +30,10 @@ export function wander(character: Kinematic): Steering {
     multiply(degreesToVector(wanderOrientation), wanderRadius * 2)
   );
 
-  const { angular } = face(character, nextTargetPosition);
+  const { angular } = face(kinematic, nextTargetPosition);
 
   const linear = multiply(
-    radiansToVector(character.orientation),
+    radiansToVector(kinematic.orientation),
     maxAcceleration
   );
 

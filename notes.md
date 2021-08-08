@@ -15,9 +15,6 @@ Schneider and Eberly [2003].
 - [ ] Fix Wander implementation
 - [ ] Add collision avoidance
 - [ ] Add obstacle avoidance
-- [x] Separation behaviour should work with all targets
-- [x] Add evade
-- [x] Add flee
 
 ## Vector directions
 
