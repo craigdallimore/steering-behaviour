@@ -30,12 +30,7 @@ export function wander(character: Kinematic): Steering {
     multiply(degreesToVector(wanderOrientation), wanderRadius * 2)
   );
 
-  const { angular } = face(character, {
-    position: nextTargetPosition,
-    velocity: [0, 0],
-    orientation: 0,
-    rotation: 0,
-  });
+  const { angular } = face(character, nextTargetPosition);
 
   const linear = multiply(
     radiansToVector(character.orientation),

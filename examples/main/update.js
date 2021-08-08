@@ -188,7 +188,7 @@ const applyBehaviour = (
       if (!target) {
         return char;
       }
-      const steering = face(char.kinematic, target.kinematic);
+      const steering = face(char.kinematic, target.kinematic.position);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
