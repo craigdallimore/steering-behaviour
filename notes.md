@@ -7,14 +7,12 @@ Schneider and Eberly [2003].
 
 ## Todo
 
+- [ ] Add collision avoidance
+- [ ] Add obstacle avoidance
 - [ ] Add steering configs
 
   - [ ] Choosing a behaviour will display a behaviour-specific fieldset
   - [ ] Describe the various behaviours
-
-- [ ] Fix Wander implementation
-- [ ] Add collision avoidance
-- [ ] Add obstacle avoidance
 
 ## Vector directions
 

@@ -13,6 +13,7 @@ import {
   align,
   arrive,
   chaseRabbit,
+  collisionAvoidance,
   emptySteering,
   evade,
   face,
@@ -146,6 +147,16 @@ const applyBehaviour = (
       if (!steering) {
         return char;
       }
+      return {
+        ...char,
+        kinematic: updateKinematic(steering, char.kinematic, time),
+      };
+    }
+    case "COLLISION_AVOIDANCE": {
+      const others = [...characters.values()]
+        .filter((ent) => ent !== char)
+        .map((char) => char.kinematic);
+      const steering = collisionAvoidance(char.kinematic, others);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),

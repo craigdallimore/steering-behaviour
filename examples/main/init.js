@@ -126,6 +126,7 @@ export default function init(
       switch (value) {
         case "ALIGN":
         case "ARRIVE":
+        case "COLLISION_AVOIDANCE":
         case "EVADE":
         case "FACE":
         case "FLEE":
