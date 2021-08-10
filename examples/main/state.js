@@ -15,6 +15,7 @@ export type SteeringBehaviour =
   | "NONE"
   | "ALIGN"
   | "ARRIVE"
+  | "COLLISION_AVOIDANCE"
   | "EVADE"
   | "FACE"
   | "FLEE"
@@ -44,30 +45,86 @@ export const initialState: State = {
       "aa",
       {
         kinematic: {
-          position: [100, 120],
-          velocity: [20, 0],
-          orientation: 0.5 * Math.PI,
+          position: [660, 390],
+          velocity: [-20, 0],
+          orientation: 1.5 * Math.PI,
           rotation: 0,
         },
-        behaviour: "SEPARATION",
+        behaviour: "COLLISION_AVOIDANCE",
         target: null,
         path: null,
       },
     ],
-    [
-      "bb",
+    ...["b", "c", "d", "e", "f", "g"].map((l, i) => [
+      l,
       {
         kinematic: {
-          position: [200, 100],
-          velocity: [0, 0],
+          position: [400, 320 + i * 30],
+          velocity: [8, -1],
           orientation: 0.5 * Math.PI,
           rotation: 0,
         },
-        behaviour: "NONE",
+        behaviour: "COLLISION_AVOIDANCE",
         target: null,
         path: null,
       },
-    ],
+    ]),
+    ...["b", "c", "d", "e", "f", "g"].map((l, i) => [
+      l + "a",
+      {
+        kinematic: {
+          position: [440, 300 + i * 30],
+          velocity: [9, 1],
+          orientation: 0.5 * Math.PI,
+          rotation: 0,
+        },
+        behaviour: "COLLISION_AVOIDANCE",
+        target: null,
+        path: null,
+      },
+    ]),
+    ...["b", "c", "d", "e", "f", "g"].map((l, i) => [
+      l + "b",
+      {
+        kinematic: {
+          position: [480, 315 + i * 30],
+          velocity: [10, -1],
+          orientation: 0.5 * Math.PI,
+          rotation: 0,
+        },
+        behaviour: "COLLISION_AVOIDANCE",
+        target: null,
+        path: null,
+      },
+    ]),
+    ...["b", "c", "d", "e", "f", "g"].map((l, i) => [
+      l + "c",
+      {
+        kinematic: {
+          position: [520, 300 + i * 30],
+          velocity: [11, 1],
+          orientation: 0.5 * Math.PI,
+          rotation: 0,
+        },
+        behaviour: "COLLISION_AVOIDANCE",
+        target: null,
+        path: null,
+      },
+    ]),
+    ...["b", "c", "d", "e", "f", "g"].map((l, i) => [
+      l + "d",
+      {
+        kinematic: {
+          position: [560, 315 + i * 30],
+          velocity: [12, -1],
+          orientation: 0.5 * Math.PI,
+          rotation: 0,
+        },
+        behaviour: "COLLISION_AVOIDANCE",
+        target: null,
+        path: null,
+      },
+    ]),
   ]),
   paths: new Map([
     [
