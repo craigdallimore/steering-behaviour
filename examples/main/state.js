@@ -23,6 +23,7 @@ export type SteeringBehaviour =
   | "FOLLOW_PATH_PREDICT"
   | "LOOK_WHERE_YOU_ARE_GOING"
   | "MATCH_VELOCITY"
+  | "OBSTACLE_AVOIDANCE"
   | "PURSUE"
   | "SEEK"
   | "SEPARATION"
@@ -50,83 +51,14 @@ export const initialState: State = {
           orientation: 1.5 * Math.PI,
           rotation: 0,
         },
-        behaviour: "COLLISION_AVOIDANCE",
+        behaviour: "NONE",
         target: null,
         path: null,
       },
     ],
-    ...["b", "c", "d", "e", "f", "g"].map((l, i) => [
-      l,
-      {
-        kinematic: {
-          position: [400, 320 + i * 30],
-          velocity: [8, -1],
-          orientation: 0.5 * Math.PI,
-          rotation: 0,
-        },
-        behaviour: "COLLISION_AVOIDANCE",
-        target: null,
-        path: null,
-      },
-    ]),
-    ...["b", "c", "d", "e", "f", "g"].map((l, i) => [
-      l + "a",
-      {
-        kinematic: {
-          position: [440, 300 + i * 30],
-          velocity: [9, 1],
-          orientation: 0.5 * Math.PI,
-          rotation: 0,
-        },
-        behaviour: "COLLISION_AVOIDANCE",
-        target: null,
-        path: null,
-      },
-    ]),
-    ...["b", "c", "d", "e", "f", "g"].map((l, i) => [
-      l + "b",
-      {
-        kinematic: {
-          position: [480, 315 + i * 30],
-          velocity: [10, -1],
-          orientation: 0.5 * Math.PI,
-          rotation: 0,
-        },
-        behaviour: "COLLISION_AVOIDANCE",
-        target: null,
-        path: null,
-      },
-    ]),
-    ...["b", "c", "d", "e", "f", "g"].map((l, i) => [
-      l + "c",
-      {
-        kinematic: {
-          position: [520, 300 + i * 30],
-          velocity: [11, 1],
-          orientation: 0.5 * Math.PI,
-          rotation: 0,
-        },
-        behaviour: "COLLISION_AVOIDANCE",
-        target: null,
-        path: null,
-      },
-    ]),
-    ...["b", "c", "d", "e", "f", "g"].map((l, i) => [
-      l + "d",
-      {
-        kinematic: {
-          position: [560, 315 + i * 30],
-          velocity: [12, -1],
-          orientation: 0.5 * Math.PI,
-          rotation: 0,
-        },
-        behaviour: "COLLISION_AVOIDANCE",
-        target: null,
-        path: null,
-      },
-    ]),
   ]),
   paths: new Map([
+    /*
     [
       "p1",
       [
@@ -138,5 +70,6 @@ export const initialState: State = {
         [625, 500],
       ],
     ],
+    */
   ]),
 };
