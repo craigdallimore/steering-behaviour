@@ -20,6 +20,7 @@ import {
   flee,
   lookWhereYouAreGoing,
   matchVelocity,
+  obstacleAvoidance,
   predictiveFollow,
   pursue,
   seek,
@@ -219,6 +220,17 @@ const applyBehaviour = (
       }
 
       const steering = matchVelocity(char.kinematic, target.kinematic);
+      return {
+        ...char,
+        kinematic: updateKinematic(steering, char.kinematic, time),
+      };
+    }
+    case "OBSTACLE_AVOIDANCE": {
+      const target = getCharacter(char.target, characters);
+      if (!target) {
+        return char;
+      }
+      const steering = obstacleAvoidance(char.kinematic);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),

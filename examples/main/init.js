@@ -64,6 +64,8 @@ export default function init(
   ) {
     const main = $canvas.getContext("2d");
 
+    $behaviour.size = $behaviour.children.length;
+
     const setDomValuesFromState = (state: State): void => {
       const focussedCharacter = state.focussedCharacterId
         ? state.characters.get(state.focussedCharacterId)
@@ -134,6 +136,7 @@ export default function init(
         case "FOLLOW_PATH_PREDICT":
         case "LOOK_WHERE_YOU_ARE_GOING":
         case "MATCH_VELOCITY":
+        case "OBSTACLE_AVOIDANCE":
         case "NONE":
         case "PURSUE":
         case "SEEK":

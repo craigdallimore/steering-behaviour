@@ -7,7 +7,7 @@ Schneider and Eberly [2003].
 
 ## Todo
 
-- [ ] Add collision avoidance
+- [x] Add collision avoidance
 - [ ] Add obstacle avoidance
 - [ ] Add steering configs
 

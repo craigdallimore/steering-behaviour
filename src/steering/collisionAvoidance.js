@@ -19,11 +19,11 @@ export function collisionAvoidance(
   // config
 
   // Holds the maximum acceleration
-  const maxAcceleration = 25;
+  const maxAcceleration = 5;
 
   // Holds the collision radius of a character (we assume all characters have the
   // same radius here)
-  const radius = 10;
+  const radius = 7.5;
 
   const init = {
     shortestTime: Infinity,

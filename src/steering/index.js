@@ -10,6 +10,7 @@ import { flee } from "./flee.js";
 import { lookWhereYouAreGoing } from "./lookWhereYouAreGoing.js";
 import { matchVelocity } from "./matchVelocity.js";
 import { predictiveFollow } from "./predictiveFollow.js";
+import { obstacleAvoidance } from "./obstacleAvoidance.js";
 import { pursue } from "./pursue.js";
 import { seek } from "./seek.js";
 import { separation } from "./separation.js";
@@ -26,6 +27,7 @@ export {
   flee,
   lookWhereYouAreGoing,
   matchVelocity,
+  obstacleAvoidance,
   predictiveFollow,
   pursue,
   seek,
