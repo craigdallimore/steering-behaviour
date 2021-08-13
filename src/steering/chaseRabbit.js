@@ -21,14 +21,7 @@ export function chaseRabbit(character: Kinematic, path: Path): Steering {
   // Get the target position
   const targetPosition = getPosition(path, targetParam);
 
-  const target = {
-    orientation: 0,
-    rotation: 0,
-    position: targetPosition,
-    velocity: [0, 0],
-  };
-
   const { angular } = lookWhereYouAreGoing(character);
-  const { linear } = seek(character, target);
+  const { linear } = seek(character, targetPosition);
   return { angular, linear };
 }

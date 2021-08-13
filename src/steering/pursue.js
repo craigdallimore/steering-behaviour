@@ -21,10 +21,5 @@ export function pursue(character: Kinematic, target: Kinematic): Steering {
     multiply(target.velocity, prediction)
   );
 
-  const nextTarget = {
-    ...target,
-    position: nextTargetPosition,
-  };
-
-  return seek(character, nextTarget);
+  return seek(character, nextTargetPosition);
 }
