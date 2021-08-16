@@ -3,10 +3,12 @@
 import drawArrow from "../../lib/drawArrow.js";
 import drawGrid from "../../lib/drawGrid.js";
 import drawPath from "../../lib/drawPath.js";
+import drawShape from "../../lib/drawShape.js";
 import drawSelectionBox from "../../lib/drawSelectionBox.js";
 
 import type { State, Character } from "./state.js";
 import type { Path } from "../../lib/path.js";
+import type { Shape } from "../../lib/shape.js";
 
 export default function runEffects(
   dom: {
@@ -23,6 +25,10 @@ export default function runEffects(
 
   state.paths.forEach((p: Path) => {
     drawPath(dom.main, p, "rgba(178, 223, 219, 1)");
+  });
+
+  state.shapes.forEach((s: Shape) => {
+    drawShape(dom.main, s, "rgba(74, 20, 140, 1)", "rgba(237, 231, 246, 1)");
   });
 
   if (state.focussedCharacterId) {

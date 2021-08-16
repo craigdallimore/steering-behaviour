@@ -1,6 +1,7 @@
 // @flow
 import type { Kinematic } from "../../lib/kinematic.js";
 import type { Path, PathId } from "../../lib/path.js";
+import type { Shape, ShapeId } from "../../lib/shape.js";
 
 export type CharacterId = string;
 
@@ -35,6 +36,7 @@ export type State = {|
   focussedCharacterId: null | CharacterId,
   characters: Map<CharacterId, Character>,
   paths: Map<PathId, Path>,
+  shapes: Map<ShapeId, Shape>,
 |};
 
 export const initialState: State = {
@@ -54,6 +56,22 @@ export const initialState: State = {
         behaviour: "NONE",
         target: null,
         path: null,
+      },
+    ],
+  ]),
+  shapes: new Map([
+    [
+      "s1",
+      {
+        path: {
+          position: [400, 400],
+          points: [
+            [-10, -10],
+            [-10, 10],
+            [10, 10],
+            [10, -10],
+          ],
+        },
       },
     ],
   ]),

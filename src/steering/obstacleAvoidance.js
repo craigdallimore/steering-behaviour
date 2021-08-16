@@ -12,6 +12,11 @@ type Collision = {
 };
 
 function getCollision(position: Vector, ray: Vector): Collision | null {
+  // To work out:
+  // - how to represent an obstacle (suppose it is a list of 3 points or more)
+  // - how to find the intersection of the ray and the obstacle (if one exists)
+  // - how to find the normal
+
   return null;
 }
 
