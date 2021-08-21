@@ -4,6 +4,10 @@ import { add, multiply, normalise } from "../../lib/vector.js";
 import type { Kinematic } from "../../lib/kinematic.js";
 import type { Steering } from "./steering.js";
 import type { Vector } from "../../lib/vector.js";
+import type { Segment } from "../../lib/path.js";
+import type { Shape } from "../../lib/shape.js";
+import { findIntersection } from "../../lib/shape.js";
+
 import { seek } from "./seek.js";
 
 type Collision = {
@@ -11,16 +15,42 @@ type Collision = {
   normal: Vector,
 };
 
-function getCollision(position: Vector, ray: Vector): Collision | null {
+export function getCollision(
+  position: Vector,
+  ray: Vector,
+  shape: Shape
+): Collision | null {
+  // The line extending from the character
+  const seg: Segment = [position, add(ray, position)];
+
+  const intersection = findIntersection(seg, shape);
+
+  if (intersection) {
+    /*
+    const edge = intersection.segment;
+    const v = subtract(edge[1], edge[0]);
+    const u = [edge[1][1] - edge[0][1], edge[0][0] - edge[1][0]];
+
+    const n = Math.sqrt(dot(u, u));
+    // const dir = dot(
+    */
+
+    return {
+      position: intersection.point,
+      normal: [0, 0],
+    };
+  }
+
   // To work out:
-  // - how to represent an obstacle (suppose it is a list of 3 points or more)
-  // - how to find the intersection of the ray and the obstacle (if one exists)
   // - how to find the normal
 
   return null;
 }
 
-export function obstacleAvoidance(character: Kinematic): Steering {
+export function obstacleAvoidance(
+  character: Kinematic,
+  shape: Shape
+): Steering {
   // Config
 
   // Holds the minimum distance to a wall (i.e., how far to avoid collision)
@@ -37,7 +67,7 @@ export function obstacleAvoidance(character: Kinematic): Steering {
   const rayVector = multiply(normalise(character.velocity), lookahead);
 
   // Find the collision
-  const collision = getCollision(character.position, rayVector);
+  const collision = getCollision(character.position, rayVector, shape);
 
   // If have no collision, do nothing
   if (!collision) {
