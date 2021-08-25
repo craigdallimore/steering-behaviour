@@ -1,6 +1,12 @@
 // @flow
 
-import { add, multiply, normalise } from "../../lib/vector.js";
+import {
+  add,
+  distance,
+  multiply,
+  subtract,
+  normalise,
+} from "../../lib/vector.js";
 import type { Kinematic } from "../../lib/kinematic.js";
 import type { Steering } from "./steering.js";
 import type { Vector } from "../../lib/vector.js";
@@ -15,34 +21,43 @@ type Collision = {
   normal: Vector,
 };
 
+export function getNormals([a, b]: Segment): [Vector, Vector] {
+  const [dx, dy] = subtract(a, b);
+  return [
+    [-dy, dx],
+    [dy, -dx],
+  ];
+}
+
 export function getCollision(
-  position: Vector,
+  characterPosition: Vector,
   ray: Vector,
   shape: Shape
 ): Collision | null {
   // The line extending from the character
-  const seg: Segment = [position, add(ray, position)];
+  const seg: Segment = [characterPosition, add(ray, characterPosition)];
 
   const intersection = findFirstIntersection(seg, shape);
 
   if (intersection) {
-    /*
-    const edge = intersection.segment;
-    const v = subtract(edge[1], edge[0]);
-    const u = [edge[1][1] - edge[0][1], edge[0][0] - edge[1][0]];
+    // Here we get the normals for the intersected segment
+    const normals = getNormals(intersection.segment);
 
-    const n = Math.sqrt(dot(u, u));
-    // const dir = dot(
-    */
+    // We want the normal on the same side as the character
+    const closestNormal =
+      distance(normals[0], characterPosition) <
+      distance(normals[1], characterPosition)
+        ? normals[0]
+        : normals[1];
+
+    // Let's define the normal as a vector relative to the intersection point,
+    // with a distance of 1, on the character side of the intersection.
 
     return {
       position: intersection.point,
-      normal: [0, 0],
+      normal: normalise(closestNormal),
     };
   }
-
-  // To work out:
-  // - how to find the normal
 
   return null;
 }

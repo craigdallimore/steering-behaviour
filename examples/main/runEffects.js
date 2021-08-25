@@ -1,6 +1,7 @@
 // @flow
 
 import drawArrow from "../../lib/drawArrow.js";
+import drawSegment from "../../lib/drawSegment.js";
 import drawCircle from "../../lib/drawCircle.js";
 import drawGrid from "../../lib/drawGrid.js";
 import drawPath from "../../lib/drawPath.js";
@@ -10,7 +11,7 @@ import drawSelectionBox from "../../lib/drawSelectionBox.js";
 import type { State, Character } from "./state.js";
 import type { Path } from "../../lib/path.js";
 import type { Shape } from "../../lib/shape.js";
-import { add, subtract, multiply, normalise } from "../../lib/vector.js";
+import { add, multiply, normalise } from "../../lib/vector.js";
 import { getCollision } from "../../src/steering/obstacleAvoidance.js";
 
 export default function runEffects(
@@ -30,7 +31,8 @@ export default function runEffects(
 
     // Holds the distance to look ahead for a collision
     // (i.e., the length of the collision ray)
-    const lookahead = 50;
+    const lookahead = 150;
+    const avoidDistance = 20;
 
     // 1. Calculate the target to delegate to seek
 
@@ -40,13 +42,7 @@ export default function runEffects(
 
     const pos = cha.kinematic.position;
     const rayEnd = add(pos, rayVector);
-    dom.main.strokeStyle = "rgb(67, 160, 71)";
-    dom.main.save();
-    dom.main.moveTo(pos[0], pos[1]);
-    dom.main.lineTo(rayEnd[0], rayEnd[1]);
-    dom.main.stroke();
-
-    dom.main.restore();
+    drawSegment(dom.main, [pos, rayEnd], "rgb(67, 160, 71)");
 
     const shape = state.shapes.get("s1");
     // Find the collision
@@ -55,6 +51,13 @@ export default function runEffects(
 
       if (collision && collision.position) {
         drawCircle(dom.main, collision.position, 3, "rgba(96, 125, 139, 1)");
+
+        const target = add(
+          collision.position,
+          multiply(collision.normal, avoidDistance)
+        );
+
+        drawCircle(dom.main, target, 3, "rgba(194, 24, 91, 1)");
       }
     }
   });
