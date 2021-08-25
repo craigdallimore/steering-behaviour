@@ -6,7 +6,7 @@ import type { Steering } from "./steering.js";
 import type { Vector } from "../../lib/vector.js";
 import type { Segment } from "../../lib/path.js";
 import type { Shape } from "../../lib/shape.js";
-import { findIntersection } from "../../lib/shape.js";
+import { findFirstIntersection } from "../../lib/shape.js";
 
 import { seek } from "./seek.js";
 
@@ -23,7 +23,7 @@ export function getCollision(
   // The line extending from the character
   const seg: Segment = [position, add(ray, position)];
 
-  const intersection = findIntersection(seg, shape);
+  const intersection = findFirstIntersection(seg, shape);
 
   if (intersection) {
     /*

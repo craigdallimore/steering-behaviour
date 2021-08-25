@@ -48,9 +48,9 @@ export const initialState: State = {
       "aa",
       {
         kinematic: {
-          position: [450, 395],
-          velocity: [-20, 0],
-          orientation: 1.5 * Math.PI,
+          position: [431, 423],
+          velocity: [-20, -20],
+          orientation: 1.75 * Math.PI,
           rotation: 0,
         },
         behaviour: "NONE",

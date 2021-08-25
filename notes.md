@@ -9,6 +9,8 @@ Schneider and Eberly [2003].
 
 - [x] Add collision avoidance
 - [ ] Add obstacle avoidance
+  - [x] Find closest collision on shape
+  - [ ] Find normal
 - [ ] Add steering configs
 
   - [ ] Choosing a behaviour will display a behaviour-specific fieldset
