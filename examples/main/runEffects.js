@@ -9,10 +9,28 @@ import drawShape from "../../lib/drawShape.js";
 import drawSelectionBox from "../../lib/drawSelectionBox.js";
 
 import type { State, Character } from "./state.js";
-import type { Path } from "../../lib/path.js";
+import type { Path, Segment } from "../../lib/path.js";
+import type { Kinematic } from "../../lib/kinematic.js";
 import type { Shape } from "../../lib/shape.js";
-import { add, multiply, normalise } from "../../lib/vector.js";
+import {
+  add,
+  multiply,
+  vectorToRadians,
+  radiansToVector,
+} from "../../lib/vector.js";
 import { getCollision } from "../../src/steering/obstacleAvoidance.js";
+
+function getWhiskerRay(
+  k: Kinematic,
+  radians: number,
+  magnitude: number
+): Segment {
+  const bearing = vectorToRadians(k.velocity) - radians;
+  return [
+    k.position,
+    add(k.position, multiply(radiansToVector(bearing), magnitude)),
+  ];
+}
 
 export default function runEffects(
   dom: {
@@ -29,25 +47,24 @@ export default function runEffects(
   state.characters.forEach((cha: Character) => {
     drawArrow(dom.main, cha.kinematic);
 
-    // Holds the distance to look ahead for a collision
-    // (i.e., the length of the collision ray)
-    const lookahead = 150;
+    const lookaheadMain = 150;
+    const lookaheadSide = 75;
     const avoidDistance = 20;
 
-    // 1. Calculate the target to delegate to seek
+    const w0 = getWhiskerRay(cha.kinematic, 0, lookaheadMain);
+    const w1 = getWhiskerRay(cha.kinematic, 0.2, lookaheadSide);
+    const w2 = getWhiskerRay(cha.kinematic, -0.2, lookaheadSide);
 
-    // Calculate the collision ray vector
-    // [-10, 0]
-    const rayVector = multiply(normalise(cha.kinematic.velocity), lookahead);
-
-    const pos = cha.kinematic.position;
-    const rayEnd = add(pos, rayVector);
-    drawSegment(dom.main, [pos, rayEnd], "rgb(67, 160, 71)");
+    drawSegment(dom.main, w0, "rgb(67, 160, 71)");
+    drawSegment(dom.main, w1, "rgb(46, 125, 50)");
+    drawSegment(dom.main, w2, "rgb(46, 125, 50)");
 
     const shape = state.shapes.get("s1");
-    // Find the collision
     if (shape) {
-      const collision = getCollision(cha.kinematic.position, rayVector, shape);
+      const collision =
+        getCollision(w0, shape) ||
+        getCollision(w1, shape) ||
+        getCollision(w2, shape);
 
       if (collision && collision.position) {
         drawCircle(dom.main, collision.position, 3, "rgba(96, 125, 139, 1)");

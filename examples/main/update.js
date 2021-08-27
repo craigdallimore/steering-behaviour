@@ -9,6 +9,7 @@ import {
 } from "./state.js";
 import { distance, type Vector } from "../../lib/vector.js";
 import type { PathId, Path } from "../../lib/path.js";
+import type { ShapeId, Shape } from "../../lib/shape.js";
 import {
   align,
   arrive,
@@ -33,6 +34,7 @@ import updateKinematic from "../../src/updateKinematic.js";
 
 type CharacterMap = Map<CharacterId, Character>;
 type PathMap = Map<PathId, Path>;
+type ShapeMap = Map<ShapeId, Shape>;
 
 const TICK = "TICK";
 const PLAY_BUTTON_CLICKED = "PLAY_BUTTON_CLICKED";
@@ -122,7 +124,8 @@ const applyBehaviour = (
   char: Character,
   time: number,
   characters: CharacterMap,
-  paths: PathMap
+  paths: PathMap,
+  shapes: ShapeMap
 ): Character => {
   switch (char.behaviour) {
     case "ALIGN": {
@@ -226,11 +229,11 @@ const applyBehaviour = (
       };
     }
     case "OBSTACLE_AVOIDANCE": {
-      const target = getCharacter(char.target, characters);
-      if (!target) {
+      const shape = shapes.get("s1"); // TODO should not be a single hardcoded shape id
+      if (!shape) {
         return char;
       }
-      const steering = obstacleAvoidance(char.kinematic);
+      const steering = obstacleAvoidance(char.kinematic, shape);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
@@ -419,7 +422,8 @@ export function update(state: State, action: Action): State {
             char,
             time,
             state.characters,
-            state.paths
+            state.paths,
+            state.shapes
           );
           return [id, nextChar];
         })

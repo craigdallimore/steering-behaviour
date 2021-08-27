@@ -6,6 +6,8 @@ import {
   multiply,
   subtract,
   normalise,
+  vectorToRadians,
+  radiansToVector,
 } from "../../lib/vector.js";
 import type { Kinematic } from "../../lib/kinematic.js";
 import type { Steering } from "./steering.js";
@@ -15,6 +17,7 @@ import type { Shape } from "../../lib/shape.js";
 import { findFirstIntersection } from "../../lib/shape.js";
 
 import { seek } from "./seek.js";
+import { lookWhereYouAreGoing } from "./lookWhereYouAreGoing.js";
 
 type Collision = {
   position: Vector,
@@ -29,13 +32,8 @@ export function getNormals([a, b]: Segment): [Vector, Vector] {
   ];
 }
 
-export function getCollision(
-  characterPosition: Vector,
-  ray: Vector,
-  shape: Shape
-): Collision | null {
+export function getCollision(seg: Segment, shape: Shape): Collision | null {
   // The line extending from the character
-  const seg: Segment = [characterPosition, add(ray, characterPosition)];
 
   const intersection = findFirstIntersection(seg, shape);
 
@@ -45,8 +43,7 @@ export function getCollision(
 
     // We want the normal on the same side as the character
     const closestNormal =
-      distance(normals[0], characterPosition) <
-      distance(normals[1], characterPosition)
+      distance(normals[0], seg[0]) < distance(normals[1], seg[0])
         ? normals[0]
         : normals[1];
 
@@ -62,6 +59,18 @@ export function getCollision(
   return null;
 }
 
+function getWhiskerRay(
+  k: Kinematic,
+  radians: number,
+  magnitude: number
+): Segment {
+  const bearing = vectorToRadians(k.velocity) - radians;
+  return [
+    k.position,
+    add(k.position, multiply(radiansToVector(bearing), magnitude)),
+  ];
+}
+
 export function obstacleAvoidance(
   character: Kinematic,
   shape: Shape
@@ -70,24 +79,26 @@ export function obstacleAvoidance(
 
   // Holds the minimum distance to a wall (i.e., how far to avoid collision)
   // should be greater than the radius of the character
-  const avoidDistance = 10;
+  const avoidDistance = 20;
 
   // Holds the distance to look ahead for a collision
   // (i.e., the length of the collision ray)
-  const lookahead = 10;
+  const lookaheadMain = 150;
+  const lookaheadSide = 150;
 
-  // 1. Calculate the target to delegate to seek
+  const w0 = getWhiskerRay(character, 0, lookaheadMain);
+  const w1 = getWhiskerRay(character, 0.2, lookaheadSide);
+  const w2 = getWhiskerRay(character, -0.2, lookaheadSide);
 
-  // Calculate the collision ray vector
-  const rayVector = multiply(normalise(character.velocity), lookahead);
-
-  // Find the collision
-  const collision = getCollision(character.position, rayVector, shape);
+  const collision =
+    getCollision(w0, shape) ||
+    getCollision(w1, shape) ||
+    getCollision(w2, shape);
 
   // If have no collision, do nothing
   if (!collision) {
     return {
-      angular: 0,
+      angular: lookWhereYouAreGoing(character).angular,
       linear: [0, 0],
     };
   }
