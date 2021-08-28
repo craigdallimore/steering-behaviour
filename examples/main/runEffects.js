@@ -62,9 +62,9 @@ export default function runEffects(
     const shape = state.shapes.get("s1");
     if (shape) {
       const collision =
-        getCollision(w0, shape) ||
         getCollision(w1, shape) ||
-        getCollision(w2, shape);
+        getCollision(w2, shape) ||
+        getCollision(w0, shape);
 
       if (collision && collision.position) {
         drawCircle(dom.main, collision.position, 3, "rgba(96, 125, 139, 1)");

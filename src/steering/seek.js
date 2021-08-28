@@ -5,10 +5,11 @@ import type { Vector } from "../../lib/vector.js";
 import type { Kinematic } from "../../lib/kinematic.js";
 import type { Steering } from "./steering.js";
 
-export function seek(character: Kinematic, targetPosition: Vector): Steering {
-  // Config
-  const maxAcceleration = 25;
-
+export function seek(
+  character: Kinematic,
+  targetPosition: Vector,
+  maxAcceleration: number
+): Steering {
   const linear = multiply(
     normalise(subtract(targetPosition, character.position)),
     maxAcceleration

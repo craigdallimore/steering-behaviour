@@ -71,29 +71,26 @@ function getWhiskerRay(
   ];
 }
 
+type Config = {
+  avoidDistance: number,
+  lookaheadMain: number,
+  lookaheadSide: number,
+  maxAcceleration: number,
+};
+
 export function obstacleAvoidance(
   character: Kinematic,
-  shape: Shape
+  shape: Shape,
+  config: Config
 ): Steering {
-  // Config
-
-  // Holds the minimum distance to a wall (i.e., how far to avoid collision)
-  // should be greater than the radius of the character
-  const avoidDistance = 20;
-
-  // Holds the distance to look ahead for a collision
-  // (i.e., the length of the collision ray)
-  const lookaheadMain = 150;
-  const lookaheadSide = 150;
-
-  const w0 = getWhiskerRay(character, 0, lookaheadMain);
-  const w1 = getWhiskerRay(character, 0.2, lookaheadSide);
-  const w2 = getWhiskerRay(character, -0.2, lookaheadSide);
+  const w0 = getWhiskerRay(character, 0, config.lookaheadMain);
+  const w1 = getWhiskerRay(character, 0.2, config.lookaheadSide);
+  const w2 = getWhiskerRay(character, -0.2, config.lookaheadSide);
 
   const collision =
-    getCollision(w0, shape) ||
     getCollision(w1, shape) ||
-    getCollision(w2, shape);
+    getCollision(w2, shape) ||
+    getCollision(w0, shape);
 
   // If have no collision, do nothing
   if (!collision) {
@@ -106,9 +103,9 @@ export function obstacleAvoidance(
   // Otherwise create a target
   const targetPosition = add(
     collision.position,
-    multiply(collision.normal, avoidDistance)
+    multiply(collision.normal, config.avoidDistance)
   );
 
   // 2. Delegate to seek
-  return seek(character, targetPosition);
+  return seek(character, targetPosition, config.maxAcceleration);
 }

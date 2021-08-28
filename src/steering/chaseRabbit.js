@@ -6,22 +6,26 @@ import type { Steering } from "./steering.js";
 import { seek } from "./seek.js";
 import { lookWhereYouAreGoing } from "./lookWhereYouAreGoing.js";
 
-export function chaseRabbit(character: Kinematic, path: Path): Steering {
-  // config
-  // Holds the distance along the path to generate the target. Can be negative
-  // if the character is to move along the reverse direction
-  const pathOffset = 30;
+type Config = {
+  pathOffset: number,
+  maxAcceleration: number,
+};
 
+export function chaseRabbit(
+  character: Kinematic,
+  path: Path,
+  config: Config
+): Steering {
   // Find the current position on the path
   const currentParam = getParam(path, character.position);
 
   // Offset it
-  const targetParam = currentParam + pathOffset;
+  const targetParam = currentParam + config.pathOffset;
 
   // Get the target position
   const targetPosition = getPosition(path, targetParam);
 
   const { angular } = lookWhereYouAreGoing(character);
-  const { linear } = seek(character, targetPosition);
+  const { linear } = seek(character, targetPosition, config.maxAcceleration);
   return { angular, linear };
 }
