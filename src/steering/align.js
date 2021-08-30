@@ -14,38 +14,46 @@ function mapToRange(orientation: number): number {
   return nextOrientation % (Math.PI * 2);
 }
 
-export function align(character: Kinematic, orientation: number): Steering {
-  const maxAngularAcceleration = 140;
-  const maxRotation = 120;
-  const decelerationTolerance = 2;
-  const alignTolerance = 0.01;
-  const timeToTarget = 0.1;
+export type AlignConfig = {
+  maxAngularAcceleration: number,
+  maxRotation: number,
+  decelerationTolerance: number,
+  alignTolerance: number,
+  timeToTarget: number,
+};
+
+export function align(
+  character: Kinematic,
+  orientation: number,
+  config: AlignConfig
+): Steering {
   const linear = [0, 0];
 
   const rotation = mapToRange(orientation - character.orientation);
   const rotationSize = Math.abs(rotation);
 
-  if (rotationSize < alignTolerance) {
+  if (rotationSize < config.alignTolerance) {
     return {
       linear,
       angular: 0,
     };
   }
 
-  const isSlowed = rotationSize <= decelerationTolerance;
+  const isSlowed = rotationSize <= config.decelerationTolerance;
 
   const idealRotation = isSlowed
-    ? (maxRotation * rotationSize) / decelerationTolerance
-    : maxRotation;
+    ? (config.maxRotation * rotationSize) / config.decelerationTolerance
+    : config.maxRotation;
 
   const nextIdealRotation = idealRotation * (rotation / rotationSize);
 
-  const angular = (nextIdealRotation - character.rotation) / timeToTarget;
+  const angular =
+    (nextIdealRotation - character.rotation) / config.timeToTarget;
 
   const angularAcceleration = Math.abs(angular);
   const finalAngular =
-    angularAcceleration > maxAngularAcceleration
-      ? (angular * maxAngularAcceleration) / angularAcceleration
+    angularAcceleration > config.maxAngularAcceleration
+      ? (angular * config.maxAngularAcceleration) / angularAcceleration
       : angular;
 
   return {

@@ -14,6 +14,7 @@ import type { Steering } from "./steering.js";
 import type { Vector } from "../../lib/vector.js";
 import type { Segment } from "../../lib/path.js";
 import type { Shape } from "../../lib/shape.js";
+import type { AlignConfig } from "./align.js";
 import { findFirstIntersection } from "../../lib/shape.js";
 
 import { seek } from "./seek.js";
@@ -81,7 +82,8 @@ type Config = {
 export function obstacleAvoidance(
   character: Kinematic,
   shape: Shape,
-  config: Config
+  config: Config,
+  alignConfig: AlignConfig
 ): Steering {
   const w0 = getWhiskerRay(character, 0, config.lookaheadMain);
   const w1 = getWhiskerRay(character, 0.2, config.lookaheadSide);
@@ -95,7 +97,7 @@ export function obstacleAvoidance(
   // If have no collision, do nothing
   if (!collision) {
     return {
-      angular: lookWhereYouAreGoing(character).angular,
+      angular: lookWhereYouAreGoing(character, alignConfig).angular,
       linear: [0, 0],
     };
   }
@@ -107,5 +109,7 @@ export function obstacleAvoidance(
   );
 
   // 2. Delegate to seek
-  return seek(character, targetPosition, config.maxAcceleration);
+  return seek(character, targetPosition, {
+    maxAcceleration: config.maxAcceleration,
+  });
 }

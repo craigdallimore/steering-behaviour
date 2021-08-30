@@ -9,32 +9,37 @@ import {
 } from "../../lib/vector.js";
 import type { Kinematic } from "../../lib/kinematic.js";
 import type { Steering } from "./steering.js";
+import type { AlignConfig } from "./align.js";
 import { face } from "./face.js";
 
-export function wander(kinematic: Kinematic): Steering {
-  // Config
+type Config = {
+  wanderOffset: number,
+  wanderRadius: number,
+  maxAcceleration: number,
+};
 
-  const wanderOffset = 50;
-  const wanderRadius = 20;
-  const maxAcceleration = 25;
-
+export function wander(
+  kinematic: Kinematic,
+  config: Config,
+  alignConfig: AlignConfig
+): Steering {
   const wanderPosition: Vector = add(
     kinematic.position,
-    multiply(radiansToVector(kinematic.orientation), wanderOffset)
+    multiply(radiansToVector(kinematic.orientation), config.wanderOffset)
   );
 
   const wanderOrientation = Math.random() * 360;
 
   const nextTargetPosition = add(
     wanderPosition,
-    multiply(degreesToVector(wanderOrientation), wanderRadius * 2)
+    multiply(degreesToVector(wanderOrientation), config.wanderRadius * 2)
   );
 
-  const { angular } = face(kinematic, nextTargetPosition);
+  const { angular } = face(kinematic, nextTargetPosition, alignConfig);
 
   const linear = multiply(
     radiansToVector(kinematic.orientation),
-    maxAcceleration
+    config.maxAcceleration
   );
 
   return {

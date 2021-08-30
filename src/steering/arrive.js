@@ -10,28 +10,32 @@ import {
 import type { Kinematic } from "../../lib/kinematic.js";
 import type { Steering } from "./steering.js";
 
+type Config = {
+  maxAcceleration: number,
+  timeToTarget: number,
+  maxSpeed: number,
+  targetRadius: number,
+  slowRadius: number,
+};
+
 export function arrive(
   character: Kinematic,
-  target: Kinematic
+  target: Kinematic,
+  config: Config
 ): Steering | null {
   // Config
-  const maxAcceleration = 25;
-  const timeToTarget = 3;
-  const maxSpeed = 55;
-  const targetRadius = 5;
-  const slowRadius = 60;
 
   const distanceToTarget = distance(character.position, target.position);
   const directionToTarget = subtract(target.position, character.position);
 
-  if (distanceToTarget < targetRadius) {
+  if (distanceToTarget < config.targetRadius) {
     return null;
   }
 
   const idealSpeed =
-    distanceToTarget > slowRadius
-      ? maxSpeed
-      : maxSpeed * (distanceToTarget / slowRadius);
+    distanceToTarget > config.slowRadius
+      ? config.maxSpeed
+      : config.maxSpeed * (distanceToTarget / config.slowRadius);
 
   // Here we appear to take a vector from the two points, and relate it to
   // the ideal speed
@@ -40,11 +44,11 @@ export function arrive(
   const reduced = subtract(idealVelocity, character.velocity);
 
   // A higher value will arrive sooner
-  const linear = multiply(reduced, 1 / timeToTarget);
+  const linear = multiply(reduced, 1 / config.timeToTarget);
 
   const finalLinear =
-    length(linear) > maxAcceleration
-      ? multiply(normalise(linear), maxAcceleration)
+    length(linear) > config.maxAcceleration
+      ? multiply(normalise(linear), config.maxAcceleration)
       : linear;
 
   return {

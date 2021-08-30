@@ -10,21 +10,20 @@ import {
 } from "../../lib/vector.js";
 import type { Kinematic } from "../../lib/kinematic.js";
 import type { Steering } from "./steering.js";
+import type { AlignConfig } from "./align.js";
 import { lookWhereYouAreGoing } from "./lookWhereYouAreGoing.js";
+
+type Config = {
+  maxAcceleration: number,
+  radius: number,
+};
 
 export function collisionAvoidance(
   character: Kinematic,
-  targets: Array<Kinematic>
+  targets: Array<Kinematic>,
+  config: Config,
+  alignConfig: AlignConfig
 ): Steering {
-  // config
-
-  // Holds the maximum acceleration
-  const maxAcceleration = 5;
-
-  // Holds the collision radius of a character (we assume all characters have the
-  // same radius here)
-  const radius = 7.5;
-
   const init = {
     shortestTime: Infinity,
     firstMinSeparation: 0,
@@ -44,7 +43,7 @@ export function collisionAvoidance(
     const distance = length(relativePos);
     const minSeparation = distance - relativeSpeed * acc.shortestTime;
 
-    if (minSeparation > 2 * radius) {
+    if (minSeparation > 2 * config.radius) {
       return acc;
     }
     if (timeToCollision > 0 && timeToCollision < acc.shortestTime) {
@@ -61,7 +60,7 @@ export function collisionAvoidance(
     return acc;
   }, init);
 
-  const { angular } = lookWhereYouAreGoing(character);
+  const { angular } = lookWhereYouAreGoing(character, alignConfig);
 
   if (!final.firstTarget) {
     return {
@@ -71,7 +70,7 @@ export function collisionAvoidance(
   }
 
   const relativePos =
-    final.firstMinSeparation <= 0 || final.firstDistance < 2 * radius
+    final.firstMinSeparation <= 0 || final.firstDistance < 2 * config.radius
       ? // If we’re going to hit exactly, or if we’re already colliding, then
         // do the steering based on current position.
         subtract(character.position, final.firstTarget.position)
@@ -83,7 +82,7 @@ export function collisionAvoidance(
 
   // Avoid the target
   return {
-    linear: multiply(normalise(relativePos), maxAcceleration),
+    linear: multiply(normalise(relativePos), config.maxAcceleration),
     angular,
   };
 }

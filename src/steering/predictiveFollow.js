@@ -6,6 +6,7 @@ import type { Kinematic } from "../../lib/kinematic.js";
 import type { Steering } from "./steering.js";
 import { seek } from "./seek.js";
 import { lookWhereYouAreGoing } from "./lookWhereYouAreGoing.js";
+import type { AlignConfig } from "./align.js";
 
 type Config = {
   pathOffset: number,
@@ -16,7 +17,8 @@ type Config = {
 export function predictiveFollow(
   character: Kinematic,
   path: Path,
-  config: Config
+  config: Config,
+  alignConfig: AlignConfig
 ): Steering {
   // Find the predicted future location
   const futurePos = add(
@@ -33,7 +35,9 @@ export function predictiveFollow(
   // Get the target position
   const targetPosition = getPosition(path, targetParam);
 
-  const { angular } = lookWhereYouAreGoing(character);
-  const { linear } = seek(character, targetPosition, config.maxAcceleration);
+  const { angular } = lookWhereYouAreGoing(character, alignConfig);
+  const { linear } = seek(character, targetPosition, {
+    maxAcceleration: config.maxAcceleration,
+  });
   return { angular, linear };
 }
