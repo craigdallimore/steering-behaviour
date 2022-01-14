@@ -7,7 +7,14 @@ Schneider and Eberly [2003].
 
 ## Todo
 
+- [ ] Typescript migration
+
+  - [ ] Get canvas working
+  - [ ] Get whole app working
+  - [ ] yarn lint succeeds
+
 - [ ] Decouple look-where-you-are-going from some behaviours
+- [ ] Investigate and handle incorrectness issue with radiansToVector / vice versa
 
 Steering pipeline
 

@@ -4,8 +4,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ["eslint:recommended", "plugin:flowtype/recommended", "prettier"],
-  plugins: ["flowtype"],
+  extends: ["eslint:recommended", "prettier"],
   parserOptions: {
     ecmaVersion: 12,
     sourceType: "module",
