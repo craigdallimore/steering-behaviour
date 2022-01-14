@@ -7,14 +7,94 @@ Schneider and Eberly [2003].
 
 ## Todo
 
-- [x] Add collision avoidance
-- [ ] Add obstacle avoidance
-  - [x] Find closest collision on shape
-  - [ ] Find normal
-- [ ] Add steering configs
+- [ ] Decouple look-where-you-are-going from some behaviours
 
-  - [ ] Choosing a behaviour will display a behaviour-specific fieldset
-  - [ ] Describe the various behaviours
+Steering pipeline
+
+- Targeters
+  - Work out what the movement goal is
+  - targets could be positional, orientation, velocity, rotation (known as channels)
+  - generate the top level goal
+  - think in terms of the characters goal
+- Decomposers
+  - provide subgoals that lead to the main goal
+  - might use a pathfinding algorithm to produce a route to a goal
+  - most commonly used to integrate path planning into steering
+  - can be any number
+  - order matters
+  - can do nothing (given the goal cannot be decomposed)
+  - returns a subgoal, which is passed to the next decomposer, and so on until all decomposers are used
+- constraints
+  - limit that way a character can achieve a goal or sub-goal
+  - detects if moving towards the current sub-goal violates the constraint and suggests avoidance
+  - tends to represent obstacles (characters or walls)
+  - used with the actuator; reviews paths and check if they are sensible
+- actuator
+  - only one per character
+  - works out the path to the current subgoal
+  - limits the physical movement capabilities of a character
+
+---
+
+```
+
+class SteeringPipeline:
+# Lists of components at each stage of the pipe
+targeters
+decomposers
+constraints
+actuator
+
+# Holds the number of attempts the algorithm will make
+# to fund an unconstrained route.
+constraintSteps
+
+# Holds the deadlock steering behavior
+deadlock
+
+# Holds the current kinematic data for the character
+kinematic
+
+# Performs the pipeline algorithm and returns the
+# required forces used to move the character
+def getSteering():
+
+  # Firstly we get the top level goal
+  goal
+  for targeter in targeters:
+    goal.updateChannels(targeter.getGoal(kinematic))
+
+  # Now we decompose it
+  for decomposer in decomposers:
+    goal = decomposer.decompose(kinematic, goal)
+
+  # Now we loop through the actuation and constraint
+  # process
+  validPath = false
+  for i in 0..constraintSteps:
+
+    # Get the path from the actuator
+    path = actuator.getPath(kinematic, goal)
+
+    # Check for constraint violation
+    for constraint in constraints:
+      # If we find a violation, get a suggestion
+      if constraint.isViolated(path):
+        goal = constraint.suggest(path, kinematic, goal)
+
+      # Go back to the top level loop to get the
+      # path for the new goal
+      break continue
+
+    # If we’re here it is because we found a valid path
+    return actuator.output(path, kinematic, goal)
+
+  # We arrive here if we ran out of constraint steps.
+  # We delegate to the deadlock behavior
+  return deadlock.getSteering()
+```
+
+1 targeter to many decomposers (used in series)
 
 ## Vector directions
 
