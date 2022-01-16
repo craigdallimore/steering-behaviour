@@ -1,19 +1,13 @@
-import {
-  add,
-  length,
-  subtract,
-  multiply,
-  normalise,
-} from "../../lib/vector.js";
-import type { Kinematic } from "../../lib/kinematic.js";
+import { add, length, subtract, multiply, normalise } from "../lib/vector.js";
+import type { Kinematic } from "../lib/kinematic.js";
 import type { Steering } from "./steering.js";
 import { lookWhereYouAreGoing } from "./lookWhereYouAreGoing.js";
 import type { AlignConfig } from "./align.js";
 
 type Config = {
-  threshold: number,
-  decayCoefficient: number,
-  maxAcceleration: number,
+  threshold: number;
+  decayCoefficient: number;
+  maxAcceleration: number;
 };
 
 export function separation(

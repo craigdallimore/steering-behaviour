@@ -1,11 +1,11 @@
-import { subtract, multiply, add, length } from "../../lib/vector.js";
-import type { Kinematic } from "../../lib/kinematic.js";
+import { subtract, multiply, add, length } from "../lib/vector.js";
+import type { Kinematic } from "../lib/kinematic.js";
 import type { Steering } from "./steering.js";
 import { seek } from "./seek.js";
 
 type Config = {
-  maxAcceleration: number,
-  maxPrediction: number,
+  maxAcceleration: number;
+  maxPrediction: number;
 };
 
 export function pursue(

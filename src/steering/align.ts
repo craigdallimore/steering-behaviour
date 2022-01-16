@@ -1,4 +1,4 @@
-import type { Kinematic } from "../../lib/kinematic.js";
+import type { Kinematic } from "../lib/kinematic.js";
 import type { Steering } from "./steering.js";
 
 function mapToRange(orientation: number): number {
@@ -13,11 +13,11 @@ function mapToRange(orientation: number): number {
 }
 
 export type AlignConfig = {
-  maxAngularAcceleration: number,
-  maxRotation: number,
-  decelerationTolerance: number,
-  alignTolerance: number,
-  timeToTarget: number,
+  maxAngularAcceleration: number;
+  maxRotation: number;
+  decelerationTolerance: number;
+  alignTolerance: number;
+  timeToTarget: number;
 };
 
 export function align(

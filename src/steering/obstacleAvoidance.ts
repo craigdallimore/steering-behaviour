@@ -6,21 +6,21 @@ import {
   normalise,
   vectorToRadians,
   radiansToVector,
-} from "../../lib/vector.js";
-import type { Kinematic } from "../../lib/kinematic.js";
+} from "../lib/vector.js";
+import type { Kinematic } from "../lib/kinematic.js";
 import type { Steering } from "./steering.js";
-import type { Vector } from "../../lib/vector.js";
-import type { Segment } from "../../lib/path.js";
-import type { Shape } from "../../lib/shape.js";
+import type { Vector } from "../lib/vector.js";
+import type { Segment } from "../lib/path.js";
+import type { Shape } from "../lib/shape.js";
 import type { AlignConfig } from "./align.js";
-import { findFirstIntersection } from "../../lib/shape.js";
+import { findFirstIntersection } from "../lib/shape.js";
 
 import { seek } from "./seek.js";
 import { lookWhereYouAreGoing } from "./lookWhereYouAreGoing.js";
 
 type Collision = {
-  position: Vector,
-  normal: Vector,
+  position: Vector;
+  normal: Vector;
 };
 
 export function getNormals([a, b]: Segment): [Vector, Vector] {
@@ -71,10 +71,10 @@ function getWhiskerRay(
 }
 
 type Config = {
-  avoidDistance: number,
-  lookaheadMain: number,
-  lookaheadSide: number,
-  maxAcceleration: number,
+  avoidDistance: number;
+  lookaheadMain: number;
+  lookaheadSide: number;
+  maxAcceleration: number;
 };
 
 export function obstacleAvoidance(

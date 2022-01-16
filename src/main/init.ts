@@ -1,4 +1,4 @@
-import { type Store } from "../../src/events.js";
+import { type Store } from "../events.js";
 import { type Action } from "./update.js";
 import { type State, type SteeringBehaviour, initialState } from "./state.js";
 

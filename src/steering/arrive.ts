@@ -4,16 +4,16 @@ import {
   subtract,
   multiply,
   normalise,
-} from "../../lib/vector.js";
-import type { Kinematic } from "../../lib/kinematic.js";
+} from "../lib/vector.js";
+import type { Kinematic } from "../lib/kinematic.js";
 import type { Steering } from "./steering.js";
 
 type Config = {
-  maxAcceleration: number,
-  timeToTarget: number,
-  maxSpeed: number,
-  targetRadius: number,
-  slowRadius: number,
+  maxAcceleration: number;
+  timeToTarget: number;
+  maxSpeed: number;
+  targetRadius: number;
+  slowRadius: number;
 };
 
 export function arrive(

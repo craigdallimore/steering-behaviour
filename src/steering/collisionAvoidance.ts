@@ -5,15 +5,15 @@ import {
   subtract,
   multiply,
   normalise,
-} from "../../lib/vector.js";
-import type { Kinematic } from "../../lib/kinematic.js";
+} from "../lib/vector.js";
+import type { Kinematic } from "../lib/kinematic.js";
 import type { Steering } from "./steering.js";
 import type { AlignConfig } from "./align.js";
 import { lookWhereYouAreGoing } from "./lookWhereYouAreGoing.js";
 
 type Config = {
-  maxAcceleration: number,
-  radius: number,
+  maxAcceleration: number;
+  radius: number;
 };
 
 export function collisionAvoidance(

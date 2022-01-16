@@ -1,10 +1,10 @@
-import { length, subtract, multiply, normalise } from "../../lib/vector.js";
-import type { Kinematic } from "../../lib/kinematic.js";
+import { length, subtract, multiply, normalise } from "../lib/vector.js";
+import type { Kinematic } from "../lib/kinematic.js";
 import type { Steering } from "./steering.js";
 
 type Config = {
-  timeToTarget: number,
-  maxAcceleration: number,
+  timeToTarget: number;
+  maxAcceleration: number;
 };
 
 export function matchVelocity(

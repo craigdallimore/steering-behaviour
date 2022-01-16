@@ -1,4 +1,4 @@
-import * as example from "../examples/main/index.js";
+import * as example from "./main/index.js";
 import { createStore } from "./events.js";
 
 const exampleStore = createStore(example.update, example.initialState);

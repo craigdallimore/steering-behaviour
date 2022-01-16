@@ -1,9 +1,9 @@
-import { subtract, multiply, normalise } from "../../lib/vector.js";
-import type { Kinematic } from "../../lib/kinematic.js";
+import { subtract, multiply, normalise } from "../lib/vector.js";
+import type { Kinematic } from "../lib/kinematic.js";
 import type { Steering } from "./steering.js";
 
 type Config = {
-  maxAcceleration: number,
+  maxAcceleration: number;
 };
 
 export function flee(

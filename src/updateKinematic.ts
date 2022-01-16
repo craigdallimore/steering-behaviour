@@ -1,6 +1,6 @@
-import type { Kinematic } from "../lib/kinematic.js";
-import { add, length, multiply, normalise } from "../lib/vector.js";
-import limitOrientation from "../lib/limitOrientation.js";
+import type { Kinematic } from "./lib/kinematic.js";
+import { add, length, multiply, normalise } from "./lib/vector.js";
+import limitOrientation from "./lib/limitOrientation.js";
 import type { Steering } from "./steering/steering.js";
 const maxSpeed = 45;
 

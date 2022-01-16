@@ -1,6 +1,6 @@
-import type { Kinematic } from "../../lib/kinematic.js";
-import type { Path, PathId } from "../../lib/path.js";
-import type { Shape, ShapeId } from "../../lib/shape.js";
+import type { Kinematic } from "../lib/kinematic.js";
+import type { Path, PathId } from "../lib/path.js";
+import type { Shape, ShapeId } from "../lib/shape.js";
 
 export type CharacterId = string;
 

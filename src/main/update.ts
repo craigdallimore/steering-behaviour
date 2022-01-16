@@ -5,9 +5,9 @@ import {
   type CharacterId,
   type Character,
 } from "./state.js";
-import { distance, type Vector } from "../../lib/vector.js";
-import type { PathId, Path } from "../../lib/path.js";
-import type { ShapeId, Shape } from "../../lib/shape.js";
+import { distance, type Vector } from "../lib/vector.js";
+import type { PathId, Path } from "../lib/path.js";
+import type { ShapeId, Shape } from "../lib/shape.js";
 import {
   align,
   arrive,
@@ -25,8 +25,8 @@ import {
   seek,
   separation,
   wander,
-} from "../../src/steering/index.js";
-import updateKinematic from "../../src/updateKinematic.js";
+} from "../steering/index.js";
+import updateKinematic from "../updateKinematic.js";
 
 // TYPES ----------------------------------------------------------------------
 
