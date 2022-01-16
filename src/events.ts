@@ -1,10 +1,10 @@
 export type Store<State, Action> = {
   getState: () => State;
-  dispatch: (Action) => State;
+  dispatch: (a: Action) => State;
 };
 
 export function createStore<State, Action>(
-  reducer: (State, Action) => State,
+  reducer: (s: State, a: Action) => State,
   initialState: State
 ): Store<State, Action> {
   let state = initialState;

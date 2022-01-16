@@ -93,7 +93,7 @@ export type Action =
 
 const updateFocussedCharacter = (
   state: State,
-  fn: (Character) => Character
+  fn: (a: Character) => Character
 ): State => {
   if (!state.focussedCharacterId) {
     return state;
@@ -108,7 +108,7 @@ const updateFocussedCharacter = (
 };
 
 const getCharacter = (
-  id: ?CharacterId,
+  id: CharacterId | null,
   characters: CharacterMap
 ): Character | null => {
   if (!id) {
@@ -436,7 +436,7 @@ export function update(state: State, action: Action): State {
         const nextState = updateFocussedCharacter(state, (char) => {
           return {
             ...char,
-            target: clickedCharacterId,
+            target: clickedCharacterId[0],
           };
         });
         return {
@@ -447,7 +447,7 @@ export function update(state: State, action: Action): State {
 
       return {
         ...state,
-        focussedCharacterId: clickedCharacterId,
+        focussedCharacterId: clickedCharacterId[0],
       };
     }
 

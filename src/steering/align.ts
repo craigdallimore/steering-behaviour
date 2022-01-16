@@ -1,3 +1,4 @@
+import type { Vector } from "../lib/vector.js";
 import type { Kinematic } from "../lib/kinematic.js";
 import type { Steering } from "./steering.js";
 
@@ -25,7 +26,7 @@ export function align(
   orientation: number,
   config: AlignConfig
 ): Steering {
-  const linear = [0, 0];
+  const linear: Vector = [0, 0];
 
   const rotation = mapToRange(orientation - character.orientation);
   const rotationSize = Math.abs(rotation);

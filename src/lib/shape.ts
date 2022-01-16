@@ -16,26 +16,35 @@ export function findAllIntersections(
   seg: Segment, // Segment, absolutely positioned
   shape: Shape
 ): Array<Intersection> {
-  return shape.path.points.reduce((acc, point, index) => {
-    const lastIndex = index === 0 ? shape.path.points.length - 1 : index - 1;
-    const [relA, relB]: Segment = [point, shape.path.points[lastIndex]];
-    const absoluteEdge: Segment = [
-      add(shape.path.position, relA),
-      add(shape.path.position, relB),
-    ];
+  return shape.path.points.reduce(
+    (acc: Intersection[], point, index): Intersection[] => {
+      const lastIndex = index === 0 ? shape.path.points.length - 1 : index - 1;
+      const [relA, relB]: Segment = [point, shape.path.points[lastIndex]];
+      const absoluteEdge: Segment = [
+        add(shape.path.position, relA),
+        add(shape.path.position, relB),
+      ];
 
-    const p = findSegmentIntersection(seg, absoluteEdge);
-    return p
-      ? [
-          ...acc,
-          {
-            point: p,
-            segment: absoluteEdge,
-          },
-        ]
-      : acc;
-  }, []);
+      const p = findSegmentIntersection(seg, absoluteEdge);
+
+      if (p) {
+        const inter: Intersection = {
+          point: p,
+          segment: absoluteEdge,
+        };
+        return [...acc, inter];
+      }
+
+      return acc;
+    },
+    []
+  );
 }
+
+type Init = {
+  dist: number;
+  int: Intersection | null;
+};
 
 // If the segment is from point A to point B, the first intersection is the one
 // closest to point A
@@ -51,11 +60,10 @@ export function findFirstIntersection(
 
   const a = seg[0];
 
-  return intersections.reduce(
-    (acc, int: Intersection) => {
-      const dist = distance(a, int.point);
-      return dist < acc.dist ? { int, dist } : acc;
-    },
-    { int: null, dist: Infinity }
-  ).int;
+  const init: Init = { int: null, dist: Infinity };
+
+  return intersections.reduce((acc, int: Intersection) => {
+    const dist = distance(a, int.point);
+    return dist < acc.dist ? { int, dist } : acc;
+  }, init).int;
 }

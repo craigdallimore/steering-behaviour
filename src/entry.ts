@@ -6,7 +6,7 @@ const exampleStore = createStore(example.update, example.initialState);
 function main(): void {
   const exampleDom = example.init(exampleStore);
 
-  if (!exampleDom) {
+  if (!exampleDom.main) {
     return;
   }
 

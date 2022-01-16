@@ -6,6 +6,7 @@ import {
   multiply,
   normalise,
 } from "../lib/vector.js";
+import type { Vector } from "../lib/vector.js";
 import type { Kinematic } from "../lib/kinematic.js";
 import type { Steering } from "./steering.js";
 import type { AlignConfig } from "./align.js";
@@ -16,13 +17,22 @@ type Config = {
   radius: number;
 };
 
+type Final = {
+  shortestTime: number;
+  firstMinSeparation: number;
+  firstDistance: number;
+  firstRelativePos: Vector;
+  firstRelativeVel: Vector;
+  firstTarget: Kinematic | null;
+};
+
 export function collisionAvoidance(
   character: Kinematic,
   targets: Array<Kinematic>,
   config: Config,
   alignConfig: AlignConfig
 ): Steering {
-  const init = {
+  const init: Final = {
     shortestTime: Infinity,
     firstMinSeparation: 0,
     firstDistance: 0,

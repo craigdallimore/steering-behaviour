@@ -192,7 +192,7 @@ export function findClosestSegmentToPoint(
   point: Vector,
   path: Path
 ): [Vector, Vector] {
-  const segments = path.points.reduce((acc, vec, index) => {
+  const segments: Segment[] = path.points.reduce((acc, vec, index) => {
     return index === 0 ? acc : [...acc, [path[index - 1], vec]];
   }, []);
 
