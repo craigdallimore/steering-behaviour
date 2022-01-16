@@ -38,8 +38,8 @@ const getClassname = (behaviour: SteeringBehaviour): string => {
 };
 
 export default function init(store: Store<State, Action>): {
-  main: CanvasRenderingContext2D,
-} | null {
+  main: CanvasRenderingContext2D | null;
+} {
   if (
     $form instanceof HTMLFormElement &&
     $canvas instanceof HTMLCanvasElement &&
@@ -100,87 +100,92 @@ export default function init(store: Store<State, Action>): {
 
     setDomValuesFromState(initialState);
 
-    main.translate(0.5, 0.5);
+    main?.translate(0.5, 0.5);
 
     // ------------------------------------------------------------------------
     $canvas.addEventListener("click", (e: MouseEvent) => {
-      const target: HTMLElement = (e.target: any);
+      if (e.target instanceof Element) {
+        const { top, left }: DOMRect = e.target.getBoundingClientRect();
 
-      const { top, left }: ClientRect = target.getBoundingClientRect();
-
-      store.dispatch({
-        type: "CANVAS_CLICKED",
-        payload: [e.clientX - left, e.clientY - top],
-      });
-      const state = store.getState();
-      setDomValuesFromState(state);
+        store.dispatch({
+          type: "CANVAS_CLICKED",
+          payload: [e.clientX - left, e.clientY - top],
+        });
+        const state = store.getState();
+        setDomValuesFromState(state);
+      }
     });
 
     // ------------------------------------------------------------------------
     $behaviour.addEventListener("change", (e: Event) => {
-      const target: HTMLSelectElement = (e.target: any);
-      const value = target.value;
-      switch (value) {
-        case "ALIGN":
-        case "ARRIVE":
-        case "COLLISION_AVOIDANCE":
-        case "EVADE":
-        case "FACE":
-        case "FLEE":
-        case "FOLLOW_PATH_CHASE_RABBIT":
-        case "FOLLOW_PATH_PREDICT":
-        case "LOOK_WHERE_YOU_ARE_GOING":
-        case "MATCH_VELOCITY":
-        case "OBSTACLE_AVOIDANCE":
-        case "NONE":
-        case "PURSUE":
-        case "SEEK":
-        case "SEPARATION":
-        case "WANDER":
-          $form.className = getClassname(value);
-          store.dispatch({
-            type: "BEHAVIOUR_CHANGED",
-            payload: (value: SteeringBehaviour),
-          });
-          return;
+      if (e.target instanceof HTMLSelectElement) {
+        switch (e.target.value) {
+          case "ALIGN":
+          case "ARRIVE":
+          case "COLLISION_AVOIDANCE":
+          case "EVADE":
+          case "FACE":
+          case "FLEE":
+          case "FOLLOW_PATH_CHASE_RABBIT":
+          case "FOLLOW_PATH_PREDICT":
+          case "LOOK_WHERE_YOU_ARE_GOING":
+          case "MATCH_VELOCITY":
+          case "OBSTACLE_AVOIDANCE":
+          case "NONE":
+          case "PURSUE":
+          case "SEEK":
+          case "SEPARATION":
+          case "WANDER":
+            $form.className = getClassname(e.target.value);
+            store.dispatch({
+              type: "BEHAVIOUR_CHANGED",
+              payload: e.target.value,
+            });
+            return;
+        }
       }
     });
 
     // ------------------------------------------------------------------------
     $orient.addEventListener("input", (e: Event) => {
-      const target: HTMLInputElement = (e.target: any);
-      store.dispatch({
-        type: "ORIENTATION_CHANGED",
-        payload: (parseFloat(target.value): number),
-      });
+      if (e.target instanceof HTMLInputElement) {
+        store.dispatch({
+          type: "ORIENTATION_CHANGED",
+          payload: parseFloat(e.target.value),
+        });
+      }
     });
     $posX.addEventListener("input", (e: Event) => {
-      const target: HTMLInputElement = (e.target: any);
-      store.dispatch({
-        type: "POSX_CHANGED",
-        payload: (parseFloat(target.value): number),
-      });
+      if (e.target instanceof HTMLInputElement) {
+        store.dispatch({
+          type: "POSX_CHANGED",
+          payload: parseFloat(e.target.value),
+        });
+      }
     });
     $posZ.addEventListener("input", (e: Event) => {
-      const target: HTMLInputElement = (e.target: any);
-      store.dispatch({
-        type: "POSZ_CHANGED",
-        payload: (parseFloat(target.value): number),
-      });
+      if (e.target instanceof HTMLInputElement) {
+        store.dispatch({
+          type: "POSZ_CHANGED",
+          payload: parseFloat(e.target.value),
+        });
+      }
     });
     $velX.addEventListener("input", (e: Event) => {
-      const target: HTMLInputElement = (e.target: any);
-      store.dispatch({
-        type: "VELX_CHANGED",
-        payload: (parseFloat(target.value): number),
-      });
+      if (e.target instanceof HTMLInputElement) {
+        store.dispatch({
+          type: "VELX_CHANGED",
+          payload: parseFloat(e.target.value),
+        });
+      }
     });
     $velZ.addEventListener("input", (e: Event) => {
-      const target: HTMLInputElement = (e.target: any);
-      store.dispatch({
-        type: "VELZ_CHANGED",
-        payload: (parseFloat(target.value): number),
-      });
+      if (e.target instanceof HTMLInputElement) {
+        store.dispatch({
+          type: "VELZ_CHANGED",
+          payload: parseFloat(e.target.value),
+        });
+      }
     });
 
     // ------------------------------------------------------------------------
@@ -209,5 +214,5 @@ export default function init(store: Store<State, Action>): {
 
     return { main };
   }
-  return null;
+  return { main: null };
 }
