@@ -37,9 +37,9 @@ const getClassname = (behaviour: SteeringBehaviour): string => {
   }
 };
 
-export default function init(store: Store<State, Action>): {
-  main: CanvasRenderingContext2D | null;
-} {
+export default function init(
+  store: Store<State, Action>
+): CanvasRenderingContext2D | null {
   if (
     $form instanceof HTMLFormElement &&
     $canvas instanceof HTMLCanvasElement &&
@@ -212,7 +212,7 @@ export default function init(store: Store<State, Action>): {
       $btnSetTarget.textContent = "Click a target";
     });
 
-    return { main };
+    return main;
   }
-  return { main: null };
+  return null;
 }

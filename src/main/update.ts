@@ -420,17 +420,18 @@ export function update(state: State, action: Action): State {
       };
     case "CANVAS_CLICKED": {
       const clickPosition: Vector = action.payload;
+      const pairs = [...state.characters];
 
-      const clickedCharacterId = [...state.characters].reduce(
-        (acc, [id, char]) => {
-          const distanceToClick = distance(
-            clickPosition,
-            char.kinematic.position
-          );
-          return distanceToClick < 15 ? id : acc;
-        },
-        null
-      );
+      const clickedCharacterId = pairs.reduce((acc, pair) => {
+        const id: CharacterId = pair[0];
+        const char: Character = pair[1];
+
+        const distanceToClick = distance(
+          clickPosition,
+          char.kinematic.position
+        );
+        return distanceToClick < 15 ? id : acc;
+      }, pairs[0][0]);
 
       if (state.isSettingTarget) {
         const nextState = updateFocussedCharacter(state, (char) => {

@@ -90,7 +90,7 @@ export function getParam(path: Path, characterPosition: Vector): number {
 
   const init = {
     distance: 0,
-    node: path[0],
+    node: path.points[0],
     done: false,
   };
 
@@ -122,7 +122,7 @@ export function getParam(path: Path, characterPosition: Vector): number {
 export function getPosition(path: Path, param: number): Vector {
   const init = {
     distance: 0,
-    node: path[0],
+    node: path.points[0],
     done: false,
   };
 
@@ -192,9 +192,21 @@ export function findClosestSegmentToPoint(
   point: Vector,
   path: Path
 ): [Vector, Vector] {
-  const segments: Segment[] = path.points.reduce((acc, vec, index) => {
-    return index === 0 ? acc : [...acc, [path[index - 1], vec]];
-  }, []);
+  const initialSegments: Segment[] = [];
+
+  const segments: Segment[] = path.points.reduce(
+    (acc: Segment[], vecB: Vector, index: number): Segment[] => {
+      if (index === 0) {
+        return acc;
+      }
+
+      const vecA: Vector = path.points[index - 1];
+      const segment: Segment = [vecA, vecB];
+
+      return [...acc, segment];
+    },
+    initialSegments
+  );
 
   const distances = segments.map((seg, index) => {
     return { dist: distanceToSegment(seg, point), index };

@@ -6,9 +6,10 @@ const exampleStore = createStore(example.update, example.initialState);
 function main(): void {
   const exampleDom = example.init(exampleStore);
 
-  if (!exampleDom.main) {
+  if (!exampleDom) {
     return;
   }
+  const ctx: CanvasRenderingContext2D = exampleDom;
 
   function frame(prevtime: number) {
     return function (time: number) {
@@ -17,7 +18,7 @@ function main(): void {
         type: "TICK",
         payload: t,
       });
-      example.runEffects(exampleDom, exampleState);
+      example.runEffects(ctx, exampleState);
       window.requestAnimationFrame(frame(time));
     };
   }
