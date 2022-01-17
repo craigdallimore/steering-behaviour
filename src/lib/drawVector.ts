@@ -1,5 +1,5 @@
 import type { Vector } from "./vector";
-import { vectorToRadians_, length } from "./vector";
+import { vectorToRadians, length } from "./vector";
 
 export default function drawVector(
   ctx: CanvasRenderingContext2D,
@@ -9,7 +9,7 @@ export default function drawVector(
 ): CanvasRenderingContext2D {
   const [x1, z1] = from;
   const distance = length(to);
-  const orientation = distance > 0 ? vectorToRadians_(to) : 0;
+  const orientation = distance > 0 ? vectorToRadians(to) : 0;
 
   ctx.save();
   ctx.fillStyle = fillStyle;

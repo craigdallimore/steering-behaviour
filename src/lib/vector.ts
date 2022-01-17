@@ -26,11 +26,6 @@ export function length([x, z]: Vector): number {
   return Math.hypot(x, z);
 }
 
-// TODO this seems wrong, and is only used in drawVector
-export function vectorToRadians_([x, z]: Vector): number {
-  return Math.atan2(x, -z);
-}
-
 export function vectorToRadians([x, z]: Vector): number {
   return Math.atan2(x, z);
 }
@@ -39,8 +34,6 @@ export function degreesToVector(angle: number): Vector {
   const theta = (angle * Math.PI) / 180;
   return [Math.cos(theta), Math.sin(theta)];
 }
-
-console.log(vectorToRadians(radiansToVector(-3.5)));
 
 export function radiansToVector(rad: number): Vector {
   return [Math.sin(rad), Math.cos(rad)];

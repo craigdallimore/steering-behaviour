@@ -48,8 +48,8 @@ export const initialState: State = {
       {
         kinematic: {
           position: [531, 523],
-          velocity: [-10, -10],
-          orientation: 1.75 * Math.PI,
+          velocity: [0, -10],
+          orientation: 0,
           rotation: 0,
         },
         behaviour: "OBSTACLE_AVOIDANCE",

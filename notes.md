@@ -7,16 +7,96 @@ Schneider and Eberly [2003].
 
 ## Todo
 
-- [ ] Typescript migration
+- [ ] Investigate and handle incorrectness issue with radiansToVector / vice versa
+- [ ] QOL improvements
 
-  - [ ] Get canvas working
-  - [ ] Get whole app working
-  - [ ] yarn lint succeeds
+  - [ ] Scenario picker. It would be neat to select a scenario to play, and have the app restart with fresh state.
+  - [ ] Make it possible to dynamically add characters to a scenario
+  - [ ] The orientation picker should be more like a dial
+  - [ ] Canvas should be dynamically sized and will work when resized
+  - [ ] Hover and focus styles for mouse cursor
 
 - [ ] Decouple look-where-you-are-going from some behaviours
-- [ ] Investigate and handle incorrectness issue with radiansToVector / vice versa
 
-Steering pipeline
+## Steering behaviours
+
+NONE
+
+ALIGN -------------------------------------
+
+```js
+{
+  maxAngularAcceleration: number;
+  maxRotation: number;
+  decelerationTolerance: number;
+  alignTolerance: number;
+  timeToTarget: number;
+}
+```
+
+Aims to match a given orientation.
+Increases rotation speed
+Backs off based on timeToTarget
+Stops within alignTolerance
+
+ARRIVE -------------------------------------
+
+```js
+{
+  maxAcceleration: number;
+  timeToTarget: number;
+  maxSpeed: number;
+  targetRadius: number;
+  slowRadius: number;
+}
+```
+
+Takes a target.
+
+Accelerates towards a target
+Slows within slowRadius
+Stops within targetRadius
+
+COLLISION_AVOIDANCE ------------------------
+(lookWhereYouAreGoing)
+
+EVADE --------------------------------------
+(flee)
+
+FACE ---------------------------------------
+(align)
+
+FLEE ---------------------------------------
+
+FOLLOW_PATH_CHASE_RABBIT -------------------
+(lookWhereYouAreGoing)
+(seek)
+
+FOLLOW_PATH_PREDICT ------------------------
+(lookWhereYouAreGoing)
+(seek)
+
+LOOK_WHERE_YOU_ARE_GOING -------------------
+(align)
+
+MATCH_VELOCITY -----------------------------
+
+OBSTACLE_AVOIDANCE -------------------------
+(seek)
+(lookWhereYouAreGoing)
+
+PURSUE -------------------------------------
+(seek)
+
+SEEK ---------------------------------------
+
+SEPARATION ---------------------------------
+(lookWhereYouAreGoing)
+
+WANDER -------------------------------------
+(face)
+
+## Steering pipeline
 
 - Targeters
   - Work out what the movement goal is

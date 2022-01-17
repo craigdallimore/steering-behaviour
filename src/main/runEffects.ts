@@ -17,6 +17,7 @@ import {
   radiansToVector,
 } from "../lib/vector.js";
 import { getCollision } from "../steering/obstacleAvoidance.js";
+import drawVector from "../lib/drawVector.js";
 
 function getWhiskerRay(
   k: Kinematic,
@@ -42,6 +43,7 @@ export default function runEffects(
 
   state.characters.forEach((cha: Character) => {
     drawArrow(ctx, cha.kinematic);
+    drawVector(ctx, cha.kinematic.position, cha.kinematic.velocity, "hotpink");
 
     const lookaheadMain = 150;
     const lookaheadSide = 75;
