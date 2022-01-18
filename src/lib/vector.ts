@@ -27,7 +27,7 @@ export function length([x, z]: Vector): number {
 }
 
 export function vectorToRadians([x, z]: Vector): number {
-  return Math.atan2(x, z);
+  return Math.atan2(z, x);
 }
 
 export function degreesToVector(angle: number): Vector {

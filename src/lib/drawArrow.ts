@@ -10,12 +10,12 @@ export default function drawArrow(
   ctx.transform(1, 0, 0, 1, x, z);
   ctx.fillStyle = "rgb(240, 98, 146)";
   ctx.rotate(c.orientation);
-  ctx.moveTo(0, -10);
+  ctx.moveTo(10, 0);
   ctx.beginPath();
-  ctx.lineTo(5, 10);
-  ctx.lineTo(0, 5);
-  ctx.lineTo(-5, 10);
-  ctx.lineTo(0, -10);
+  ctx.lineTo(-10, 5);
+  ctx.lineTo(-5, 0);
+  ctx.lineTo(-10, -5);
+  ctx.lineTo(10, 0);
   ctx.fill();
   ctx.restore();
 

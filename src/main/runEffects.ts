@@ -43,8 +43,9 @@ export default function runEffects(
 
   state.characters.forEach((cha: Character) => {
     drawArrow(ctx, cha.kinematic);
-    drawVector(ctx, cha.kinematic.position, cha.kinematic.velocity, "hotpink");
+    drawVector(ctx, cha.kinematic.position, cha.kinematic.velocity, "purple");
 
+    /*
     const lookaheadMain = 150;
     const lookaheadSide = 75;
     const avoidDistance = 20;
@@ -75,6 +76,7 @@ export default function runEffects(
         drawCircle(ctx, target, 3, "rgba(194, 24, 91, 1)");
       }
     }
+     */
   });
 
   state.paths.forEach((p: Path) => {

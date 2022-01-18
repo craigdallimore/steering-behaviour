@@ -1,4 +1,4 @@
-import { length } from "../lib/vector.js";
+import { length, vectorToRadians } from "../lib/vector.js";
 import type { Kinematic } from "../lib/kinematic.js";
 import { emptySteering, type Steering } from "./steering.js";
 import { align } from "./align.js";
@@ -12,7 +12,7 @@ export function lookWhereYouAreGoing(
     return emptySteering;
   }
 
-  const orientation = Math.atan2(character.velocity[0], -character.velocity[1]);
+  const orientation = vectorToRadians(character.velocity);
 
   return align(character, orientation, config);
 }

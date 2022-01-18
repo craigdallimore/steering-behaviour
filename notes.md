@@ -7,7 +7,6 @@ Schneider and Eberly [2003].
 
 ## Todo
 
-- [ ] Investigate and handle incorrectness issue with radiansToVector / vice versa
 - [ ] QOL improvements
 
   - [ ] Scenario picker. It would be neat to select a scenario to play, and have the app restart with fresh state.
