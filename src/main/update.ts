@@ -437,7 +437,7 @@ export function update(state: State, action: Action): State {
         const nextState = updateFocussedCharacter(state, (char) => {
           return {
             ...char,
-            target: clickedCharacterId[0],
+            target: clickedCharacterId,
           };
         });
         return {
@@ -448,7 +448,7 @@ export function update(state: State, action: Action): State {
 
       return {
         ...state,
-        focussedCharacterId: clickedCharacterId[0],
+        focussedCharacterId: clickedCharacterId,
       };
     }
 
