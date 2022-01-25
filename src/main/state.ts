@@ -43,7 +43,7 @@ export const initialState: State = {
   lastUpdated: 0,
   isPaused: false,
   isSettingTarget: false,
-  focussedCharacterId: "aa",
+  focussedCharacterId: "topleft",
   characters: new Map([
     [
       "topleft",
