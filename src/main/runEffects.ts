@@ -1,10 +1,11 @@
-import drawArrow from "../lib/drawArrow.js";
-import drawSegment from "../lib/drawSegment.js";
-import drawCircle from "../lib/drawCircle.js";
-import drawGrid from "../lib/drawGrid.js";
-import drawPath from "../lib/drawPath.js";
-import drawShape from "../lib/drawShape.js";
-import drawSelectionBox from "../lib/drawSelectionBox.js";
+import drawArrow from "../draw/drawArrow.js";
+import drawCircle from "../draw/drawCircle.js";
+import drawGrid from "../draw/drawGrid.js";
+import drawPath from "../draw/drawPath.js";
+import drawSegment from "../draw/drawSegment.js";
+import drawSelectionBox from "../draw/drawSelectionBox.js";
+import drawShape from "../draw/drawShape.js";
+import drawVector from "../draw/drawVector.js";
 
 import type { State, Character } from "./state.js";
 import type { Path, Segment } from "../lib/path.js";
@@ -17,7 +18,6 @@ import {
   radiansToVector,
 } from "../lib/vector.js";
 import { getCollision } from "../steering/obstacleAvoidance.js";
-import drawVector from "../lib/drawVector.js";
 
 function getWhiskerRay(
   k: Kinematic,

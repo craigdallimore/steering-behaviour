@@ -1,5 +1,5 @@
-import type { Vector } from "./vector";
-import { vectorToRadians, length } from "./vector";
+import type { Vector } from "../lib/vector";
+import { vectorToRadians, length } from "../lib/vector";
 
 export default function drawVector(
   ctx: CanvasRenderingContext2D,

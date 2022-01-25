@@ -1,4 +1,4 @@
-import type { Kinematic } from "./kinematic.js";
+import type { Kinematic } from "../lib/kinematic.js";
 
 export default function drawTarget(
   ctx: CanvasRenderingContext2D,

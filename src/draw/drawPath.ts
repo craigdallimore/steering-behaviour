@@ -1,4 +1,4 @@
-import type { Path } from "./path.js";
+import type { Path } from "../lib/path.js";
 
 export default function drawCircle(
   ctx: CanvasRenderingContext2D,

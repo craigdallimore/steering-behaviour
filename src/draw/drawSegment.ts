@@ -1,4 +1,4 @@
-import type { Segment } from "./path.js";
+import type { Segment } from "../lib/path.js";
 
 export default function drawShape(
   ctx: CanvasRenderingContext2D,
