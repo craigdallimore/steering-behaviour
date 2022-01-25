@@ -517,6 +517,8 @@ export function update(state: State, action: Action): State {
       }
       const time = action.payload;
 
+      state.lastUpdated = Date.now();
+
       state.characters = new Map(
         [...state.characters].map(([id, char]) => {
           const nextChar = applyBehaviour(

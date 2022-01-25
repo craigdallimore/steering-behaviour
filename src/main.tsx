@@ -1,5 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-ReactDOM.render(<h1>hi!</h1>, document.getElementById('root'));
-  console.log('h1 from react');
+import Layout from "./components/Layout.js";
+
+ReactDOM.render(<Layout />, document.getElementById("root"));

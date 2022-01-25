@@ -30,6 +30,7 @@ export type SteeringBehaviour =
   | "WANDER";
 
 export type State = {
+  lastUpdated: number;
   isPaused: boolean;
   isSettingTarget: boolean;
   focussedCharacterId: null | CharacterId;
@@ -39,7 +40,8 @@ export type State = {
 };
 
 export const initialState: State = {
-  isPaused: true,
+  lastUpdated: 0,
+  isPaused: false,
   isSettingTarget: false,
   focussedCharacterId: "aa",
   characters: new Map([
