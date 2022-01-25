@@ -1,10 +1,14 @@
+import { useImmerReducer } from "use-immer";
+import { enableMapSet } from "immer";
 import React from "react";
 import Canvas from "./Canvas.js";
 import useRAF from "../hooks/useRAF.js";
 import * as app from "../main/index.js";
 
+enableMapSet();
+
 const Main = () => {
-  const [state, dispatch] = React.useReducer(app.update, app.initialState);
+  const [state, dispatch] = useImmerReducer(app.update, app.initialState);
 
   useRAF((tick: number) => {
     dispatch({ type: "TICK", payload: tick });

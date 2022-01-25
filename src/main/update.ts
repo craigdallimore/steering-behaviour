@@ -405,19 +405,13 @@ const applyBehaviour = (
 export function update(state: State, action: Action): State {
   switch (action.type) {
     case "SET_TARGET_BUTTON_CLICKED":
-      return {
-        ...state,
-        isSettingTarget: true,
-      };
+      state.isSettingTarget = true;
+      return state;
     case "RESET_BUTTON_CLICKED":
-      return {
-        ...initialState,
-      };
+      return initialState;
     case "PLAY_BUTTON_CLICKED":
-      return {
-        ...state,
-        isPaused: !state.isPaused,
-      };
+      state.isPaused = !state.isPaused;
+      return state;
     case "CANVAS_CLICKED": {
       const clickPosition: Vector = action.payload;
       const pairs = [...state.characters];

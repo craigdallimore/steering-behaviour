@@ -5,12 +5,11 @@ import * as app from "../main/index.js";
 const Canvas = (props: { state: State }) => {
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
 
-  console.log(props.state.lastUpdated);
   React.useEffect(() => {
     if (canvasRef.current) {
       const ctx = canvasRef.current.getContext("2d");
       if (ctx) {
-        //app.runEffects(ctx, props.state);
+        app.runEffects(ctx, props.state);
       }
     }
   }, [props.state.lastUpdated]);
