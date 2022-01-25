@@ -5,7 +5,13 @@
   - [ ] Move draw functions to a folder
   - [ ] Hook up DOM controls
   - [ ] rename state to draft in update, as per convention
+  - [ ] rename segment to edge
   - [ ] update>OBSTACLE_AVOIDANCE, do not use hardcoded shape id
+
+```js
+main?.translate(0.5, 0.5);
+```
+
 - [ ] QOL improvements
 
   - [ ] Scenario picker. It would be neat to select a scenario to play, and have the app restart with fresh state.
