@@ -4,11 +4,50 @@ import React from "react";
 import Canvas from "./Canvas.js";
 import useRAF from "../hooks/useRAF.js";
 import * as app from "../main/index.js";
+import {
+  Character,
+  type State,
+  type SteeringBehaviour,
+} from "../main/state.js";
 
 enableMapSet();
 
+function getFocussedCharacter(state: State): Character | null {
+  if (!state.focussedCharacterId) {
+    return null;
+  }
+  const char = state.characters.get(state.focussedCharacterId);
+  return char || null;
+}
+
+const getClassname = (behaviour: SteeringBehaviour): string => {
+  switch (behaviour) {
+    case "ALIGN":
+    case "ARRIVE":
+    case "EVADE":
+    case "FLEE":
+    case "FACE":
+    case "MATCH_VELOCITY":
+    case "PURSUE":
+    case "SEEK":
+      return "has-target";
+    default: {
+      return "";
+    }
+  }
+};
+
 const Main = () => {
   const [state, dispatch] = useImmerReducer(app.update, app.initialState);
+
+  const focussedCharacter = getFocussedCharacter(state);
+  const className = focussedCharacter
+    ? getClassname(focussedCharacter.behaviour)
+    : "";
+
+  const legendText = state.focussedCharacterId
+    ? `Character ${state.focussedCharacterId}`
+    : "Character not selected";
 
   useRAF((tick: number) => {
     dispatch({ type: "TICK", payload: tick });
@@ -17,30 +56,61 @@ const Main = () => {
   return (
     <main>
       <Canvas state={state} />
-      <form>
+      <form className={className}>
         <fieldset>
-          <legend>Character</legend>
+          <legend>{legendText}</legend>
 
           <label htmlFor="orientation">Orientation</label>
-          <input id="orientation" type="range" min="-2" max="2" step="0.1" />
+          <input
+            id="orientation"
+            type="range"
+            min="-2"
+            max="2"
+            step="0.1"
+            value={focussedCharacter?.kinematic.orientation.toString()}
+          />
 
           <label htmlFor="rotation">Rotation</label>
-          <input id="rotation" type="number" />
+          <input
+            id="rotation"
+            type="number"
+            value={focussedCharacter?.kinematic.rotation.toString()}
+          />
 
           <label htmlFor="position-x">Horizontal position</label>
-          <input id="position-x" type="number" min="0" max="800" />
+          <input
+            id="position-x"
+            type="number"
+            min="0"
+            max="800"
+            value={focussedCharacter?.kinematic.position[0].toString()}
+          />
 
           <label htmlFor="position-z">Vertical position</label>
-          <input id="position-z" type="number" min="0" max="800" />
+          <input
+            id="position-z"
+            type="number"
+            min="0"
+            max="800"
+            value={focussedCharacter?.kinematic.position[1].toString()}
+          />
 
           <label htmlFor="velocity-x">Horizontal velocity</label>
-          <input id="velocity-x" type="number" />
+          <input
+            id="velocity-x"
+            type="number"
+            value={focussedCharacter?.kinematic.velocity[0].toString()}
+          />
 
           <label htmlFor="velocity-z">Vertical velocity</label>
-          <input id="velocity-z" type="number" />
+          <input
+            id="velocity-z"
+            type="number"
+            value={focussedCharacter?.kinematic.velocity[1].toString()}
+          />
 
           <label htmlFor="behaviour">Behaviour</label>
-          <select id="behaviour">
+          <select id="behaviour" value={focussedCharacter?.behaviour}>
             <option value="NONE">None</option>
             <option value="ALIGN">Align</option>
             <option value="ARRIVE">Arrive</option>
@@ -68,9 +138,11 @@ const Main = () => {
 
         <fieldset id="target">
           <legend>Target</legend>
-          <span id="target-label">Target not set</span>
+          <span id="target-label">
+            {focussedCharacter?.target ?? "Not set"}
+          </span>
           <button type="button" id="btn-set-target">
-            Set target
+            {state.isSettingTarget ? "Click a target" : "Pick target"}
           </button>
         </fieldset>
 
