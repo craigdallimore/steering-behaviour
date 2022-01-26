@@ -1,16 +1,13 @@
 # TODO
 
 - [ ] REFACTOR
+
   - [ ] Remove maxspeed from `updateKinematic`
-  - [ ] Move draw functions to a folder
-  - [ ] Hook up DOM controls
+  - [x] Move draw functions to a folder
+  - [x] Hook up DOM controls
   - [ ] rename state to draft in update, as per convention
   - [ ] rename segment to edge
   - [ ] update>OBSTACLE_AVOIDANCE, do not use hardcoded shape id
-
-```js
-main?.translate(0.5, 0.5);
-```
 
 - [ ] QOL improvements
 

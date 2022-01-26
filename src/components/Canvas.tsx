@@ -1,8 +1,12 @@
 import React from "react";
 import { type State } from "../main/state.js";
+import { type Action } from "../main/update.js";
 import * as app from "../main/index.js";
 
-const Canvas = (props: { state: State }) => {
+const Canvas = (props: {
+  state: State;
+  dispatch: (action: Action) => void;
+}) => {
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
   const ctxRef = React.useRef<CanvasRenderingContext2D | null>(null);
 
@@ -23,7 +27,21 @@ const Canvas = (props: { state: State }) => {
   }, [canvasRef.current]);
 
   return (
-    <canvas ref={canvasRef} width="800" height="800" id="canvas-main"></canvas>
+    <canvas
+      ref={canvasRef}
+      width="800"
+      height="800"
+      id="canvas-main"
+      onClick={(e) => {
+        const target = e.target as HTMLCanvasElement;
+        const { top, left }: DOMRect = target.getBoundingClientRect();
+
+        props.dispatch({
+          type: "CANVAS_CLICKED",
+          payload: [e.clientX - left, e.clientY - top],
+        });
+      }}
+    ></canvas>
   );
 };
 
