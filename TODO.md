@@ -7,7 +7,9 @@
   - [x] Hook up DOM controls
   - [x] rename segment to edge
   - [ ] rename state to draft in update, as per convention
+  - [ ] avoid cloning within reducer
   - [ ] update>OBSTACLE_AVOIDANCE, do not use hardcoded shape id
+  - [ ] drawScene - move out getWhiskerRay
 
 lib/
 kinematic.ts

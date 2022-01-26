@@ -1,11 +1,11 @@
-import drawArrow from "../draw/drawArrow.js";
-import drawCircle from "../draw/drawCircle.js";
-import drawGrid from "../draw/drawGrid.js";
-import drawPath from "../draw/drawPath.js";
-import drawEdge from "../draw/drawEdge.js";
-import drawSelectionBox from "../draw/drawSelectionBox.js";
-import drawShape from "../draw/drawShape.js";
-import drawVector from "../draw/drawVector.js";
+import drawArrow from "./drawArrow.js";
+import drawCircle from "./drawCircle.js";
+import drawGrid from "./drawGrid.js";
+import drawPath from "./drawPath.js";
+import drawEdge from "./drawEdge.js";
+import drawSelectionBox from "./drawSelectionBox.js";
+import drawShape from "./drawShape.js";
+import drawVector from "./drawVector.js";
 
 import type {
   State,
@@ -31,7 +31,7 @@ function getWhiskerRay(k: Kinematic, radians: number, magnitude: number): Edge {
   ];
 }
 
-export default function runEffects(
+export default function drawScene(
   ctx: CanvasRenderingContext2D,
   state: State
 ): void {

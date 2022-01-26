@@ -1,4 +1,4 @@
-import { initialState } from "./state.js";
+import { initialState } from "@domain/initialState.js";
 import {
   Character,
   CharacterId,
@@ -29,7 +29,7 @@ import {
   separation,
   wander,
 } from "../steering/index.js";
-import updateKinematic from "../updateKinematic.js";
+import updateKinematic from "@lib/kinematic.js";
 
 // TYPES ----------------------------------------------------------------------
 
@@ -405,7 +405,7 @@ const applyBehaviour = (
   }
 };
 
-export function update(state: State, action: Action): State {
+export function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "SET_TARGET_BUTTON_CLICKED":
       state.isSettingTarget = true;

@@ -1,6 +1,7 @@
 import type { Kinematic, Steering } from "@domain/types.js";
-import { add, length, multiply, normalise } from "./lib/vector.js";
-import limitOrientation from "./lib/limitOrientation.js";
+import { add, length, multiply, normalise } from "./vector.js";
+import limitOrientation from "./limitOrientation.js";
+
 const maxSpeed = 45;
 
 export default function updateKinematic(
