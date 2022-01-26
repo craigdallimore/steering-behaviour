@@ -2,21 +2,15 @@
 
 - [ ] REFACTOR
 
-  - [ ] lint
+  - [x] lint
   - [x] Move draw functions to a folder
   - [x] Hook up DOM controls
   - [x] rename segment to edge
   - [ ] files:
-    - [ ] reducer
-      - [ ] rename state to draft
-      - [ ] avoid cloning
+    - [ ] applyBehaviour
       - [ ] OBSTACLE_AVOIDANCE, do not use hardcoded shape id
-      - [ ] `updateFocussedCharacter`
-      - [ ] `getCharacter`
-      - [ ] `applyBehaviour`
-    - [ ] drawScene - move out getWhiskerRay
+      - [ ] find a way to move config up into state
     - [ ] initialState/State: separate state for controls and scene
-    - [ ] Layout: move out getFocussedCharacter
     - [ ] kinematic: Remove maxspeed
     - [ ] align: remove mapToRange
     - [ ] obstace avoidance
@@ -24,6 +18,7 @@
       - [ ] getCollision
       - [ ] getWhiskerRay
   - [ ] Break up components
+  - [ ] Find a way to have a debug variant for each view
   - [ ] Testing
     - [ ] How to show coverage
     - [ ] How to test component
