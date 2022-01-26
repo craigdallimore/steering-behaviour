@@ -2,14 +2,32 @@
 
 - [ ] REFACTOR
 
-  - [ ] Remove maxspeed from `updateKinematic`
+  - [ ] lint
   - [x] Move draw functions to a folder
   - [x] Hook up DOM controls
   - [x] rename segment to edge
-  - [ ] rename state to draft in update, as per convention
-  - [ ] avoid cloning within reducer
-  - [ ] update>OBSTACLE_AVOIDANCE, do not use hardcoded shape id
-  - [ ] drawScene - move out getWhiskerRay
+  - [ ] files:
+    - [ ] reducer
+      - [ ] rename state to draft
+      - [ ] avoid cloning
+      - [ ] OBSTACLE_AVOIDANCE, do not use hardcoded shape id
+      - [ ] `updateFocussedCharacter`
+      - [ ] `getCharacter`
+      - [ ] `applyBehaviour`
+    - [ ] drawScene - move out getWhiskerRay
+    - [ ] initialState/State: separate state for controls and scene
+    - [ ] Layout: move out getFocussedCharacter
+    - [ ] kinematic: Remove maxspeed
+    - [ ] align: remove mapToRange
+    - [ ] obstace avoidance
+      - [ ] getNormals
+      - [ ] getCollision
+      - [ ] getWhiskerRay
+  - [ ] Break up components
+  - [ ] Testing
+    - [ ] How to show coverage
+    - [ ] How to test component
+    - [ ] How to test library file
 
 lib/
 kinematic.ts
