@@ -23,8 +23,8 @@
     "use-immer": "^0.6.0"
   },
   "scripts": {
+    "lint": "eslint . --ext .ts",
     "build": "rollup -c",
-    "lint": "eslint ./src/**.*",
     "dev": "rollup -c --watch"
   },
   "name": "ai-steering-behaviours",

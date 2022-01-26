@@ -1,5 +1,5 @@
 import { subtract, multiply, add, length } from "@lib/vector.js";
-import type { Kinematic, Vector, Steering } from "@domain/types.js";
+import type { Kinematic, Steering } from "@domain/types.js";
 import { seek } from "./seek.js";
 
 type Config = {

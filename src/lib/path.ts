@@ -1,4 +1,4 @@
-import type { Edge, Vector, Path, PathId } from "@domain/types.js";
+import type { Edge, Vector, Path } from "@domain/types.js";
 import { distance, subtract, multiply, normalise } from "./vector.js";
 
 const zero2D: Vector = [0, 0];
