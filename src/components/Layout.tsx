@@ -5,17 +5,10 @@ import Canvas from "./Canvas.js";
 import useRAF from "../hooks/useRAF.js";
 import { reducer } from "@domain/reducer.js";
 import { initialState } from "@domain/initialState.js";
-import type { Character, State, SteeringBehaviour } from "@domain/types.js";
+import type { SteeringBehaviour } from "@domain/types.js";
+import getFocussedCharacter from "@lib/getFocussedCharacter.js";
 
-enableMapSet();
-
-function getFocussedCharacter(state: State): Character | null {
-  if (!state.focussedCharacterId) {
-    return null;
-  }
-  const char = state.characters.get(state.focussedCharacterId);
-  return char || null;
-}
+enableMapSet(); // immer can understand Map and Set
 
 const getClassname = (behaviour: SteeringBehaviour): string => {
   switch (behaviour) {
