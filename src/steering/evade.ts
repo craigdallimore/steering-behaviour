@@ -1,4 +1,4 @@
-import { subtract, multiply, add, length } from "../lib/vector.js";
+import { subtract, multiply, add, length } from "@lib/vector.js";
 import type { Kinematic, Steering } from "@domain/types.js";
 import { flee } from "./flee.js";
 

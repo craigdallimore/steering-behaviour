@@ -10,7 +10,7 @@ import {
   SteeringBehaviour,
   Vector,
 } from "@domain/types.js";
-import { distance } from "../lib/vector.js";
+import { distance } from "@lib/vector.js";
 import {
   align,
   arrive,

@@ -5,7 +5,7 @@ import {
   subtract,
   multiply,
   normalise,
-} from "../lib/vector.js";
+} from "@lib/vector.js";
 import type { Kinematic, Vector, Steering } from "@domain/types.js";
 import type { AlignConfig } from "./align.js";
 import { lookWhereYouAreGoing } from "./lookWhereYouAreGoing.js";

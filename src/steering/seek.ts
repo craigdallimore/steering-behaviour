@@ -1,4 +1,4 @@
-import { subtract, multiply, normalise } from "../lib/vector.js";
+import { subtract, multiply, normalise } from "@lib/vector.js";
 import type { Kinematic, Vector, Steering } from "@domain/types.js";
 
 type Config = {

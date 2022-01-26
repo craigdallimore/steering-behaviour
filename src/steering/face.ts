@@ -1,4 +1,4 @@
-import { length, subtract } from "../lib/vector.js";
+import { length, subtract } from "@lib/vector.js";
 import type { Kinematic, Vector, Steering } from "@domain/types.js";
 import { emptySteering } from "./steering.js";
 import { align } from "./align.js";

@@ -6,7 +6,7 @@ import {
   normalise,
   vectorToRadians,
   radiansToVector,
-} from "../lib/vector.js";
+} from "@lib/vector.js";
 import type {
   Kinematic,
   Steering,
@@ -16,7 +16,7 @@ import type {
 } from "@domain/types.js";
 
 import type { AlignConfig } from "./align.js";
-import { findFirstIntersection } from "../lib/shape.js";
+import { findFirstIntersection } from "@lib/shape.js";
 
 import { seek } from "./seek.js";
 import { lookWhereYouAreGoing } from "./lookWhereYouAreGoing.js";
