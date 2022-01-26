@@ -55,7 +55,6 @@ export type SteeringBehaviour =
   | "WANDER";
 
 export type State = {
-  lastUpdated: number;
   isPaused: boolean;
   isSettingTarget: boolean;
   focussedCharacterId: null | CharacterId;

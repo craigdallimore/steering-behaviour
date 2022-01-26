@@ -1,8 +1,7 @@
 import type { State } from "@domain/types.js";
 
 export const initialState: State = {
-  lastUpdated: 0,
-  isPaused: false,
+  isPaused: true,
   isSettingTarget: false,
   focussedCharacterId: "topleft",
   characters: new Map([

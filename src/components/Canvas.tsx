@@ -10,11 +10,9 @@ const Canvas = (props: {
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
   const ctxRef = React.useRef<CanvasRenderingContext2D | null>(null);
 
-  React.useEffect(() => {
-    if (ctxRef.current) {
-      drawScene(ctxRef.current, props.state);
-    }
-  }, [props.state.lastUpdated]);
+  if (ctxRef.current) {
+    drawScene(ctxRef.current, props.state);
+  }
 
   React.useEffect(() => {
     if (canvasRef.current) {
