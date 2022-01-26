@@ -1,5 +1,9 @@
 export type Vector = [x: number, z: number];
 
+export type CharacterMap = Map<CharacterId, Character>;
+export type PathMap = Map<PathId, Path>;
+export type ShapeMap = Map<ShapeId, Shape>;
+
 export type Kinematic = {
   position: Vector;
   orientation: number;
