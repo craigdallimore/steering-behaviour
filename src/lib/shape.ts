@@ -1,11 +1,4 @@
-import type {
-  Edge,
-  Intersection,
-  Path,
-  Shape,
-  ShapeId,
-  Vector,
-} from "@domain/types.js";
+import type { Edge, Intersection, Shape } from "@domain/types.js";
 import { add, distance } from "./vector.js";
 import { findEdgeIntersection } from "./path.js";
 
