@@ -1,8 +1,8 @@
-import type { Segment } from "../lib/path.js";
+import type { Edge } from "@domain/types";
 
 export default function drawShape(
   ctx: CanvasRenderingContext2D,
-  [a, b]: Segment,
+  [a, b]: Edge,
   strokeStyle: string
 ): CanvasRenderingContext2D {
   ctx.save();

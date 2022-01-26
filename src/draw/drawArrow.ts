@@ -1,4 +1,4 @@
-import type { Kinematic } from "../lib/kinematic.js";
+import type { Kinematic } from "@domain/types";
 
 export default function drawArrow(
   ctx: CanvasRenderingContext2D,

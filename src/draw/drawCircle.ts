@@ -1,4 +1,4 @@
-import type { Vector } from "../lib/vector.js";
+import type { Vector } from "@domain/types";
 
 export default function drawCircle(
   ctx: CanvasRenderingContext2D,

@@ -1,13 +1,16 @@
 import { initialState } from "./state.js";
 import {
-  type State,
-  type SteeringBehaviour,
-  type CharacterId,
-  type Character,
-} from "./state.js";
-import { distance, type Vector } from "../lib/vector.js";
-import type { PathId, Path } from "../lib/path.js";
-import type { ShapeId, Shape } from "../lib/shape.js";
+  Character,
+  CharacterId,
+  Path,
+  PathId,
+  Shape,
+  ShapeId,
+  State,
+  SteeringBehaviour,
+  Vector,
+} from "@domain/types.js";
+import { distance } from "../lib/vector.js";
 import {
   align,
   arrive,

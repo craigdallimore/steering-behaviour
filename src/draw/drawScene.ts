@@ -2,15 +2,19 @@ import drawArrow from "../draw/drawArrow.js";
 import drawCircle from "../draw/drawCircle.js";
 import drawGrid from "../draw/drawGrid.js";
 import drawPath from "../draw/drawPath.js";
-import drawSegment from "../draw/drawSegment.js";
+import drawEdge from "../draw/drawEdge.js";
 import drawSelectionBox from "../draw/drawSelectionBox.js";
 import drawShape from "../draw/drawShape.js";
 import drawVector from "../draw/drawVector.js";
 
-import type { State, Character } from "./state.js";
-import type { Path, Segment } from "../lib/path.js";
-import type { Kinematic } from "../lib/kinematic.js";
-import type { Shape } from "../lib/shape.js";
+import type {
+  State,
+  Character,
+  Path,
+  Edge,
+  Kinematic,
+  Shape,
+} from "@domain/types.js";
 import {
   add,
   multiply,
@@ -19,11 +23,7 @@ import {
 } from "../lib/vector.js";
 import { getCollision } from "../steering/obstacleAvoidance.js";
 
-function getWhiskerRay(
-  k: Kinematic,
-  radians: number,
-  magnitude: number
-): Segment {
+function getWhiskerRay(k: Kinematic, radians: number, magnitude: number): Edge {
   const bearing = vectorToRadians(k.velocity) - radians;
   return [
     k.position,
@@ -54,9 +54,9 @@ export default function runEffects(
     const w1 = getWhiskerRay(cha.kinematic, 0.2, lookaheadSide);
     const w2 = getWhiskerRay(cha.kinematic, -0.2, lookaheadSide);
 
-    drawSegment(ctx, w0, "rgb(67, 160, 71)");
-    drawSegment(ctx, w1, "rgb(46, 125, 50)");
-    drawSegment(ctx, w2, "rgb(46, 125, 50)");
+    drawEdge(ctx, w0, "rgb(67, 160, 71)");
+    drawEdge(ctx, w1, "rgb(46, 125, 50)");
+    drawEdge(ctx, w2, "rgb(46, 125, 50)");
 
     const shape = state.shapes.get("s1");
     if (shape) {

@@ -1,6 +1,4 @@
-import type { Vector } from "../lib/vector.js";
-import type { Kinematic } from "../lib/kinematic.js";
-import type { Steering } from "./steering.js";
+import type { Kinematic, Vector, Steering } from "@domain/types.js";
 
 function mapToRange(orientation: number): number {
   // To rotate all the way clockwise, use the value 6.283

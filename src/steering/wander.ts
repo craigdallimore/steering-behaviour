@@ -3,10 +3,8 @@ import {
   radiansToVector,
   degreesToVector,
   add,
-  type Vector,
 } from "../lib/vector.js";
-import type { Kinematic } from "../lib/kinematic.js";
-import type { Steering } from "./steering.js";
+import type { Kinematic, Vector, Steering } from "@domain/types.js";
 import type { AlignConfig } from "./align.js";
 import { face } from "./face.js";
 

@@ -1,43 +1,4 @@
-import type { Kinematic } from "../lib/kinematic.js";
-import type { Path, PathId } from "../lib/path.js";
-import type { Shape, ShapeId } from "../lib/shape.js";
-
-export type CharacterId = string;
-
-export type Character = {
-  kinematic: Kinematic;
-  behaviour: SteeringBehaviour;
-  target: CharacterId | null;
-  path: PathId | null;
-};
-
-export type SteeringBehaviour =
-  | "NONE"
-  | "ALIGN"
-  | "ARRIVE"
-  | "COLLISION_AVOIDANCE"
-  | "EVADE"
-  | "FACE"
-  | "FLEE"
-  | "FOLLOW_PATH_CHASE_RABBIT"
-  | "FOLLOW_PATH_PREDICT"
-  | "LOOK_WHERE_YOU_ARE_GOING"
-  | "MATCH_VELOCITY"
-  | "OBSTACLE_AVOIDANCE"
-  | "PURSUE"
-  | "SEEK"
-  | "SEPARATION"
-  | "WANDER";
-
-export type State = {
-  lastUpdated: number;
-  isPaused: boolean;
-  isSettingTarget: boolean;
-  focussedCharacterId: null | CharacterId;
-  characters: Map<CharacterId, Character>;
-  paths: Map<PathId, Path>;
-  shapes: Map<ShapeId, Shape>;
-};
+import type { State } from "@domain/types.js";
 
 export const initialState: State = {
   lastUpdated: 0,

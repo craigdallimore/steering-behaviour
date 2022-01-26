@@ -6,6 +6,10 @@
     "lib": ["es6", "dom"],
     "module": "esnext",
     "rootDir": "src",
+    "baseUrl": "src",
+    "paths": {
+      "@domain/*": ["domain/*"]
+    },
     "noImplicitAny": true,
     "outDir": "lib",
     "esModuleInterop": true,

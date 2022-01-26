@@ -5,8 +5,7 @@ import {
   multiply,
   normalise,
 } from "../lib/vector.js";
-import type { Kinematic } from "../lib/kinematic.js";
-import type { Steering } from "./steering.js";
+import type { Kinematic, Steering } from "@domain/types.js";
 
 type Config = {
   maxAcceleration: number;

@@ -7,11 +7,14 @@ import {
   vectorToRadians,
   radiansToVector,
 } from "../lib/vector.js";
-import type { Kinematic } from "../lib/kinematic.js";
-import type { Steering } from "./steering.js";
-import type { Vector } from "../lib/vector.js";
-import type { Segment } from "../lib/path.js";
-import type { Shape } from "../lib/shape.js";
+import type {
+  Kinematic,
+  Steering,
+  Vector,
+  Edge,
+  Shape,
+} from "@domain/types.js";
+
 import type { AlignConfig } from "./align.js";
 import { findFirstIntersection } from "../lib/shape.js";
 
@@ -23,7 +26,7 @@ type Collision = {
   normal: Vector;
 };
 
-export function getNormals([a, b]: Segment): [Vector, Vector] {
+export function getNormals([a, b]: Edge): [Vector, Vector] {
   const [dx, dy] = subtract(a, b);
   return [
     [-dy, dx],
@@ -31,14 +34,14 @@ export function getNormals([a, b]: Segment): [Vector, Vector] {
   ];
 }
 
-export function getCollision(seg: Segment, shape: Shape): Collision | null {
+export function getCollision(seg: Edge, shape: Shape): Collision | null {
   // The line extending from the character
 
   const intersection = findFirstIntersection(seg, shape);
 
   if (intersection) {
-    // Here we get the normals for the intersected segment
-    const normals = getNormals(intersection.segment);
+    // Here we get the normals for the intersected edge
+    const normals = getNormals(intersection.edge);
 
     // We want the normal on the same side as the character
     const closestNormal =
@@ -58,11 +61,7 @@ export function getCollision(seg: Segment, shape: Shape): Collision | null {
   return null;
 }
 
-function getWhiskerRay(
-  k: Kinematic,
-  radians: number,
-  magnitude: number
-): Segment {
+function getWhiskerRay(k: Kinematic, radians: number, magnitude: number): Edge {
   const bearing = vectorToRadians(k.velocity) - radians;
   return [
     k.position,

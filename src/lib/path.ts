@@ -1,19 +1,12 @@
-import type { Vector } from "./vector.js";
-export type Path = {
-  position: Vector;
-  points: Array<[number, number]>;
-};
-export type PathId = string;
+import type { Edge, Vector, Path, PathId } from "@domain/types.js";
 import { distance, subtract, multiply, normalise } from "./vector.js";
-
-export type Segment = [Vector, Vector];
 
 const zero2D: Vector = [0, 0];
 
-function vectorToSegment2D(
+function vectorToEdge2D(
   t: number,
   [px, pz]: Vector,
-  [[ax, az], [bx, bz]]: Segment
+  [[ax, az], [bx, bz]]: Edge
 ): Vector {
   return [(1 - t) * ax + t * bx - px, (1 - t) * az + t * bz - pz];
 }
@@ -22,9 +15,9 @@ function sqDiag([x, z]: Vector) {
   return x ** 2 + z ** 2;
 }
 
-export function findSegmentIntersection(
-  [a1, a2]: Segment,
-  [b1, b2]: Segment
+export function findEdgeIntersection(
+  [a1, a2]: Edge,
+  [b1, b2]: Edge
 ): Vector | null {
   const [s1x, s1y] = subtract(a2, a1);
   const [s2x, s2y] = subtract(b2, b1);
@@ -43,8 +36,8 @@ export function findSegmentIntersection(
   return null;
 }
 
-function findClosestPointOnSegment(
-  [[ax, az], [bx, bz]]: Segment,
+function findClosestPointOnEdge(
+  [[ax, az], [bx, bz]]: Edge,
   [px, pz]: Vector
 ): Vector {
   const v: Vector = [bx - ax, bz - az]; // distance from a to b
@@ -55,14 +48,14 @@ function findClosestPointOnSegment(
   const t = -vu / vv;
 
   if (t >= 0 && t <= 1) {
-    return vectorToSegment2D(t, zero2D, [
+    return vectorToEdge2D(t, zero2D, [
       [ax, az],
       [bx, bz],
     ]);
   }
 
   const g0 = sqDiag(
-    vectorToSegment2D(
+    vectorToEdge2D(
       0,
       [px, pz],
       [
@@ -72,7 +65,7 @@ function findClosestPointOnSegment(
     )
   );
   const g1 = sqDiag(
-    vectorToSegment2D(
+    vectorToEdge2D(
       1,
       [px, pz],
       [
@@ -157,8 +150,8 @@ export function getPosition(path: Path, param: number): Vector {
   }, init).node;
 }
 
-export function distanceToSegment(
-  [[ax, az], [bx, bz]]: Segment,
+export function distanceToEdge(
+  [[ax, az], [bx, bz]]: Edge,
   [px, pz]: Vector // point
 ): number {
   const A = px - ax;
@@ -188,28 +181,28 @@ export function distanceToSegment(
   return Math.sqrt(dx ** 2 + dy ** 2);
 }
 
-export function findClosestSegmentToPoint(
+export function findClosestEdgeToPoint(
   point: Vector,
   path: Path
 ): [Vector, Vector] {
-  const initialSegments: Segment[] = [];
+  const initialEdges: Edge[] = [];
 
-  const segments: Segment[] = path.points.reduce(
-    (acc: Segment[], vecB: Vector, index: number): Segment[] => {
+  const edges: Edge[] = path.points.reduce(
+    (acc: Edge[], vecB: Vector, index: number): Edge[] => {
       if (index === 0) {
         return acc;
       }
 
       const vecA: Vector = path.points[index - 1];
-      const segment: Segment = [vecA, vecB];
+      const edge: Edge = [vecA, vecB];
 
-      return [...acc, segment];
+      return [...acc, edge];
     },
-    initialSegments
+    initialEdges
   );
 
-  const distances = segments.map((seg, index) => {
-    return { dist: distanceToSegment(seg, point), index };
+  const distances = edges.map((seg, index) => {
+    return { dist: distanceToEdge(seg, point), index };
   });
 
   const shortest = distances.reduce(
@@ -220,15 +213,12 @@ export function findClosestSegmentToPoint(
     }
   );
 
-  return segments[shortest.index];
+  return edges[shortest.index];
 }
 
 export function findClosestPointOnPath(path: Path, point: Vector): Vector {
   if (path.points.length < 2) {
     return point;
   }
-  return findClosestPointOnSegment(
-    findClosestSegmentToPoint(point, path),
-    point
-  );
+  return findClosestPointOnEdge(findClosestEdgeToPoint(point, path), point);
 }

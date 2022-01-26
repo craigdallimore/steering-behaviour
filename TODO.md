@@ -5,9 +5,21 @@
   - [ ] Remove maxspeed from `updateKinematic`
   - [x] Move draw functions to a folder
   - [x] Hook up DOM controls
+  - [x] rename segment to edge
   - [ ] rename state to draft in update, as per convention
-  - [ ] rename segment to edge
   - [ ] update>OBSTACLE_AVOIDANCE, do not use hardcoded shape id
+
+lib/
+kinematic.ts
+limitOrientation.ts
+path.ts
+shape.ts
+vector.ts
+main/
+state.ts -> has the initial state
+update.ts -> hasstate reducer and helpers, and Action type
+main.tsx -> ok
+updateKinematic.ts
 
 - [ ] QOL improvements
 

@@ -1,4 +1,4 @@
-import type { Shape } from "../lib/shape.js";
+import type { Shape } from "@domain/types";
 
 export default function drawShape(
   ctx: CanvasRenderingContext2D,

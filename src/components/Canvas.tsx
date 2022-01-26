@@ -1,7 +1,7 @@
 import React from "react";
-import { type State } from "../main/state.js";
+import type { State } from "@domain/types.js";
 import { type Action } from "../main/update.js";
-import * as app from "../main/index.js";
+import drawScene from "../draw/drawScene.js";
 
 const Canvas = (props: {
   state: State;
@@ -12,7 +12,7 @@ const Canvas = (props: {
 
   React.useEffect(() => {
     if (ctxRef.current) {
-      app.runEffects(ctxRef.current, props.state);
+      drawScene(ctxRef.current, props.state);
     }
   }, [props.state.lastUpdated]);
 

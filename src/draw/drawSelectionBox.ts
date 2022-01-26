@@ -1,4 +1,4 @@
-import type { Vector } from "../lib/vector.js";
+import type { Vector } from "@domain/types";
 
 export default function drawSelectionBox(
   ctx: CanvasRenderingContext2D,

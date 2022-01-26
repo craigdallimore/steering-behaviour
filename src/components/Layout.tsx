@@ -1,14 +1,11 @@
 import { useImmerReducer } from "use-immer";
 import { enableMapSet } from "immer";
-import React, { MouseEventHandler } from "react";
+import React from "react";
 import Canvas from "./Canvas.js";
 import useRAF from "../hooks/useRAF.js";
-import * as app from "../main/index.js";
-import {
-  Character,
-  type State,
-  type SteeringBehaviour,
-} from "../main/state.js";
+import { update } from "../main/update.js";
+import { initialState } from "../main/state.js";
+import type { Character, State, SteeringBehaviour } from "@domain/types.js";
 
 enableMapSet();
 
@@ -38,7 +35,7 @@ const getClassname = (behaviour: SteeringBehaviour): string => {
 };
 
 const Main = () => {
-  const [state, dispatch] = useImmerReducer(app.update, app.initialState);
+  const [state, dispatch] = useImmerReducer(update, initialState);
 
   const focussedCharacter = getFocussedCharacter(state);
   const className = focussedCharacter

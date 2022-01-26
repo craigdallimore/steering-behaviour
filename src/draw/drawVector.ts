@@ -1,4 +1,4 @@
-import type { Vector } from "../lib/vector";
+import type { Vector } from "@domain/types";
 import { vectorToRadians, length } from "../lib/vector";
 
 export default function drawVector(

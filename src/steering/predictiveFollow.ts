@@ -1,7 +1,6 @@
-import { getParam, getPosition, type Path } from "../lib/path.js";
+import { getParam, getPosition } from "../lib/path.js";
+import { Path, Kinematic, Steering } from "@domain/types.js";
 import { add, multiply } from "../lib/vector.js";
-import type { Kinematic } from "../lib/kinematic.js";
-import type { Steering } from "./steering.js";
 import { seek } from "./seek.js";
 import { lookWhereYouAreGoing } from "./lookWhereYouAreGoing.js";
 import type { AlignConfig } from "./align.js";
