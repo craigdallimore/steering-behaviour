@@ -24,18 +24,6 @@
     - [ ] How to test component
     - [ ] How to test library file
 
-lib/
-kinematic.ts
-limitOrientation.ts
-path.ts
-shape.ts
-vector.ts
-main/
-state.ts -> has the initial state
-update.ts -> hasstate reducer and helpers, and Action type
-main.tsx -> ok
-updateKinematic.ts
-
 - [ ] QOL improvements
 
   - [ ] Scenario picker. It would be neat to select a scenario to play, and have the app restart with fresh state.
