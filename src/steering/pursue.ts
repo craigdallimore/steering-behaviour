@@ -1,16 +1,11 @@
 import { subtract, multiply, add, length } from "@lib/vector.js";
-import type { Kinematic, Steering } from "@domain/types.js";
+import type { Kinematic, PursueConfig, Steering } from "@domain/types.js";
 import { seek } from "./seek.js";
-
-type Config = {
-  maxAcceleration: number;
-  maxPrediction: number;
-};
 
 export function pursue(
   character: Kinematic,
   target: Kinematic,
-  config: Config
+  config: PursueConfig
 ): Steering {
   const direction = subtract(target.position, character.position);
   const distance = length(direction);

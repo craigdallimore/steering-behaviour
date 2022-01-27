@@ -1,14 +1,10 @@
 import { subtract, multiply, normalise } from "@lib/vector.js";
-import type { Kinematic, Steering } from "@domain/types.js";
-
-type Config = {
-  maxAcceleration: number;
-};
+import type { FleeConfig, Kinematic, Steering } from "@domain/types.js";
 
 export function flee(
   character: Kinematic,
   target: Kinematic,
-  config: Config
+  config: FleeConfig
 ): Steering {
   const linear = multiply(
     normalise(subtract(character.position, target.position)),

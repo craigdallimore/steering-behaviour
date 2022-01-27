@@ -8,14 +8,15 @@ import {
   radiansToVector,
 } from "@lib/vector.js";
 import type {
+  AlignConfig,
   Kinematic,
   Steering,
   Vector,
   Edge,
   Shape,
+  ObstacleAvoidanceConfig,
 } from "@domain/types.js";
 
-import type { AlignConfig } from "./align.js";
 import { findFirstIntersection } from "@lib/shape.js";
 
 import { seek } from "./seek.js";
@@ -69,17 +70,10 @@ function getWhiskerRay(k: Kinematic, radians: number, magnitude: number): Edge {
   ];
 }
 
-type Config = {
-  avoidDistance: number;
-  lookaheadMain: number;
-  lookaheadSide: number;
-  maxAcceleration: number;
-};
-
 export function obstacleAvoidance(
   character: Kinematic,
   shape: Shape,
-  config: Config,
+  config: ObstacleAvoidanceConfig,
   alignConfig: AlignConfig
 ): Steering {
   const w0 = getWhiskerRay(character, 0, config.lookaheadMain);

@@ -1,16 +1,11 @@
 import { subtract, multiply, add, length } from "@lib/vector.js";
-import type { Kinematic, Steering } from "@domain/types.js";
+import type { EvadeConfig, Kinematic, Steering } from "@domain/types.js";
 import { flee } from "./flee.js";
-
-type Config = {
-  maxPrediction: number;
-  maxAcceleration: number;
-};
 
 export function evade(
   character: Kinematic,
   target: Kinematic,
-  config: Config
+  config: EvadeConfig
 ): Steering {
   const direction = subtract(target.position, character.position);
   const distance = length(direction);

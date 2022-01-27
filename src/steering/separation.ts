@@ -1,18 +1,16 @@
 import { add, length, subtract, multiply, normalise } from "@lib/vector.js";
-import type { Kinematic, Steering } from "@domain/types.js";
+import type {
+  AlignConfig,
+  Kinematic,
+  SeparationConfig,
+  Steering,
+} from "@domain/types.js";
 import { lookWhereYouAreGoing } from "./lookWhereYouAreGoing.js";
-import type { AlignConfig } from "./align.js";
-
-type Config = {
-  threshold: number;
-  decayCoefficient: number;
-  maxAcceleration: number;
-};
 
 export function separation(
   character: Kinematic,
   targets: Array<Kinematic>,
-  config: Config,
+  config: SeparationConfig,
   alignConfig: AlignConfig
 ): Steering {
   const { angular } = lookWhereYouAreGoing(character, alignConfig);

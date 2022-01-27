@@ -1,6 +1,22 @@
 import updateKinematic from "@lib/updateKinematic.js";
 import getCharacter from "@lib/getCharacter";
-import { Character, CharacterMap, PathMap, ShapeMap } from "@domain/types.js";
+import {
+  AlignConfig,
+  ArriveConfig,
+  Character,
+  CharacterMap,
+  CollisionAvoidanceConfig,
+  EvadeConfig,
+  FleeConfig,
+  FollowPathChaseRabbitConfig,
+  FollowPathPredictConfig,
+  MatchVelocityConfig,
+  PathMap,
+  PursueConfig,
+  SeekConfig,
+  ShapeMap,
+  WanderConfig,
+} from "@domain/types.js";
 import {
   align,
   arrive,
@@ -19,6 +35,92 @@ import {
   separation,
   wander,
 } from "../steering/index.js";
+const alignConfig: AlignConfig = {
+  maxAngularAcceleration: 140,
+  maxRotation: 120,
+  decelerationTolerance: 2,
+  alignTolerance: 0.01,
+  timeToTarget: 0.1,
+};
+
+const arriveConfig: ArriveConfig = {
+  maxAcceleration: 25,
+  timeToTarget: 3,
+  maxSpeed: 55,
+  targetRadius: 5,
+  slowRadius: 60,
+};
+const collisionAvoidanceConfig: CollisionAvoidanceConfig = {
+  // Holds the maximum acceleration
+  maxAcceleration: 5,
+  // Holds the collision radius of a character (we assume all characters have the
+  // same radius here)
+  radius: 7.5,
+};
+
+const followPathChaseRabbitConfig: FollowPathChaseRabbitConfig = {
+  maxAcceleration: 25,
+  // Holds the distance along the path to generate the target. Can be negative
+  // if the character is to move along the reverse direction
+  pathOffset: 30,
+};
+
+const followPathPredictConfig: FollowPathPredictConfig = {
+  // Holds the distance along the path to generate the target. Can be negative
+  // if the character is to move along the reverse direction
+  pathOffset: 30,
+  // Holds the time in the future to predict the character position
+  predictTime: 0.1,
+  maxAcceleration: 25,
+};
+
+const separationConfig = {
+  // The threshold to take action
+  threshold: 250,
+  // Holds the constant coefficient of decay for the inverse square law force
+  decayCoefficient: 1500,
+  // Holds the maximum acceleration of the character
+  maxAcceleration: 25,
+};
+
+const matchVelocityConfig: MatchVelocityConfig = {
+  timeToTarget: 0.1,
+  maxAcceleration: 25,
+};
+
+const obstacleAvoidanceConfig = {
+  // Holds the minimum distance to a wall (i.e., how far to avoid collision)
+  // should be greater than the radius of the character
+  avoidDistance: 20,
+  // Holds the distance to look ahead for a collision
+  // (i.e., the length of the collision ray)
+  lookaheadMain: 150,
+  lookaheadSide: 75,
+  maxAcceleration: 15,
+};
+
+const pursueConfig: PursueConfig = {
+  maxPrediction: 1,
+  maxAcceleration: 25,
+};
+
+const evadeConfig: EvadeConfig = {
+  maxPrediction: 1,
+  maxAcceleration: 25,
+};
+
+const fleeConfig: FleeConfig = {
+  maxAcceleration: 25,
+};
+
+const seekConfig: SeekConfig = {
+  maxAcceleration: 25,
+};
+const wanderConfig: WanderConfig = {
+  maxAcceleration: 25,
+  wanderOffset: 50,
+  wanderRadius: 20,
+};
 
 export default function applyBehaviour(
   char: Character,
@@ -27,14 +129,6 @@ export default function applyBehaviour(
   paths: PathMap,
   shapes: ShapeMap
 ): Character {
-  const alignConfig = {
-    maxAngularAcceleration: 140,
-    maxRotation: 120,
-    decelerationTolerance: 2,
-    alignTolerance: 0.01,
-    timeToTarget: 0.1,
-  };
-
   switch (char.behaviour) {
     case "ALIGN": {
       const target = getCharacter(char.target, characters);
@@ -59,13 +153,7 @@ export default function applyBehaviour(
       if (!target) {
         return char;
       }
-      const steering = arrive(char.kinematic, target.kinematic, {
-        maxAcceleration: 25,
-        timeToTarget: 3,
-        maxSpeed: 55,
-        targetRadius: 5,
-        slowRadius: 60,
-      });
+      const steering = arrive(char.kinematic, target.kinematic, arriveConfig);
       if (!steering) {
         return char;
       }
@@ -81,13 +169,7 @@ export default function applyBehaviour(
       const steering = collisionAvoidance(
         char.kinematic,
         others,
-        {
-          // Holds the maximum acceleration
-          maxAcceleration: 5,
-          // Holds the collision radius of a character (we assume all characters have the
-          // same radius here)
-          radius: 7.5,
-        },
+        collisionAvoidanceConfig,
         alignConfig
       );
       return {
@@ -103,12 +185,7 @@ export default function applyBehaviour(
       const steering = chaseRabbit(
         char.kinematic,
         path,
-        {
-          maxAcceleration: 25,
-          // Holds the distance along the path to generate the target. Can be negative
-          // if the character is to move along the reverse direction
-          pathOffset: 30,
-        },
+        followPathChaseRabbitConfig,
         alignConfig
       );
       return {
@@ -124,14 +201,7 @@ export default function applyBehaviour(
       const steering = predictiveFollow(
         char.kinematic,
         path,
-        {
-          // Holds the distance along the path to generate the target. Can be negative
-          // if the character is to move along the reverse direction
-          pathOffset: 30,
-          // Holds the time in the future to predict the character position
-          predictTime: 0.1,
-          maxAcceleration: 25,
-        },
+        followPathPredictConfig,
         alignConfig
       );
       return {
@@ -146,14 +216,7 @@ export default function applyBehaviour(
       const steering = separation(
         char.kinematic,
         others,
-        {
-          // The threshold to take action
-          threshold: 250,
-          // Holds the constant coefficient of decay for the inverse square law force
-          decayCoefficient: 1500,
-          // Holds the maximum acceleration of the character
-          maxAcceleration: 25,
-        },
+        separationConfig,
         alignConfig
       );
       return {
@@ -189,10 +252,11 @@ export default function applyBehaviour(
         return char;
       }
 
-      const steering = matchVelocity(char.kinematic, target.kinematic, {
-        timeToTarget: 0.1,
-        maxAcceleration: 25,
-      });
+      const steering = matchVelocity(
+        char.kinematic,
+        target.kinematic,
+        matchVelocityConfig
+      );
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
@@ -206,16 +270,7 @@ export default function applyBehaviour(
       const steering = obstacleAvoidance(
         char.kinematic,
         shape,
-        {
-          // Holds the minimum distance to a wall (i.e., how far to avoid collision)
-          // should be greater than the radius of the character
-          avoidDistance: 20,
-          // Holds the distance to look ahead for a collision
-          // (i.e., the length of the collision ray)
-          lookaheadMain: 150,
-          lookaheadSide: 75,
-          maxAcceleration: 15,
-        },
+        obstacleAvoidanceConfig,
         alignConfig
       );
       return {
@@ -228,10 +283,7 @@ export default function applyBehaviour(
       if (!target) {
         return char;
       }
-      const steering = pursue(char.kinematic, target.kinematic, {
-        maxPrediction: 1,
-        maxAcceleration: 25,
-      });
+      const steering = pursue(char.kinematic, target.kinematic, pursueConfig);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
@@ -242,10 +294,7 @@ export default function applyBehaviour(
       if (!target) {
         return char;
       }
-      const steering = evade(char.kinematic, target.kinematic, {
-        maxPrediction: 1,
-        maxAcceleration: 25,
-      });
+      const steering = evade(char.kinematic, target.kinematic, evadeConfig);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
@@ -256,9 +305,7 @@ export default function applyBehaviour(
       if (!target) {
         return char;
       }
-      const steering = flee(char.kinematic, target.kinematic, {
-        maxAcceleration: 25,
-      });
+      const steering = flee(char.kinematic, target.kinematic, fleeConfig);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
@@ -269,24 +316,18 @@ export default function applyBehaviour(
       if (!target) {
         return char;
       }
-      const steering = seek(char.kinematic, target.kinematic.position, {
-        maxAcceleration: 25,
-      });
+      const steering = seek(
+        char.kinematic,
+        target.kinematic.position,
+        seekConfig
+      );
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
       };
     }
     case "WANDER": {
-      const steering = wander(
-        char.kinematic,
-        {
-          maxAcceleration: 25,
-          wanderOffset: 50,
-          wanderRadius: 20,
-        },
-        alignConfig
-      );
+      const steering = wander(char.kinematic, wanderConfig, alignConfig);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),

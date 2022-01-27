@@ -4,19 +4,18 @@ import {
   degreesToVector,
   add,
 } from "@lib/vector.js";
-import type { Kinematic, Vector, Steering } from "@domain/types.js";
-import type { AlignConfig } from "./align.js";
+import type {
+  Kinematic,
+  Vector,
+  Steering,
+  WanderConfig,
+  AlignConfig,
+} from "@domain/types.js";
 import { face } from "./face.js";
-
-type Config = {
-  wanderOffset: number;
-  wanderRadius: number;
-  maxAcceleration: number;
-};
 
 export function wander(
   kinematic: Kinematic,
-  config: Config,
+  config: WanderConfig,
   alignConfig: AlignConfig
 ): Steering {
   const wanderPosition: Vector = add(

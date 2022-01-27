@@ -1,20 +1,19 @@
 import { getParam, getPosition } from "@lib/path.js";
-import { Path, Kinematic, Steering } from "@domain/types.js";
+import {
+  AlignConfig,
+  Path,
+  Kinematic,
+  Steering,
+  FollowPathPredictConfig,
+} from "@domain/types.js";
 import { add, multiply } from "@lib/vector.js";
 import { seek } from "./seek.js";
 import { lookWhereYouAreGoing } from "./lookWhereYouAreGoing.js";
-import type { AlignConfig } from "./align.js";
-
-type Config = {
-  pathOffset: number;
-  predictTime: number;
-  maxAcceleration: number;
-};
 
 export function predictiveFollow(
   character: Kinematic,
   path: Path,
-  config: Config,
+  config: FollowPathPredictConfig,
   alignConfig: AlignConfig
 ): Steering {
   // Find the predicted future location

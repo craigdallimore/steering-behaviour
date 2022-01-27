@@ -1,8 +1,12 @@
 import { length, subtract } from "@lib/vector.js";
-import type { Kinematic, Vector, Steering } from "@domain/types.js";
+import type {
+  AlignConfig,
+  Kinematic,
+  Vector,
+  Steering,
+} from "@domain/types.js";
 import { emptySteering } from "./steering.js";
 import { align } from "./align.js";
-import type { AlignConfig } from "./align.js";
 
 export function face(
   character: Kinematic,

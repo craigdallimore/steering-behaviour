@@ -1,18 +1,18 @@
 import { getParam, getPosition } from "@lib/path.js";
-import type { Kinematic, Path, Steering } from "@domain/types.js";
+import type {
+  AlignConfig,
+  FollowPathChaseRabbitConfig,
+  Kinematic,
+  Path,
+  Steering,
+} from "@domain/types.js";
 import { seek } from "./seek.js";
 import { lookWhereYouAreGoing } from "./lookWhereYouAreGoing.js";
-import type { AlignConfig } from "./align.js";
-
-type Config = {
-  pathOffset: number;
-  maxAcceleration: number;
-};
 
 export function chaseRabbit(
   character: Kinematic,
   path: Path,
-  config: Config,
+  config: FollowPathChaseRabbitConfig,
   alignConfig: AlignConfig
 ): Steering {
   // Find the current position on the path

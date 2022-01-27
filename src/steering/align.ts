@@ -1,4 +1,9 @@
-import type { Kinematic, Vector, Steering } from "@domain/types.js";
+import type {
+  AlignConfig,
+  Kinematic,
+  Vector,
+  Steering,
+} from "@domain/types.js";
 
 function mapToRange(orientation: number): number {
   // To rotate all the way clockwise, use the value 6.283
@@ -10,14 +15,6 @@ function mapToRange(orientation: number): number {
 
   return nextOrientation % (Math.PI * 2);
 }
-
-export type AlignConfig = {
-  maxAngularAcceleration: number;
-  maxRotation: number;
-  decelerationTolerance: number;
-  alignTolerance: number;
-  timeToTarget: number;
-};
 
 export function align(
   character: Kinematic,

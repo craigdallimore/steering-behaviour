@@ -6,8 +6,13 @@ import {
   multiply,
   normalise,
 } from "@lib/vector.js";
-import type { Kinematic, Vector, Steering } from "@domain/types.js";
-import type { AlignConfig } from "./align.js";
+import type {
+  AlignConfig,
+  Kinematic,
+  Vector,
+  Steering,
+  CollisionAvoidanceConfig,
+} from "@domain/types.js";
 import { lookWhereYouAreGoing } from "./lookWhereYouAreGoing.js";
 
 type Config = {
@@ -27,7 +32,7 @@ type Final = {
 export function collisionAvoidance(
   character: Kinematic,
   targets: Array<Kinematic>,
-  config: Config,
+  config: CollisionAvoidanceConfig,
   alignConfig: AlignConfig
 ): Steering {
   const init: Final = {

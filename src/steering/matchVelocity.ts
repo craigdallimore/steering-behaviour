@@ -1,15 +1,14 @@
 import { length, subtract, multiply, normalise } from "@lib/vector.js";
-import type { Kinematic, Steering } from "@domain/types.js";
-
-type Config = {
-  timeToTarget: number;
-  maxAcceleration: number;
-};
+import type {
+  Kinematic,
+  MatchVelocityConfig,
+  Steering,
+} from "@domain/types.js";
 
 export function matchVelocity(
   character: Kinematic,
   target: Kinematic,
-  config: Config
+  config: MatchVelocityConfig
 ): Steering {
   const angular = 0;
   const linear = subtract(target.velocity, character.velocity);

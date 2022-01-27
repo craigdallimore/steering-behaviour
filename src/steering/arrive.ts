@@ -5,20 +5,12 @@ import {
   multiply,
   normalise,
 } from "@lib/vector.js";
-import type { Kinematic, Steering } from "@domain/types.js";
-
-type Config = {
-  maxAcceleration: number;
-  timeToTarget: number;
-  maxSpeed: number;
-  targetRadius: number;
-  slowRadius: number;
-};
+import type { ArriveConfig, Kinematic, Steering } from "@domain/types.js";
 
 export function arrive(
   character: Kinematic,
   target: Kinematic,
-  config: Config
+  config: ArriveConfig
 ): Steering | null {
   // Config
 
