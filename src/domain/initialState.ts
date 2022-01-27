@@ -9,6 +9,7 @@ export const initialState: State = {
       "topleft",
       {
         kinematic: {
+          maxSpeed: 45,
           position: [460, 480],
           velocity: [-10, -10],
           orientation: 0,
@@ -23,6 +24,7 @@ export const initialState: State = {
       "top",
       {
         kinematic: {
+          maxSpeed: 45,
           position: [480, 480],
           velocity: [0, -10],
           orientation: 0,
@@ -37,6 +39,7 @@ export const initialState: State = {
       "topright",
       {
         kinematic: {
+          maxSpeed: 45,
           position: [500, 480],
           velocity: [10, -10],
           orientation: 0,
@@ -51,6 +54,7 @@ export const initialState: State = {
       "bottom",
       {
         kinematic: {
+          maxSpeed: 45,
           position: [480, 520],
           velocity: [0, 10],
           orientation: 0,
@@ -65,6 +69,7 @@ export const initialState: State = {
       "left",
       {
         kinematic: {
+          maxSpeed: 45,
           position: [460, 500],
           velocity: [-10, 0],
           orientation: 0,
@@ -79,6 +84,7 @@ export const initialState: State = {
       "right",
       {
         kinematic: {
+          maxSpeed: 45,
           position: [500, 500],
           velocity: [10, 0],
           orientation: 0,
@@ -93,6 +99,7 @@ export const initialState: State = {
       "bottomleft",
       {
         kinematic: {
+          maxSpeed: 45,
           position: [460, 520],
           velocity: [-10, 10],
           orientation: 0,
@@ -107,6 +114,7 @@ export const initialState: State = {
       "bottomright",
       {
         kinematic: {
+          maxSpeed: 45,
           position: [500, 520],
           velocity: [10, 10],
           orientation: 0,

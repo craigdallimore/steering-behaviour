@@ -11,7 +11,6 @@
       - [ ] OBSTACLE_AVOIDANCE, do not use hardcoded shape id
       - [ ] find a way to move config up into state
     - [ ] initialState/State: separate state for controls and scene
-    - [ ] kinematic: Remove maxspeed
     - [ ] align: remove mapToRange
     - [ ] obstace avoidance
       - [ ] getNormals

@@ -5,6 +5,7 @@ export type PathMap = Map<PathId, Path>;
 export type ShapeMap = Map<ShapeId, Shape>;
 
 export type Kinematic = {
+  maxSpeed: number;
   position: Vector;
   orientation: number;
   velocity: Vector;
