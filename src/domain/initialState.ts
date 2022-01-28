@@ -1,6 +1,6 @@
 import type { State } from "@domain/types.js";
 
-import { Align, None } from "@steering/behaviours";
+import { Align, Seek, None } from "@steering/behaviours";
 
 export const initialState: State = {
   isPaused: true,
@@ -17,7 +17,7 @@ export const initialState: State = {
           orientation: 0,
           rotation: 0,
         },
-        behaviour: new Align("_2"),
+        behaviour: new Seek("_2"),
       },
     ],
     [

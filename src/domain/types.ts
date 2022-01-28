@@ -1,4 +1,41 @@
-import { Align, Seek, None } from "@steering/behaviours";
+import {
+  Align,
+  Arrive,
+  Flee,
+  MatchVelocity,
+  None,
+  Seek,
+  Separation,
+  CollisionAvoidance,
+  // Evade,
+  // Face,
+  // FollowPathPredict,
+  // FollowPathChaserabbit,
+  // LookWhereYouAreGoing,
+  // ObstacleAvoidance,
+  // Pursue,
+  // Wander,
+} from "@steering/behaviours";
+
+export type Behaviour =
+  | Align
+  | Arrive
+  | Flee
+  | CollisionAvoidance
+  // | Evade
+  // | Face
+  // | FollowPathPredict
+  // | FollowPathChaserabbit
+  // | LookWhereYouAreGoing
+  // | ObstacleAvoidance
+  // | Pursue
+  // | Wander;
+  | MatchVelocity
+  | None
+  | Seek
+  | Separation;
+
+export type SteeringBehaviourName = Behaviour["name"];
 
 export type Vector = [x: number, z: number];
 
@@ -41,10 +78,6 @@ export type Intersection = {
   edge: Edge;
   point: Vector;
 };
-
-export type Behaviour = Align | Seek | None;
-
-export type SteeringBehaviourName = Behaviour["name"];
 
 export type State = {
   isPaused: boolean;

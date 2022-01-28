@@ -26,13 +26,15 @@ export default function applyBehaviour(
         kinematic: updateKinematic(steering, char.kinematic, time),
       };
     }
-    /*
     case "ARRIVE": {
-      const target = getCharacter(char.target, characters);
+      const target = getCharacter(char.behaviour.targetId, characters);
       if (!target) {
         return char;
       }
-      const steering = arrive(char.kinematic, target.kinematic, char.behaviour);
+      const steering = char.behaviour.calculate(
+        char.kinematic,
+        target.kinematic.position
+      );
       if (!steering) {
         return char;
       }
@@ -45,16 +47,13 @@ export default function applyBehaviour(
       const others = [...characters.values()]
         .filter((ent) => ent !== char)
         .map((char) => char.kinematic);
-      const steering = collisionAvoidance(
-        char.kinematic,
-        others,
-        char.behaviour
-      );
+      const steering = char.behaviour.calculate(char.kinematic, others);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
       };
     }
+    /*
     case "FOLLOW_PATH_CHASE_RABBIT": {
       const path = char.path ? paths.get(char.path) : null;
       if (!path) {
@@ -77,18 +76,20 @@ export default function applyBehaviour(
         kinematic: updateKinematic(steering, char.kinematic, time),
       };
     }
+    */
     case "SEPARATION": {
       const others = [...characters.values()]
         .filter((ent) => ent !== char)
         .map((char) => char.kinematic);
-      const steering = separation(char.kinematic, others, char.behaviour);
+      const steering = char.behaviour.calculate(char.kinematic, others);
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
       };
     }
+    /*
     case "FACE": {
-      const target = getCharacter(char.target, characters);
+      const target = getCharacter(char.behaviour.targetId, characters);
       if (!target) {
         return char;
       }
@@ -109,22 +110,23 @@ export default function applyBehaviour(
         kinematic: updateKinematic(steering, char.kinematic, time),
       };
     }
+    */
     case "MATCH_VELOCITY": {
-      const target = getCharacter(char.target, characters);
+      const target = getCharacter(char.behaviour.targetId, characters);
       if (!target) {
         return char;
       }
 
-      const steering = matchVelocity(
+      const steering = char.behaviour.calculate(
         char.kinematic,
-        target.kinematic,
-        char.behaviour
+        target.kinematic
       );
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
       };
     }
+    /*
     case "OBSTACLE_AVOIDANCE": {
       const shape = shapes.get("s1"); // TODO should not be a single hardcoded shape id
       if (!shape) {
@@ -137,7 +139,7 @@ export default function applyBehaviour(
       };
     }
     case "PURSUE": {
-      const target = getCharacter(char.target, characters);
+      const target = getCharacter(char.behaviour.targetId, characters);
       if (!target) {
         return char;
       }
@@ -148,7 +150,7 @@ export default function applyBehaviour(
       };
     }
     case "EVADE": {
-      const target = getCharacter(char.target, characters);
+      const target = getCharacter(char.behaviour.targetId, characters);
       if (!target) {
         return char;
       }
@@ -158,18 +160,21 @@ export default function applyBehaviour(
         kinematic: updateKinematic(steering, char.kinematic, time),
       };
     }
+    */
     case "FLEE": {
-      const target = getCharacter(char.target, characters);
+      const target = getCharacter(char.behaviour.targetId, characters);
       if (!target) {
         return char;
       }
-      const steering = flee(char.kinematic, target.kinematic, char.behaviour);
+      const steering = char.behaviour.calculate(
+        char.kinematic,
+        target.kinematic.position
+      );
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
       };
     }
-*/
     case "SEEK": {
       const target = getCharacter(char.behaviour.targetId, characters);
       if (!target) {
