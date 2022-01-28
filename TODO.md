@@ -7,15 +7,17 @@
   - [x] Hook up DOM controls
   - [x] rename segment to edge
   - [ ] files:
+
     - [ ] applyBehaviour
-      - [ ] OBSTACLE_AVOIDANCE, do not use hardcoded shape id
-      - [ ] find a way to move config up into state
+      - [ ] OBSTACLE_AVOIDANCE, do not use hardcoded shape id. I think this deserves some research
     - [ ] initialState/State: separate state for controls and scene
-    - [ ] align: remove mapToRange
-    - [ ] obstace avoidance
-      - [ ] getNormals
-      - [ ] getCollision
-      - [ ] getWhiskerRay
+    - [ ] behaviourDefault - might it be better to use class instances for this?
+      - For each behaviour
+        - have a class that takes config and returns an instance that can be used for behaving
+        - behaviours like chaseRabbit can be instantiated with a PathId and a seek config
+        - behaviours can be instantiated with default values, that can be overridden
+    - [ ] A character should be able to have multiple blendable behaviours
+
   - [ ] Break up components
   - [ ] Find a way to have a debug variant for each view
   - [ ] Testing
