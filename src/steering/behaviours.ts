@@ -1,6 +1,11 @@
 import type {
   Vector,
   Kinematic,
+  Edge,
+  Shape,
+  ShapeId,
+  Path,
+  PathId,
   Steering,
   CharacterId,
   SteeringBehaviourName,
@@ -9,11 +14,15 @@ import {
   add,
   dot,
   distance,
+  radiansToVector,
+  degreesToVector,
+  vectorToRadians,
   length,
   normalise,
   multiply,
   subtract,
 } from "@lib/vector.js";
+import { getParam, getPosition } from "@lib/path.js";
 
 abstract class B {
   abstract readonly name: SteeringBehaviourName;
@@ -155,75 +164,69 @@ export class Arrive extends B {
   }
 }
 
-/*
-export class FollowPathChaserabbit extends B {
+export class FollowPathChaseRabbit extends B {
   readonly name = "FOLLOW_PATH_CHASE_RABBIT";
+  pathId: PathId;
   pathOffset: number;
-  seekConfig: SeekConfig;
-  constructor() {
+  seek: Seek;
+  constructor(pathId: PathId, pathOffset?: number) {
     super();
-  // Holds the distance along the path to generate the target. Can be negative
-  // if the character is to move along the reverse direction
-  pathOffset: 30,
-  seekConfig: {
-    name: "SEEK",
-    maxAcceleration: 25,
-  },
-
+    this.pathId = pathId;
+    // Holds the distance along the path to generate the target. Can be negative
+    // if the character is to move along the reverse direction
+    this.pathOffset = pathOffset || 30;
+    this.seek = new Seek("");
   }
-  calculate(): Steering {
-  // Find the current position on the path
-  const currentParam = getParam(path, kinematic.position);
+  calculate(kinematic: Kinematic, path: Path): Steering {
+    // Find the current position on the path
+    const currentParam = getParam(path, kinematic.position);
 
-  // Offset it
-  const targetParam = currentParam + this.pathOffset;
+    // Offset it
+    const targetParam = currentParam + this.pathOffset;
 
-  // Get the target position
-  const targetPosition = getPosition(path, targetParam);
+    // Get the target position
+    const targetPosition = getPosition(path, targetParam);
 
-  const { linear } = seek(kinematic, targetPosition, this.seekConfig);
-  return { angular: 0, linear };
+    const { linear } = this.seek.calculate(kinematic, targetPosition);
+    return { angular: 0, linear };
   }
 }
 export class FollowPathPredict extends B {
   readonly name = "FOLLOW_PATH_PREDICT";
+  pathId: PathId;
   pathOffset: number;
   predictTime: number;
-  seekConfig: SeekConfig;
-  constructor() {
+  seek: Seek;
+  constructor(pathId: PathId, pathOffset?: number, predictTime?: number) {
     super();
-  // Holds the distance along the path to generate the target. Can be negative
-  // if the character is to move along the reverse direction
-  pathOffset: 30,
-  // Holds the time in the future to predict the character position
-  predictTime: 0.1,
-  seekConfig: {
-    name: "SEEK",
-    maxAcceleration: 25,
-  },
-
+    this.pathId = pathId;
+    // Holds the distance along the path to generate the target. Can be negative
+    // if the character is to move along the reverse direction
+    this.pathOffset = pathOffset || 30;
+    // Holds the time in the future to predict the character position
+    this.predictTime = predictTime || 0.1;
+    this.seek = new Seek("");
   }
-  calculate(): Steering {
-  // Find the predicted future location
-  const futurePos = add(
-    kinematic.position,
-    multiply(kinematic.velocity, this.predictTime)
-  );
+  calculate(kinematic: Kinematic, path: Path): Steering {
+    // Find the predicted future location
+    const futurePos = add(
+      kinematic.position,
+      multiply(kinematic.velocity, this.predictTime)
+    );
 
-  // Find the predicted position on the path
-  const currentParam = getParam(path, futurePos);
+    // Find the predicted position on the path
+    const currentParam = getParam(path, futurePos);
 
-  // Offset it
-  const targetParam = currentParam + this.pathOffset;
+    // Offset it
+    const targetParam = currentParam + this.pathOffset;
 
-  // Get the target position
-  const targetPosition = getPosition(path, targetParam);
+    // Get the target position
+    const targetPosition = getPosition(path, targetParam);
 
-  const { linear } = seek(kinematic, targetPosition, this.seekConfig);
-  return { angular: 0, linear };
+    const { linear } = this.seek.calculate(kinematic, targetPosition);
+    return { angular: 0, linear };
   }
 }
-*/
 type Final = {
   shortestTime: number;
   firstMinSeparation: number;
@@ -308,63 +311,57 @@ export class CollisionAvoidance extends B {
     };
   }
 }
-/*
 export class Evade extends B {
   readonly name = "EVADE";
   maxPrediction: number;
-  fleeConfig: FleeConfig;
-  constructor() {
+  flee: Flee;
+  constructor(flee: Flee, maxPrediction?: number) {
     super();
-  maxPrediction: 1,
-  fleeConfig: {
-    name: "FLEE",
-    maxAcceleration: 25,
-  },
-
+    this.flee = flee;
+    this.maxPrediction = maxPrediction || 1;
   }
-  calculate(): Steering {
-  const direction = subtract(target.position, kinematic.position);
-  const distance = length(direction);
-  const speed = length(kinematic.velocity);
+  calculate(kinematic: Kinematic, target: Kinematic): Steering {
+    const direction = subtract(target.position, kinematic.position);
+    const distance = length(direction);
+    const speed = length(kinematic.velocity);
 
-  const prediction =
-    speed <= distance / this.maxPrediction
-      ? this.maxPrediction
-      : distance / speed;
+    const prediction =
+      speed <= distance / this.maxPrediction
+        ? this.maxPrediction
+        : distance / speed;
 
-  const nextTargetPosition = add(
-    target.position,
-    multiply(target.velocity, prediction)
-  );
+    const nextTargetPosition = add(
+      target.position,
+      multiply(target.velocity, prediction)
+    );
 
-  const nextTarget = {
-    ...target,
-    position: nextTargetPosition,
-  };
-
-  return flee(kinematic, nextTarget, this.fleeConfig);
+    return this.flee.calculate(kinematic, nextTargetPosition);
   }
 }
 export class Face extends B {
   readonly name = "FACE";
-  alignConfig: AlignConfig;
-  constructor() {
+  targetId: CharacterId;
+  align: Align;
+  constructor(targetId: CharacterId) {
     super();
-
+    this.targetId = targetId;
+    this.align = new Align(targetId);
   }
-  calculate(): Steering {
-  const direction = subtract(position, kinematic.position);
+  calculate(kinematic: Kinematic, position: Vector): Steering {
+    const direction = subtract(position, kinematic.position);
 
-  if (length(direction) === 0) {
-    return emptySteering;
-  }
+    if (length(direction) === 0) {
+      return {
+        angular: 0,
+        linear: [0, 0],
+      };
+    }
 
-  const nextOrientation = Math.atan2(direction[0], -direction[1]);
+    const nextOrientation = Math.atan2(direction[0], -direction[1]);
 
-  return align(kinematic, nextOrientation, this.alignConfig);
+    return this.align.calculate(kinematic, nextOrientation);
   }
 }
-*/
 export class Flee extends B {
   readonly name = "FLEE";
   targetId: CharacterId;
@@ -388,33 +385,26 @@ export class Flee extends B {
     };
   }
 }
-/*
 export class LookWhereYouAreGoing extends B {
   readonly name = "LOOK_WHERE_YOU_ARE_GOING";
-  alignConfig: AlignConfig;
-  constructor() {
+  align: Align;
+  constructor(align?: Align) {
     super();
-
-  alignConfig: {
-    name: "ALIGN",
-    maxAngularAcceleration: 140,
-    maxRotation: 120,
-    decelerationTolerance: 2,
-    alignTolerance: 0.01,
-    timeToTarget: 0.1,
-  },
+    this.align = align || new Align("");
   }
-  calculate(): Steering {
-  if (length(kinematic.velocity) === 0) {
-    return emptySteering;
-  }
+  calculate(kinematic: Kinematic): Steering {
+    if (length(kinematic.velocity) === 0) {
+      return {
+        linear: [0, 0],
+        angular: 0,
+      };
+    }
 
-  const orientation = vectorToRadians(kinematic.velocity);
+    const orientation = vectorToRadians(kinematic.velocity);
 
-  return align(kinematic, orientation, this.alignConfig);
+    return this.align.calculate(kinematic, orientation);
   }
 }
-*/
 export class MatchVelocity extends B {
   readonly name = "MATCH_VELOCITY";
   targetId: CharacterId;
@@ -445,10 +435,7 @@ export class MatchVelocity extends B {
     };
   }
 }
-/*
 import { findFirstIntersection } from "@lib/shape.js";
-
-import { seek } from "./seek.js";
 
 type Collision = {
   position: Vector;
@@ -500,86 +487,86 @@ function getWhiskerRay(k: Kinematic, radians: number, magnitude: number): Edge {
 
 export class ObstacleAvoidance extends B {
   readonly name = "OBSTACLE_AVOIDANCE";
+  shapeId: ShapeId;
+  seek: Seek;
   avoidDistance: number;
   lookaheadMain: number;
   lookaheadSide: number;
-  seekConfig: SeekConfig;
-  constructor() {
+  constructor(
+    shapeId: ShapeId,
+    avoidDistance?: number,
+    lookaheadMain?: number,
+    lookaheadSide?: number
+  ) {
     super();
-  // Holds the minimum distance to a wall (i.e., how far to avoid collision)
-  // should be greater than the radius of the character
-  avoidDistance: 20,
-  // Holds the distance to look ahead for a collision
-  // (i.e., the length of the collision ray)
-  lookaheadMain: 150,
-  lookaheadSide: 75,
+    // Holds the minimum distance to a wall (i.e., how far to avoid collision)
+    // should be greater than the radius of the character
+    this.avoidDistance = avoidDistance || 20;
+    // Holds the distance to look ahead for a collision
+    // (i.e., the length of the collision ray)
+    this.lookaheadMain = lookaheadMain || 150;
+    this.lookaheadSide = lookaheadSide || 75;
 
-  seekConfig: {
-    name: "SEEK",
-    maxAcceleration: 15,
-  },
-
+    this.shapeId = shapeId;
+    this.seek = new Seek("");
   }
-  calculate(): Steering {
-  const w0 = getWhiskerRay(kinematic, 0, this.lookaheadMain);
-  const w1 = getWhiskerRay(kinematic, 0.2, this.lookaheadSide);
-  const w2 = getWhiskerRay(kinematic, -0.2, this.lookaheadSide);
+  calculate(kinematic: Kinematic, shape: Shape): Steering {
+    const w0 = getWhiskerRay(kinematic, 0, this.lookaheadMain);
+    const w1 = getWhiskerRay(kinematic, 0.2, this.lookaheadSide);
+    const w2 = getWhiskerRay(kinematic, -0.2, this.lookaheadSide);
 
-  const collision =
-    getCollision(w1, shape) ||
-    getCollision(w2, shape) ||
-    getCollision(w0, shape);
+    const collision =
+      getCollision(w1, shape) ||
+      getCollision(w2, shape) ||
+      getCollision(w0, shape);
 
-  // If have no collision, do nothing
-  if (!collision) {
-    return {
-      angular: 0,
-      linear: [0, 0],
-    };
-  }
+    // If have no collision, do nothing
+    if (!collision) {
+      return {
+        angular: 0,
+        linear: [0, 0],
+      };
+    }
 
-  // Otherwise create a target
-  const targetPosition = add(
-    collision.position,
-    multiply(collision.normal, this.avoidDistance)
-  );
+    // Otherwise create a target
+    const targetPosition = add(
+      collision.position,
+      multiply(collision.normal, this.avoidDistance)
+    );
 
-  // 2. Delegate to seek
-  return seek(kinematic, targetPosition, this.seekConfig);
+    // 2. Delegate to seek
+    return this.seek.calculate(kinematic, targetPosition);
   }
 }
 export class Pursue extends B {
   readonly name = "PURSUE";
+  targetId: CharacterId;
   maxPrediction: number;
-  seekConfig: SeekConfig;
-  constructor() {
+  seek: Seek;
+  constructor(targetId: CharacterId, maxPrediction?: number) {
     super();
-  maxPrediction: 1,
-  seekConfig: {
-    name: "SEEK",
-    maxAcceleration: 25,
-  },
-
+    this.maxPrediction = maxPrediction || 1;
+    this.seek = new Seek(targetId);
+    this.targetId = targetId;
   }
-  calculate(): Steering {
-  const direction = subtract(target.position, kinematic.position);
-  const distance = length(direction);
-  const speed = length(kinematic.velocity);
+  calculate(kinematic: Kinematic, target: Kinematic): Steering {
+    const direction = subtract(target.position, kinematic.position);
+    const distance = length(direction);
+    const speed = length(kinematic.velocity);
 
-  const prediction =
-    speed <= distance / this.maxPrediction
-      ? this.maxPrediction
-      : distance / speed;
+    const prediction =
+      speed <= distance / this.maxPrediction
+        ? this.maxPrediction
+        : distance / speed;
 
-  const nextTargetPosition = add(
-    target.position,
-    multiply(target.velocity, prediction)
-  );
+    const nextTargetPosition = add(
+      target.position,
+      multiply(target.velocity, prediction)
+    );
 
-  return seek(kinematic, nextTargetPosition, this.seekConfig);
+    return this.seek.calculate(kinematic, nextTargetPosition);
   }
 }
-*/
 export class Seek extends B {
   readonly name = "SEEK";
   targetId: CharacterId;
@@ -651,59 +638,50 @@ export class Separation extends B {
     );
   }
 }
-/*
 export class Wander extends B {
   readonly name = "WANDER";
   wanderOffset: number;
   wanderRadius: number;
   maxAcceleration: number;
-  faceConfig: FaceConfig;
-  constructor() {
+  face: Face;
+  constructor(
+    wanderOffset?: number,
+    wanderRadius?: number,
+    maxAcceleration?: number
+  ) {
     super();
-  maxAcceleration: 25,
-  wanderOffset: 50,
-  wanderRadius: 20,
-  faceConfig: {
-    name: "FACE",
-    alignConfig: {
-      name: "ALIGN",
-      maxAngularAcceleration: 140,
-      maxRotation: 120,
-      decelerationTolerance: 2,
-      alignTolerance: 0.01,
-      timeToTarget: 0.1,
-    },
-  },
-
+    this.maxAcceleration = maxAcceleration || 25;
+    this.wanderOffset = wanderOffset || 50;
+    this.wanderRadius = wanderRadius || 20;
+    this.face = new Face("");
   }
-  calculate(): Steering {
-  const wanderPosition: Vector = add(
-    kinematic.position,
-    multiply(radiansToVector(kinematic.orientation), this.wanderOffset)
-  );
+  calculate(kinematic: Kinematic): Steering {
+    const wanderPosition: Vector = add(
+      kinematic.position,
+      multiply(radiansToVector(kinematic.orientation), this.wanderOffset)
+    );
 
-  const wanderOrientation = Math.random() * 360;
+    const wanderOrientation = Math.random() * 360;
 
-  const nextTargetPosition = add(
-    wanderPosition,
-    multiply(degreesToVector(wanderOrientation), this.wanderRadius * 2)
-  );
+    const nextTargetPosition = add(
+      wanderPosition,
+      multiply(degreesToVector(wanderOrientation), this.wanderRadius * 2)
+    );
 
-  const { angular } = face(kinematic, nextTargetPosition, this.faceConfig);
+    const { angular } = this.face.calculate(kinematic, nextTargetPosition);
 
-  const linear = multiply(
-    radiansToVector(kinematic.orientation),
-    this.maxAcceleration
-  );
+    const linear = multiply(
+      radiansToVector(kinematic.orientation),
+      this.maxAcceleration
+    );
 
-  return {
-    angular,
-    linear,
-  };
+    return {
+      angular,
+      linear,
+    };
   }
 }
 
-*/
 export class None extends B {
   readonly name = "NONE";
   calculate(): Steering {

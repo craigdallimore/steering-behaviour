@@ -1,6 +1,23 @@
 import type { State } from "@domain/types.js";
 
-import { Align, Seek, None } from "@steering/behaviours";
+import {
+  Align,
+  Arrive,
+  CollisionAvoidance,
+  Evade,
+  Face,
+  Flee,
+  FollowPathChaseRabbit,
+  FollowPathPredict,
+  LookWhereYouAreGoing,
+  MatchVelocity,
+  None,
+  ObstacleAvoidance,
+  Pursue,
+  Seek,
+  Separation,
+  Wander,
+} from "@steering/behaviours";
 
 export const initialState: State = {
   isPaused: true,
@@ -12,12 +29,12 @@ export const initialState: State = {
       {
         kinematic: {
           maxSpeed: 45,
-          position: [460, 480],
-          velocity: [0, 0],
-          orientation: 0,
+          position: [160, 180],
+          velocity: [0, -10],
+          orientation: 1,
           rotation: 0,
         },
-        behaviour: new Seek("_2"),
+        behaviour: new FollowPathChaseRabbit("p1"),
       },
     ],
     [
@@ -27,7 +44,7 @@ export const initialState: State = {
           maxSpeed: 45,
           position: [60, 80],
           velocity: [0, 0],
-          orientation: 2,
+          orientation: 0.3,
           rotation: 0,
         },
         behaviour: new None(),
@@ -35,12 +52,11 @@ export const initialState: State = {
     ],
   ]),
   shapes: new Map([
-    /*
     [
       "s1",
       {
         path: {
-          position: [100, 100],
+          position: [400, 400],
           points: [
             [-20, -25], // TL
             [-20, 20], // BL
@@ -50,21 +66,21 @@ export const initialState: State = {
         },
       },
     ],
-    */
   ]),
   paths: new Map([
-    /*
     [
       "p1",
-      [
-        [600, 50],
-        [300, 150],
-        [200, 350],
-        [300, 600],
-        [600, 650],
-        [625, 500],
-      ],
+      {
+        position: [200, 200],
+        points: [
+          [600, 50],
+          [300, 150],
+          [200, 350],
+          [300, 600],
+          [600, 650],
+          [625, 500],
+        ],
+      },
     ],
-    */
   ]),
 };

@@ -21,10 +21,8 @@ export default function applyBehaviour(
       if (!steering) {
         return char;
       }
-      return {
-        ...char,
-        kinematic: updateKinematic(steering, char.kinematic, time),
-      };
+      char.kinematic = updateKinematic(steering, char.kinematic, time);
+      return char;
     }
     case "ARRIVE": {
       const target = getCharacter(char.behaviour.targetId, characters);
@@ -38,79 +36,60 @@ export default function applyBehaviour(
       if (!steering) {
         return char;
       }
-      return {
-        ...char,
-        kinematic: updateKinematic(steering, char.kinematic, time),
-      };
+      char.kinematic = updateKinematic(steering, char.kinematic, time);
+      return char;
     }
     case "COLLISION_AVOIDANCE": {
       const others = [...characters.values()]
         .filter((ent) => ent !== char)
         .map((char) => char.kinematic);
       const steering = char.behaviour.calculate(char.kinematic, others);
-      return {
-        ...char,
-        kinematic: updateKinematic(steering, char.kinematic, time),
-      };
+      char.kinematic = updateKinematic(steering, char.kinematic, time);
+      return char;
     }
-    /*
     case "FOLLOW_PATH_CHASE_RABBIT": {
-      const path = char.path ? paths.get(char.path) : null;
+      const path = paths.get(char.behaviour.pathId);
       if (!path) {
         return char;
       }
-      const steering = chaseRabbit(char.kinematic, path, char.behaviour);
-      return {
-        ...char,
-        kinematic: updateKinematic(steering, char.kinematic, time),
-      };
+      const steering = char.behaviour.calculate(char.kinematic, path);
+      char.kinematic = updateKinematic(steering, char.kinematic, time);
+      return char;
     }
     case "FOLLOW_PATH_PREDICT": {
-      const path = char.path ? paths.get(char.path) : null;
+      const path = paths.get(char.behaviour.pathId);
       if (!path) {
         return char;
       }
-      const steering = predictiveFollow(char.kinematic, path, char.behaviour);
-      return {
-        ...char,
-        kinematic: updateKinematic(steering, char.kinematic, time),
-      };
+      const steering = char.behaviour.calculate(char.kinematic, path);
+      char.kinematic = updateKinematic(steering, char.kinematic, time);
+      return char;
     }
-    */
     case "SEPARATION": {
       const others = [...characters.values()]
         .filter((ent) => ent !== char)
         .map((char) => char.kinematic);
       const steering = char.behaviour.calculate(char.kinematic, others);
-      return {
-        ...char,
-        kinematic: updateKinematic(steering, char.kinematic, time),
-      };
+      char.kinematic = updateKinematic(steering, char.kinematic, time);
+      return char;
     }
-    /*
     case "FACE": {
       const target = getCharacter(char.behaviour.targetId, characters);
       if (!target) {
         return char;
       }
-      const steering = face(
+      const steering = char.behaviour.calculate(
         char.kinematic,
-        target.kinematic.position,
-        char.behaviour
+        target.kinematic.position
       );
-      return {
-        ...char,
-        kinematic: updateKinematic(steering, char.kinematic, time),
-      };
+      char.kinematic = updateKinematic(steering, char.kinematic, time);
+      return char;
     }
     case "LOOK_WHERE_YOU_ARE_GOING": {
-      const steering = lookWhereYouAreGoing(char.kinematic, char.behaviour);
-      return {
-        ...char,
-        kinematic: updateKinematic(steering, char.kinematic, time),
-      };
+      const steering = char.behaviour.calculate(char.kinematic);
+      char.kinematic = updateKinematic(steering, char.kinematic, time);
+      return char;
     }
-    */
     case "MATCH_VELOCITY": {
       const target = getCharacter(char.behaviour.targetId, characters);
       if (!target) {
@@ -121,46 +100,42 @@ export default function applyBehaviour(
         char.kinematic,
         target.kinematic
       );
-      return {
-        ...char,
-        kinematic: updateKinematic(steering, char.kinematic, time),
-      };
+      char.kinematic = updateKinematic(steering, char.kinematic, time);
+      return char;
     }
-    /*
     case "OBSTACLE_AVOIDANCE": {
-      const shape = shapes.get("s1"); // TODO should not be a single hardcoded shape id
+      const shape = shapes.get(char.behaviour.shapeId);
       if (!shape) {
         return char;
       }
-      const steering = obstacleAvoidance(char.kinematic, shape, char.behaviour);
-      return {
-        ...char,
-        kinematic: updateKinematic(steering, char.kinematic, time),
-      };
+      const steering = char.behaviour.calculate(char.kinematic, shape);
+      char.kinematic = updateKinematic(steering, char.kinematic, time);
+      return char;
     }
     case "PURSUE": {
       const target = getCharacter(char.behaviour.targetId, characters);
       if (!target) {
         return char;
       }
-      const steering = pursue(char.kinematic, target.kinematic, char.behaviour);
-      return {
-        ...char,
-        kinematic: updateKinematic(steering, char.kinematic, time),
-      };
+      const steering = char.behaviour.calculate(
+        char.kinematic,
+        target.kinematic
+      );
+      char.kinematic = updateKinematic(steering, char.kinematic, time);
+      return char;
     }
     case "EVADE": {
-      const target = getCharacter(char.behaviour.targetId, characters);
+      const target = getCharacter(char.behaviour.flee.targetId, characters);
       if (!target) {
         return char;
       }
-      const steering = evade(char.kinematic, target.kinematic, char.behaviour);
-      return {
-        ...char,
-        kinematic: updateKinematic(steering, char.kinematic, time),
-      };
+      const steering = char.behaviour.calculate(
+        char.kinematic,
+        target.kinematic
+      );
+      char.kinematic = updateKinematic(steering, char.kinematic, time);
+      return char;
     }
-    */
     case "FLEE": {
       const target = getCharacter(char.behaviour.targetId, characters);
       if (!target) {
@@ -170,10 +145,8 @@ export default function applyBehaviour(
         char.kinematic,
         target.kinematic.position
       );
-      return {
-        ...char,
-        kinematic: updateKinematic(steering, char.kinematic, time),
-      };
+      char.kinematic = updateKinematic(steering, char.kinematic, time);
+      return char;
     }
     case "SEEK": {
       const target = getCharacter(char.behaviour.targetId, characters);
@@ -184,26 +157,18 @@ export default function applyBehaviour(
         char.kinematic,
         target.kinematic.position
       );
-      return {
-        ...char,
-        kinematic: updateKinematic(steering, char.kinematic, time),
-      };
+      char.kinematic = updateKinematic(steering, char.kinematic, time);
+      return char;
     }
-    /*
     case "WANDER": {
-      const steering = wander(char.kinematic, char.behaviour);
-      return {
-        ...char,
-        kinematic: updateKinematic(steering, char.kinematic, time),
-      };
+      const steering = char.behaviour.calculate(char.kinematic);
+      char.kinematic = updateKinematic(steering, char.kinematic, time);
+      return char;
     }
-*/
     case "NONE": {
       const steering = char.behaviour.calculate();
-      return {
-        ...char,
-        kinematic: updateKinematic(steering, char.kinematic, time),
-      };
+      char.kinematic = updateKinematic(steering, char.kinematic, time);
+      return char;
     }
     default: {
       return char;

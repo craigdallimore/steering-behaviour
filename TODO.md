@@ -40,14 +40,14 @@
 
 NONE
 
-[ ] ALIGN -------------------------------------
+[x] ALIGN -------------------------------------
 
 Aims to match a given orientation.
 Increases rotation speed
 Backs off based on timeToTarget
 Stops within alignTolerance
 
-ARRIVE -------------------------------------
+[x] ARRIVE -------------------------------------
 
 Takes a target.
 
@@ -55,46 +55,55 @@ Accelerates towards a target
 Slows within slowRadius
 Stops within targetRadius
 
-COLLISION_AVOIDANCE ------------------------
+[x] COLLISION_AVOIDANCE ------------------------
 
-EVADE --------------------------------------
+[x] EVADE --------------------------------------
 
+- [x] tested, working
 - uses FLEE
 
-[ ] FACE ---------------------------------------
+- [ ] FACE ---------------------------------------
 
 - uses ALIGN
+- [ ] broken?
 
-[ ] FLEE ---------------------------------------
+[x] FLEE ---------------------------------------
 
-FOLLOW_PATH_CHASE_RABBIT -------------------
+- [x] tested, working
+
+[x] FOLLOW_PATH_CHASE_RABBIT -------------------
+
+- [x] tested, works ok
+- uses SEEK
+
+[x] FOLLOW_PATH_PREDICT ------------------------
 
 - uses SEEK
 
-FOLLOW_PATH_PREDICT ------------------------
+[x] LOOK_WHERE_YOU_ARE_GOING -------------------
 
-- uses SEEK
-
-LOOK_WHERE_YOU_ARE_GOING -------------------
-
+- [x] tested, working
 - uses ALIGN
 
-MATCH_VELOCITY -----------------------------
+[x] MATCH_VELOCITY -----------------------------
 
-OBSTACLE_AVOIDANCE -------------------------
+[x] OBSTACLE_AVOIDANCE -------------------------
 
+- [ ] Not exactly working
 - uses SEEK
 
-PURSUE -------------------------------------
+[x] PURSUE -------------------------------------
 
+- [x] tested, working
 - uses SEEK
 
-[ ] SEEK ---------------------------------------
+[x] SEEK ---------------------------------------
 
-SEPARATION ---------------------------------
+[x] SEPARATION ---------------------------------
 
-WANDER -------------------------------------
+[x] WANDER -------------------------------------
 
+- tested, broken
 - uses FACE
   - uses ALIGN
 

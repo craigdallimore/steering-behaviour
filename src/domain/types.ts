@@ -1,39 +1,39 @@
 import {
   Align,
   Arrive,
+  CollisionAvoidance,
+  Evade,
+  Face,
   Flee,
+  FollowPathChaseRabbit,
+  FollowPathPredict,
+  LookWhereYouAreGoing,
   MatchVelocity,
   None,
+  ObstacleAvoidance,
+  Pursue,
   Seek,
   Separation,
-  CollisionAvoidance,
-  // Evade,
-  // Face,
-  // FollowPathPredict,
-  // FollowPathChaserabbit,
-  // LookWhereYouAreGoing,
-  // ObstacleAvoidance,
-  // Pursue,
-  // Wander,
+  Wander,
 } from "@steering/behaviours";
 
 export type Behaviour =
   | Align
   | Arrive
-  | Flee
   | CollisionAvoidance
-  // | Evade
-  // | Face
-  // | FollowPathPredict
-  // | FollowPathChaserabbit
-  // | LookWhereYouAreGoing
-  // | ObstacleAvoidance
-  // | Pursue
-  // | Wander;
+  | Evade
+  | Face
+  | Flee
+  | FollowPathChaseRabbit
+  | FollowPathPredict
+  | LookWhereYouAreGoing
   | MatchVelocity
   | None
+  | ObstacleAvoidance
+  | Pursue
   | Seek
-  | Separation;
+  | Separation
+  | Wander;
 
 export type SteeringBehaviourName = Behaviour["name"];
 
