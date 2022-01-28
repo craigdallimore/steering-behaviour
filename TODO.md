@@ -39,32 +39,12 @@ NONE
 
 ALIGN -------------------------------------
 
-```js
-{
-  maxAngularAcceleration: number;
-  maxRotation: number;
-  decelerationTolerance: number;
-  alignTolerance: number;
-  timeToTarget: number;
-}
-```
-
 Aims to match a given orientation.
 Increases rotation speed
 Backs off based on timeToTarget
 Stops within alignTolerance
 
 ARRIVE -------------------------------------
-
-```js
-{
-  maxAcceleration: number;
-  timeToTarget: number;
-  maxSpeed: number;
-  targetRadius: number;
-  slowRadius: number;
-}
-```
 
 Takes a target.
 
@@ -73,43 +53,47 @@ Slows within slowRadius
 Stops within targetRadius
 
 COLLISION_AVOIDANCE ------------------------
-(lookWhereYouAreGoing)
 
 EVADE --------------------------------------
-(flee)
+
+- uses FLEE
 
 FACE ---------------------------------------
-(align)
+
+- uses ALIGN
 
 FLEE ---------------------------------------
 
 FOLLOW_PATH_CHASE_RABBIT -------------------
-(lookWhereYouAreGoing)
-(seek)
+
+- uses SEEK
 
 FOLLOW_PATH_PREDICT ------------------------
-(lookWhereYouAreGoing)
-(seek)
+
+- uses SEEK
 
 LOOK_WHERE_YOU_ARE_GOING -------------------
-(align)
+
+- uses ALIGN
 
 MATCH_VELOCITY -----------------------------
 
 OBSTACLE_AVOIDANCE -------------------------
-(seek)
-(lookWhereYouAreGoing)
+
+- uses SEEK
 
 PURSUE -------------------------------------
-(seek)
+
+- uses SEEK
 
 SEEK ---------------------------------------
 
 SEPARATION ---------------------------------
-(lookWhereYouAreGoing)
 
 WANDER -------------------------------------
-(face)
+
+- uses FACE
+  - uses ALIGN
 
 ## Steering pipeline
 

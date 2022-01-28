@@ -7,18 +7,11 @@ import {
   normalise,
 } from "@lib/vector.js";
 import type {
-  AlignConfig,
   Kinematic,
   Vector,
   Steering,
   CollisionAvoidanceConfig,
 } from "@domain/types.js";
-import { lookWhereYouAreGoing } from "./lookWhereYouAreGoing.js";
-
-type Config = {
-  maxAcceleration: number;
-  radius: number;
-};
 
 type Final = {
   shortestTime: number;
@@ -32,8 +25,7 @@ type Final = {
 export function collisionAvoidance(
   character: Kinematic,
   targets: Array<Kinematic>,
-  config: CollisionAvoidanceConfig,
-  alignConfig: AlignConfig
+  config: CollisionAvoidanceConfig
 ): Steering {
   const init: Final = {
     shortestTime: Infinity,
@@ -71,11 +63,9 @@ export function collisionAvoidance(
     return acc;
   }, init);
 
-  const { angular } = lookWhereYouAreGoing(character, alignConfig);
-
   if (!final.firstTarget) {
     return {
-      angular,
+      angular: 0,
       linear: [0, 0],
     };
   }
@@ -94,6 +84,6 @@ export function collisionAvoidance(
   // Avoid the target
   return {
     linear: multiply(normalise(relativePos), config.maxAcceleration),
-    angular,
+    angular: 0,
   };
 }

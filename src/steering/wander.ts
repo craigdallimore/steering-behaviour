@@ -9,15 +9,10 @@ import type {
   Vector,
   Steering,
   WanderConfig,
-  AlignConfig,
 } from "@domain/types.js";
 import { face } from "./face.js";
 
-export function wander(
-  kinematic: Kinematic,
-  config: WanderConfig,
-  alignConfig: AlignConfig
-): Steering {
+export function wander(kinematic: Kinematic, config: WanderConfig): Steering {
   const wanderPosition: Vector = add(
     kinematic.position,
     multiply(radiansToVector(kinematic.orientation), config.wanderOffset)
@@ -30,7 +25,7 @@ export function wander(
     multiply(degreesToVector(wanderOrientation), config.wanderRadius * 2)
   );
 
-  const { angular } = face(kinematic, nextTargetPosition, alignConfig);
+  const { angular } = face(kinematic, nextTargetPosition, config.faceConfig);
 
   const linear = multiply(
     radiansToVector(kinematic.orientation),

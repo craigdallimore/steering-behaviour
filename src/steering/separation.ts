@@ -1,20 +1,11 @@
 import { add, length, subtract, multiply, normalise } from "@lib/vector.js";
-import type {
-  AlignConfig,
-  Kinematic,
-  SeparationConfig,
-  Steering,
-} from "@domain/types.js";
-import { lookWhereYouAreGoing } from "./lookWhereYouAreGoing.js";
+import type { Kinematic, SeparationConfig, Steering } from "@domain/types.js";
 
 export function separation(
   character: Kinematic,
   targets: Array<Kinematic>,
-  config: SeparationConfig,
-  alignConfig: AlignConfig
+  config: SeparationConfig
 ): Steering {
-  const { angular } = lookWhereYouAreGoing(character, alignConfig);
-
   return targets.reduce(
     (acc: Steering, target: Kinematic): Steering => {
       const direction = subtract(character.position, target.position);
@@ -31,7 +22,7 @@ export function separation(
 
         return {
           linear: add(linear, acc.linear),
-          angular,
+          angular: 0,
         };
       }
 
@@ -39,7 +30,7 @@ export function separation(
     },
     {
       linear: [0, 0],
-      angular,
+      angular: 0,
     }
   );
 }

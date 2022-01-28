@@ -8,7 +8,6 @@ import {
   radiansToVector,
 } from "@lib/vector.js";
 import type {
-  AlignConfig,
   Kinematic,
   Steering,
   Vector,
@@ -20,7 +19,6 @@ import type {
 import { findFirstIntersection } from "@lib/shape.js";
 
 import { seek } from "./seek.js";
-import { lookWhereYouAreGoing } from "./lookWhereYouAreGoing.js";
 
 type Collision = {
   position: Vector;
@@ -73,8 +71,7 @@ function getWhiskerRay(k: Kinematic, radians: number, magnitude: number): Edge {
 export function obstacleAvoidance(
   character: Kinematic,
   shape: Shape,
-  config: ObstacleAvoidanceConfig,
-  alignConfig: AlignConfig
+  config: ObstacleAvoidanceConfig
 ): Steering {
   const w0 = getWhiskerRay(character, 0, config.lookaheadMain);
   const w1 = getWhiskerRay(character, 0.2, config.lookaheadSide);
@@ -88,7 +85,7 @@ export function obstacleAvoidance(
   // If have no collision, do nothing
   if (!collision) {
     return {
-      angular: lookWhereYouAreGoing(character, alignConfig).angular,
+      angular: 0,
       linear: [0, 0],
     };
   }
@@ -100,7 +97,5 @@ export function obstacleAvoidance(
   );
 
   // 2. Delegate to seek
-  return seek(character, targetPosition, {
-    maxAcceleration: config.maxAcceleration,
-  });
+  return seek(character, targetPosition, config.seekConfig);
 }

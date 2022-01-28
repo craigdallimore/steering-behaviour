@@ -1,6 +1,5 @@
 import { getParam, getPosition } from "@lib/path.js";
 import {
-  AlignConfig,
   Path,
   Kinematic,
   Steering,
@@ -8,13 +7,11 @@ import {
 } from "@domain/types.js";
 import { add, multiply } from "@lib/vector.js";
 import { seek } from "./seek.js";
-import { lookWhereYouAreGoing } from "./lookWhereYouAreGoing.js";
 
 export function predictiveFollow(
   character: Kinematic,
   path: Path,
-  config: FollowPathPredictConfig,
-  alignConfig: AlignConfig
+  config: FollowPathPredictConfig
 ): Steering {
   // Find the predicted future location
   const futurePos = add(
@@ -31,9 +28,6 @@ export function predictiveFollow(
   // Get the target position
   const targetPosition = getPosition(path, targetParam);
 
-  const { angular } = lookWhereYouAreGoing(character, alignConfig);
-  const { linear } = seek(character, targetPosition, {
-    maxAcceleration: config.maxAcceleration,
-  });
-  return { angular, linear };
+  const { linear } = seek(character, targetPosition, config.seekConfig);
+  return { angular: 0, linear };
 }

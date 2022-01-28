@@ -5,12 +5,12 @@ import Canvas from "./Canvas.js";
 import useRAF from "../hooks/useRAF.js";
 import { reducer } from "@domain/reducer.js";
 import { initialState } from "@domain/initialState.js";
-import type { SteeringBehaviour } from "@domain/types.js";
+import type { SteeringBehaviourName } from "@domain/types.js";
 import getFocussedCharacter from "@lib/getFocussedCharacter.js";
 
 enableMapSet(); // immer can understand Map and Set
 
-const getClassname = (behaviour: SteeringBehaviour): string => {
+const getClassname = (behaviour: SteeringBehaviourName): string => {
   switch (behaviour) {
     case "ALIGN":
     case "ARRIVE":
@@ -32,7 +32,7 @@ const Main = () => {
 
   const focussedCharacter = getFocussedCharacter(state);
   const className = focussedCharacter
-    ? getClassname(focussedCharacter.behaviour)
+    ? getClassname(focussedCharacter.behaviour.name)
     : "";
 
   const legendText = state.focussedCharacterId

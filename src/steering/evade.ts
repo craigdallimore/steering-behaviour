@@ -26,7 +26,5 @@ export function evade(
     position: nextTargetPosition,
   };
 
-  return flee(character, nextTarget, {
-    maxAcceleration: config.maxAcceleration,
-  });
+  return flee(character, nextTarget, config.fleeConfig);
 }

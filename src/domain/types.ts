@@ -1,6 +1,16 @@
 export type Vector = [x: number, z: number];
 
+export type CharacterId = string;
+
+export type Character = {
+  kinematic: Kinematic;
+  behaviour: BehaviourConfig;
+  target: CharacterId | null;
+  path: PathId | null;
+};
+
 export type CharacterMap = Map<CharacterId, Character>;
+
 export type PathMap = Map<PathId, Path>;
 export type ShapeMap = Map<ShapeId, Shape>;
 
@@ -32,16 +42,7 @@ export type Intersection = {
   point: Vector;
 };
 
-export type CharacterId = string;
-
-export type Character = {
-  kinematic: Kinematic;
-  behaviour: SteeringBehaviour;
-  target: CharacterId | null;
-  path: PathId | null;
-};
-
-export type SteeringBehaviour =
+export type SteeringBehaviourName =
   | "NONE"
   | "ALIGN"
   | "ARRIVE"
@@ -78,10 +79,10 @@ export type BehaviourConfig =
   | WanderConfig;
 
 export type NoneConfig = {
-  // name: "NONE"
+  name: "NONE";
 };
 export type AlignConfig = {
-  // name: "ALIGN";
+  name: "ALIGN";
   maxAngularAcceleration: number;
   maxRotation: number;
   decelerationTolerance: number;
@@ -89,7 +90,7 @@ export type AlignConfig = {
   timeToTarget: number;
 };
 export type ArriveConfig = {
-  // name: "ARRIVE";
+  name: "ARRIVE";
   maxAcceleration: number;
   timeToTarget: number;
   maxSpeed: number;
@@ -98,80 +99,83 @@ export type ArriveConfig = {
 };
 
 export type CollisionAvoidanceConfig = {
-  // name: "COLLISION_AVOIDANCE";
+  name: "COLLISION_AVOIDANCE";
   maxAcceleration: number;
   radius: number;
 };
 
 export type EvadeConfig = {
-  // name: "EVADE";
+  name: "EVADE";
   maxPrediction: number;
-  maxAcceleration: number;
+  fleeConfig: FleeConfig;
 };
 
 export type FaceConfig = {
-  // name: "FACE";
+  name: "FACE";
+  alignConfig: AlignConfig;
 };
 
 export type FleeConfig = {
-  // name: "FLEE";
+  name: "FLEE";
   maxAcceleration: number;
 };
 
 export type FollowPathChaseRabbitConfig = {
-  // name: "FOLLOW_PATH_CHASE_RABBIT";
+  name: "FOLLOW_PATH_CHASE_RABBIT";
   pathOffset: number;
-  maxAcceleration: number;
+  seekConfig: SeekConfig;
 };
 
 export type FollowPathPredictConfig = {
-  // name: "FOLLOW_PATH_PREDICT";
+  name: "FOLLOW_PATH_PREDICT";
   pathOffset: number;
   predictTime: number;
-  maxAcceleration: number;
+  seekConfig: SeekConfig;
 };
 
 export type LookWhereYouAreGoingConfig = {
-  // name: "LOOK_WHERE_YOU_ARE_GOING";
+  name: "LOOK_WHERE_YOU_ARE_GOING";
+  alignConfig: AlignConfig;
 };
 
 export type MatchVelocityConfig = {
-  // name: "MATCH_VELOCITY";
+  name: "MATCH_VELOCITY";
   timeToTarget: number;
   maxAcceleration: number;
 };
 
 export type ObstacleAvoidanceConfig = {
-  // name: "OBSTACLE_AVOIDANCE";
+  name: "OBSTACLE_AVOIDANCE";
   avoidDistance: number;
   lookaheadMain: number;
   lookaheadSide: number;
-  maxAcceleration: number;
+  seekConfig: SeekConfig;
 };
 
 export type PursueConfig = {
-  // name: "PURSUE";
-  maxAcceleration: number;
+  name: "PURSUE";
   maxPrediction: number;
+  seekConfig: SeekConfig;
 };
 
 export type SeekConfig = {
-  // name: "SEEK";
+  name: "SEEK";
   maxAcceleration: number;
 };
 
 export type SeparationConfig = {
-  // name: "SEPARATION";
+  name: "SEPARATION";
   threshold: number;
   decayCoefficient: number;
   maxAcceleration: number;
 };
 
 export type WanderConfig = {
-  // name: "WANDER";
+  name: "WANDER";
   wanderOffset: number;
   wanderRadius: number;
   maxAcceleration: number;
+  faceConfig: FaceConfig;
 };
 
 export type State = {

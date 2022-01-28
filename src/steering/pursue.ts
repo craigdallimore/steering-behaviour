@@ -21,7 +21,5 @@ export function pursue(
     multiply(target.velocity, prediction)
   );
 
-  return seek(character, nextTargetPosition, {
-    maxAcceleration: config.maxAcceleration,
-  });
+  return seek(character, nextTargetPosition, config.seekConfig);
 }
