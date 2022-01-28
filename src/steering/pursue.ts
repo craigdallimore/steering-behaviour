@@ -3,13 +3,13 @@ import type { Kinematic, PursueConfig, Steering } from "@domain/types.js";
 import { seek } from "./seek.js";
 
 export function pursue(
-  character: Kinematic,
+  kinematic: Kinematic,
   target: Kinematic,
   config: PursueConfig
 ): Steering {
-  const direction = subtract(target.position, character.position);
+  const direction = subtract(target.position, kinematic.position);
   const distance = length(direction);
-  const speed = length(character.velocity);
+  const speed = length(kinematic.velocity);
 
   const prediction =
     speed <= distance / config.maxPrediction
@@ -21,5 +21,5 @@ export function pursue(
     multiply(target.velocity, prediction)
   );
 
-  return seek(character, nextTargetPosition, config.seekConfig);
+  return seek(kinematic, nextTargetPosition, config.seekConfig);
 }

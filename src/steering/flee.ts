@@ -2,12 +2,12 @@ import { subtract, multiply, normalise } from "@lib/vector.js";
 import type { FleeConfig, Kinematic, Steering } from "@domain/types.js";
 
 export function flee(
-  character: Kinematic,
+  kinematic: Kinematic,
   target: Kinematic,
   config: FleeConfig
 ): Steering {
   const linear = multiply(
-    normalise(subtract(character.position, target.position)),
+    normalise(subtract(kinematic.position, target.position)),
     config.maxAcceleration
   );
 

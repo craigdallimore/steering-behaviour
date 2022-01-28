@@ -8,12 +8,12 @@ import type {
 import { seek } from "./seek.js";
 
 export function chaseRabbit(
-  character: Kinematic,
+  kinematic: Kinematic,
   path: Path,
   config: FollowPathChaseRabbitConfig
 ): Steering {
   // Find the current position on the path
-  const currentParam = getParam(path, character.position);
+  const currentParam = getParam(path, kinematic.position);
 
   // Offset it
   const targetParam = currentParam + config.pathOffset;
@@ -21,6 +21,6 @@ export function chaseRabbit(
   // Get the target position
   const targetPosition = getPosition(path, targetParam);
 
-  const { linear } = seek(character, targetPosition, config.seekConfig);
+  const { linear } = seek(kinematic, targetPosition, config.seekConfig);
   return { angular: 0, linear };
 }

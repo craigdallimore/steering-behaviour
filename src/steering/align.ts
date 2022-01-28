@@ -17,13 +17,13 @@ function mapToRange(orientation: number): number {
 }
 
 export function align(
-  character: Kinematic,
+  kinematic: Kinematic,
   orientation: number,
   config: AlignConfig
 ): Steering {
   const linear: Vector = [0, 0];
 
-  const rotation = mapToRange(orientation - character.orientation);
+  const rotation = mapToRange(orientation - kinematic.orientation);
   const rotationSize = Math.abs(rotation);
 
   if (rotationSize < config.alignTolerance) {
@@ -42,7 +42,7 @@ export function align(
   const nextIdealRotation = idealRotation * (rotation / rotationSize);
 
   const angular =
-    (nextIdealRotation - character.rotation) / config.timeToTarget;
+    (nextIdealRotation - kinematic.rotation) / config.timeToTarget;
 
   const angularAcceleration = Math.abs(angular);
   const finalAngular =

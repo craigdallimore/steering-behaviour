@@ -6,12 +6,12 @@ import type {
 } from "@domain/types.js";
 
 export function matchVelocity(
-  character: Kinematic,
+  kinematic: Kinematic,
   target: Kinematic,
   config: MatchVelocityConfig
 ): Steering {
   const angular = 0;
-  const linear = subtract(target.velocity, character.velocity);
+  const linear = subtract(target.velocity, kinematic.velocity);
   const dividedLinear = multiply(linear, 1 / config.timeToTarget);
   const finalLinear =
     length(dividedLinear) > config.maxAcceleration

@@ -34,7 +34,7 @@ export function getNormals([a, b]: Edge): [Vector, Vector] {
 }
 
 export function getCollision(seg: Edge, shape: Shape): Collision | null {
-  // The line extending from the character
+  // The line extending from the kinematic
 
   const intersection = findFirstIntersection(seg, shape);
 
@@ -42,14 +42,14 @@ export function getCollision(seg: Edge, shape: Shape): Collision | null {
     // Here we get the normals for the intersected edge
     const normals = getNormals(intersection.edge);
 
-    // We want the normal on the same side as the character
+    // We want the normal on the same side as the kinematic
     const closestNormal =
       distance(normals[0], seg[0]) < distance(normals[1], seg[0])
         ? normals[0]
         : normals[1];
 
     // Let's define the normal as a vector relative to the intersection point,
-    // with a distance of 1, on the character side of the intersection.
+    // with a distance of 1, on the kinematic side of the intersection.
 
     return {
       position: intersection.point,
@@ -69,13 +69,13 @@ function getWhiskerRay(k: Kinematic, radians: number, magnitude: number): Edge {
 }
 
 export function obstacleAvoidance(
-  character: Kinematic,
+  kinematic: Kinematic,
   shape: Shape,
   config: ObstacleAvoidanceConfig
 ): Steering {
-  const w0 = getWhiskerRay(character, 0, config.lookaheadMain);
-  const w1 = getWhiskerRay(character, 0.2, config.lookaheadSide);
-  const w2 = getWhiskerRay(character, -0.2, config.lookaheadSide);
+  const w0 = getWhiskerRay(kinematic, 0, config.lookaheadMain);
+  const w1 = getWhiskerRay(kinematic, 0.2, config.lookaheadSide);
+  const w2 = getWhiskerRay(kinematic, -0.2, config.lookaheadSide);
 
   const collision =
     getCollision(w1, shape) ||
@@ -97,5 +97,5 @@ export function obstacleAvoidance(
   );
 
   // 2. Delegate to seek
-  return seek(character, targetPosition, config.seekConfig);
+  return seek(kinematic, targetPosition, config.seekConfig);
 }

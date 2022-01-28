@@ -8,14 +8,14 @@ import {
 import type { ArriveConfig, Kinematic, Steering } from "@domain/types.js";
 
 export function arrive(
-  character: Kinematic,
+  kinematic: Kinematic,
   target: Kinematic,
   config: ArriveConfig
 ): Steering | null {
   // Config
 
-  const distanceToTarget = distance(character.position, target.position);
-  const directionToTarget = subtract(target.position, character.position);
+  const distanceToTarget = distance(kinematic.position, target.position);
+  const directionToTarget = subtract(target.position, kinematic.position);
 
   if (distanceToTarget < config.targetRadius) {
     return null;
@@ -30,7 +30,7 @@ export function arrive(
   // the ideal speed
   const idealVelocity = multiply(normalise(directionToTarget), idealSpeed);
 
-  const reduced = subtract(idealVelocity, character.velocity);
+  const reduced = subtract(idealVelocity, kinematic.velocity);
 
   // A higher value will arrive sooner
   const linear = multiply(reduced, 1 / config.timeToTarget);

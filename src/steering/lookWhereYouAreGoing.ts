@@ -8,14 +8,14 @@ import { emptySteering } from "./steering.js";
 import { align } from "./align.js";
 
 export function lookWhereYouAreGoing(
-  character: Kinematic,
+  kinematic: Kinematic,
   config: LookWhereYouAreGoingConfig
 ): Steering {
-  if (length(character.velocity) === 0) {
+  if (length(kinematic.velocity) === 0) {
     return emptySteering;
   }
 
-  const orientation = vectorToRadians(character.velocity);
+  const orientation = vectorToRadians(kinematic.velocity);
 
-  return align(character, orientation, config.alignConfig);
+  return align(kinematic, orientation, config.alignConfig);
 }

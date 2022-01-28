@@ -2,13 +2,13 @@ import { add, length, subtract, multiply, normalise } from "@lib/vector.js";
 import type { Kinematic, SeparationConfig, Steering } from "@domain/types.js";
 
 export function separation(
-  character: Kinematic,
+  kinematic: Kinematic,
   targets: Array<Kinematic>,
   config: SeparationConfig
 ): Steering {
   return targets.reduce(
     (acc: Steering, target: Kinematic): Steering => {
-      const direction = subtract(character.position, target.position);
+      const direction = subtract(kinematic.position, target.position);
       const distance = length(direction);
 
       if (distance < config.threshold) {

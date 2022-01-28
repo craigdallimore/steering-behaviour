@@ -23,7 +23,7 @@ type Final = {
 };
 
 export function collisionAvoidance(
-  character: Kinematic,
+  kinematic: Kinematic,
   targets: Array<Kinematic>,
   config: CollisionAvoidanceConfig
 ): Steering {
@@ -38,8 +38,8 @@ export function collisionAvoidance(
 
   const final = targets.reduce((acc, target) => {
     // Calculate the time to collision
-    const relativePos = subtract(target.position, character.position);
-    const relativeVel = subtract(target.velocity, character.velocity);
+    const relativePos = subtract(target.position, kinematic.position);
+    const relativeVel = subtract(target.velocity, kinematic.velocity);
     const relativeSpeed = length(relativeVel);
     const timeToCollision = dot(relativePos, relativeVel) / relativeSpeed ** 2;
 
@@ -74,7 +74,7 @@ export function collisionAvoidance(
     final.firstMinSeparation <= 0 || final.firstDistance < 2 * config.radius
       ? // If we’re going to hit exactly, or if we’re already colliding, then
         // do the steering based on current position.
-        subtract(character.position, final.firstTarget.position)
+        subtract(kinematic.position, final.firstTarget.position)
       : // Otherwise calculate the future relative position
         add(
           final.firstRelativePos,

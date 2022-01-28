@@ -3,13 +3,13 @@ import type { EvadeConfig, Kinematic, Steering } from "@domain/types.js";
 import { flee } from "./flee.js";
 
 export function evade(
-  character: Kinematic,
+  kinematic: Kinematic,
   target: Kinematic,
   config: EvadeConfig
 ): Steering {
-  const direction = subtract(target.position, character.position);
+  const direction = subtract(target.position, kinematic.position);
   const distance = length(direction);
-  const speed = length(character.velocity);
+  const speed = length(kinematic.velocity);
 
   const prediction =
     speed <= distance / config.maxPrediction
@@ -26,5 +26,5 @@ export function evade(
     position: nextTargetPosition,
   };
 
-  return flee(character, nextTarget, config.fleeConfig);
+  return flee(kinematic, nextTarget, config.fleeConfig);
 }

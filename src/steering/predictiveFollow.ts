@@ -9,14 +9,14 @@ import { add, multiply } from "@lib/vector.js";
 import { seek } from "./seek.js";
 
 export function predictiveFollow(
-  character: Kinematic,
+  kinematic: Kinematic,
   path: Path,
   config: FollowPathPredictConfig
 ): Steering {
   // Find the predicted future location
   const futurePos = add(
-    character.position,
-    multiply(character.velocity, config.predictTime)
+    kinematic.position,
+    multiply(kinematic.velocity, config.predictTime)
   );
 
   // Find the predicted position on the path
@@ -28,6 +28,6 @@ export function predictiveFollow(
   // Get the target position
   const targetPosition = getPosition(path, targetParam);
 
-  const { linear } = seek(character, targetPosition, config.seekConfig);
+  const { linear } = seek(kinematic, targetPosition, config.seekConfig);
   return { angular: 0, linear };
 }
