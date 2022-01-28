@@ -5,14 +5,15 @@ import Canvas from "./Canvas.js";
 import useRAF from "../hooks/useRAF.js";
 import { reducer } from "@domain/reducer.js";
 import { initialState } from "@domain/initialState.js";
-import type { SteeringBehaviourName } from "@domain/types.js";
+import type { Behaviour, SteeringBehaviourName } from "@domain/types.js";
 import getFocussedCharacter from "@lib/getFocussedCharacter.js";
 
 enableMapSet(); // immer can understand Map and Set
 
-const getClassname = (behaviour: SteeringBehaviourName): string => {
-  switch (behaviour) {
+const getTargetLabel = (behaviour: Behaviour): string => {
+  switch (behaviour.name) {
     case "ALIGN":
+      /*
     case "ARRIVE":
     case "EVADE":
     case "FLEE":
@@ -20,6 +21,26 @@ const getClassname = (behaviour: SteeringBehaviourName): string => {
     case "MATCH_VELOCITY":
     case "PURSUE":
     case "SEEK":
+    */
+      return behaviour.targetId;
+    default: {
+      return "Not set";
+    }
+  }
+};
+
+const getClassname = (name: SteeringBehaviourName): string => {
+  switch (name) {
+    case "ALIGN":
+      /*
+    case "ARRIVE":
+    case "EVADE":
+    case "FLEE":
+    case "FACE":
+    case "MATCH_VELOCITY":
+    case "PURSUE":
+    case "SEEK":
+    */
       return "has-target";
     default: {
       return "";
@@ -31,8 +52,12 @@ const Main = () => {
   const [state, dispatch] = useImmerReducer(reducer, initialState);
 
   const focussedCharacter = getFocussedCharacter(state);
+
   const className = focussedCharacter
     ? getClassname(focussedCharacter.behaviour.name)
+    : "";
+  const targetLabel = focussedCharacter
+    ? getTargetLabel(focussedCharacter.behaviour)
     : "";
 
   const legendText = state.focussedCharacterId
@@ -150,7 +175,7 @@ const Main = () => {
           <label htmlFor="behaviour">Behaviour</label>
           <select
             id="behaviour"
-            value={focussedCharacter?.behaviour}
+            value={focussedCharacter?.behaviour.name}
             onChange={(e) => {
               if (e.target instanceof HTMLSelectElement) {
                 switch (e.target.value) {
@@ -170,10 +195,12 @@ const Main = () => {
                   case "SEEK":
                   case "SEPARATION":
                   case "WANDER":
+                    /*
                     dispatch({
                       type: "BEHAVIOUR_CHANGED",
                       payload: e.target.value,
                     });
+                    */
                     return;
                 }
               }
@@ -206,9 +233,7 @@ const Main = () => {
 
         <fieldset id="target">
           <legend>Target</legend>
-          <span id="target-label">
-            {focussedCharacter?.target ?? "Not set"}
-          </span>
+          <span id="target-label">{targetLabel}</span>
           <button
             type="button"
             id="btn-set-target"

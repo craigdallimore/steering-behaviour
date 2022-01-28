@@ -16,6 +16,7 @@
         - have a class that takes config and returns an instance that can be used for behaving
         - behaviours like chaseRabbit can be instantiated with a PathId and a seek config
         - behaviours can be instantiated with default values, that can be overridden
+        - [ ] Fix the change behaviour UI
     - [ ] A character should be able to have multiple blendable behaviours
 
   - [ ] Break up components
@@ -39,7 +40,7 @@
 
 NONE
 
-ALIGN -------------------------------------
+[ ] ALIGN -------------------------------------
 
 Aims to match a given orientation.
 Increases rotation speed
@@ -60,11 +61,11 @@ EVADE --------------------------------------
 
 - uses FLEE
 
-FACE ---------------------------------------
+[ ] FACE ---------------------------------------
 
 - uses ALIGN
 
-FLEE ---------------------------------------
+[ ] FLEE ---------------------------------------
 
 FOLLOW_PATH_CHASE_RABBIT -------------------
 
@@ -88,7 +89,7 @@ PURSUE -------------------------------------
 
 - uses SEEK
 
-SEEK ---------------------------------------
+[ ] SEEK ---------------------------------------
 
 SEPARATION ---------------------------------
 

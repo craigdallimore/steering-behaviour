@@ -1,24 +1,6 @@
 import updateKinematic from "@lib/updateKinematic.js";
 import getCharacter from "@lib/getCharacter";
 import { Character, CharacterMap, PathMap, ShapeMap } from "@domain/types.js";
-import {
-  align,
-  arrive,
-  chaseRabbit,
-  collisionAvoidance,
-  emptySteering,
-  evade,
-  face,
-  flee,
-  lookWhereYouAreGoing,
-  matchVelocity,
-  obstacleAvoidance,
-  predictiveFollow,
-  pursue,
-  seek,
-  separation,
-  wander,
-} from "../steering/index.js";
 export default function applyBehaviour(
   char: Character,
   time: number,
@@ -28,14 +10,13 @@ export default function applyBehaviour(
 ): Character {
   switch (char.behaviour.name) {
     case "ALIGN": {
-      const target = getCharacter(char.target, characters);
+      const target = getCharacter(char.behaviour.targetId, characters);
       if (!target) {
         return char;
       }
-      const steering = align(
+      const steering = char.behaviour.calculate(
         char.kinematic,
-        target.kinematic.orientation,
-        char.behaviour
+        target.kinematic.orientation
       );
       if (!steering) {
         return char;
@@ -45,6 +26,7 @@ export default function applyBehaviour(
         kinematic: updateKinematic(steering, char.kinematic, time),
       };
     }
+    /*
     case "ARRIVE": {
       const target = getCharacter(char.target, characters);
       if (!target) {
@@ -187,21 +169,22 @@ export default function applyBehaviour(
         kinematic: updateKinematic(steering, char.kinematic, time),
       };
     }
+*/
     case "SEEK": {
-      const target = getCharacter(char.target, characters);
+      const target = getCharacter(char.behaviour.targetId, characters);
       if (!target) {
         return char;
       }
-      const steering = seek(
+      const steering = char.behaviour.calculate(
         char.kinematic,
-        target.kinematic.position,
-        char.behaviour
+        target.kinematic.position
       );
       return {
         ...char,
         kinematic: updateKinematic(steering, char.kinematic, time),
       };
     }
+    /*
     case "WANDER": {
       const steering = wander(char.kinematic, char.behaviour);
       return {
@@ -209,10 +192,12 @@ export default function applyBehaviour(
         kinematic: updateKinematic(steering, char.kinematic, time),
       };
     }
+*/
     case "NONE": {
+      const steering = char.behaviour.calculate();
       return {
         ...char,
-        kinematic: updateKinematic(emptySteering, char.kinematic, time),
+        kinematic: updateKinematic(steering, char.kinematic, time),
       };
     }
     default: {

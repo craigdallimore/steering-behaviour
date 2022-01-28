@@ -3,7 +3,7 @@ import {
   Character,
   CharacterId,
   State,
-  SteeringBehaviour,
+  Behaviour,
   Vector,
 } from "@domain/types.js";
 import { distance } from "@lib/vector.js";
@@ -31,7 +31,7 @@ export type Action =
     }
   | {
       type: typeof BEHAVIOUR_CHANGED;
-      payload: SteeringBehaviour;
+      payload: Behaviour;
     }
   | {
       type: typeof ORIENTATION_CHANGED;

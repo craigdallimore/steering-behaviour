@@ -1,134 +1,41 @@
 import type { State } from "@domain/types.js";
 
-import { obstacleAvoidanceConfig } from "@domain/behaviourDefaults";
+import { Align, None } from "@steering/behaviours";
 
 export const initialState: State = {
   isPaused: true,
   isSettingTarget: false,
-  focussedCharacterId: "topleft",
+  focussedCharacterId: "_1",
   characters: new Map([
     [
-      "topleft",
+      "_1",
       {
         kinematic: {
           maxSpeed: 45,
           position: [460, 480],
-          velocity: [-10, -10],
+          velocity: [0, 0],
           orientation: 0,
           rotation: 0,
         },
-        behaviour: obstacleAvoidanceConfig,
-        target: null,
-        path: null,
+        behaviour: new Align("_2"),
       },
     ],
     [
-      "top",
+      "_2",
       {
         kinematic: {
           maxSpeed: 45,
-          position: [480, 480],
-          velocity: [0, -10],
-          orientation: 0,
+          position: [60, 80],
+          velocity: [0, 0],
+          orientation: 2,
           rotation: 0,
         },
-        behaviour: obstacleAvoidanceConfig,
-        target: null,
-        path: null,
-      },
-    ],
-    [
-      "topright",
-      {
-        kinematic: {
-          maxSpeed: 45,
-          position: [500, 480],
-          velocity: [10, -10],
-          orientation: 0,
-          rotation: 0,
-        },
-        behaviour: obstacleAvoidanceConfig,
-        target: null,
-        path: null,
-      },
-    ],
-    [
-      "bottom",
-      {
-        kinematic: {
-          maxSpeed: 45,
-          position: [480, 520],
-          velocity: [0, 10],
-          orientation: 0,
-          rotation: 0,
-        },
-        behaviour: obstacleAvoidanceConfig,
-        target: null,
-        path: null,
-      },
-    ],
-    [
-      "left",
-      {
-        kinematic: {
-          maxSpeed: 45,
-          position: [460, 500],
-          velocity: [-10, 0],
-          orientation: 0,
-          rotation: 0,
-        },
-        behaviour: obstacleAvoidanceConfig,
-        target: null,
-        path: null,
-      },
-    ],
-    [
-      "right",
-      {
-        kinematic: {
-          maxSpeed: 45,
-          position: [500, 500],
-          velocity: [10, 0],
-          orientation: 0,
-          rotation: 0,
-        },
-        behaviour: obstacleAvoidanceConfig,
-        target: null,
-        path: null,
-      },
-    ],
-    [
-      "bottomleft",
-      {
-        kinematic: {
-          maxSpeed: 45,
-          position: [460, 520],
-          velocity: [-10, 10],
-          orientation: 0,
-          rotation: 0,
-        },
-        behaviour: obstacleAvoidanceConfig,
-        target: null,
-        path: null,
-      },
-    ],
-    [
-      "bottomright",
-      {
-        kinematic: {
-          maxSpeed: 45,
-          position: [500, 520],
-          velocity: [10, 10],
-          orientation: 0,
-          rotation: 0,
-        },
-        behaviour: obstacleAvoidanceConfig,
-        target: null,
-        path: null,
+        behaviour: new None(),
       },
     ],
   ]),
   shapes: new Map([
+    /*
     [
       "s1",
       {
@@ -143,6 +50,7 @@ export const initialState: State = {
         },
       },
     ],
+    */
   ]),
   paths: new Map([
     /*
