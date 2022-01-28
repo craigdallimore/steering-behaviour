@@ -1,23 +1,6 @@
 import type { State } from "@domain/types.js";
 
-import {
-  Align,
-  Arrive,
-  CollisionAvoidance,
-  Evade,
-  Face,
-  Flee,
-  FollowPathChaseRabbit,
-  FollowPathPredict,
-  LookWhereYouAreGoing,
-  MatchVelocity,
-  None,
-  ObstacleAvoidance,
-  Pursue,
-  Seek,
-  Separation,
-  Wander,
-} from "@steering/behaviours";
+import { FollowPathChaseRabbit, None } from "@steering/index.js";
 
 export const initialState: State = {
   isPaused: true,

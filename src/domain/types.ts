@@ -15,7 +15,7 @@ import {
   Seek,
   Separation,
   Wander,
-} from "@steering/behaviours";
+} from "@steering/index.js";
 
 export type Behaviour =
   | Align

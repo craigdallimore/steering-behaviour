@@ -1,30 +1,32 @@
+import { AbstractBehaviour } from "./abstractBehaviour.js";
 import { subtract, multiply, add, length } from "@lib/vector.js";
-import type { EvadeConfig, Kinematic, Steering } from "@domain/types.js";
-import { flee } from "./flee.js";
+import type { Kinematic, Steering } from "@domain/types.js";
+import Flee from "./flee.js";
 
-export function evade(
-  kinematic: Kinematic,
-  target: Kinematic,
-  config: EvadeConfig
-): Steering {
-  const direction = subtract(target.position, kinematic.position);
-  const distance = length(direction);
-  const speed = length(kinematic.velocity);
+export default class Evade extends AbstractBehaviour {
+  readonly name = "EVADE";
+  maxPrediction: number;
+  flee: Flee;
+  constructor(flee: Flee, maxPrediction?: number) {
+    super();
+    this.flee = flee;
+    this.maxPrediction = maxPrediction || 1;
+  }
+  calculate(kinematic: Kinematic, target: Kinematic): Steering {
+    const direction = subtract(target.position, kinematic.position);
+    const distance = length(direction);
+    const speed = length(kinematic.velocity);
 
-  const prediction =
-    speed <= distance / config.maxPrediction
-      ? config.maxPrediction
-      : distance / speed;
+    const prediction =
+      speed <= distance / this.maxPrediction
+        ? this.maxPrediction
+        : distance / speed;
 
-  const nextTargetPosition = add(
-    target.position,
-    multiply(target.velocity, prediction)
-  );
+    const nextTargetPosition = add(
+      target.position,
+      multiply(target.velocity, prediction)
+    );
 
-  const nextTarget = {
-    ...target,
-    position: nextTargetPosition,
-  };
-
-  return flee(kinematic, nextTarget, config.fleeConfig);
+    return this.flee.calculate(kinematic, nextTargetPosition);
+  }
 }
