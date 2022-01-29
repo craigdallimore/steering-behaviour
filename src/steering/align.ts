@@ -1,3 +1,10 @@
+/*
+ * Aims to match a given orientation.
+ * Increases rotation speed
+ * Backs off based on timeToTarget
+ * Stops within alignTolerance
+ */
+
 import { AbstractBehaviour } from "./abstractBehaviour.js";
 
 import type {

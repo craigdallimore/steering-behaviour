@@ -1,3 +1,10 @@
+/*
+ * Takes a target.
+ *
+ * Accelerates towards a target
+ * Slows within slowRadius
+ * Stops within targetRadius
+ */
 import { AbstractBehaviour } from "./abstractBehaviour.js";
 import {
   length,

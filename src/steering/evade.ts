@@ -1,15 +1,17 @@
 import { AbstractBehaviour } from "./abstractBehaviour.js";
 import { subtract, multiply, add, length } from "@lib/vector.js";
-import type { Kinematic, Steering } from "@domain/types.js";
+import type { CharacterId, Kinematic, Steering } from "@domain/types.js";
 import Flee from "./flee.js";
 
 export default class Evade extends AbstractBehaviour {
   readonly name = "EVADE";
+  targetId: CharacterId;
   maxPrediction: number;
   flee: Flee;
-  constructor(flee: Flee, maxPrediction?: number) {
+  constructor(targetId: CharacterId, maxPrediction?: number) {
     super();
-    this.flee = flee;
+    this.targetId = targetId;
+    this.flee = new Flee(targetId);
     this.maxPrediction = maxPrediction || 1;
   }
   calculate(kinematic: Kinematic, target: Kinematic): Steering {
