@@ -6,18 +6,20 @@
   - [x] Move draw functions to a folder
   - [x] Hook up DOM controls
   - [x] rename segment to edge
-  - [ ] files:
-
-    - [ ] applyBehaviour
-      - [ ] OBSTACLE_AVOIDANCE, do not use hardcoded shape id. I think this deserves some research
-    - [ ] initialState/State: separate state for controls and scene
-    - [ ] behaviourDefault - might it be better to use class instances for this?
-      - For each behaviour
-        - have a class that takes config and returns an instance that can be used for behaving
-        - behaviours like chaseRabbit can be instantiated with a PathId and a seek config
-        - behaviours can be instantiated with default values, that can be overridden
-        - [ ] Fix the change behaviour UI
-    - [ ] A character should be able to have multiple blendable behaviours
+  - [x] Add granular control views for all behaviours
+  - [x] Integrate controls
+  - [ ] Fix the change behaviour UI
+  - [ ] Enable change target
+  - [ ] Add "Remove behaviour"
+  - [ ] Canvas should be dynamically sized and will work when resized
+  - [ ] Improve overall styling
+  - [ ] Fix Face behaviour
+  - [ ] Test all behaviours
+  - [ ] A character should be able to have multiple blendable behaviours
+  - [ ] Move helpers out from class files
+  - [ ] Does dispatch cause unexpected re-renders?
+  - [ ] Do state changes cause unexpected re-renders?
+  - [ ] Update orientation notes
 
   - [ ] Break up components
   - [ ] Find a way to have a debug variant for each view
@@ -31,81 +33,34 @@
   - [ ] Scenario picker. It would be neat to select a scenario to play, and have the app restart with fresh state.
   - [ ] Make it possible to dynamically add characters to a scenario
   - [ ] The orientation picker should be more like a dial
-  - [ ] Canvas should be dynamically sized and will work when resized
   - [ ] Hover and focus styles for mouse cursor
-
-- [ ] Decouple look-where-you-are-going from some behaviours
 
 ## Steering behaviours
 
-NONE
-
-[x] ALIGN -------------------------------------
-
-Aims to match a given orientation.
-Increases rotation speed
-Backs off based on timeToTarget
-Stops within alignTolerance
-
-[x] ARRIVE -------------------------------------
-
-Takes a target.
-
-Accelerates towards a target
-Slows within slowRadius
-Stops within targetRadius
-
-[x] COLLISION_AVOIDANCE ------------------------
-
-[x] EVADE --------------------------------------
-
-- [x] tested, working
-- uses FLEE
-
-- [ ] FACE ---------------------------------------
-
-- uses ALIGN
-- [ ] broken?
-
-[x] FLEE ---------------------------------------
-
-- [x] tested, working
-
-[x] FOLLOW_PATH_CHASE_RABBIT -------------------
-
-- [x] tested, works ok
-- uses SEEK
-
-[x] FOLLOW_PATH_PREDICT ------------------------
-
-- uses SEEK
-
-[x] LOOK_WHERE_YOU_ARE_GOING -------------------
-
-- [x] tested, working
-- uses ALIGN
-
-[x] MATCH_VELOCITY -----------------------------
-
-[x] OBSTACLE_AVOIDANCE -------------------------
-
-- [ ] Not exactly working
-- uses SEEK
-
-[x] PURSUE -------------------------------------
-
-- [x] tested, working
-- uses SEEK
-
-[x] SEEK ---------------------------------------
-
-[x] SEPARATION ---------------------------------
-
-[x] WANDER -------------------------------------
-
-- tested, broken
-- uses FACE
-  - uses ALIGN
+- [ ] NONE
+- [ ] ALIGN
+- [ ] ARRIVE
+- [ ] COLLISION_AVOIDANCE
+- [ ] EVADE
+  - [ ] tested, working
+- [ ] FACE
+  - [ ] broken?
+- [ ] FLEE
+  - [ ] tested, working
+- [ ] FOLLOW_PATH_CHASE_RABBIT
+  - [ ] tested, works ok
+- [ ] FOLLOW_PATH_PREDICT
+- [ ] LOOK_WHERE_YOU_ARE_GOING
+  - [ ] tested, working
+- [ ] MATCH_VELOCITY
+- [ ] OBSTACLE_AVOIDANCE
+  - [ ] Not exactly working
+- [ ] PURSUE
+  - [ ] tested, working
+- [ ] SEEK
+- [ ] SEPARATION
+- [ ] WANDER
+- [ ] tested, broken
 
 ## Steering pipeline
 
