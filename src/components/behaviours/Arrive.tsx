@@ -1,6 +1,7 @@
 import React from "react";
 import NumericField from "components/NumericField";
 import Arrive from "@steering/arrive";
+import PickTarget from "@components/PickTarget";
 import makeUpdatedClone from "@lib/makeUpdatedClone";
 
 type Props = {
@@ -63,6 +64,7 @@ const ArriveControls = (props: Props) => {
           );
         }}
       />
+      <PickTarget targetId={behaviour.targetId} />
     </>
   );
 };
