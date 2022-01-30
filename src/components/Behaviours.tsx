@@ -7,9 +7,7 @@ import EvadeControls from "./behaviours/Evade";
 import FleeControls from "./behaviours/Flee";
 import FollowPathChaseRabbitControls from "./behaviours/FollowPathChaseRabbit";
 import FollowPathPredictControls from "./behaviours/FollowPathPredict";
-import LookWhereYouAreGoingControls from "./behaviours/LookWhereYouAreGoing";
 import MatchVelocityControls from "./behaviours/MatchVelocity";
-import NoneControls from "./behaviours/None";
 import ObstacleAvoidanceControls from "./behaviours/ObstacleAvoidance";
 import PursueControls from "./behaviours/Pursue";
 import SeekControls from "./behaviours/Seek";
@@ -84,125 +82,115 @@ const BehaviourItem = (itemProps: ItemProps) => {
       case "FACE":
         return null;
       case "FLEE":
-      //return (
-      //<FleeControls
-      //behaviour={behaviour}
-      //onBehaviourChange={(b) => {
-      //itemProps.dispatch({
-      //type: "BEHAVIOUR_CHANGED",
-      //payload: b,
-      //});
-      //}}
-      ///>
-      //);
+        return (
+          <FleeControls
+            behaviour={behaviour}
+            onBehaviourChange={(b) => {
+              itemProps.dispatch({
+                type: "BEHAVIOUR_CHANGED",
+                payload: b,
+              });
+            }}
+          />
+        );
       case "FOLLOW_PATH_CHASE_RABBIT":
-      //return (
-      //<FollowPathChaseRabbitControls
-      //behaviour={behaviour}
-      //onBehaviourChange={(b) => {
-      //itemProps.dispatch({
-      //type: "BEHAVIOUR_CHANGED",
-      //payload: b,
-      //});
-      //}}
-      ///>
-      //);
+        return (
+          <FollowPathChaseRabbitControls
+            behaviour={behaviour}
+            onBehaviourChange={(b) => {
+              itemProps.dispatch({
+                type: "BEHAVIOUR_CHANGED",
+                payload: b,
+              });
+            }}
+          />
+        );
       case "FOLLOW_PATH_PREDICT":
-      //return (
-      //<FollowPathPredictControls
-      //behaviour={behaviour}
-      //onBehaviourChange={(b) => {
-      //itemProps.dispatch({
-      //type: "BEHAVIOUR_CHANGED",
-      //payload: b,
-      //});
-      //}}
-      ///>
-      //);
+        return (
+          <FollowPathPredictControls
+            behaviour={behaviour}
+            onBehaviourChange={(b) => {
+              itemProps.dispatch({
+                type: "BEHAVIOUR_CHANGED",
+                payload: b,
+              });
+            }}
+          />
+        );
       case "LOOK_WHERE_YOU_ARE_GOING":
-      //return (
-      //<LookWhereYouAreGoingControls
-      //behaviour={behaviour}
-      //onBehaviourChange={(b) => {
-      //itemProps.dispatch({
-      //type: "BEHAVIOUR_CHANGED",
-      //payload: b,
-      //});
-      //}}
-      ///>
-      //);
+        return null;
       case "MATCH_VELOCITY":
-      //return (
-      //<MatchVelocityControls
-      //behaviour={behaviour}
-      //onBehaviourChange={(b) => {
-      //itemProps.dispatch({
-      //type: "BEHAVIOUR_CHANGED",
-      //payload: b,
-      //});
-      //}}
-      ///>
-      //);
+        return (
+          <MatchVelocityControls
+            behaviour={behaviour}
+            onBehaviourChange={(b) => {
+              itemProps.dispatch({
+                type: "BEHAVIOUR_CHANGED",
+                payload: b,
+              });
+            }}
+          />
+        );
       case "OBSTACLE_AVOIDANCE":
-      //return (
-      //<ObstacleAvoidanceControls
-      //behaviour={behaviour}
-      //onBehaviourChange={(b) => {
-      //itemProps.dispatch({
-      //type: "BEHAVIOUR_CHANGED",
-      //payload: b,
-      //});
-      //}}
-      ///>
-      //);
+        return (
+          <ObstacleAvoidanceControls
+            behaviour={behaviour}
+            onBehaviourChange={(b) => {
+              itemProps.dispatch({
+                type: "BEHAVIOUR_CHANGED",
+                payload: b,
+              });
+            }}
+          />
+        );
       case "PURSUE":
-      //return (
-      //<PursueControls
-      //behaviour={behaviour}
-      //onBehaviourChange={(b) => {
-      //itemProps.dispatch({
-      //type: "BEHAVIOUR_CHANGED",
-      //payload: b,
-      //});
-      //}}
-      ///>
-      //);
+        return (
+          <PursueControls
+            behaviour={behaviour}
+            onBehaviourChange={(b) => {
+              itemProps.dispatch({
+                type: "BEHAVIOUR_CHANGED",
+                payload: b,
+              });
+            }}
+          />
+        );
       case "SEEK":
-      //return (
-      //<SeekControls
-      //behaviour={behaviour}
-      //onBehaviourChange={(b) => {
-      //itemProps.dispatch({
-      //type: "BEHAVIOUR_CHANGED",
-      //payload: b,
-      //});
-      //}}
-      ///>
-      //);
+        return (
+          <SeekControls
+            behaviour={behaviour}
+            onBehaviourChange={(b) => {
+              itemProps.dispatch({
+                type: "BEHAVIOUR_CHANGED",
+                payload: b,
+              });
+            }}
+          />
+        );
       case "SEPARATION":
-      //return (
-      //<SeparationControls
-      //behaviour={behaviour}
-      //onBehaviourChange={(b) => {
-      //itemProps.dispatch({
-      //type: "BEHAVIOUR_CHANGED",
-      //payload: b,
-      //});
-      //}}
-      ///>
-      //);
+        return (
+          <SeparationControls
+            behaviour={behaviour}
+            onBehaviourChange={(b) => {
+              itemProps.dispatch({
+                type: "BEHAVIOUR_CHANGED",
+                payload: b,
+              });
+            }}
+          />
+        );
       case "WANDER":
-      //return (
-      //<WanderControls
-      //behaviour={behaviour}
-      //onBehaviourChange={(b) => {
-      //itemProps.dispatch({
-      //type: "BEHAVIOUR_CHANGED",
-      //payload: b,
-      //});
-      //}}
-      ///>
-      //);
+        return (
+          <WanderControls
+            behaviour={behaviour}
+            onBehaviourChange={(b) => {
+              itemProps.dispatch({
+                type: "BEHAVIOUR_CHANGED",
+                payload: b,
+              });
+            }}
+          />
+        );
       default:
         return null;
     }
