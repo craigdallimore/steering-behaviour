@@ -101,10 +101,10 @@ export function reducer(state: State, action: Action): State {
 
       if (state.isSettingTarget) {
         const nextState = updateFocussedCharacter(state, (char) => {
-          return {
-            ...char,
-            target: clickedCharacterId,
-          };
+          if ("targetId" in char.behaviour) {
+            char.behaviour.targetId = clickedCharacterId;
+          }
+          return char;
         });
         nextState.isSettingTarget = false;
         return nextState;

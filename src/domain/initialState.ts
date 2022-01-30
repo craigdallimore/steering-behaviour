@@ -1,6 +1,6 @@
 import type { State } from "@domain/types.js";
 
-import { Align, None } from "@steering/index.js";
+import { Align, Wander, None } from "@steering/index.js";
 
 export const initialState: State = {
   isPaused: true,
@@ -13,7 +13,7 @@ export const initialState: State = {
         kinematic: {
           maxSpeed: 45,
           position: [160, 180],
-          velocity: [0, -10],
+          velocity: [0, 0],
           orientation: 1,
           rotation: 0,
         },
@@ -27,7 +27,20 @@ export const initialState: State = {
           maxSpeed: 45,
           position: [60, 80],
           velocity: [0, 0],
-          orientation: 0.3,
+          orientation: -1.5 * Math.PI,
+          rotation: 0,
+        },
+        behaviour: new None(),
+      },
+    ],
+    [
+      "_3",
+      {
+        kinematic: {
+          maxSpeed: 45,
+          position: [360, 380],
+          velocity: [0, 0],
+          orientation: 1.5 * Math.PI,
           rotation: 0,
         },
         behaviour: new None(),
