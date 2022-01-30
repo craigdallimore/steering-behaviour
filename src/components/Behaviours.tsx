@@ -43,7 +43,6 @@ const Behaviours = (props: Props) => {
           )}
         </li>
       </ul>
-      <h4>TODO: add-behaviour controls</h4>
     </fieldset>
   );
 };

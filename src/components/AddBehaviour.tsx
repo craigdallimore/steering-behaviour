@@ -1,7 +1,6 @@
 import React from "react";
 import { SteeringBehaviourName, Behaviour } from "@domain/types.js";
 import SelectBehaviour from "@components/SelectBehaviour.js";
-import BehaviourSwitch from "./behaviours/BehaviourSwitch";
 import {
   Align,
   Arrive,
@@ -64,12 +63,6 @@ type Props = {
 
 const AddBehaviour = (props: Props) => {
   const [isAddingBehaviour, setIsAddingBehaviour] = React.useState(false);
-  const [behaviourCandidate, setBehaviourCandidate] = React.useState<Behaviour>(
-    new None()
-  );
-
-  const isTargetNeeded =
-    "targetId" in behaviourCandidate && behaviourCandidate.targetId === "";
 
   if (isAddingBehaviour) {
     return (
@@ -83,25 +76,11 @@ const AddBehaviour = (props: Props) => {
           Cancel
         </button>
         <SelectBehaviour
-          behaviourName={behaviourCandidate.name}
+          behaviourName={"NONE"}
           onSelectBehaviour={(nextBehaviourName: SteeringBehaviourName) => {
-            setBehaviourCandidate(getDefaultBehaviour(nextBehaviourName));
+            props.onBehaviourChange(getDefaultBehaviour(nextBehaviourName));
           }}
         />
-        <BehaviourSwitch
-          behaviour={behaviourCandidate}
-          onBehaviourChange={(behaviour: Behaviour) => {
-            setBehaviourCandidate(behaviour);
-          }}
-        />
-        <button
-          onClick={() => {
-            setIsAddingBehaviour(false);
-            props.onBehaviourChange(behaviourCandidate);
-          }}
-        >
-          Set new behaviour
-        </button>
       </>
     );
   }
