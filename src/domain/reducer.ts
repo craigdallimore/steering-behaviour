@@ -19,6 +19,7 @@ const SET_TARGET_BUTTON_CLICKED = "SET_TARGET_BUTTON_CLICKED";
 const CANVAS_CLICKED = "CANVAS_CLICKED";
 const BEHAVIOUR_CHANGED = "BEHAVIOUR_CHANGED";
 const ORIENTATION_CHANGED = "ORIENTATION_CHANGED";
+const ROTATION_CHANGED = "ROTATION_CHANGED";
 const POSX_CHANGED = "POSX_CHANGED";
 const POSZ_CHANGED = "POSZ_CHANGED";
 const VELX_CHANGED = "VELX_CHANGED";
@@ -32,6 +33,10 @@ export type Action =
   | {
       type: typeof BEHAVIOUR_CHANGED;
       payload: Behaviour;
+    }
+  | {
+      type: typeof ROTATION_CHANGED;
+      payload: number;
     }
   | {
       type: typeof ORIENTATION_CHANGED;
@@ -117,6 +122,16 @@ export function reducer(state: State, action: Action): State {
         };
       });
 
+    case "ROTATION_CHANGED":
+      return updateFocussedCharacter(state, (char) => {
+        return {
+          ...char,
+          kinematic: {
+            ...char.kinematic,
+            rotation: action.payload,
+          },
+        };
+      });
     case "ORIENTATION_CHANGED":
       return updateFocussedCharacter(state, (char) => {
         return {
