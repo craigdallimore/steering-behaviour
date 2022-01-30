@@ -14,10 +14,10 @@ export const initialState: State = {
           maxSpeed: 45,
           position: [160, 180],
           velocity: [0, 0],
-          orientation: 1,
+          orientation: 2 * Math.PI,
           rotation: 0,
         },
-        behaviour: new Align("_2"),
+        behaviour: new None(),
       },
     ],
     [

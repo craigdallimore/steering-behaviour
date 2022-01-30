@@ -17,22 +17,22 @@ Schneider and Eberly [2003].
 Positive increments are clockwise
 Negative increments are anticlockwise
 
-| Orientation       | Points towards |
-| ----------------- | -------------- |
-| `-2 * Math.PI`    | North          |
-| `-1.75 * Math.PI` | North East     |
-| `-1.5 * Math.PI`  | East           |
-| `-1.25 * Math.PI` | South East     |
-| `-1 * Math.PI`    | South          |
-| `-0.75 * Math.PI` | South West     |
-| `-0.5 * Math.PI`  | West           |
-| `-0.25 * Math.PI` | North West     |
-| `0`               | North          |
-| `0.25 * Math.PI`  | North East     |
-| `0.5 * Math.PI`   | East           |
-| `0.75 * Math.PI`  | South East     |
-| `1 * Math.PI`     | South          |
-| `1.25 * Math.PI`  | South West     |
-| `1.5 * Math.PI`   | West           |
-| `1.75 * Math.PI`  | North West     |
-| `2 * Math.PI`     | North          |
+| Orientation       | Points towards | Value |
+| ----------------- | -------------- | ----- |
+| `-2 * Math.PI`    | East           | -6.28 |
+| `-1.75 * Math.PI` | South East     | -5.4  |
+| `-1.5 * Math.PI`  | South          | -4.7  |
+| `-1.25 * Math.PI` | South West     | -3.9  |
+| `-1 * Math.PI`    | West           | -3.14 |
+| `-0.75 * Math.PI` | North West     | -2    |
+| `-0.5 * Math.PI`  | North          | -1.6  |
+| `-0.25 * Math.PI` | North East     | -0.8  |
+| `0`               | East           | 0     |
+| `0.25 * Math.PI`  | South East     | 0.7   |
+| `0.5 * Math.PI`   | South          | 1.5   |
+| `0.75 * Math.PI`  | South West     | 2.3   |
+| `1 * Math.PI`     | West           | 3.14  |
+| `1.25 * Math.PI`  | North West     | 3.9   |
+| `1.5 * Math.PI`   | North          | 4.7   |
+| `1.75 * Math.PI`  | North East     | 5.4   |
+| `2 * Math.PI`     | East           | 6.2   |

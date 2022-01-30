@@ -8,9 +8,10 @@
   - [x] rename segment to edge
   - [x] Add granular control views for all behaviours
   - [x] Integrate controls
-  - [ ] Fix the change behaviour UI
-  - [ ] Enable change target
+  - [x] Enable change target
+  - [x] Fix the change behaviour UI
   - [ ] Add "Remove behaviour"
+  - [ ] Add "Add behaviour"
   - [ ] Canvas should be dynamically sized and will work when resized
   - [ ] Improve overall styling
   - [ ] Fix Face behaviour
@@ -19,7 +20,7 @@
   - [ ] Move helpers out from class files
   - [ ] Does dispatch cause unexpected re-renders?
   - [ ] Do state changes cause unexpected re-renders?
-  - [ ] Update orientation notes
+  - [x] Update orientation notes
 
   - [ ] Break up components
   - [ ] Find a way to have a debug variant for each view
