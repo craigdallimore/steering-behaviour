@@ -1,17 +1,7 @@
 import React from "react";
 import NumericField from "components/NumericField";
 import Align from "@steering/align";
-
-function makeUpdatedClone<Behaviour>(
-  orig: Behaviour,
-  field: string,
-  value: number
-) {
-  const proto = Object.getPrototypeOf(orig);
-  const clone = Object.assign(Object.create(proto), orig);
-  clone[field] = value;
-  return clone;
-}
+import makeUpdatedClone from "@lib/makeUpdatedClone";
 
 type Props = {
   behaviour: Align;
