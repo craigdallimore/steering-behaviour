@@ -1,6 +1,6 @@
 import type { State } from "@domain/types.js";
 
-import { FollowPathChaseRabbit, None } from "@steering/index.js";
+import { Align, None } from "@steering/index.js";
 
 export const initialState: State = {
   isPaused: true,
@@ -17,7 +17,7 @@ export const initialState: State = {
           orientation: 1,
           rotation: 0,
         },
-        behaviour: new FollowPathChaseRabbit("p1"),
+        behaviour: new Align("_2"),
       },
     ],
     [
