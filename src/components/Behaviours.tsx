@@ -4,6 +4,7 @@ import AlignControls from "./behaviours/Align";
 import ArriveControls from "./behaviours/Arrive";
 import CollisionAvoidanceControls from "./behaviours/CollisionAvoidance";
 import EvadeControls from "./behaviours/Evade";
+import FaceControls from "./behaviours/Face";
 import FleeControls from "./behaviours/Flee";
 import FollowPathChaseRabbitControls from "./behaviours/FollowPathChaseRabbit";
 import FollowPathPredictControls from "./behaviours/FollowPathPredict";
@@ -80,7 +81,17 @@ const BehaviourItem = (itemProps: ItemProps) => {
           />
         );
       case "FACE":
-        return null;
+        return (
+          <FaceControls
+            behaviour={behaviour}
+            onBehaviourChange={(b) => {
+              itemProps.dispatch({
+                type: "BEHAVIOUR_CHANGED",
+                payload: b,
+              });
+            }}
+          />
+        );
       case "FLEE":
         return (
           <FleeControls

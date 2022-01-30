@@ -134,13 +134,8 @@ export function reducer(state: State, action: Action): State {
       });
     case "ORIENTATION_CHANGED":
       return updateFocussedCharacter(state, (char) => {
-        return {
-          ...char,
-          kinematic: {
-            ...char.kinematic,
-            orientation: Math.PI * action.payload,
-          },
-        };
+        char.kinematic.orientation = Math.PI * action.payload;
+        return char;
       });
     case "POSX_CHANGED":
       return updateFocussedCharacter(state, (char) => {

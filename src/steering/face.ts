@@ -27,7 +27,7 @@ export default class Face extends AbstractBehaviour {
       };
     }
 
-    const nextOrientation = Math.atan2(direction[0], -direction[1]);
+    const nextOrientation = Math.atan2(direction[1], direction[0]);
 
     return this.align.calculate(kinematic, nextOrientation);
   }
