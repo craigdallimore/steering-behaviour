@@ -10,17 +10,18 @@
   - [x] Integrate controls
   - [x] Enable change target
   - [x] Fix the change behaviour UI
-  - [ ] Add "Remove behaviour"
+  - [x] Add "Remove behaviour"
   - [ ] Add "Add behaviour"
   - [ ] Canvas should be dynamically sized and will work when resized
   - [ ] Improve overall styling
-  - [ ] Fix Face behaviour
+  - [x] Fix Face behaviour
   - [ ] Test all behaviours
   - [ ] A character should be able to have multiple blendable behaviours
   - [ ] Move helpers out from class files
   - [ ] Does dispatch cause unexpected re-renders?
   - [ ] Do state changes cause unexpected re-renders?
   - [x] Update orientation notes
+  - [ ] Reducer can be more imperitive
 
   - [ ] Break up components
   - [ ] Find a way to have a debug variant for each view
@@ -45,7 +46,6 @@
 - [ ] EVADE
   - [ ] tested, working
 - [ ] FACE
-  - [ ] broken?
 - [ ] FLEE
   - [ ] tested, working
 - [ ] FOLLOW_PATH_CHASE_RABBIT

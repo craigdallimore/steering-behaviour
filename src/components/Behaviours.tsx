@@ -16,6 +16,8 @@ import SeparationControls from "./behaviours/Separation";
 import WanderControls from "./behaviours/Wander";
 
 import { Action } from "@domain/reducer";
+import None from "@steering/none";
+import RemoveBehaviour from "./RemoveBehaviour";
 
 type Props = {
   character: Character;
@@ -211,6 +213,7 @@ const BehaviourItem = (itemProps: ItemProps) => {
     <li>
       <h3>{itemProps.behaviour.name}</h3>
       {getBehaviourSpecificControls(itemProps.behaviour)}
+      {itemProps.behaviour instanceof None || <RemoveBehaviour />}
     </li>
   );
 };
