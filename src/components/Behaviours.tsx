@@ -1,6 +1,7 @@
 import React from "react";
 import { Behaviour, Character } from "@domain/types";
 import AlignControls from "./behaviours/Align";
+import ArriveControls from "./behaviours/Arrive";
 import { Action } from "@domain/reducer";
 
 type Props = {
@@ -31,6 +32,17 @@ const BehaviourItem = (itemProps: ItemProps) => {
           />
         );
       case "ARRIVE":
+        return (
+          <ArriveControls
+            behaviour={behaviour}
+            onBehaviourChange={(b) => {
+              itemProps.dispatch({
+                type: "BEHAVIOUR_CHANGED",
+                payload: b,
+              });
+            }}
+          />
+        );
       case "COLLISION_AVOIDANCE":
       case "EVADE":
       case "FACE":
