@@ -8,8 +8,8 @@
   - [x] rename segment to edge
   - [ ] files:
     - [ ] applyBehaviour
-      - [ ] OBSTACLE_AVOIDANCE, do not use hardcoded shape id
       - [ ] find a way to move config up into state
+      - [ ] OBSTACLE_AVOIDANCE, do not use hardcoded shape id
     - [ ] initialState/State: separate state for controls and scene
     - [ ] kinematic: Remove maxspeed
     - [ ] align: remove mapToRange
@@ -33,6 +33,7 @@
   - [ ] Hover and focus styles for mouse cursor
 
 - [ ] Decouple look-where-you-are-going from some behaviours
+- [ ] Use WebGL to render characters
 
 ## Steering behaviours
 
