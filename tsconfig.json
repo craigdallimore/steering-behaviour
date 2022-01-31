@@ -9,6 +9,8 @@
     "baseUrl": "src",
     "paths": {
       "@domain/*": ["domain/*"],
+      "@components/*": ["components/*"],
+      "@steering/*": ["steering/*"],
       "@draw/*": ["draw/*"],
       "@lib/*": ["lib/*"]
     },

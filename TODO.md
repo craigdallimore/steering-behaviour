@@ -6,17 +6,21 @@
   - [x] Move draw functions to a folder
   - [x] Hook up DOM controls
   - [x] rename segment to edge
-  - [ ] files:
-    - [ ] applyBehaviour
-      - [ ] find a way to move config up into state
-      - [ ] OBSTACLE_AVOIDANCE, do not use hardcoded shape id
-    - [ ] initialState/State: separate state for controls and scene
-    - [ ] kinematic: Remove maxspeed
-    - [ ] align: remove mapToRange
-    - [ ] obstace avoidance
-      - [ ] getNormals
-      - [ ] getCollision
-      - [ ] getWhiskerRay
+  - [x] Add granular control views for all behaviours
+  - [x] Integrate controls
+  - [x] Enable change target
+  - [x] Fix the change behaviour UI
+  - [ ] Add "Remove behaviour"
+  - [ ] Add "Add behaviour"
+  - [ ] Canvas should be dynamically sized and will work when resized
+  - [ ] Improve overall styling
+  - [ ] Fix Face behaviour
+  - [ ] Test all behaviours
+  - [ ] A character should be able to have multiple blendable behaviours
+  - [ ] Move helpers out from class files
+  - [ ] Does dispatch cause unexpected re-renders?
+  - [ ] Do state changes cause unexpected re-renders?
+  - [x] Update orientation notes
   - [ ] Break up components
   - [ ] Find a way to have a debug variant for each view
   - [ ] Testing
@@ -29,89 +33,34 @@
   - [ ] Scenario picker. It would be neat to select a scenario to play, and have the app restart with fresh state.
   - [ ] Make it possible to dynamically add characters to a scenario
   - [ ] The orientation picker should be more like a dial
-  - [ ] Canvas should be dynamically sized and will work when resized
   - [ ] Hover and focus styles for mouse cursor
-
-- [ ] Decouple look-where-you-are-going from some behaviours
-- [ ] Use WebGL to render characters
 
 ## Steering behaviours
 
-NONE
-
-ALIGN -------------------------------------
-
-```js
-{
-  maxAngularAcceleration: number;
-  maxRotation: number;
-  decelerationTolerance: number;
-  alignTolerance: number;
-  timeToTarget: number;
-}
-```
-
-Aims to match a given orientation.
-Increases rotation speed
-Backs off based on timeToTarget
-Stops within alignTolerance
-
-ARRIVE -------------------------------------
-
-```js
-{
-  maxAcceleration: number;
-  timeToTarget: number;
-  maxSpeed: number;
-  targetRadius: number;
-  slowRadius: number;
-}
-```
-
-Takes a target.
-
-Accelerates towards a target
-Slows within slowRadius
-Stops within targetRadius
-
-COLLISION_AVOIDANCE ------------------------
-(lookWhereYouAreGoing)
-
-EVADE --------------------------------------
-(flee)
-
-FACE ---------------------------------------
-(align)
-
-FLEE ---------------------------------------
-
-FOLLOW_PATH_CHASE_RABBIT -------------------
-(lookWhereYouAreGoing)
-(seek)
-
-FOLLOW_PATH_PREDICT ------------------------
-(lookWhereYouAreGoing)
-(seek)
-
-LOOK_WHERE_YOU_ARE_GOING -------------------
-(align)
-
-MATCH_VELOCITY -----------------------------
-
-OBSTACLE_AVOIDANCE -------------------------
-(seek)
-(lookWhereYouAreGoing)
-
-PURSUE -------------------------------------
-(seek)
-
-SEEK ---------------------------------------
-
-SEPARATION ---------------------------------
-(lookWhereYouAreGoing)
-
-WANDER -------------------------------------
-(face)
+- [ ] NONE
+- [ ] ALIGN
+- [ ] ARRIVE
+- [ ] COLLISION_AVOIDANCE
+- [ ] EVADE
+  - [ ] tested, working
+- [ ] FACE
+  - [ ] broken?
+- [ ] FLEE
+  - [ ] tested, working
+- [ ] FOLLOW_PATH_CHASE_RABBIT
+  - [ ] tested, works ok
+- [ ] FOLLOW_PATH_PREDICT
+- [ ] LOOK_WHERE_YOU_ARE_GOING
+  - [ ] tested, working
+- [ ] MATCH_VELOCITY
+- [ ] OBSTACLE_AVOIDANCE
+  - [ ] Not exactly working
+- [ ] PURSUE
+  - [ ] tested, working
+- [ ] SEEK
+- [ ] SEPARATION
+- [ ] WANDER
+- [ ] tested, broken
 
 ## Steering pipeline
 

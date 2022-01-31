@@ -1,18 +1,25 @@
+import { AbstractBehaviour } from "./abstractBehaviour.js";
+import Align from "./align";
 import { length, vectorToRadians } from "@lib/vector.js";
 import type { Kinematic, Steering } from "@domain/types.js";
-import { emptySteering } from "./steering.js";
-import { align } from "./align.js";
-import type { AlignConfig } from "./align.js";
 
-export function lookWhereYouAreGoing(
-  character: Kinematic,
-  config: AlignConfig
-): Steering {
-  if (length(character.velocity) === 0) {
-    return emptySteering;
+export default class LookWhereYouAreGoing extends AbstractBehaviour {
+  readonly name = "LOOK_WHERE_YOU_ARE_GOING";
+  align: Align;
+  constructor(align?: Align) {
+    super();
+    this.align = align || new Align("");
   }
+  calculate(kinematic: Kinematic): Steering {
+    if (length(kinematic.velocity) === 0) {
+      return {
+        linear: [0, 0],
+        angular: 0,
+      };
+    }
 
-  const orientation = vectorToRadians(character.velocity);
+    const orientation = vectorToRadians(kinematic.velocity);
 
-  return align(character, orientation, config);
+    return this.align.calculate(kinematic, orientation);
+  }
 }

@@ -1,24 +1,32 @@
+import { AbstractBehaviour } from "./abstractBehaviour.js";
 import { subtract, multiply, normalise } from "@lib/vector.js";
-import type { Kinematic, Vector, Steering } from "@domain/types.js";
+import type {
+  Kinematic,
+  Vector,
+  Steering,
+  CharacterId,
+} from "@domain/types.js";
 
-type Config = {
+export default class Seek extends AbstractBehaviour {
+  readonly name = "SEEK";
+  targetId: CharacterId;
   maxAcceleration: number;
-};
+  constructor(targetId: CharacterId, maxAcceleration?: number) {
+    super();
+    this.targetId = targetId;
+    this.maxAcceleration = maxAcceleration || 25;
+  }
+  calculate(kinematic: Kinematic, targetPosition: Vector): Steering {
+    const linear = multiply(
+      normalise(subtract(targetPosition, kinematic.position)),
+      this.maxAcceleration
+    );
 
-export function seek(
-  character: Kinematic,
-  targetPosition: Vector,
-  config: Config
-): Steering {
-  const linear = multiply(
-    normalise(subtract(targetPosition, character.position)),
-    config.maxAcceleration
-  );
+    const angular = 0;
 
-  const angular = 0;
-
-  return {
-    angular,
-    linear,
-  };
+    return {
+      angular,
+      linear,
+    };
+  }
 }

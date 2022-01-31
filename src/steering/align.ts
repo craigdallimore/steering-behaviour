@@ -1,4 +1,18 @@
-import type { Kinematic, Vector, Steering } from "@domain/types.js";
+/*
+ * Aims to match a given orientation.
+ * Increases rotation speed
+ * Backs off based on timeToTarget
+ * Stops within alignTolerance
+ */
+
+import { AbstractBehaviour } from "./abstractBehaviour.js";
+
+import type {
+  CharacterId,
+  Kinematic,
+  Vector,
+  Steering,
+} from "@domain/types.js";
 
 function mapToRange(orientation: number): number {
   // To rotate all the way clockwise, use the value 6.283
@@ -11,50 +25,65 @@ function mapToRange(orientation: number): number {
   return nextOrientation % (Math.PI * 2);
 }
 
-export type AlignConfig = {
+export default class Align extends AbstractBehaviour {
+  readonly name = "ALIGN";
+  targetId: CharacterId;
   maxAngularAcceleration: number;
   maxRotation: number;
   decelerationTolerance: number;
   alignTolerance: number;
   timeToTarget: number;
-};
 
-export function align(
-  character: Kinematic,
-  orientation: number,
-  config: AlignConfig
-): Steering {
-  const linear: Vector = [0, 0];
-
-  const rotation = mapToRange(orientation - character.orientation);
-  const rotationSize = Math.abs(rotation);
-
-  if (rotationSize < config.alignTolerance) {
-    return {
-      linear,
-      angular: 0,
-    };
+  constructor(
+    targetId: CharacterId,
+    maxAngularAcceleration?: number,
+    maxRotation?: number,
+    decelerationTolerance?: number,
+    alignTolerance?: number,
+    timeToTarget?: number
+  ) {
+    super();
+    this.targetId = targetId;
+    this.maxAngularAcceleration = maxAngularAcceleration || 140;
+    this.maxRotation = maxRotation || 120;
+    this.decelerationTolerance = decelerationTolerance || 2;
+    this.alignTolerance = alignTolerance || 0.01;
+    this.timeToTarget = timeToTarget || 0.1;
   }
 
-  const isSlowed = rotationSize <= config.decelerationTolerance;
+  calculate(kinematic: Kinematic, orientation: number): Steering {
+    const linear: Vector = [0, 0];
 
-  const idealRotation = isSlowed
-    ? (config.maxRotation * rotationSize) / config.decelerationTolerance
-    : config.maxRotation;
+    const rotation = mapToRange(orientation - kinematic.orientation);
+    const rotationSize = Math.abs(rotation);
 
-  const nextIdealRotation = idealRotation * (rotation / rotationSize);
+    if (rotationSize < this.alignTolerance) {
+      return {
+        linear,
+        angular: 0,
+      };
+    }
 
-  const angular =
-    (nextIdealRotation - character.rotation) / config.timeToTarget;
+    const isSlowed = rotationSize <= this.decelerationTolerance;
 
-  const angularAcceleration = Math.abs(angular);
-  const finalAngular =
-    angularAcceleration > config.maxAngularAcceleration
-      ? (angular * config.maxAngularAcceleration) / angularAcceleration
-      : angular;
+    const idealRotation = isSlowed
+      ? (this.maxRotation * rotationSize) / this.decelerationTolerance
+      : this.maxRotation;
 
-  return {
-    angular: finalAngular,
-    linear,
-  };
+    const nextIdealRotation = idealRotation * (rotation / rotationSize);
+
+    const angular =
+      (nextIdealRotation - kinematic.rotation) / this.timeToTarget;
+
+    const angularAcceleration = Math.abs(angular);
+    const finalAngular =
+      angularAcceleration > this.maxAngularAcceleration
+        ? (angular * this.maxAngularAcceleration) / angularAcceleration
+        : angular;
+
+    return {
+      angular: finalAngular,
+      linear,
+    };
+  }
 }

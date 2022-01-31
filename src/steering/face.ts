@@ -1,21 +1,34 @@
+import { AbstractBehaviour } from "./abstractBehaviour.js";
 import { length, subtract } from "@lib/vector.js";
-import type { Kinematic, Vector, Steering } from "@domain/types.js";
-import { emptySteering } from "./steering.js";
-import { align } from "./align.js";
-import type { AlignConfig } from "./align.js";
+import type {
+  CharacterId,
+  Kinematic,
+  Vector,
+  Steering,
+} from "@domain/types.js";
+import Align from "./align.js";
 
-export function face(
-  character: Kinematic,
-  position: Vector,
-  config: AlignConfig
-): Steering {
-  const direction = subtract(position, character.position);
-
-  if (length(direction) === 0) {
-    return emptySteering;
+export default class Face extends AbstractBehaviour {
+  readonly name = "FACE";
+  targetId: CharacterId;
+  align: Align;
+  constructor(targetId: CharacterId) {
+    super();
+    this.targetId = targetId;
+    this.align = new Align(targetId);
   }
+  calculate(kinematic: Kinematic, position: Vector): Steering {
+    const direction = subtract(position, kinematic.position);
 
-  const nextOrientation = Math.atan2(direction[0], -direction[1]);
+    if (length(direction) === 0) {
+      return {
+        angular: 0,
+        linear: [0, 0],
+      };
+    }
 
-  return align(character, nextOrientation, config);
+    const nextOrientation = Math.atan2(direction[1], direction[0]);
+
+    return this.align.calculate(kinematic, nextOrientation);
+  }
 }

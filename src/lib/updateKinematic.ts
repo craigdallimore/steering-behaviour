@@ -2,14 +2,12 @@ import type { Kinematic, Steering } from "@domain/types.js";
 import { add, length, multiply, normalise } from "./vector.js";
 import limitOrientation from "./limitOrientation.js";
 
-const maxSpeed = 45;
-
 export default function updateKinematic(
   steering: Steering,
   kinematic: Kinematic,
   time: number
 ): Kinematic {
-  const { velocity, position, orientation, rotation } = kinematic;
+  const { maxSpeed, velocity, position, orientation, rotation } = kinematic;
 
   const nextPosition = add(position, multiply(velocity, time));
   // The velocity is increased by a difference of the maximum acceleration
@@ -29,6 +27,7 @@ export default function updateKinematic(
       : nextVelocity;
 
   return {
+    maxSpeed: maxSpeed,
     position: nextPosition,
     velocity: finalVelocity,
     orientation: nextOrientation,

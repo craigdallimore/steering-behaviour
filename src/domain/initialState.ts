@@ -1,120 +1,49 @@
 import type { State } from "@domain/types.js";
 
+import { Face, Wander, None } from "@steering/index.js";
+
 export const initialState: State = {
   isPaused: true,
   isSettingTarget: false,
-  focussedCharacterId: "topleft",
+  focussedCharacterId: "_1",
   characters: new Map([
     [
-      "topleft",
+      "_1",
       {
         kinematic: {
-          position: [460, 480],
-          velocity: [-10, -10],
-          orientation: 0,
+          maxSpeed: 45,
+          position: [160, 180],
+          velocity: [0, 0],
+          orientation: 2 * Math.PI,
           rotation: 0,
         },
-        behaviour: "OBSTACLE_AVOIDANCE",
-        target: null,
-        path: null,
+        behaviour: new Face("_2"),
       },
     ],
     [
-      "top",
+      "_2",
       {
         kinematic: {
-          position: [480, 480],
-          velocity: [0, -10],
-          orientation: 0,
+          maxSpeed: 45,
+          position: [60, 80],
+          velocity: [0, 0],
+          orientation: -1.5 * Math.PI,
           rotation: 0,
         },
-        behaviour: "OBSTACLE_AVOIDANCE",
-        target: null,
-        path: null,
+        behaviour: new None(),
       },
     ],
     [
-      "topright",
+      "_3",
       {
         kinematic: {
-          position: [500, 480],
-          velocity: [10, -10],
-          orientation: 0,
+          maxSpeed: 45,
+          position: [360, 380],
+          velocity: [0, 0],
+          orientation: 1.5 * Math.PI,
           rotation: 0,
         },
-        behaviour: "OBSTACLE_AVOIDANCE",
-        target: null,
-        path: null,
-      },
-    ],
-    [
-      "bottom",
-      {
-        kinematic: {
-          position: [480, 520],
-          velocity: [0, 10],
-          orientation: 0,
-          rotation: 0,
-        },
-        behaviour: "OBSTACLE_AVOIDANCE",
-        target: null,
-        path: null,
-      },
-    ],
-    [
-      "left",
-      {
-        kinematic: {
-          position: [460, 500],
-          velocity: [-10, 0],
-          orientation: 0,
-          rotation: 0,
-        },
-        behaviour: "OBSTACLE_AVOIDANCE",
-        target: null,
-        path: null,
-      },
-    ],
-    [
-      "right",
-      {
-        kinematic: {
-          position: [500, 500],
-          velocity: [10, 0],
-          orientation: 0,
-          rotation: 0,
-        },
-        behaviour: "OBSTACLE_AVOIDANCE",
-        target: null,
-        path: null,
-      },
-    ],
-    [
-      "bottomleft",
-      {
-        kinematic: {
-          position: [460, 520],
-          velocity: [-10, 10],
-          orientation: 0,
-          rotation: 0,
-        },
-        behaviour: "OBSTACLE_AVOIDANCE",
-        target: null,
-        path: null,
-      },
-    ],
-    [
-      "bottomright",
-      {
-        kinematic: {
-          position: [500, 520],
-          velocity: [10, 10],
-          orientation: 0,
-          rotation: 0,
-        },
-        behaviour: "OBSTACLE_AVOIDANCE",
-        target: null,
-        path: null,
+        behaviour: new None(),
       },
     ],
   ]),
@@ -123,7 +52,7 @@ export const initialState: State = {
       "s1",
       {
         path: {
-          position: [100, 100],
+          position: [400, 400],
           points: [
             [-20, -25], // TL
             [-20, 20], // BL
@@ -135,18 +64,19 @@ export const initialState: State = {
     ],
   ]),
   paths: new Map([
-    /*
     [
       "p1",
-      [
-        [600, 50],
-        [300, 150],
-        [200, 350],
-        [300, 600],
-        [600, 650],
-        [625, 500],
-      ],
+      {
+        position: [200, 200],
+        points: [
+          [600, 50],
+          [300, 150],
+          [200, 350],
+          [300, 600],
+          [600, 650],
+          [625, 500],
+        ],
+      },
     ],
-    */
   ]),
 };

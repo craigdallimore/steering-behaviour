@@ -1,10 +1,58 @@
+import {
+  Align,
+  Arrive,
+  CollisionAvoidance,
+  Evade,
+  Face,
+  Flee,
+  FollowPathChaseRabbit,
+  FollowPathPredict,
+  LookWhereYouAreGoing,
+  MatchVelocity,
+  None,
+  ObstacleAvoidance,
+  Pursue,
+  Seek,
+  Separation,
+  Wander,
+} from "@steering/index.js";
+
+export type Behaviour =
+  | Align
+  | Arrive
+  | CollisionAvoidance
+  | Evade
+  | Face
+  | Flee
+  | FollowPathChaseRabbit
+  | FollowPathPredict
+  | LookWhereYouAreGoing
+  | MatchVelocity
+  | None
+  | ObstacleAvoidance
+  | Pursue
+  | Seek
+  | Separation
+  | Wander;
+
+export type SteeringBehaviourName = Behaviour["name"];
+
 export type Vector = [x: number, z: number];
 
+export type CharacterId = string;
+
+export type Character = {
+  kinematic: Kinematic;
+  behaviour: Behaviour;
+};
+
 export type CharacterMap = Map<CharacterId, Character>;
+
 export type PathMap = Map<PathId, Path>;
 export type ShapeMap = Map<ShapeId, Shape>;
 
 export type Kinematic = {
+  maxSpeed: number;
   position: Vector;
   orientation: number;
   velocity: Vector;
@@ -30,33 +78,6 @@ export type Intersection = {
   edge: Edge;
   point: Vector;
 };
-
-export type CharacterId = string;
-
-export type Character = {
-  kinematic: Kinematic;
-  behaviour: SteeringBehaviour;
-  target: CharacterId | null;
-  path: PathId | null;
-};
-
-export type SteeringBehaviour =
-  | "NONE"
-  | "ALIGN"
-  | "ARRIVE"
-  | "COLLISION_AVOIDANCE"
-  | "EVADE"
-  | "FACE"
-  | "FLEE"
-  | "FOLLOW_PATH_CHASE_RABBIT"
-  | "FOLLOW_PATH_PREDICT"
-  | "LOOK_WHERE_YOU_ARE_GOING"
-  | "MATCH_VELOCITY"
-  | "OBSTACLE_AVOIDANCE"
-  | "PURSUE"
-  | "SEEK"
-  | "SEPARATION"
-  | "WANDER";
 
 export type State = {
   isPaused: boolean;

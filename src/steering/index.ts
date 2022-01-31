@@ -1,35 +1,35 @@
-import { emptySteering } from "./steering.js";
-import { align } from "./align.js";
-import { arrive } from "./arrive.js";
-import { chaseRabbit } from "./chaseRabbit.js";
-import { collisionAvoidance } from "./collisionAvoidance.js";
-import { evade } from "./evade.js";
-import { face } from "./face.js";
-import { flee } from "./flee.js";
-import { lookWhereYouAreGoing } from "./lookWhereYouAreGoing.js";
-import { matchVelocity } from "./matchVelocity.js";
-import { predictiveFollow } from "./predictiveFollow.js";
-import { obstacleAvoidance } from "./obstacleAvoidance.js";
-import { pursue } from "./pursue.js";
-import { seek } from "./seek.js";
-import { separation } from "./separation.js";
-import { wander } from "./wander.js";
+import Align from "./align.js";
+import Arrive from "./arrive.js";
+import CollisionAvoidance from "./collisionAvoidance.js";
+import Evade from "./evade.js";
+import Face from "./face.js";
+import Flee from "./flee.js";
+import FollowPathChaseRabbit from "./followPathChaseRabbit";
+import FollowPathPredict from "./followPathPredict";
+import LookWhereYouAreGoing from "./lookWhereYouAreGoing.js";
+import MatchVelocity from "./matchVelocity.js";
+import None from "./none.js";
+import ObstacleAvoidance from "./obstacleAvoidance.js";
+import Pursue from "./pursue.js";
+import Seek from "./seek.js";
+import Separation from "./separation.js";
+import Wander from "./wander.js";
 
 export {
-  align,
-  arrive,
-  chaseRabbit,
-  collisionAvoidance,
-  emptySteering,
-  evade,
-  face,
-  flee,
-  lookWhereYouAreGoing,
-  matchVelocity,
-  obstacleAvoidance,
-  predictiveFollow,
-  pursue,
-  seek,
-  separation,
-  wander,
+  Align,
+  Arrive,
+  CollisionAvoidance,
+  Evade,
+  Face,
+  Flee,
+  FollowPathChaseRabbit,
+  FollowPathPredict,
+  LookWhereYouAreGoing,
+  MatchVelocity,
+  None,
+  ObstacleAvoidance,
+  Pursue,
+  Seek,
+  Separation,
+  Wander,
 };
