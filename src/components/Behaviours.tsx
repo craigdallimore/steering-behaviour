@@ -31,7 +31,6 @@ const Behaviours = (props: Props) => {
           {props.character.behaviour instanceof None ? (
             <AddBehaviour
               onBehaviourChange={(payload: Behaviour) => {
-                console.log({ payload });
                 props.dispatch({
                   type: "BEHAVIOUR_CHANGED",
                   payload,
