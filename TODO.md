@@ -2,26 +2,16 @@
 
 - [ ] REFACTOR
 
-  - [x] lint
-  - [x] Move draw functions to a folder
-  - [x] Hook up DOM controls
-  - [x] rename segment to edge
-  - [x] Add granular control views for all behaviours
-  - [x] Integrate controls
-  - [x] Enable change target
-  - [x] Fix the change behaviour UI
-  - [x] Add "Remove behaviour"
-  - [ ] Add "Add behaviour"
+  - [ ] Make sure targets/paths/shapes can be picked for all behaviours
   - [ ] Canvas should be dynamically sized and will work when resized
   - [ ] Improve overall styling
-  - [x] Fix Face behaviour
   - [ ] Test all behaviours
+  - [ ] Behaviour config should include configuring dependent behaviour
   - [ ] A character should be able to have multiple blendable behaviours
   - [ ] Move helpers out from class files
   - [ ] Does dispatch cause unexpected re-renders?
   - [ ] Do state changes cause unexpected re-renders?
-  - [x] Update orientation notes
-  - [ ] Reducer can be more imperitive
+  - [ ] Reducer can be more imperative
 
   - [ ] Break up components
   - [ ] Find a way to have a debug variant for each view
