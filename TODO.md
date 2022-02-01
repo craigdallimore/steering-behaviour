@@ -12,7 +12,6 @@
   - [ ] Does dispatch cause unexpected re-renders?
   - [ ] Do state changes cause unexpected re-renders?
   - [ ] Reducer can be more imperative
-
   - [ ] Break up components
   - [ ] Find a way to have a debug variant for each view
   - [ ] Testing
