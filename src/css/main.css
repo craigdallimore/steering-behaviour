@@ -1,5 +1,4 @@
-@import "sanitize.css";
-
+@import "./behaviours.css";
 * {
   box-sizing: border-box;
 }
@@ -36,15 +35,4 @@ fieldset {
 }
 button + button {
   float: right;
-}
-.behaviours {
-  display: flex;
-  flex-direction: column;
-}
-.behaviours ul {
-  list-style: none;
-}
-.behaviours li {
-  display: flex;
-  flex-direction: column;
 }

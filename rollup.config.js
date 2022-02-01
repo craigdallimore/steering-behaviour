@@ -2,9 +2,9 @@ import typescript from "@rollup/plugin-typescript";
 import serve from "rollup-plugin-serve";
 import sourcemaps from "rollup-plugin-sourcemaps";
 import postcss from "rollup-plugin-postcss";
-import postcssModules from "postcss-modules";
 import autoprefixer from "autoprefixer";
 import postcssNormalize from "postcss-normalize";
+import postcssImport from "postcss-import";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import external from "rollup-plugin-peer-deps-external";
@@ -28,8 +28,7 @@ export default {
     postcss({
       inject: false, // don't inject JavaScript
       extract: true, // write a CSS file
-      modules: true, // enable CSS modules
-      plugins: [postcssNormalize(), postcssModules(), autoprefixer()],
+      plugins: [postcssNormalize(), postcssImport(), autoprefixer()],
       // minimize: true,
       writeDefinitions: false, // true -> generate .css.d.ts files
     }),
