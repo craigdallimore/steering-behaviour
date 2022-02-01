@@ -1,56 +1,68 @@
+@import "./base.css";
 @import "./behaviours.css";
-* {
-  box-sizing: border-box;
-}
-html,
-body {
-  width: 100%;
-  height: 100%;
-  display: flex;
-}
-body {
-  font-family: sans;
-  margin: 0;
-}
-#root {
-  display: grid;
-  width: 100%;
-  height: 100%;
-  grid-template-rows: 5rem 1fr;
-  grid-template-columns: 1fr 30rem;
-  grid-template-areas:
-    "header header"
-    "canvas aside";
-}
-header {
-  grid-area: header;
-}
+@import "./header.css";
+
 main {
   grid-area: canvas;
   overflow: hidden;
+  border-top: 1px solid var(--base06);
+  border-right: 1px solid var(--base06);
 }
+
 canvas {
 }
 form {
   grid-area: aside;
+  background-color: var(--base05);
   overflow-y: auto;
 }
+form fieldset {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  grid-gap: 0.5rem;
+}
+
 legend {
   padding: 0.5rem;
   background: black;
   color: white;
 }
 label {
-  align-self: center;
-  text-align: right;
+  font-size: 0.8rem;
 }
+
 fieldset {
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  grid-gap: 0.5rem;
-  margin-bottom: 1rem;
+  border: 0;
   padding: 1rem;
 }
+
 button + button {
   float: right;
+}
+
+select {
+  padding: 0.25rem 0.5rem;
+  border: 2px solid var(--base00);
+  letter-spacing: 1px;
+}
+
+button {
+  position: relative;
+  background-color: var(--base01);
+  color: white;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.5rem;
+  border: 2px solid var(--base00);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+}
+button:hover {
+  background-color: var(--base02);
+  cursor: pointer;
+}
+button:active {
+  top: 3px;
+  left: 3px;
+  box-shadow: none;
 }

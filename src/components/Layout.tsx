@@ -1,6 +1,7 @@
 import { useImmerReducer } from "use-immer";
 import { enableMapSet } from "immer";
 import React from "react";
+import Header from "./Header.js";
 import Canvas from "./Canvas.js";
 import Behaviours from "./Behaviours.js";
 import NumericField from "./NumericField.js";
@@ -14,15 +15,6 @@ import StateContext from "./StateContext.js";
 import "../css/main.css";
 
 enableMapSet(); // immer can understand Map and Set
-
-const getTargetId = (character: Character | null): CharacterId | null => {
-  if (!character) {
-    return null;
-  }
-  return "targetId" in character.behaviour
-    ? character.behaviour.targetId
-    : null;
-};
 
 const getClassname = (behaviour: Behaviour): string => {
   return "targetId" in behaviour ? "has-target" : "";
@@ -47,7 +39,7 @@ const Main = () => {
 
   return (
     <>
-      <header>This is the header</header>
+      <Header/>
       <main>
         <Canvas state={state} dispatch={dispatch} />
       </main>
