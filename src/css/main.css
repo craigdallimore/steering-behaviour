@@ -1,0 +1,50 @@
+@import "sanitize.css";
+
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: sans;
+}
+main {
+  display: flex;
+  align-items: flex-start;
+}
+canvas {
+  border: 2px solid rgba(227, 242, 253, 1);
+  margin: 3rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.05);
+}
+form {
+  margin-top: 2rem;
+}
+legend {
+  padding: 0.5rem;
+  background: black;
+  color: white;
+}
+label {
+  align-self: center;
+  text-align: right;
+}
+fieldset {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  grid-gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+button + button {
+  float: right;
+}
+.behaviours {
+  display: flex;
+  flex-direction: column;
+}
+.behaviours ul {
+  list-style: none;
+}
+.behaviours li {
+  display: flex;
+  flex-direction: column;
+}
