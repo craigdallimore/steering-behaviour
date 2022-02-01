@@ -1,0 +1,28 @@
+.scenario-sidebar {
+  grid-area: scenario;
+  background-color: var(--base05);
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+h1 {
+  margin: 0 1rem;
+}
+.scenario-sidebar span {
+  margin: 1rem 0;
+}
+.scenario-sidebar button {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+.scenario-sidebar button + button {
+  margin-top: 1rem;
+}
+.scenario-sidebar fieldset {
+  display: flex;
+  flex-direction: column;
+}
+.scenario-sidebar select {
+  margin-top: 0.25rem;
+}

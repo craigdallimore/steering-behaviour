@@ -1,14 +1,14 @@
 import { useImmerReducer } from "use-immer";
 import { enableMapSet } from "immer";
 import React from "react";
-import Header from "./Header.js";
+import ScenarioSidebar from "./ScenarioSidebar.js";
 import Canvas from "./Canvas.js";
 import Behaviours from "./Behaviours.js";
 import NumericField from "./NumericField.js";
 import useRAF from "../hooks/useRAF.js";
 import { reducer } from "@domain/reducer.js";
 import { initialState } from "@domain/initialState.js";
-import type { Behaviour, Character, CharacterId } from "@domain/types.js";
+import type { Behaviour } from "@domain/types.js";
 import getFocussedCharacter from "@lib/getFocussedCharacter.js";
 import DispatchContext from "./DispatchContext.js";
 import StateContext from "./StateContext.js";
@@ -39,7 +39,7 @@ const Main = () => {
 
   return (
     <>
-      <Header/>
+      <ScenarioSidebar/>
       <main>
         <Canvas state={state} dispatch={dispatch} />
       </main>

@@ -1,18 +1,18 @@
 @import "./base.css";
 @import "./behaviours.css";
-@import "./header.css";
+@import "./scenario-sidebar.css";
 
 main {
   grid-area: canvas;
   overflow: hidden;
-  border-top: 1px solid var(--base06);
+  border-left: 1px solid var(--base06);
   border-right: 1px solid var(--base06);
 }
 
 canvas {
 }
 form {
-  grid-area: aside;
+  grid-area: character;
   background-color: var(--base05);
   overflow-y: auto;
 }
