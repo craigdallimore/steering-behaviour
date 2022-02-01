@@ -2,20 +2,38 @@
 * {
   box-sizing: border-box;
 }
+html,
+body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
 body {
   font-family: sans;
+  margin: 0;
+}
+#root {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-rows: 5rem 1fr;
+  grid-template-columns: 1fr 30rem;
+  grid-template-areas:
+    "header header"
+    "canvas aside";
+}
+header {
+  grid-area: header;
 }
 main {
-  display: flex;
-  align-items: flex-start;
+  grid-area: canvas;
+  overflow: hidden;
 }
 canvas {
-  border: 2px solid rgba(227, 242, 253, 1);
-  margin: 3rem;
-  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.05);
 }
 form {
-  margin-top: 2rem;
+  grid-area: aside;
+  overflow-y: auto;
 }
 legend {
   padding: 0.5rem;

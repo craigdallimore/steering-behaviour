@@ -9,9 +9,21 @@ const Canvas = (props: {
 }) => {
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
   const ctxRef = React.useRef<CanvasRenderingContext2D | null>(null);
+  const [width, setWidth] = React.useState(0);
+  const [height, setHeight] = React.useState(0);
 
   if (ctxRef.current) {
     drawScene(ctxRef.current, props.state);
+  }
+
+  function onResize() {
+    const p = canvasRef.current?.parentNode;
+    if (p instanceof HTMLElement) {
+      const rect = p.getBoundingClientRect();
+      console.log("onResize", rect.height);
+      setWidth(rect.width);
+      setHeight(rect.height);
+    }
   }
 
   React.useEffect(() => {
@@ -24,11 +36,19 @@ const Canvas = (props: {
     }
   }, [canvasRef.current]);
 
+  React.useLayoutEffect(() => {
+    window.addEventListener("resize", onResize);
+    onResize();
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+  }, [canvasRef.current]);
+
   return (
     <canvas
       ref={canvasRef}
-      width="800"
-      height="800"
+      width={width}
+      height={height}
       id="canvas-main"
       onClick={(e) => {
         const target = e.target as HTMLCanvasElement;

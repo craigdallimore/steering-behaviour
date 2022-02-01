@@ -11,7 +11,7 @@ import type { Behaviour, Character, CharacterId } from "@domain/types.js";
 import getFocussedCharacter from "@lib/getFocussedCharacter.js";
 import DispatchContext from "./DispatchContext.js";
 import StateContext from "./StateContext.js";
-import '../css/main.css';
+import "../css/main.css";
 
 enableMapSet(); // immer can understand Map and Set
 
@@ -46,9 +46,11 @@ const Main = () => {
   });
 
   return (
-    <main>
+    <>
       <header>This is the header</header>
-      <Canvas state={state} dispatch={dispatch} />
+      <main>
+        <Canvas state={state} dispatch={dispatch} />
+      </main>
       <DispatchContext.Provider value={dispatch}>
         <StateContext.Provider value={state}>
           <form className={className}>
@@ -162,7 +164,7 @@ const Main = () => {
           </form>
         </StateContext.Provider>
       </DispatchContext.Provider>
-    </main>
+    </>
   );
 };
 
