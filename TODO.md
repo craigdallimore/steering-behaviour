@@ -7,8 +7,6 @@
   - [ ] Behaviour config should include configuring dependent behaviour
   - [ ] A character should be able to have multiple blendable behaviours
   - [ ] Move helpers out from class files
-  - [ ] Does dispatch cause unexpected re-renders?
-  - [ ] Do state changes cause unexpected re-renders?
   - [ ] Reducer can be more imperative
   - [ ] Find a way to have a debug variant for each view
   - [ ] Testing
@@ -23,6 +21,7 @@
   - [ ] Make it possible to dynamically add characters to a scenario
   - [ ] Make it possible to draw paths
   - [ ] Path should be closable?
+  - [ ] Should be possible to make the mouse a target
   - [ ] The orientation picker should be more like a dial
   - [ ] Help new users understand what they are loking at!
   - [ ] Hovering an id should highlight the character
@@ -36,6 +35,8 @@
 - [ ] Other
   - [ ] Gather descriptions of each behaviour
   - [ ] Add Art Deco styling
+  - [ ] Does dispatch cause unexpected re-renders?
+  - [ ] Do state changes cause unexpected re-renders?
 
 ## Steering behaviours
 
