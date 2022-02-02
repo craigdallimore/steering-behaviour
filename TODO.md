@@ -1,5 +1,12 @@
 # TODO
 
+## Bugs
+
+- [ ] Reset button messes up the scaling
+- [ ] Reset button on scenario picker should not be present until the scenario has been started
+
+## Features
+
 - [ ] Make sure targets/paths/shapes can be picked for all behaviours
 - [ ] Behaviour config should include configuring dependent behaviour
 - [ ] A character should be able to have multiple blendable behaviours
@@ -11,25 +18,21 @@
   - [ ] How to test component
   - [ ] How to test library file
 - [ ] Scenario picker. It would be neat to select a scenario to play, and have the app restart with fresh state.
-- [ ] Reset button on scenario picker is not present until the scenario has been started
 - [ ] Make it possible to dynamically add characters to a scenario
 - [ ] Make it possible to draw paths
 - [ ] Path should be closable?
 - [ ] Should be possible to make the mouse a target
 - [ ] The orientation picker should be more like a dial
-- [ ] Help new users understand what they are loking at!
+- [ ] Help new users understand what they are looking at!
 - [ ] Hovering an id should highlight the character
 - [ ] RTS controls:
-  - [x] Thicker white selection box
-  - [x] Don't show the "pick a target" button when selecting a target!
-  - [x] Deselecting a character should show nothing in the sidebar
   - [ ] Round targeting reticule
   - [ ] When clicking on a target, there should be a clear visual indication
         the click worked
-  - [x] Clicking off a character should unselect it
   - [ ] When performing an action, the cursor should look different
   - [ ] When hovering a character, the cursor should look different
 - [ ] Gather descriptions of each behaviour
+- [ ] Add a button to stop a kinematic from moving
 - [ ] Add Art Deco styling
 - [ ] Does dispatch cause unexpected re-renders?
 - [ ] Do state changes cause unexpected re-renders?
