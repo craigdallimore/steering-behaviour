@@ -3,6 +3,7 @@ import drawGrid from "./drawGrid.js";
 import drawPath from "./drawPath.js";
 import drawSelectionBox from "./drawSelectionBox.js";
 import drawShape from "./drawShape.js";
+import drawMouse from "./drawMouse.js";
 
 import type { State, Character, Path, Shape } from "@domain/types.js";
 
@@ -36,5 +37,8 @@ export default function drawScene(
     if (focussedCharacter) {
       drawSelectionBox(ctx, focussedCharacter.kinematic.position);
     }
+  }
+  if (state.ui.mousePosition) {
+    drawMouse(ctx, state.ui.mousePosition, state.ui.isSettingTarget);
   }
 }

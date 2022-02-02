@@ -55,6 +55,27 @@ const Canvas = (props: {
       ref={canvasRef}
       width={props.state.ui.canvasDimensions[0] * devicePixelRatio}
       height={props.state.ui.canvasDimensions[1] * devicePixelRatio}
+      onMouseEnter={(e) => {
+        const target = e.target as HTMLCanvasElement;
+        const { top, left }: DOMRect = target.getBoundingClientRect();
+        props.dispatch({
+          type: "CANVAS_MOUSE_ENTER",
+          payload: [e.clientX - left, e.clientY - top],
+        });
+      }}
+      onMouseMove={(e) => {
+        const target = e.target as HTMLCanvasElement;
+        const { top, left }: DOMRect = target.getBoundingClientRect();
+        props.dispatch({
+          type: "CANVAS_MOUSE_MOVE",
+          payload: [e.clientX - left, e.clientY - top],
+        });
+      }}
+      onMouseLeave={() => {
+        props.dispatch({
+          type: "CANVAS_MOUSE_LEAVE",
+        });
+      }}
       style={{
         width: `${props.state.ui.canvasDimensions[0]}px`,
         height: `${props.state.ui.canvasDimensions[1]}px`,

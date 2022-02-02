@@ -81,6 +81,7 @@ export type Intersection = {
 
 export type State = {
   ui: {
+    mousePosition: Vector | null;
     canvasDimensions: Vector;
     isPaused: boolean;
     isSettingTarget: boolean;
