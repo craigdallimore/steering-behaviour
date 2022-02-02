@@ -1,11 +1,5 @@
 import { initialState } from "@domain/initialState.js";
-import {
-  Character,
-  CharacterId,
-  State,
-  Behaviour,
-  Vector,
-} from "@domain/types.js";
+import { CharacterId, State, Behaviour, Vector } from "@domain/types.js";
 import { distance } from "@lib/vector.js";
 import updateFocussedCharacter from "@lib/updateFocussedCharacter";
 import applyBehaviour from "@lib/applyBehaviour";
@@ -94,20 +88,41 @@ export function reducer(state: State, action: Action): State {
       return state;
     case "CANVAS_CLICKED": {
       const clickPosition: Vector = action.payload;
-      const pairs = [...state.characters];
 
-      const clickedCharacterId = pairs.reduce((acc, pair) => {
-        const id: CharacterId = pair[0];
-        const char: Character = pair[1];
+      const distanceMap = [...state.characters].reduce((m, [id, char]) => {
+        const d = distance(clickPosition, char.kinematic.position);
+        m.set(id, d);
+        return m;
+      }, new Map());
 
-        const distanceToClick = distance(
-          clickPosition,
-          char.kinematic.position
-        );
-        return distanceToClick < 15 ? id : acc;
-      }, pairs[0][0]);
+      const closestToClick = [...distanceMap].reduce(
+        (acc, entry) => {
+          return acc[1] < entry[1] ? acc : entry;
+        },
+        [null, Infinity]
+      );
 
-      if (state.ui.isSettingTarget) {
+      const [clickedCharacterId, clickedCharacterDistance]: [
+        CharacterId | null,
+        number
+      ] = closestToClick;
+
+      if (!clickedCharacterId) {
+        // Suppose there are no characters on the board
+        return state;
+      }
+
+      if (clickedCharacterDistance > 15) {
+        // Too far away from any character; we consider this as deselection
+        state.ui.isSettingTarget = false;
+        state.ui.focussedCharacterId = null;
+        return state;
+      }
+
+      if (
+        state.ui.isSettingTarget &&
+        clickedCharacterId !== state.ui.focussedCharacterId // A character cannot target themselves
+      ) {
         const nextState = updateFocussedCharacter(state, (char) => {
           if ("targetId" in char.behaviour) {
             char.behaviour.targetId = clickedCharacterId;
