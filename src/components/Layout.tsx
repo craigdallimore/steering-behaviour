@@ -22,13 +22,17 @@ const Main = () => {
 
   return (
     <>
-      <ScenarioSidebar/>
+      <DispatchContext.Provider value={dispatch}>
+        <StateContext.Provider value={state}>
+          <ScenarioSidebar />
+        </StateContext.Provider>
+      </DispatchContext.Provider>
       <main>
         <Canvas state={state} dispatch={dispatch} />
       </main>
       <DispatchContext.Provider value={dispatch}>
         <StateContext.Provider value={state}>
-          <CharacterSidebar/>
+          <CharacterSidebar />
         </StateContext.Provider>
       </DispatchContext.Provider>
     </>

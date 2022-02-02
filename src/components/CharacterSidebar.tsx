@@ -115,25 +115,6 @@ const CharacterSidebar = () => {
         {focussedCharacter && (
           <Behaviours dispatch={dispatch} character={focussedCharacter} />
         )}
-
-        <button
-          type="button"
-          id="play-pause"
-          onClick={() => {
-            dispatch({ type: "PLAY_BUTTON_CLICKED" });
-          }}
-        >
-          {state.isPaused ? "Play" : "Pause"}
-        </button>
-        <button
-          type="button"
-          id="reset"
-          onClick={() => {
-            dispatch({ type: "RESET_BUTTON_CLICKED" });
-          }}
-        >
-          Reset
-        </button>
       </form>
     </aside>
   );
