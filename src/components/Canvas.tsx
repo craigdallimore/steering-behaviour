@@ -29,7 +29,8 @@ const Canvas = (props: {
     if (canvasRef.current) {
       const ctx = canvasRef.current.getContext("2d");
       if (ctx) {
-        //ctx.translate(0.5, 0.5);
+        ctx.translate(0.5, 0.5);
+        ctx.scale(devicePixelRatio, devicePixelRatio);
         ctxRef.current = ctx;
       }
     }
@@ -46,8 +47,12 @@ const Canvas = (props: {
   return (
     <canvas
       ref={canvasRef}
-      width={props.state.scene[0]}
-      height={props.state.scene[1]}
+      width={props.state.scene[0] * devicePixelRatio}
+      height={props.state.scene[1] * devicePixelRatio}
+      style={{
+        width: `${props.state.scene[0]}px`,
+        height: `${props.state.scene[1]}px`,
+      }}
       id="canvas-main"
       onClick={(e) => {
         const target = e.target as HTMLCanvasElement;
