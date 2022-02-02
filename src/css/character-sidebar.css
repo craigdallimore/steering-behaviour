@@ -1,3 +1,12 @@
+h2 {
+  padding: 1rem;
+  text-transform: uppercase;
+  font-size: 1rem;
+  text-align: center;
+  color: black;
+  letter-spacing: 1px;
+}
+
 .character-sidebar {
   grid-area: character;
   background-color: var(--base05);
@@ -17,4 +26,15 @@
 
 .character-sidebar input + label {
   margin-top: 0.5rem;
+}
+
+.character-sidebar legend {
+  display: flex;
+}
+
+.character-sidebar code {
+  margin-left: auto;
+  background: var(--base04);
+  padding: 1px 3px 0;
+  border-radius: 2px;
 }

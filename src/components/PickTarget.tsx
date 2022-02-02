@@ -13,7 +13,16 @@ const PickTarget = (props: Props) => {
 
   return (
     <>
-      <span id="target-label">{props.targetId}</span>
+      {props.targetId ? (
+        <label className="label-target-id">
+          Current target
+          <code>ID: {props.targetId}</code>
+        </label>
+      ) : (
+        <label className="label-target-id">
+          No target has been assigned yet
+        </label>
+      )}
       <button
         type="button"
         id="btn-set-target"
@@ -21,7 +30,7 @@ const PickTarget = (props: Props) => {
           dispatch({ type: "SET_TARGET_BUTTON_CLICKED" });
         }}
       >
-        {state.isSettingTarget ? "Click on a target" : "Pick target"}
+        {state.isSettingTarget ? "Click on a target" : "Assign a target"}
       </button>
     </>
   );

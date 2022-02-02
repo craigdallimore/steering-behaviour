@@ -13,9 +13,11 @@ main {
 canvas {
 }
 legend {
-  padding: 0.5rem;
-  background: black;
-  color: white;
+  padding: 0.5rem 0;
+  width: 100%;
+  font-weight: bold;
+  border-bottom: 2px solid var(--base06);
+  margin-bottom: 0.5rem;
 }
 
 label {

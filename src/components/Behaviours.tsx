@@ -1,5 +1,5 @@
 import React from "react";
-import { Behaviour, Character } from "@domain/types";
+import { Behaviour, Character, SteeringBehaviourName } from "@domain/types";
 import BehaviourSwitch from "./behaviours/BehaviourSwitch";
 import AddBehaviour from "./AddBehaviour";
 import RemoveBehaviour from "./RemoveBehaviour";
@@ -12,13 +12,53 @@ type Props = {
   dispatch: (action: Action) => void;
 };
 
+const getName = (name: SteeringBehaviourName): string => {
+  switch (name) {
+    case "ALIGN":
+      return "Align";
+    case "ARRIVE":
+      return "Arrive";
+    case "COLLISION_AVOIDANCE":
+      return "Collision avoidance";
+    case "EVADE":
+      return "Evade";
+    case "FACE":
+      return "Face";
+    case "FLEE":
+      return "Flee";
+    case "FOLLOW_PATH_CHASE_RABBIT":
+      return "Follow path (chase the rabbit)";
+    case "FOLLOW_PATH_PREDICT":
+      return "Follow path (predict)";
+    case "LOOK_WHERE_YOU_ARE_GOING":
+      return "Look where you are going";
+    case "MATCH_VELOCITY":
+      return "Match velocity";
+    case "OBSTACLE_AVOIDANCE":
+      return "Obstacle avoidance";
+    case "PURSUE":
+      return "Pursue";
+    case "SEEK":
+      return "Seek";
+    case "SEPARATION":
+      return "Separation";
+    case "WANDER":
+      return "Wander";
+    default:
+      return "No behaviour";
+  }
+};
+
 const Behaviours = (props: Props) => {
   return (
     <fieldset className="behaviours">
       <legend>Behaviours</legend>
       <ul>
         <li>
-          <h3>{props.character.behaviour.name}</h3>
+          <header>
+            <h3>{getName(props.character.behaviour.name)}</h3>
+            {props.character.behaviour instanceof None || <RemoveBehaviour />}
+          </header>
           <BehaviourSwitch
             behaviour={props.character.behaviour}
             onBehaviourChange={(payload: Behaviour) => {
@@ -28,7 +68,7 @@ const Behaviours = (props: Props) => {
               });
             }}
           />
-          {props.character.behaviour instanceof None ? (
+          {props.character.behaviour instanceof None && (
             <AddBehaviour
               onBehaviourChange={(payload: Behaviour) => {
                 props.dispatch({
@@ -37,8 +77,6 @@ const Behaviours = (props: Props) => {
                 });
               }}
             />
-          ) : (
-            <RemoveBehaviour />
           )}
         </li>
       </ul>

@@ -20,15 +20,18 @@ const CharacterSidebar = () => {
     ? getClassname(focussedCharacter.behaviour)
     : "";
 
-  const legendText = state.focussedCharacterId
-    ? `Character ${state.focussedCharacterId}`
-    : "Character not selected";
+  const idText = state.focussedCharacterId
+    ? `ID: ${state.focussedCharacterId}`
+    : "--";
 
   return (
-    <aside className="character-sidebar">
+    <aside className="character-sidebar" aria-label="Character sidebar">
+      <h2>Selected item</h2>
       <form className={className}>
         <fieldset>
-          <legend>{legendText}</legend>
+          <legend>
+            Kinematic <code>{idText}</code>
+          </legend>
 
           <label htmlFor="orientation">Orientation</label>
           <input

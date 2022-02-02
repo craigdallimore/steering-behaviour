@@ -67,7 +67,14 @@ const AddBehaviour = (props: Props) => {
   if (isAddingBehaviour) {
     return (
       <>
+        <SelectBehaviour
+          behaviourName={"NONE"}
+          onSelectBehaviour={(nextBehaviourName: SteeringBehaviourName) => {
+            props.onBehaviourChange(getDefaultBehaviour(nextBehaviourName));
+          }}
+        />
         <button
+          className="button-cancel"
           type="button"
           onClick={() => {
             setIsAddingBehaviour(false);
@@ -75,12 +82,6 @@ const AddBehaviour = (props: Props) => {
         >
           Cancel
         </button>
-        <SelectBehaviour
-          behaviourName={"NONE"}
-          onSelectBehaviour={(nextBehaviourName: SteeringBehaviourName) => {
-            props.onBehaviourChange(getDefaultBehaviour(nextBehaviourName));
-          }}
-        />
       </>
     );
   }

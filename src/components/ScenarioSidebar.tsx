@@ -7,7 +7,7 @@ const ScenarioSidebar = () => {
   const state = React.useContext(StateContext);
 
   return (
-    <aside className="scenario-sidebar">
+    <aside className="scenario-sidebar" aria-label="Scenario sidebar">
       <h1>Steering Behaviours!</h1>
       <fieldset>
         <label htmlFor="pick-scenario">Pick a scenario</label>
@@ -15,8 +15,8 @@ const ScenarioSidebar = () => {
           <option>TODO</option>
         </select>
         <span>
-          The <em>align behaviour</em> makes a character rotate to match the
-          orientation of another character.
+          The <em>align behaviour</em> makes an item rotate to match the
+          orientation of another item.
         </span>
       </fieldset>
 
