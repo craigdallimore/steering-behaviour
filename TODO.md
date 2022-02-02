@@ -3,8 +3,7 @@
 - [ ] REFACTOR
 
   - [ ] Make sure targets/paths/shapes can be picked for all behaviours
-  - [ ] Fix canvas blur
-  - [ ] Test all behaviours
+  - [ ] Fix canvas blur in chrome
   - [ ] Behaviour config should include configuring dependent behaviour
   - [ ] A character should be able to have multiple blendable behaviours
   - [ ] Move helpers out from class files
@@ -17,40 +16,32 @@
     - [ ] How to show coverage
     - [ ] How to test component
     - [ ] How to test library file
-  - [ ] Typing in inputs sucks
 
 - [ ] QOL improvements
 
   - [ ] Scenario picker. It would be neat to select a scenario to play, and have the app restart with fresh state.
   - [ ] Reset button on scenario picker is not present until the scenario has been started
   - [ ] Make it possible to dynamically add characters to a scenario
+  - [ ] Make it possible to draw paths
+  - [ ] Path should be closable?
   - [ ] The orientation picker should be more like a dial
-  - [ ] Hover and focus styles for mouse cursor
   - [ ] Help new users understand what they are loking at!
-  - [ ] When clicking on a target, there should be a clear visiual indication the click worked
+  - [ ] Hovering an id should highlight the character
+  - [ ] RTS controls:
+    - [ ] When clicking on a target, there should be a clear visual indication
+          the click worked
+    - [ ] Clicking off a character should unselect it
+    - [ ] When performing an action, the cursor should look different
+    - [ ] When hovering a character, the cursor should look different
 
 - [ ] Other
   - [ ] Gather descriptions of each behaviour
 
 ## Steering behaviours
 
-ok
-
-- [x] NONE
-- [x] ALIGN
-- [x] ARRIVE
-- [ ] FACE
-- [ ] FLEE
-- [ ] LOOK_WHERE_YOU_ARE_GOING
-- [ ] MATCH_VELOCITY
-- [ ] PURSUE
-- [ ] SEEK
-- [ ] SEPARATION
-
 suspect
 
-- [ ] COLLISION_AVOIDANCE Not really wokring well?
-- [ ] EVADE
+- [ ] COLLISION_AVOIDANCE Not really working well?
 - [ ] WANDER
 
 needs to be able to select a path/shape

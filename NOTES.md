@@ -36,3 +36,14 @@ Negative increments are anticlockwise
 | `1.5 * Math.PI`   | North          | 4.7   |
 | `1.75 * Math.PI`  | North East     | 5.4   |
 | `2 * Math.PI`     | East           | 6.2   |
+
+## Dependent behaviours
+
+Evade uses Flee
+Face uses Align
+FPCR uses Seek
+FPP uses Seek
+LWYAG uses Align
+ObstacleAvoidance uses Seek
+Pursue uses Seek
+Wander uses Face uses Seek
