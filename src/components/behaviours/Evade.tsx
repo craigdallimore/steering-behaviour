@@ -1,7 +1,7 @@
 import React from "react";
 import NumericField from "components/NumericField";
 import Evade from "@steering/evade";
-import PickTarget from "@components/PickTarget";
+import AssignedTarget from "@components/AssignedTarget";
 import makeUpdatedClone from "@lib/makeUpdatedClone";
 
 type Props = {
@@ -24,7 +24,7 @@ const EvadeControls = (props: Props) => {
           );
         }}
       />
-      <PickTarget targetId={behaviour.targetId} />
+      <AssignedTarget targetId={behaviour.targetId} />
     </>
   );
 };

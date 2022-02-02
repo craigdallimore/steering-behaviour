@@ -47,3 +47,14 @@ LWYAG uses Align
 ObstacleAvoidance uses Seek
 Pursue uses Seek
 Wander uses Face uses Seek
+
+## Behaviours with targets
+
+Align
+Arrive
+Evade
+Face
+Flee
+Match Velocity
+Pursue
+Seek

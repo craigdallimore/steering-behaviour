@@ -1,6 +1,6 @@
 import React from "react";
 import NumericField from "@components/NumericField";
-import PickTarget from "@components/PickTarget";
+import AssignedTarget from "@components/AssignedTarget";
 import Align from "@steering/align";
 import makeUpdatedClone from "@lib/makeUpdatedClone";
 
@@ -72,7 +72,7 @@ const AlignControls = (props: Props) => {
           );
         }}
       />
-      <PickTarget targetId={behaviour.targetId} />
+      <AssignedTarget targetId={behaviour.targetId} />
     </>
   );
 };

@@ -20,11 +20,13 @@
 - [ ] Help new users understand what they are loking at!
 - [ ] Hovering an id should highlight the character
 - [ ] RTS controls:
-  - [ ] Thicker white selection box
+  - [x] Thicker white selection box
+  - [x] Don't show the "pick a target" button when selecting a target!
+  - [x] Deselecting a character should show nothing in the sidebar
   - [ ] Round targeting reticule
   - [ ] When clicking on a target, there should be a clear visual indication
         the click worked
-  - [ ] Clicking off a character should unselect it
+  - [x] Clicking off a character should unselect it
   - [ ] When performing an action, the cursor should look different
   - [ ] When hovering a character, the cursor should look different
 - [ ] Gather descriptions of each behaviour

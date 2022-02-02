@@ -9,7 +9,6 @@ import applyBehaviour from "@lib/applyBehaviour";
 const TICK = "TICK";
 const PLAY_BUTTON_CLICKED = "PLAY_BUTTON_CLICKED";
 const RESET_BUTTON_CLICKED = "RESET_BUTTON_CLICKED";
-const SET_TARGET_BUTTON_CLICKED = "SET_TARGET_BUTTON_CLICKED";
 const CANVAS_CLICKED = "CANVAS_CLICKED";
 const CANVAS_RESIZED = "CANVAS_RESIZED";
 const BEHAVIOUR_CHANGED = "BEHAVIOUR_CHANGED";
@@ -62,9 +61,6 @@ export type Action =
       payload: Vector;
     }
   | {
-      type: typeof SET_TARGET_BUTTON_CLICKED;
-    }
-  | {
       type: typeof PLAY_BUTTON_CLICKED;
     }
   | {
@@ -75,9 +71,6 @@ export type Action =
 
 export function reducer(state: State, action: Action): State {
   switch (action.type) {
-    case "SET_TARGET_BUTTON_CLICKED":
-      state.ui.isSettingTarget = true;
-      return state;
     case "RESET_BUTTON_CLICKED":
       return initialState;
     case "PLAY_BUTTON_CLICKED":
@@ -129,21 +122,31 @@ export function reducer(state: State, action: Action): State {
           }
           return char;
         });
-        nextState.ui.isSettingTarget = false;
         return nextState;
       }
 
       state.ui.focussedCharacterId = clickedCharacterId;
+
+      const focussedCharacter = state.characters.get(clickedCharacterId);
+
+      // The newly focussed character may be able to have a target assigned.
+      state.ui.isSettingTarget = !!(
+        focussedCharacter && "targetId" in focussedCharacter.behaviour
+      );
       return state;
     }
 
     case "BEHAVIOUR_CHANGED":
-      return updateFocussedCharacter(state, (char) => {
-        return {
-          ...char,
-          behaviour: action.payload,
-        };
+      const nextState = updateFocussedCharacter(state, (char) => {
+        char.behaviour = action.payload;
+        return char;
       });
+
+      if ("targetId" in action.payload) {
+        nextState.ui.isSettingTarget = true;
+      }
+
+      return nextState;
 
     case "ROTATION_CHANGED":
       return updateFocussedCharacter(state, (char) => {

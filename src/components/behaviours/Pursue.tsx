@@ -2,7 +2,7 @@ import React from "react";
 import NumericField from "components/NumericField";
 import Pursue from "@steering/pursue";
 import makeUpdatedClone from "@lib/makeUpdatedClone";
-import PickTarget from "@components/PickTarget";
+import AssignedTarget from "@components/AssignedTarget";
 
 type Props = {
   behaviour: Pursue;
@@ -24,7 +24,7 @@ const PursueControls = (props: Props) => {
           );
         }}
       />
-      <PickTarget targetId={behaviour.targetId} />
+      <AssignedTarget targetId={behaviour.targetId} />
     </>
   );
 };

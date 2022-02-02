@@ -1,5 +1,5 @@
 import React from "react";
-import PickTarget from "@components/PickTarget";
+import AssignedTarget from "@components/AssignedTarget";
 import Face from "@steering/face";
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 const FaceControls = (props: Props) => {
   const { behaviour } = props;
 
-  return <PickTarget targetId={behaviour.targetId} />;
+  return <AssignedTarget targetId={behaviour.targetId} />;
 };
 
 export default FaceControls;

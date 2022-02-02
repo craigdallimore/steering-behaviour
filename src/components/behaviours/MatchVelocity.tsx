@@ -2,7 +2,7 @@ import React from "react";
 import NumericField from "components/NumericField";
 import MatchVelocity from "@steering/matchVelocity";
 import makeUpdatedClone from "@lib/makeUpdatedClone";
-import PickTarget from "@components/PickTarget";
+import AssignedTarget from "@components/AssignedTarget";
 
 type Props = {
   behaviour: MatchVelocity;
@@ -34,7 +34,7 @@ const MatchVelocityControls = (props: Props) => {
           );
         }}
       />
-      <PickTarget targetId={behaviour.targetId} />
+      <AssignedTarget targetId={behaviour.targetId} />
     </>
   );
 };
