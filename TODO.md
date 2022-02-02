@@ -1,38 +1,30 @@
 # TODO
 
-- [ ] REFACTOR
-
-  - [ ] Make sure targets/paths/shapes can be picked for all behaviours
-  - [ ] Fix canvas blur in chrome
-  - [ ] Behaviour config should include configuring dependent behaviour
-  - [ ] A character should be able to have multiple blendable behaviours
-  - [ ] Move helpers out from class files
-  - [ ] Reducer can be more imperative
-  - [ ] Find a way to have a debug variant for each view
-  - [ ] Testing
-    - [ ] How to show coverage
-    - [ ] How to test component
-    - [ ] How to test library file
-
-- [ ] QOL improvements
-
-  - [ ] Scenario picker. It would be neat to select a scenario to play, and have the app restart with fresh state.
-  - [ ] Reset button on scenario picker is not present until the scenario has been started
-  - [ ] Make it possible to dynamically add characters to a scenario
-  - [ ] Make it possible to draw paths
-  - [ ] Path should be closable?
-  - [ ] Should be possible to make the mouse a target
-  - [ ] The orientation picker should be more like a dial
-  - [ ] Help new users understand what they are loking at!
-  - [ ] Hovering an id should highlight the character
-  - [ ] RTS controls:
-    - [ ] When clicking on a target, there should be a clear visual indication
-          the click worked
-    - [ ] Clicking off a character should unselect it
-    - [ ] When performing an action, the cursor should look different
-    - [ ] When hovering a character, the cursor should look different
-
-- [ ] Other
+- [ ] Make sure targets/paths/shapes can be picked for all behaviours
+- [ ] Behaviour config should include configuring dependent behaviour
+- [ ] A character should be able to have multiple blendable behaviours
+- [ ] Move helpers out from class files
+- [ ] Reducer can be more imperative
+- [ ] Find a way to have a debug variant for each view
+- [ ] Testing
+  - [ ] How to show coverage
+  - [ ] How to test component
+  - [ ] How to test library file
+- [ ] Scenario picker. It would be neat to select a scenario to play, and have the app restart with fresh state.
+- [ ] Reset button on scenario picker is not present until the scenario has been started
+- [ ] Make it possible to dynamically add characters to a scenario
+- [ ] Make it possible to draw paths
+- [ ] Path should be closable?
+- [ ] Should be possible to make the mouse a target
+- [ ] The orientation picker should be more like a dial
+- [ ] Help new users understand what they are loking at!
+- [ ] Hovering an id should highlight the character
+- [ ] RTS controls:
+  - [ ] When clicking on a target, there should be a clear visual indication
+        the click worked
+  - [ ] Clicking off a character should unselect it
+  - [ ] When performing an action, the cursor should look different
+  - [ ] When hovering a character, the cursor should look different
   - [ ] Gather descriptions of each behaviour
   - [ ] Add Art Deco styling
   - [ ] Does dispatch cause unexpected re-renders?
