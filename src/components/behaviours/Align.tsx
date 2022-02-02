@@ -64,7 +64,7 @@ const AlignControls = (props: Props) => {
       />
       <NumericField
         id="time-to-target"
-        label="time to target"
+        label="Time to target"
         value={behaviour.timeToTarget}
         onChange={(timeToTarget) => {
           props.onBehaviourChange(
