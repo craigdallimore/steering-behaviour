@@ -3,8 +3,7 @@
 - [ ] REFACTOR
 
   - [ ] Make sure targets/paths/shapes can be picked for all behaviours
-  - [ ] Canvas should be dynamically sized and will work when resized
-  - [ ] Improve overall styling
+  - [ ] Fix canvas blur
   - [ ] Test all behaviours
   - [ ] Behaviour config should include configuring dependent behaviour
   - [ ] A character should be able to have multiple blendable behaviours
@@ -22,9 +21,15 @@
 - [ ] QOL improvements
 
   - [ ] Scenario picker. It would be neat to select a scenario to play, and have the app restart with fresh state.
+  - [ ] Reset button on scenario picker is not present until the scenario has been started
   - [ ] Make it possible to dynamically add characters to a scenario
   - [ ] The orientation picker should be more like a dial
   - [ ] Hover and focus styles for mouse cursor
+  - [ ] Help new users understand what they are loking at!
+  - [ ] When clicking on a target, there should be a clear visiual indication the click worked
+
+- [ ] Other
+  - [ ] Gather descriptions of each behaviour
 
 ## Steering behaviours
 
