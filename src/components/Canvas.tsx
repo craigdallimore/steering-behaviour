@@ -30,6 +30,12 @@ const Canvas = (props: {
       const ctx = canvasRef.current.getContext("2d");
       if (ctx) {
         ctx.translate(0.5, 0.5);
+
+        // To get crisp lines on high DPI screens, we set the dimensions of the
+        // canvas proportionate to the devicePixelRatio, then use inline CSS to
+        // keep it the correct fit for the layout.
+        // This causes the drawn area to be too small on high DPI screens, so we
+        // scale the drawn area based on the device pixel ratio.
         ctx.scale(devicePixelRatio, devicePixelRatio);
         ctxRef.current = ctx;
       }
