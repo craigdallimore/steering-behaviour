@@ -80,6 +80,7 @@ export type Intersection = {
 };
 
 export type State = {
+  scene: Vector;
   isPaused: boolean;
   isSettingTarget: boolean;
   focussedCharacterId: null | CharacterId;

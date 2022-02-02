@@ -9,8 +9,6 @@ const Canvas = (props: {
 }) => {
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
   const ctxRef = React.useRef<CanvasRenderingContext2D | null>(null);
-  const [width, setWidth] = React.useState(0);
-  const [height, setHeight] = React.useState(0);
 
   if (ctxRef.current) {
     drawScene(ctxRef.current, props.state);
@@ -20,9 +18,10 @@ const Canvas = (props: {
     const p = canvasRef.current?.parentNode;
     if (p instanceof HTMLElement) {
       const rect = p.getBoundingClientRect();
-      console.log("onResize", rect.height);
-      setWidth(rect.width);
-      setHeight(rect.height);
+      props.dispatch({
+        type: "CANVAS_RESIZED",
+        payload: [rect.width, rect.height],
+      });
     }
   }
 
@@ -30,7 +29,7 @@ const Canvas = (props: {
     if (canvasRef.current) {
       const ctx = canvasRef.current.getContext("2d");
       if (ctx) {
-        ctx.translate(0.5, 0.5);
+        //ctx.translate(0.5, 0.5);
         ctxRef.current = ctx;
       }
     }
@@ -47,8 +46,8 @@ const Canvas = (props: {
   return (
     <canvas
       ref={canvasRef}
-      width={width}
-      height={height}
+      width={props.state.scene[0]}
+      height={props.state.scene[1]}
       id="canvas-main"
       onClick={(e) => {
         const target = e.target as HTMLCanvasElement;

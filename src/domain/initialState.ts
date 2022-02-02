@@ -3,6 +3,7 @@ import type { State } from "@domain/types.js";
 import { Face, Wander, None } from "@steering/index.js";
 
 export const initialState: State = {
+  scene: [800, 800],
   isPaused: true,
   isSettingTarget: false,
   focussedCharacterId: "_1",

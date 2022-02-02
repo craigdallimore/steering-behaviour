@@ -17,6 +17,7 @@ const PLAY_BUTTON_CLICKED = "PLAY_BUTTON_CLICKED";
 const RESET_BUTTON_CLICKED = "RESET_BUTTON_CLICKED";
 const SET_TARGET_BUTTON_CLICKED = "SET_TARGET_BUTTON_CLICKED";
 const CANVAS_CLICKED = "CANVAS_CLICKED";
+const CANVAS_RESIZED = "CANVAS_RESIZED";
 const BEHAVIOUR_CHANGED = "BEHAVIOUR_CHANGED";
 const ORIENTATION_CHANGED = "ORIENTATION_CHANGED";
 const ROTATION_CHANGED = "ROTATION_CHANGED";
@@ -63,6 +64,10 @@ export type Action =
       payload: Vector;
     }
   | {
+      type: typeof CANVAS_RESIZED;
+      payload: Vector;
+    }
+  | {
       type: typeof SET_TARGET_BUTTON_CLICKED;
     }
   | {
@@ -83,6 +88,9 @@ export function reducer(state: State, action: Action): State {
       return initialState;
     case "PLAY_BUTTON_CLICKED":
       state.isPaused = !state.isPaused;
+      return state;
+    case "CANVAS_RESIZED":
+      state.scene = action.payload;
       return state;
     case "CANVAS_CLICKED": {
       const clickPosition: Vector = action.payload;

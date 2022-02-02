@@ -10,8 +10,8 @@ export default function drawScene(
   ctx: CanvasRenderingContext2D,
   state: State
 ): void {
-  ctx.clearRect(0, 0, 800, 800);
-  drawGrid(ctx);
+  ctx.clearRect(0, 0, state.scene[0], state.scene[1]);
+  drawGrid(ctx, state.scene);
   state.shapes.forEach((s: Shape) => {
     drawShape(ctx, s, "rgba(74, 20, 140, 1)", "rgba(237, 231, 246, 1)");
   });
