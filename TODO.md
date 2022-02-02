@@ -17,6 +17,7 @@
     - [ ] How to show coverage
     - [ ] How to test component
     - [ ] How to test library file
+  - [ ] Typing in inputs sucks
 
 - [ ] QOL improvements
 
@@ -33,29 +34,30 @@
 
 ## Steering behaviours
 
-- [ ] NONE
-- [ ] ALIGN
-- [ ] ARRIVE
-- [ ] COLLISION_AVOIDANCE
-- [ ] EVADE
-  - [ ] tested, working
+ok
+
+- [x] NONE
+- [x] ALIGN
+- [x] ARRIVE
 - [ ] FACE
 - [ ] FLEE
-  - [ ] tested, working
-- [ ] FOLLOW_PATH_CHASE_RABBIT
-  - [ ] tested, works ok
-- [ ] FOLLOW_PATH_PREDICT
 - [ ] LOOK_WHERE_YOU_ARE_GOING
-  - [ ] tested, working
 - [ ] MATCH_VELOCITY
-- [ ] OBSTACLE_AVOIDANCE
-  - [ ] Not exactly working
 - [ ] PURSUE
-  - [ ] tested, working
 - [ ] SEEK
 - [ ] SEPARATION
+
+suspect
+
+- [ ] COLLISION_AVOIDANCE Not really wokring well?
+- [ ] EVADE
 - [ ] WANDER
-- [ ] tested, broken
+
+needs to be able to select a path/shape
+
+- [ ] FOLLOW_PATH_CHASE_RABBIT
+- [ ] FOLLOW_PATH_PREDICT
+- [ ] OBSTACLE_AVOIDANCE
 
 ## Steering pipeline
 

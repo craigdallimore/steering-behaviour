@@ -2,6 +2,7 @@ import React from "react";
 import NumericField from "components/NumericField";
 import Seek from "@steering/seek";
 import makeUpdatedClone from "@lib/makeUpdatedClone";
+import PickTarget from "@components/PickTarget";
 
 type Props = {
   behaviour: Seek;
@@ -23,6 +24,7 @@ const SeekControls = (props: Props) => {
           );
         }}
       />
+      <PickTarget targetId={behaviour.targetId} />
     </>
   );
 };

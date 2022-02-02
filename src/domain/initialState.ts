@@ -1,6 +1,6 @@
 import type { State } from "@domain/types.js";
 
-import { Face, Wander, None } from "@steering/index.js";
+import { Separation, Face, Wander, None } from "@steering/index.js";
 
 export const initialState: State = {
   scene: [800, 800],
@@ -13,12 +13,12 @@ export const initialState: State = {
       {
         kinematic: {
           maxSpeed: 45,
-          position: [160, 180],
+          position: [60, 82],
           velocity: [0, 0],
           orientation: 2 * Math.PI,
           rotation: 0,
         },
-        behaviour: new Face("_2"),
+        behaviour: new Separation(),
       },
     ],
     [
@@ -31,7 +31,7 @@ export const initialState: State = {
           orientation: -1.5 * Math.PI,
           rotation: 0,
         },
-        behaviour: new None(),
+        behaviour: new Separation(),
       },
     ],
     [
@@ -39,12 +39,12 @@ export const initialState: State = {
       {
         kinematic: {
           maxSpeed: 45,
-          position: [360, 380],
+          position: [62, 80],
           velocity: [0, 0],
           orientation: 1.5 * Math.PI,
           rotation: 0,
         },
-        behaviour: new None(),
+        behaviour: new Separation(),
       },
     ],
   ]),
