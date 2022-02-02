@@ -26,8 +26,8 @@ export default class CollisionAvoidance extends AbstractBehaviour {
     super();
     // Holds the maximum acceleration
     this.maxAcceleration = maxAcceleration || 5;
-    // Holds the collision radius of a character (we assume all characters have the
-    // same radius here)
+    // Holds the collision radius of a character (we assume all characters have
+    // the same radius here)
     this.radius = radius || 7.5;
   }
   calculate(kinematic: Kinematic, targets: Array<Kinematic>): Steering {
