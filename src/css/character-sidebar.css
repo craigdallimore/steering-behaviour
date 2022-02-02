@@ -1,0 +1,20 @@
+.character-sidebar {
+  grid-area: character;
+  background-color: var(--base05);
+  overflow-y: auto;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.character-sidebar fieldset {
+  display: flex;
+  flex-direction: column;
+}
+
+.character-sidebar label {
+  padding-bottom: 0.25rem;
+}
+
+.character-sidebar input + label {
+  margin-top: 0.5rem;
+}

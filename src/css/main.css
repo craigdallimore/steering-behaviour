@@ -1,6 +1,7 @@
 @import "./base.css";
 @import "./behaviours.css";
 @import "./scenario-sidebar.css";
+@import "./character-sidebar.css";
 
 main {
   grid-area: canvas;
@@ -11,33 +12,18 @@ main {
 
 canvas {
 }
-form {
-  grid-area: character;
-  background-color: var(--base05);
-  overflow-y: auto;
-}
-form fieldset {
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  grid-gap: 0.5rem;
-}
-
 legend {
   padding: 0.5rem;
   background: black;
   color: white;
 }
+
 label {
   font-size: 0.8rem;
 }
 
 fieldset {
   border: 0;
-  padding: 1rem;
-}
-
-button + button {
-  float: right;
 }
 
 select {
@@ -57,6 +43,7 @@ button {
   letter-spacing: 1px;
   box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
 }
+
 button:hover {
   background-color: var(--base02);
   cursor: pointer;
@@ -65,4 +52,10 @@ button:active {
   top: 3px;
   left: 3px;
   box-shadow: none;
+}
+
+[type="number"] {
+  padding: 0.25rem 0.5rem;
+  letter-spacing: 1px;
+  border: 2px solid var(--base00);
 }

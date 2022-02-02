@@ -1,8 +1,6 @@
 import React from 'react';
 
-type Props = {};
-
-const ScenarioSidebar = (props: Props) => {
+const ScenarioSidebar = () => {
 
   return (
     <aside className="scenario-sidebar">
