@@ -20,15 +20,17 @@
 - [ ] Help new users understand what they are loking at!
 - [ ] Hovering an id should highlight the character
 - [ ] RTS controls:
+  - [ ] Thicker white selection box
+  - [ ] Round targeting reticule
   - [ ] When clicking on a target, there should be a clear visual indication
         the click worked
   - [ ] Clicking off a character should unselect it
   - [ ] When performing an action, the cursor should look different
   - [ ] When hovering a character, the cursor should look different
-  - [ ] Gather descriptions of each behaviour
-  - [ ] Add Art Deco styling
-  - [ ] Does dispatch cause unexpected re-renders?
-  - [ ] Do state changes cause unexpected re-renders?
+- [ ] Gather descriptions of each behaviour
+- [ ] Add Art Deco styling
+- [ ] Does dispatch cause unexpected re-renders?
+- [ ] Do state changes cause unexpected re-renders?
 
 ## Steering behaviours
 

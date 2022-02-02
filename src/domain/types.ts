@@ -80,10 +80,12 @@ export type Intersection = {
 };
 
 export type State = {
-  scene: Vector;
-  isPaused: boolean;
-  isSettingTarget: boolean;
-  focussedCharacterId: null | CharacterId;
+  ui: {
+    canvasDimensions: Vector;
+    isPaused: boolean;
+    isSettingTarget: boolean;
+    focussedCharacterId: null | CharacterId;
+  };
   characters: Map<CharacterId, Character>;
   paths: Map<PathId, Path>;
   shapes: Map<ShapeId, Shape>;

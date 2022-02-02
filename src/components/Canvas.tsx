@@ -53,11 +53,11 @@ const Canvas = (props: {
   return (
     <canvas
       ref={canvasRef}
-      width={props.state.scene[0] * devicePixelRatio}
-      height={props.state.scene[1] * devicePixelRatio}
+      width={props.state.ui.canvasDimensions[0] * devicePixelRatio}
+      height={props.state.ui.canvasDimensions[1] * devicePixelRatio}
       style={{
-        width: `${props.state.scene[0]}px`,
-        height: `${props.state.scene[1]}px`,
+        width: `${props.state.ui.canvasDimensions[0]}px`,
+        height: `${props.state.ui.canvasDimensions[1]}px`,
       }}
       id="canvas-main"
       onClick={(e) => {

@@ -27,7 +27,7 @@ const ScenarioSidebar = () => {
           dispatch({ type: "PLAY_BUTTON_CLICKED" });
         }}
       >
-        {state.isPaused ? "Start" : "Pause"}
+        {state.ui.isPaused ? "Start" : "Pause"}
       </button>
       <button
         type="button"

@@ -20,8 +20,8 @@ const CharacterSidebar = () => {
     ? getClassname(focussedCharacter.behaviour)
     : "";
 
-  const idText = state.focussedCharacterId
-    ? `ID: ${state.focussedCharacterId}`
+  const idText = state.ui.focussedCharacterId
+    ? `ID: ${state.ui.focussedCharacterId}`
     : "--";
 
   return (

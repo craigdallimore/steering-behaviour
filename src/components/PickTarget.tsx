@@ -30,7 +30,7 @@ const PickTarget = (props: Props) => {
           dispatch({ type: "SET_TARGET_BUTTON_CLICKED" });
         }}
       >
-        {state.isSettingTarget ? "Click on a target" : "Assign a target"}
+        {state.ui.isSettingTarget ? "Click on a target" : "Assign a target"}
       </button>
     </>
   );

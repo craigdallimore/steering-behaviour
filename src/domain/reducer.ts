@@ -82,15 +82,15 @@ export type Action =
 export function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "SET_TARGET_BUTTON_CLICKED":
-      state.isSettingTarget = true;
+      state.ui.isSettingTarget = true;
       return state;
     case "RESET_BUTTON_CLICKED":
       return initialState;
     case "PLAY_BUTTON_CLICKED":
-      state.isPaused = !state.isPaused;
+      state.ui.isPaused = !state.ui.isPaused;
       return state;
     case "CANVAS_RESIZED":
-      state.scene = action.payload;
+      state.ui.canvasDimensions = action.payload;
       return state;
     case "CANVAS_CLICKED": {
       const clickPosition: Vector = action.payload;
@@ -107,18 +107,18 @@ export function reducer(state: State, action: Action): State {
         return distanceToClick < 15 ? id : acc;
       }, pairs[0][0]);
 
-      if (state.isSettingTarget) {
+      if (state.ui.isSettingTarget) {
         const nextState = updateFocussedCharacter(state, (char) => {
           if ("targetId" in char.behaviour) {
             char.behaviour.targetId = clickedCharacterId;
           }
           return char;
         });
-        nextState.isSettingTarget = false;
+        nextState.ui.isSettingTarget = false;
         return nextState;
       }
 
-      state.focussedCharacterId = clickedCharacterId;
+      state.ui.focussedCharacterId = clickedCharacterId;
       return state;
     }
 
@@ -187,7 +187,7 @@ export function reducer(state: State, action: Action): State {
       });
 
     case "TICK": {
-      if (state.isPaused) {
+      if (state.ui.isPaused) {
         return state;
       }
       const time = action.payload;

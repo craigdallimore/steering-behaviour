@@ -10,8 +10,13 @@ export default function drawScene(
   ctx: CanvasRenderingContext2D,
   state: State
 ): void {
-  ctx.clearRect(0, 0, state.scene[0], state.scene[1]);
-  drawGrid(ctx, state.scene);
+  ctx.clearRect(
+    0,
+    0,
+    state.ui.canvasDimensions[0],
+    state.ui.canvasDimensions[1]
+  );
+  drawGrid(ctx, state.ui.canvasDimensions);
   state.shapes.forEach((s: Shape) => {
     drawShape(ctx, s, "rgba(74, 20, 140, 1)", "rgba(237, 231, 246, 1)");
   });
@@ -24,8 +29,10 @@ export default function drawScene(
     drawPath(ctx, p, "rgba(178, 223, 219, 1)");
   });
 
-  if (state.focussedCharacterId) {
-    const focussedCharacter = state.characters.get(state.focussedCharacterId);
+  if (state.ui.focussedCharacterId) {
+    const focussedCharacter = state.characters.get(
+      state.ui.focussedCharacterId
+    );
     if (focussedCharacter) {
       drawSelectionBox(ctx, focussedCharacter.kinematic.position);
     }

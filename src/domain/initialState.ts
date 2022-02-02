@@ -3,10 +3,12 @@ import type { State } from "@domain/types.js";
 import * as steering from "@steering/index.js";
 
 export const initialState: State = {
-  scene: [800, 800],
-  isPaused: true,
-  isSettingTarget: false,
-  focussedCharacterId: "_1",
+  ui: {
+    canvasDimensions: [800, 800],
+    isPaused: true,
+    isSettingTarget: false,
+    focussedCharacterId: "_1",
+  },
   characters: new Map([
     [
       "_1",
