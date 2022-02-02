@@ -9,25 +9,29 @@ export default function drawSelectionBox(
   ctx.save();
   ctx.transform(1, 0, 0, 1, x, z);
   ctx.strokeStyle = "rgb(46, 125, 50)";
+  ctx.lineWidth = 2;
   ctx.beginPath();
-  ctx.moveTo(-10, -5);
-  ctx.lineTo(-10, -10);
-  ctx.lineTo(-5, -10);
+  ctx.moveTo(-12, -7);
+  ctx.lineTo(-12, -12);
+  ctx.lineTo(-7, -12);
   ctx.stroke();
 
-  ctx.moveTo(5, -10);
-  ctx.lineTo(10, -10);
-  ctx.lineTo(10, -5);
+  ctx.beginPath();
+  ctx.moveTo(7, -12);
+  ctx.lineTo(12, -12);
+  ctx.lineTo(12, -7);
   ctx.stroke();
 
-  ctx.moveTo(10, 5);
-  ctx.lineTo(10, 10);
-  ctx.lineTo(5, 10);
+  ctx.beginPath();
+  ctx.moveTo(12, 7);
+  ctx.lineTo(12, 12);
+  ctx.lineTo(7, 12);
   ctx.stroke();
 
-  ctx.moveTo(-5, 10);
-  ctx.lineTo(-10, 10);
-  ctx.lineTo(-10, 5);
+  ctx.beginPath();
+  ctx.moveTo(-7, 12);
+  ctx.lineTo(-12, 12);
+  ctx.lineTo(-12, 7);
   ctx.stroke();
 
   ctx.restore();

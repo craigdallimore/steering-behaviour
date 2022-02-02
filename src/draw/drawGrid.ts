@@ -5,7 +5,7 @@ export default function drawGrid(
   v: Vector
 ): CanvasRenderingContext2D {
   ctx.save();
-  ctx.strokeStyle = "#7fc1ca";
+  ctx.strokeStyle = "hsl(203, 26%, 82%, 0.25)";
   for (let x = 10; x < v[0]; x += 10) {
     ctx.beginPath();
     ctx.moveTo(x, 0);
