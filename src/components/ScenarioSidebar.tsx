@@ -33,13 +33,13 @@ const ScenarioSidebar = () => {
             )
           )}
         </select>
-        <span>
-          The <em>align behaviour</em> makes an item rotate to match the
-          orientation of another item.
+        <span data-id="scenario-description">
+          {focussedScenario?.description}
         </span>
       </fieldset>
 
       <button
+        data-id="play-pause-button"
         type="button"
         id="play-pause"
         onClick={() => {
@@ -49,6 +49,7 @@ const ScenarioSidebar = () => {
         {state.ui.isPaused ? "Start" : "Pause"}
       </button>
       <button
+        data-id="reset-button"
         type="button"
         id="reset"
         onClick={() => {
