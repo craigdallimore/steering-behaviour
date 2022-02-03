@@ -11,7 +11,7 @@ const ScenarioSidebar = () => {
       <h1>Steering Behaviours!</h1>
       <fieldset>
         <label htmlFor="pick-scenario">Pick a scenario</label>
-        <select id="pick-scenario">
+        <select data-id="pick-scenario">
           <option>TODO</option>
         </select>
         <span>

@@ -8,6 +8,7 @@
     "rootDir": "src",
     "baseUrl": "src",
     "paths": {
+      "@test-utils": ["test-utils"],
       "@domain/*": ["domain/*"],
       "@components/*": ["components/*"],
       "@steering/*": ["steering/*"],
