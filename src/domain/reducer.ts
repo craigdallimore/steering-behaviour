@@ -11,9 +11,6 @@ const PLAY_BUTTON_CLICKED = "PLAY_BUTTON_CLICKED";
 const RESET_BUTTON_CLICKED = "RESET_BUTTON_CLICKED";
 const CANVAS_CLICKED = "CANVAS_CLICKED";
 const CANVAS_RESIZED = "CANVAS_RESIZED";
-const CANVAS_MOUSE_MOVE = "CANVAS_MOUSE_MOVE";
-const CANVAS_MOUSE_ENTER = "CANVAS_MOUSE_ENTER";
-const CANVAS_MOUSE_LEAVE = "CANVAS_MOUSE_LEAVE";
 const BEHAVIOUR_CHANGED = "BEHAVIOUR_CHANGED";
 const ORIENTATION_CHANGED = "ORIENTATION_CHANGED";
 const ROTATION_CHANGED = "ROTATION_CHANGED";
@@ -64,17 +61,6 @@ export type Action =
       payload: Vector;
     }
   | {
-      type: typeof CANVAS_MOUSE_ENTER;
-      payload: Vector;
-    }
-  | {
-      type: typeof CANVAS_MOUSE_LEAVE;
-    }
-  | {
-      type: typeof CANVAS_MOUSE_MOVE;
-      payload: Vector;
-    }
-  | {
       type: typeof PLAY_BUTTON_CLICKED;
     }
   | {
@@ -92,15 +78,6 @@ export function reducer(state: State, action: Action): State {
       return state;
     case "CANVAS_RESIZED":
       state.ui.canvasDimensions = action.payload;
-      return state;
-    case "CANVAS_MOUSE_ENTER":
-      state.ui.mousePosition = action.payload;
-      return state;
-    case "CANVAS_MOUSE_LEAVE":
-      state.ui.mousePosition = null;
-      return state;
-    case "CANVAS_MOUSE_MOVE":
-      state.ui.mousePosition = action.payload;
       return state;
     case "CANVAS_CLICKED": {
       const clickPosition: Vector = action.payload;

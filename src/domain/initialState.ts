@@ -4,7 +4,6 @@ import * as steering from "@steering/index.js";
 
 export const initialState: State = {
   ui: {
-    mousePosition: null,
     canvasDimensions: [800, 800],
     isPaused: true,
     isSettingTarget: false,
