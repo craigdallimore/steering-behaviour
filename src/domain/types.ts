@@ -92,6 +92,19 @@ export type State = {
   shapes: Map<ShapeId, Shape>;
 };
 
+export type ScenarioId = string;
+
+export type Scenario = {
+  id: ScenarioId;
+  name: string;
+  description: string;
+  characters: Map<CharacterId, Character>;
+  paths: Map<PathId, Path>;
+  shapes: Map<ShapeId, Shape>;
+};
+
+export type ScenarioMap = Map<ScenarioId, Scenario>;
+
 export type Steering = {
   // Negative x is Left
   // Negative z is Up

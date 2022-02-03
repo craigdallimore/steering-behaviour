@@ -1,6 +1,6 @@
-import { AbstractBehaviour } from "./abstractBehaviour.js";
-import { length, subtract, multiply, normalise } from "@lib/vector.js";
-import type { Kinematic, CharacterId, Steering } from "@domain/types.js";
+import { AbstractBehaviour } from "./abstractBehaviour";
+import { length, subtract, multiply, normalise } from "@lib/vector";
+import type { Kinematic, CharacterId, Steering } from "@domain/types";
 
 export default class MatchVelocity extends AbstractBehaviour {
   readonly name = "MATCH_VELOCITY";

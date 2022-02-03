@@ -1,7 +1,7 @@
-import { AbstractBehaviour } from "./abstractBehaviour.js";
+import { AbstractBehaviour } from "./abstractBehaviour";
 import Align from "./align";
-import { length, vectorToRadians } from "@lib/vector.js";
-import type { Kinematic, Steering } from "@domain/types.js";
+import { length, vectorToRadians } from "@lib/vector";
+import type { Kinematic, Steering } from "@domain/types";
 
 export default class LookWhereYouAreGoing extends AbstractBehaviour {
   readonly name = "LOOK_WHERE_YOU_ARE_GOING";

@@ -5,14 +5,9 @@
  * Stops within alignTolerance
  */
 
-import { AbstractBehaviour } from "./abstractBehaviour.js";
+import { AbstractBehaviour } from "./abstractBehaviour";
 
-import type {
-  CharacterId,
-  Kinematic,
-  Vector,
-  Steering,
-} from "@domain/types.js";
+import type { CharacterId, Kinematic, Vector, Steering } from "@domain/types";
 
 function mapToRange(orientation: number): number {
   // To rotate all the way clockwise, use the value 6.283

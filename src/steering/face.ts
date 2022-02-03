@@ -1,12 +1,7 @@
-import { AbstractBehaviour } from "./abstractBehaviour.js";
-import { length, subtract } from "@lib/vector.js";
-import type {
-  CharacterId,
-  Kinematic,
-  Vector,
-  Steering,
-} from "@domain/types.js";
-import Align from "./align.js";
+import { AbstractBehaviour } from "./abstractBehaviour";
+import { length, subtract } from "@lib/vector";
+import type { CharacterId, Kinematic, Vector, Steering } from "@domain/types";
+import Align from "./align";
 
 export default class Face extends AbstractBehaviour {
   readonly name = "FACE";

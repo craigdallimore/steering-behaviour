@@ -1,7 +1,7 @@
-import { AbstractBehaviour } from "./abstractBehaviour.js";
-import { subtract, multiply, add, length } from "@lib/vector.js";
-import type { CharacterId, Kinematic, Steering } from "@domain/types.js";
-import Flee from "./flee.js";
+import { AbstractBehaviour } from "./abstractBehaviour";
+import { subtract, multiply, add, length } from "@lib/vector";
+import type { CharacterId, Kinematic, Steering } from "@domain/types";
+import Flee from "./flee";
 
 export default class Evade extends AbstractBehaviour {
   readonly name = "EVADE";

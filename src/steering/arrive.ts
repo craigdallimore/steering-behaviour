@@ -5,20 +5,9 @@
  * Slows within slowRadius
  * Stops within targetRadius
  */
-import { AbstractBehaviour } from "./abstractBehaviour.js";
-import {
-  length,
-  distance,
-  subtract,
-  multiply,
-  normalise,
-} from "@lib/vector.js";
-import type {
-  CharacterId,
-  Kinematic,
-  Steering,
-  Vector,
-} from "@domain/types.js";
+import { AbstractBehaviour } from "./abstractBehaviour";
+import { length, distance, subtract, multiply, normalise } from "@lib/vector";
+import type { CharacterId, Kinematic, Steering, Vector } from "@domain/types";
 
 export default class Arrive extends AbstractBehaviour {
   readonly name = "ARRIVE";

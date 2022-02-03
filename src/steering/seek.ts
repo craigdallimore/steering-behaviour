@@ -1,11 +1,6 @@
-import { AbstractBehaviour } from "./abstractBehaviour.js";
-import { subtract, multiply, normalise } from "@lib/vector.js";
-import type {
-  Kinematic,
-  Vector,
-  Steering,
-  CharacterId,
-} from "@domain/types.js";
+import { AbstractBehaviour } from "./abstractBehaviour";
+import { subtract, multiply, normalise } from "@lib/vector";
+import type { Kinematic, Vector, Steering, CharacterId } from "@domain/types";
 
 export default class Seek extends AbstractBehaviour {
   readonly name = "SEEK";

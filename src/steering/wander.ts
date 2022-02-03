@@ -1,12 +1,7 @@
-import { AbstractBehaviour } from "./abstractBehaviour.js";
-import {
-  multiply,
-  radiansToVector,
-  degreesToVector,
-  add,
-} from "@lib/vector.js";
-import type { Kinematic, Vector, Steering } from "@domain/types.js";
-import Face from "./face.js";
+import { AbstractBehaviour } from "./abstractBehaviour";
+import { multiply, radiansToVector, degreesToVector, add } from "@lib/vector";
+import type { Kinematic, Vector, Steering } from "@domain/types";
+import Face from "./face";
 
 export default class Wander extends AbstractBehaviour {
   readonly name = "WANDER";

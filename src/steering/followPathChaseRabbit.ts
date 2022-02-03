@@ -1,7 +1,7 @@
-import { AbstractBehaviour } from "./abstractBehaviour.js";
-import { getParam, getPosition } from "@lib/path.js";
-import type { PathId, Kinematic, Path, Steering } from "@domain/types.js";
-import Seek from "./seek.js";
+import { AbstractBehaviour } from "./abstractBehaviour";
+import { getParam, getPosition } from "@lib/path";
+import type { PathId, Kinematic, Path, Steering } from "@domain/types";
+import Seek from "./seek";
 
 export default class FollowPathChaseRabbit extends AbstractBehaviour {
   readonly name = "FOLLOW_PATH_CHASE_RABBIT";

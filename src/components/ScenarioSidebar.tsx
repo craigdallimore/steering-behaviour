@@ -1,6 +1,6 @@
 import React from "react";
-import DispatchContext from "@components/DispatchContext.js";
-import StateContext from "@components/StateContext.js";
+import DispatchContext from "@components/DispatchContext";
+import StateContext from "@components/StateContext";
 
 const ScenarioSidebar = () => {
   const dispatch = React.useContext(DispatchContext);

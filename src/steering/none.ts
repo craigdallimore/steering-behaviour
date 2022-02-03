@@ -1,5 +1,5 @@
-import { AbstractBehaviour } from "./abstractBehaviour.js";
-import type { Steering } from "@domain/types.js";
+import { AbstractBehaviour } from "./abstractBehaviour";
+import type { Steering } from "@domain/types";
 
 export default class None extends AbstractBehaviour {
   readonly name = "NONE";

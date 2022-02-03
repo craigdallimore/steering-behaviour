@@ -1,6 +1,6 @@
-import type { State } from "@domain/types.js";
+import type { State } from "@domain/types";
 
-import * as steering from "@steering/index.js";
+import * as steering from "@steering/index";
 
 export const initialState: State = {
   ui: {

@@ -1,13 +1,6 @@
-import { AbstractBehaviour } from "./abstractBehaviour.js";
-import {
-  add,
-  dot,
-  length,
-  subtract,
-  multiply,
-  normalise,
-} from "@lib/vector.js";
-import type { Kinematic, Vector, Steering } from "@domain/types.js";
+import { AbstractBehaviour } from "./abstractBehaviour";
+import { add, dot, length, subtract, multiply, normalise } from "@lib/vector";
+import type { Kinematic, Vector, Steering } from "@domain/types";
 
 type Final = {
   shortestTime: number;

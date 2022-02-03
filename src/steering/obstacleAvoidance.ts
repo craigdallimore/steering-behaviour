@@ -1,4 +1,4 @@
-import { AbstractBehaviour } from "./abstractBehaviour.js";
+import { AbstractBehaviour } from "./abstractBehaviour";
 import {
   add,
   distance,
@@ -7,7 +7,7 @@ import {
   normalise,
   vectorToRadians,
   radiansToVector,
-} from "@lib/vector.js";
+} from "@lib/vector";
 import type {
   Edge,
   Kinematic,
@@ -15,11 +15,11 @@ import type {
   ShapeId,
   Steering,
   Vector,
-} from "@domain/types.js";
+} from "@domain/types";
 
-import { findFirstIntersection } from "@lib/shape.js";
+import { findFirstIntersection } from "@lib/shape";
 
-import Seek from "./seek.js";
+import Seek from "./seek";
 
 type Collision = {
   position: Vector;

@@ -1,8 +1,8 @@
-import { AbstractBehaviour } from "./abstractBehaviour.js";
-import { getParam, getPosition } from "@lib/path.js";
-import { Kinematic, Path, PathId, Steering } from "@domain/types.js";
-import { add, multiply } from "@lib/vector.js";
-import Seek from "./seek.js";
+import { AbstractBehaviour } from "./abstractBehaviour";
+import { getParam, getPosition } from "@lib/path";
+import { Kinematic, Path, PathId, Steering } from "@domain/types";
+import { add, multiply } from "@lib/vector";
+import Seek from "./seek";
 
 export default class FollowPathPredict extends AbstractBehaviour {
   readonly name = "FOLLOW_PATH_PREDICT";

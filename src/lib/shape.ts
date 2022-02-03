@@ -1,6 +1,6 @@
-import type { Edge, Intersection, Shape } from "@domain/types.js";
-import { add, distance } from "./vector.js";
-import { findEdgeIntersection } from "./path.js";
+import type { Edge, Intersection, Shape } from "@domain/types";
+import { add, distance } from "./vector";
+import { findEdgeIntersection } from "./path";
 
 export function findAllIntersections(
   seg: Edge, // Edge, absolutely positioned

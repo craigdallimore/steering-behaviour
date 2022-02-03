@@ -1,5 +1,5 @@
 // https://geekrodion.medium.com/linear-algebra-vectors-f7610e9a0f23
-import type { Vector } from "@domain/types.js";
+import type { Vector } from "@domain/types";
 
 export function add([ax, az]: Vector, [bx, bz]: Vector): Vector {
   return [ax + bx, az + bz];

@@ -1,6 +1,6 @@
-import { AbstractBehaviour } from "./abstractBehaviour.js";
-import { add, length, subtract, multiply, normalise } from "@lib/vector.js";
-import type { Kinematic, Steering } from "@domain/types.js";
+import { AbstractBehaviour } from "./abstractBehaviour";
+import { add, length, subtract, multiply, normalise } from "@lib/vector";
+import type { Kinematic, Steering } from "@domain/types";
 
 export default class Separation extends AbstractBehaviour {
   readonly name = "SEPARATION";

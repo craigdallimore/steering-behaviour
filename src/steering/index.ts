@@ -1,19 +1,19 @@
-import Align from "./align.js";
-import Arrive from "./arrive.js";
-import CollisionAvoidance from "./collisionAvoidance.js";
-import Evade from "./evade.js";
-import Face from "./face.js";
-import Flee from "./flee.js";
+import Align from "./align";
+import Arrive from "./arrive";
+import CollisionAvoidance from "./collisionAvoidance";
+import Evade from "./evade";
+import Face from "./face";
+import Flee from "./flee";
 import FollowPathChaseRabbit from "./followPathChaseRabbit";
 import FollowPathPredict from "./followPathPredict";
-import LookWhereYouAreGoing from "./lookWhereYouAreGoing.js";
-import MatchVelocity from "./matchVelocity.js";
-import None from "./none.js";
-import ObstacleAvoidance from "./obstacleAvoidance.js";
-import Pursue from "./pursue.js";
-import Seek from "./seek.js";
-import Separation from "./separation.js";
-import Wander from "./wander.js";
+import LookWhereYouAreGoing from "./lookWhereYouAreGoing";
+import MatchVelocity from "./matchVelocity";
+import None from "./none";
+import ObstacleAvoidance from "./obstacleAvoidance";
+import Pursue from "./pursue";
+import Seek from "./seek";
+import Separation from "./separation";
+import Wander from "./wander";
 
 export {
   Align,
