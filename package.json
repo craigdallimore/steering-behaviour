@@ -39,7 +39,8 @@
     "test": "jest",
     "lint": "eslint . --ext .ts",
     "build": "rollup -c",
-    "dev": "rollup -c --watch"
+    "dev": "rollup -c --watch",
+    "postinstall": "husky install"
   },
   "husky": {
     "hooks": {
