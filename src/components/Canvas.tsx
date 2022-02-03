@@ -50,6 +50,14 @@ const Canvas = (props: {
     };
   }, [canvasRef.current]);
 
+  const cursorColour = props.state.ui.isSettingTarget ? "red" : "green";
+
+  const style = {
+    cursor: `url("data:image/svg+xml,%3Csvg viewBox='0 0 44 44' xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Cstyle%3E line %7B stroke: ${cursorColour}; stroke-width: 3; %7D %3C/style%3E%3Cline x1='0' y1='0' x2='0' y2='7'/%3E%3Cline x1='0' y1='0' x2='7' y2='0'/%3E%3Cline x1='44' y1='0' x2='44' y2='7'/%3E%3Cline x1='44' y1='0' x2='37' y2='0'/%3E%3Cline x1='0' y1='44' x2='0' y2='37'/%3E%3Cline x1='0' y1='44' x2='7' y2='44'/%3E%3Cline x1='44' y1='44' x2='44' y2='37'/%3E%3Cline x1='44' y1='44' x2='37' y2='44'/%3E%3C/svg%3E") 16 16, pointer`,
+    width: `${props.state.ui.canvasDimensions[0]}px`,
+    height: `${props.state.ui.canvasDimensions[1]}px`,
+  };
+
   return (
     <canvas
       ref={canvasRef}
@@ -76,10 +84,7 @@ const Canvas = (props: {
           type: "CANVAS_MOUSE_LEAVE",
         });
       }}
-      style={{
-        width: `${props.state.ui.canvasDimensions[0]}px`,
-        height: `${props.state.ui.canvasDimensions[1]}px`,
-      }}
+      style={style}
       id="canvas-main"
       onClick={(e) => {
         const target = e.target as HTMLCanvasElement;
