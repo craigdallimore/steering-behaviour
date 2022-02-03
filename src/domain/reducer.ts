@@ -72,7 +72,14 @@ export type Action =
 export function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "RESET_BUTTON_CLICKED":
-      return initialState;
+      const canvasDimensions = state.ui.canvasDimensions;
+      return {
+        ...initialState,
+        ui: {
+          ...initialState.ui,
+          canvasDimensions,
+        },
+      };
     case "PLAY_BUTTON_CLICKED":
       state.ui.isPaused = !state.ui.isPaused;
       return state;
