@@ -40,7 +40,8 @@
     "lint": "eslint . --ext .ts",
     "build": "rollup -c",
     "dev": "rollup -c --watch",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {
