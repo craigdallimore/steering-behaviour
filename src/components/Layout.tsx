@@ -21,7 +21,7 @@ const Main = () => {
   });
 
   return (
-    <>
+    <React.StrictMode>
       <DispatchContext.Provider value={dispatch}>
         <StateContext.Provider value={state}>
           <ScenarioSidebar />
@@ -35,7 +35,7 @@ const Main = () => {
           <CharacterSidebar />
         </StateContext.Provider>
       </DispatchContext.Provider>
-    </>
+    </React.StrictMode>
   );
 };
 
