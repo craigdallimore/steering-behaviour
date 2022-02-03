@@ -81,6 +81,7 @@ export type Intersection = {
 
 export type State = {
   ui: {
+    actionFeedbackCount: number;
     canvasDimensions: Vector;
     isPaused: boolean;
     isSettingTarget: boolean;

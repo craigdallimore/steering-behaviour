@@ -1,6 +1,6 @@
 import type { Path } from "@domain/types";
 
-export default function drawCircle(
+export default function drawPath(
   ctx: CanvasRenderingContext2D,
   path: Path,
   strokeStyle: string

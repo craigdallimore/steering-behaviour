@@ -4,6 +4,7 @@ import * as steering from "@steering/index.js";
 
 export const initialState: State = {
   ui: {
+    actionFeedbackCount: -1,
     canvasDimensions: [800, 800],
     isPaused: true,
     isSettingTarget: false,
@@ -15,8 +16,8 @@ export const initialState: State = {
       {
         kinematic: {
           maxSpeed: 45,
-          position: [420, 420],
-          velocity: [20, 0],
+          position: [20, 20],
+          velocity: [10, 0],
           orientation: 2 * Math.PI,
           rotation: 0,
         },

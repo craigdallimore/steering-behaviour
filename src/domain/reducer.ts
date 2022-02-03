@@ -129,6 +129,7 @@ export function reducer(state: State, action: Action): State {
           }
           return char;
         });
+        nextState.ui.actionFeedbackCount = 60;
         return nextState;
       }
 
@@ -216,6 +217,10 @@ export function reducer(state: State, action: Action): State {
         return state;
       }
       const time = action.payload;
+
+      if (state.ui.actionFeedbackCount > -1) {
+        state.ui.actionFeedbackCount--;
+      }
 
       state.characters = new Map(
         [...state.characters].map(([id, char]) => {
