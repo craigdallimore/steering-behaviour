@@ -3,10 +3,15 @@
 ## Bugs
 
 - [ ] Reset button on scenario picker should not be present until the scenario has been started
+- [ ] COLLISION_AVOIDANCE Not really working well?
+- [ ] WANDER
 
 ## Features
 
 - [ ] Make sure targets/paths/shapes can be picked for all behaviours
+  - [ ] FOLLOW_PATH_CHASE_RABBIT
+  - [ ] FOLLOW_PATH_PREDICT
+  - [ ] OBSTACLE_AVOIDANCE
 - [ ] Behaviour config should include configuring dependent behaviour
 - [ ] A character should be able to have multiple blendable behaviours
 - [ ] Move helpers out from class files
@@ -14,7 +19,7 @@
 - [ ] Find a way to have a debug variant for each view
 - [ ] Testing
   - [ ] How to show coverage
-  - [ ] How to test component
+  - [x] How to test component
   - [ ] How to test library file
 - [ ] Scenario picker. It would be neat to select a scenario to play, and have the app restart with fresh state.
 - [ ] Make it possible to dynamically add characters to a scenario
@@ -27,22 +32,13 @@
 - [ ] The kinematic controls could be hidden until revealed
 - [ ] Gather descriptions of each behaviour
 - [ ] Add a button to stop a kinematic from moving
-- [ ] Add Art Deco styling
 - [ ] Does dispatch cause unexpected re-renders?
 - [ ] Do state changes cause unexpected re-renders?
 
-## Steering behaviours
+## Maybe
 
-suspect
-
-- [ ] COLLISION_AVOIDANCE Not really working well?
-- [ ] WANDER
-
-needs to be able to select a path/shape
-
-- [ ] FOLLOW_PATH_CHASE_RABBIT
-- [ ] FOLLOW_PATH_PREDICT
-- [ ] OBSTACLE_AVOIDANCE
+- [ ] Characters should not be able to leave the canvas. Bounce off the sides maybe?
+- [ ] Add Art Deco styling
 
 ## Steering pipeline
 
