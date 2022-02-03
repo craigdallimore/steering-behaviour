@@ -1,8 +1,16 @@
 import { initialState } from "@domain/initialState.js";
-import { CharacterId, State, Behaviour, Vector } from "@domain/types.js";
+import {
+  CharacterId,
+  State,
+  Behaviour,
+  Vector,
+  Scenario,
+  ScenarioId,
+} from "@domain/types.js";
 import { distance } from "@lib/vector.js";
 import updateFocussedCharacter from "@lib/updateFocussedCharacter";
 import applyBehaviour from "@lib/applyBehaviour";
+import getFocussedScenario from "@lib/getFocussedScenario";
 
 // TYPES ----------------------------------------------------------------------
 
@@ -12,6 +20,7 @@ const RESET_BUTTON_CLICKED = "RESET_BUTTON_CLICKED";
 const CANVAS_CLICKED = "CANVAS_CLICKED";
 const CANVAS_RESIZED = "CANVAS_RESIZED";
 const BEHAVIOUR_CHANGED = "BEHAVIOUR_CHANGED";
+const SCENARIO_CHANGED = "SCENARIO_CHANGED";
 const ORIENTATION_CHANGED = "ORIENTATION_CHANGED";
 const ROTATION_CHANGED = "ROTATION_CHANGED";
 const POSX_CHANGED = "POSX_CHANGED";
@@ -27,6 +36,10 @@ export type Action =
   | {
       type: typeof BEHAVIOUR_CHANGED;
       payload: Behaviour;
+    }
+  | {
+      type: typeof SCENARIO_CHANGED;
+      payload: ScenarioId;
     }
   | {
       type: typeof ROTATION_CHANGED;
@@ -87,9 +100,15 @@ export function reducer(state: State, action: Action): State {
       state.ui.canvasDimensions = action.payload;
       return state;
     case "CANVAS_CLICKED": {
+      const scenario = getFocussedScenario(state);
+
+      if (!scenario) {
+        return state;
+      }
+
       const clickPosition: Vector = action.payload;
 
-      const distanceMap = [...state.characters].reduce((m, [id, char]) => {
+      const distanceMap = [...scenario.characters].reduce((m, [id, char]) => {
         const d = distance(clickPosition, char.kinematic.position);
         m.set(id, d);
         return m;
@@ -135,7 +154,7 @@ export function reducer(state: State, action: Action): State {
 
       state.ui.focussedCharacterId = clickedCharacterId;
 
-      const focussedCharacter = state.characters.get(clickedCharacterId);
+      const focussedCharacter = scenario.characters.get(clickedCharacterId);
 
       // The newly focussed character may be able to have a target assigned.
       state.ui.isSettingTarget = !!(
@@ -155,6 +174,10 @@ export function reducer(state: State, action: Action): State {
       }
 
       return nextState;
+
+    case "SCENARIO_CHANGED":
+      state.ui.focussedScenarioId = action.payload;
+      return state;
 
     case "ROTATION_CHANGED":
       return updateFocussedCharacter(state, (char) => {
@@ -218,18 +241,24 @@ export function reducer(state: State, action: Action): State {
       }
       const time = action.payload;
 
+      const scenario = getFocussedScenario(state);
+
+      if (!scenario) {
+        return state;
+      }
+
       if (state.ui.actionFeedbackCount > -1) {
         state.ui.actionFeedbackCount--;
       }
 
-      state.characters = new Map(
-        [...state.characters].map(([id, char]) => {
+      scenario.characters = new Map(
+        [...scenario.characters].map(([id, char]) => {
           const nextChar = applyBehaviour(
             char,
             time,
-            state.characters,
-            state.paths,
-            state.shapes
+            scenario.characters,
+            scenario.paths,
+            scenario.shapes
           );
           return [id, nextChar];
         })

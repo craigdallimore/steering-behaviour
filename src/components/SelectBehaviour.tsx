@@ -12,9 +12,7 @@ const SelectBehaviour = (props: Props) => {
       id="behaviour"
       value={props.behaviourName}
       onChange={(e) => {
-        if (e.target instanceof HTMLSelectElement) {
-          props.onSelectBehaviour(e.target.value as SteeringBehaviourName);
-        }
+        props.onSelectBehaviour(e.target.value as SteeringBehaviourName);
       }}
     >
       <option value="ALIGN">Align</option>

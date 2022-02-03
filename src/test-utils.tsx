@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import React, { FC, ReactElement } from "react";
 import {
   queryHelpers,
   buildQueries,
@@ -9,6 +9,10 @@ import {
   MatcherOptions,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import DispatchContext from "@components/DispatchContext";
+import StateContext from "@components/StateContext";
+import { initialState } from "@domain/initialState";
+import { State } from "@domain/types";
 
 const queryAllByDataId = (
   container: HTMLElement,
@@ -37,10 +41,33 @@ const customQueries = {
   findByDataId,
 };
 
-const customRender = (
-  ui: ReactElement,
-  options?: Omit<RenderOptions, "queries">
-) => render(ui, { queries: { ...queries, ...customQueries }, ...options });
+const AllTheProviders =
+  (defaults: { dispatch: () => void; state: State }): FC =>
+  ({ children }) => {
+    return (
+      <DispatchContext.Provider value={defaults.dispatch}>
+        <StateContext.Provider value={defaults.state}>
+          {children}
+        </StateContext.Provider>
+      </DispatchContext.Provider>
+    );
+  };
+
+type Options = {
+  state?: State;
+  dispatch?: () => void;
+} & Omit<RenderOptions, "queries">;
+
+const customRender = (ui: ReactElement, options?: Options) => {
+  return render(ui, {
+    wrapper: AllTheProviders({
+      dispatch: options?.dispatch ?? jest.fn(),
+      state: options?.state ?? initialState,
+    }),
+    queries: { ...queries, ...customQueries },
+    ...options,
+  });
+};
 
 export * from "@testing-library/react";
 export { customRender as render, userEvent };

@@ -1,27 +1,44 @@
-import DispatchContext from "@components/DispatchContext";
-import StateContext from "@components/StateContext";
-import { initialState } from "@domain/initialState";
 import React from "react";
 import { render, userEvent } from "@test-utils";
 import ScenarioSidebar from "../ScenarioSidebar";
+import { initialState } from "@domain/initialState";
 
 describe("Scenario sidebar", () => {
-  it.skip("dispatches an action identifying the chosen scenario", () => {
+  it("dispatches an action identifying the chosen scenario", () => {
+    const scenario1 = {
+      name: "Scenario 1",
+      description: "Scenario 1 description",
+      characters: new Map(),
+      shapes: new Map(),
+      paths: new Map(),
+    };
+    const scenario2 = {
+      name: "Scenario 2",
+      description: "Scenario 2 description",
+      characters: new Map(),
+      shapes: new Map(),
+      paths: new Map(),
+    };
+
     const mockDispatch = jest.fn();
-    const { getByDataId } = render(
-      <DispatchContext.Provider value={mockDispatch}>
-        <StateContext.Provider value={initialState}>
-          <ScenarioSidebar />
-        </StateContext.Provider>
-      </DispatchContext.Provider>
-    );
+    const mockState = {
+      ...initialState,
+      scenarioMap: new Map([
+        ["SC_01", scenario1],
+        ["SC_02", scenario2],
+      ]),
+    };
+    const { getByDataId } = render(<ScenarioSidebar />, {
+      dispatch: mockDispatch,
+      state: mockState,
+    });
     const select = getByDataId("pick-scenario");
 
-    userEvent.selectOptions(select, ["SC_01"]);
+    userEvent.selectOptions(select, ["SC_02"]);
 
     expect(mockDispatch).toBeCalledWith({
       type: "SCENARIO_CHANGED",
-      payload: "SC_01",
+      payload: "SC_02",
     });
   });
 
