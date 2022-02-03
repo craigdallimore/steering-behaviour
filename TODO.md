@@ -2,7 +2,6 @@
 
 ## Bugs
 
-- [ ] Reset button messes up the scaling
 - [ ] Reset button on scenario picker should not be present until the scenario has been started
 
 ## Features
@@ -25,12 +24,7 @@
 - [ ] The orientation picker should be more like a dial
 - [ ] Help new users understand what they are looking at!
 - [ ] Hovering an id should highlight the character
-- [ ] RTS controls:
-  - [ ] Round targeting reticule
-  - [ ] When clicking on a target, there should be a clear visual indication
-        the click worked
-  - [ ] When performing an action, the cursor should look different
-  - [ ] When hovering a character, the cursor should look different
+- [ ] The kinematic controls could be hidden until revealed
 - [ ] Gather descriptions of each behaviour
 - [ ] Add a button to stop a kinematic from moving
 - [ ] Add Art Deco styling
