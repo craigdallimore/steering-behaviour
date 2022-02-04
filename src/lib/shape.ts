@@ -3,7 +3,7 @@ import { add, distance } from "./vector";
 import { findEdgeIntersection } from "./path";
 
 export function findAllIntersections(
-  seg: Edge, // Edge, absolutely positioned
+  edge: Edge, // Edge, absolutely positioned
   shape: Shape
 ): Array<Intersection> {
   return shape.path.points.reduce(
@@ -15,7 +15,7 @@ export function findAllIntersections(
         add(shape.path.position, relB),
       ];
 
-      const p = findEdgeIntersection(seg, absoluteEdge);
+      const p = findEdgeIntersection(edge, absoluteEdge);
 
       if (p) {
         const inter: Intersection = {
