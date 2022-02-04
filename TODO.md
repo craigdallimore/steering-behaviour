@@ -9,6 +9,11 @@
 ## Test debt
 
 - [ ] lib
+  - [ ] applyBehaviour
+  - [ ] path
+  - [ ] shape
+  - [ ] updateKinematic
+  - [ ] vector
 - [ ] components
 - [ ] steering
 - [ ] reducer
