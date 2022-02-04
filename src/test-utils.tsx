@@ -9,6 +9,7 @@ import {
   MatcherOptions,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import * as fc from "fast-check";
 import DispatchContext from "@components/DispatchContext";
 import StateContext from "@components/StateContext";
 import { initialState } from "@domain/initialState";
@@ -70,4 +71,4 @@ const customRender = (ui: ReactElement, options?: Options) => {
 };
 
 export * from "@testing-library/react";
-export { customRender as render, userEvent };
+export { customRender as render, userEvent, fc };

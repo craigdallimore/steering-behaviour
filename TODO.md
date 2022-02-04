@@ -6,6 +6,13 @@
 - [ ] COLLISION_AVOIDANCE Not really working well?
 - [ ] WANDER
 
+## Test debt
+
+- [ ] lib
+- [ ] components
+- [ ] steering
+- [ ] reducer
+
 ## Features
 
 - [ ] Make sure targets/paths/shapes can be picked for all behaviours
@@ -17,10 +24,6 @@
 - [ ] Move helpers out from class files
 - [ ] Reducer can be more imperative
 - [ ] Find a way to have a debug variant for each view
-- [ ] Testing
-  - [ ] How to show coverage
-  - [x] How to test component
-  - [ ] How to test library file
 - [ ] Scenario picker. It would be neat to select a scenario to play, and have the app restart with fresh state.
 - [ ] Make it possible to dynamically add characters to a scenario
 - [ ] Make it possible to draw paths
