@@ -1,6 +1,7 @@
 import type { State } from "@domain/types";
 
 import * as steering from "@steering/index";
+import Character from "./character";
 
 export const initialState: State = {
   ui: {
@@ -20,42 +21,36 @@ export const initialState: State = {
         characters: new Map([
           [
             "_1",
-            {
-              kinematic: {
+            new Character(
+              {
                 maxSpeed: 45,
                 position: [20, 20],
                 velocity: [10, 0],
                 orientation: 2 * Math.PI,
                 rotation: 0,
               },
-              behaviour: new steering.CollisionAvoidance(),
-            },
+              new steering.Wander()
+            ),
           ],
           [
             "_2",
-            {
-              kinematic: {
-                maxSpeed: 45,
-                position: [190, 60],
-                velocity: [0, 0],
-                orientation: -1.5 * Math.PI,
-                rotation: 0,
-              },
-              behaviour: new steering.None(),
-            },
+            new Character({
+              maxSpeed: 45,
+              position: [190, 60],
+              velocity: [0, 0],
+              orientation: -1.5 * Math.PI,
+              rotation: 0,
+            }),
           ],
           [
             "_3",
-            {
-              kinematic: {
-                maxSpeed: 45,
-                position: [232, 110],
-                velocity: [0, 0],
-                orientation: 1.5 * Math.PI,
-                rotation: 0,
-              },
-              behaviour: new steering.None(),
-            },
+            new Character({
+              maxSpeed: 45,
+              position: [232, 110],
+              velocity: [0, 0],
+              orientation: 1.5 * Math.PI,
+              rotation: 0,
+            }),
           ],
         ]),
         shapes: new Map([

@@ -16,6 +16,7 @@ import {
   Separation,
   Wander,
 } from "@steering/index.js";
+import Character from "./character";
 
 export type Behaviour =
   | Align
@@ -40,11 +41,7 @@ export type SteeringBehaviourName = Behaviour["name"];
 export type Vector = [x: number, z: number];
 
 export type CharacterId = string;
-
-export type Character = {
-  kinematic: Kinematic;
-  behaviour: Behaviour;
-};
+export { Character };
 
 export type CharacterMap = Map<CharacterId, Character>;
 
