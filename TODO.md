@@ -10,9 +10,7 @@
 
 - [ ] lib
   - [ ] applyBehaviour
-  - [ ] path
   - [ ] shape
-  - [ ] updateKinematic
   - [ ] vector
 - [ ] components
 - [ ] steering
@@ -25,6 +23,7 @@
   - [ ] FOLLOW_PATH_PREDICT
   - [ ] OBSTACLE_AVOIDANCE
 - [ ] Behaviour config should include configuring dependent behaviour
+- [ ] Are path offsets respected?
 - [ ] A character should be able to have multiple blendable behaviours
 - [ ] Move helpers out from class files
 - [ ] Reducer can be more imperative

@@ -424,4 +424,28 @@ describe("getParam", () => {
 
     expect(getParam(path, point)).toEqual(expected);
   });
+  /* TODO - check that offsets are respected
+  it("finds the distance 04", () => {
+    //   0  1  2  3  4  5  6  7
+    // 0
+    // 1    *-----x-----------*
+    // 2    |                 |
+    // 3    |     *           |
+    // 4    *                 *
+    // 5
+    const point: Vector = [3, 2];
+    const path: Path = {
+      position: [1, 1],
+      points: [
+        [0, 3],
+        [0, 0],
+        [6, 0],
+        [6, 3],
+      ],
+    };
+    const expected = 6;
+
+    expect(getParam(path, point)).toEqual(expected);
+  });
+   */
 });
