@@ -10,8 +10,6 @@
 
 - [ ] lib
   - [ ] applyBehaviour
-  - [ ] shape
-  - [ ] vector
 - [ ] components
 - [ ] steering
 - [ ] reducer
