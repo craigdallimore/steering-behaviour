@@ -1,7 +1,7 @@
 import React from "react";
-import type { State } from "@domain/types.js";
+import type { State } from "@domain/types";
 import { type Action } from "@domain/reducer";
-import drawScene from "@draw/drawScene.js";
+import drawScene from "@draw/drawScene";
 
 const Canvas = (props: {
   state: State;

@@ -1,4 +1,4 @@
-import { State, Scenario } from "@domain/types.js";
+import { State, Scenario } from "@domain/types";
 
 export default function getFocussedScenario(state: State): Scenario | null {
   if (!state.ui.focussedScenarioId) {

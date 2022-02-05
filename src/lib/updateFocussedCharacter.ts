@@ -1,4 +1,4 @@
-import { State, Character } from "@domain/types.js";
+import { State, Character } from "@domain/types";
 import getFocussedScenario from "./getFocussedScenario";
 
 export default function (state: State, fn: (a: Character) => Character): State {

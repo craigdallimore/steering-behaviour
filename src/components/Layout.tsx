@@ -1,15 +1,15 @@
 import { useImmerReducer } from "use-immer";
 import { enableMapSet } from "immer";
-import useRAF from "../hooks/useRAF.js";
+import useRAF from "../hooks/useRAF";
 import React from "react";
-import ScenarioSidebar from "./ScenarioSidebar.js";
-import Canvas from "./Canvas.js";
-import { reducer } from "@domain/reducer.js";
-import { initialState } from "@domain/initialState.js";
-import DispatchContext from "./DispatchContext.js";
-import StateContext from "./StateContext.js";
+import ScenarioSidebar from "./ScenarioSidebar";
+import Canvas from "./Canvas";
+import { reducer } from "@domain/reducer";
+import { initialState } from "@domain/initialState";
+import DispatchContext from "./DispatchContext";
+import StateContext from "./StateContext";
 import "../css/main.css";
-import CharacterSidebar from "./CharacterSidebar.js";
+import CharacterSidebar from "./CharacterSidebar";
 
 enableMapSet(); // immer can understand Map and Set
 

@@ -1,5 +1,5 @@
 import React from "react";
-import type { SteeringBehaviourName } from "@domain/types.js";
+import type { SteeringBehaviourName } from "@domain/types";
 
 type Props = {
   onSelectBehaviour: (name: SteeringBehaviourName) => void;

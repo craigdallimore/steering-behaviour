@@ -1,10 +1,10 @@
 import React from "react";
-import DispatchContext from "@components/DispatchContext.js";
-import StateContext from "@components/StateContext.js";
-import Behaviours from "./Behaviours.js";
-import NumericField from "./NumericField.js";
-import getFocussedCharacter from "@lib/getFocussedCharacter.js";
-import type { Behaviour } from "@domain/types.js";
+import DispatchContext from "@components/DispatchContext";
+import StateContext from "@components/StateContext";
+import Behaviours from "./Behaviours";
+import NumericField from "./NumericField";
+import getFocussedCharacter from "@lib/getFocussedCharacter";
+import type { Behaviour } from "@domain/types";
 
 const getClassname = (behaviour: Behaviour): string => {
   return "targetId" in behaviour ? "has-target" : "";

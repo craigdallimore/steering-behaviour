@@ -1,6 +1,6 @@
-import updateKinematic from "@lib/updateKinematic.js";
+import updateKinematic from "@lib/updateKinematic";
 import getCharacter from "@lib/getCharacter";
-import { Character, CharacterMap, PathMap, ShapeMap } from "@domain/types.js";
+import { Character, CharacterMap, PathMap, ShapeMap } from "@domain/types";
 export default function applyBehaviour(
   char: Character,
   time: number,

@@ -15,7 +15,7 @@ import {
   Seek,
   Separation,
   Wander,
-} from "@steering/index.js";
+} from "@steering/index";
 import Character from "./character";
 
 export type Behaviour =

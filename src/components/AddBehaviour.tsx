@@ -1,6 +1,6 @@
 import React from "react";
-import { SteeringBehaviourName, Behaviour } from "@domain/types.js";
-import SelectBehaviour from "@components/SelectBehaviour.js";
+import { SteeringBehaviourName, Behaviour } from "@domain/types";
+import SelectBehaviour from "@components/SelectBehaviour";
 import {
   Align,
   Arrive,
@@ -18,7 +18,7 @@ import {
   Seek,
   Separation,
   Wander,
-} from "@steering/index.js";
+} from "@steering/index";
 
 const getDefaultBehaviour = (name: SteeringBehaviourName): Behaviour => {
   switch (name) {

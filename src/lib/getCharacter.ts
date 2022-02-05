@@ -1,4 +1,4 @@
-import { Character, CharacterId, CharacterMap } from "@domain/types.js";
+import { Character, CharacterId, CharacterMap } from "@domain/types";
 
 export default function (
   id: CharacterId | null,

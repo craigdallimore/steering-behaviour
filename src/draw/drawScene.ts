@@ -1,13 +1,13 @@
-import drawArrow from "./drawArrow.js";
-import drawGrid from "./drawGrid.js";
-import drawPath from "./drawPath.js";
-import drawSelectionBox from "./drawSelectionBox.js";
-import drawShape from "./drawShape.js";
+import drawArrow from "./drawArrow";
+import drawGrid from "./drawGrid";
+import drawPath from "./drawPath";
+import drawSelectionBox from "./drawSelectionBox";
+import drawShape from "./drawShape";
 import drawCircle from "./drawCircle";
 
-import type { State, Character, Path, Shape } from "@domain/types.js";
-import getFocussedCharacter from "@lib/getFocussedCharacter.js";
-import getFocussedScenario from "@lib/getFocussedScenario.js";
+import type { State, Character, Path, Shape } from "@domain/types";
+import getFocussedCharacter from "@lib/getFocussedCharacter";
+import getFocussedScenario from "@lib/getFocussedScenario";
 
 export default function drawScene(
   ctx: CanvasRenderingContext2D,

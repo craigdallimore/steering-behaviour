@@ -1,13 +1,12 @@
-import { initialState } from "@domain/initialState.js";
+import { initialState } from "@domain/initialState";
 import {
   CharacterId,
   State,
   Behaviour,
   Vector,
-  Scenario,
   ScenarioId,
-} from "@domain/types.js";
-import { distance } from "@lib/vector.js";
+} from "@domain/types";
+import { distance } from "@lib/vector";
 import updateFocussedCharacter from "@lib/updateFocussedCharacter";
 import applyBehaviour from "@lib/applyBehaviour";
 import getFocussedScenario from "@lib/getFocussedScenario";

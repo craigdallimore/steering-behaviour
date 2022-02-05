@@ -1,5 +1,5 @@
 import React from "react";
-import DispatchContext from "@components/DispatchContext.js";
+import DispatchContext from "@components/DispatchContext";
 import None from "@steering/none";
 
 const RemoveBehaviour = () => {
