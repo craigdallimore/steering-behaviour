@@ -9,6 +9,7 @@ export default class Wander extends AbstractBehaviour {
   wanderRadius: number;
   maxAcceleration: number;
   face: Face;
+  debugPosition: Vector;
   constructor(
     wanderOffset?: number,
     wanderRadius?: number,
@@ -18,13 +19,16 @@ export default class Wander extends AbstractBehaviour {
     this.maxAcceleration = maxAcceleration || 25;
     this.wanderOffset = wanderOffset || 50;
     this.wanderRadius = wanderRadius || 20;
+    this.debugPosition = [0, 0];
+
     this.face = new Face("");
   }
   calculate(kinematic: Kinematic): Steering {
-    const wanderPosition: Vector = add(
-      kinematic.position,
-      multiply(radiansToVector(kinematic.orientation), this.wanderOffset)
+    const offset = multiply(
+      radiansToVector(kinematic.orientation),
+      this.wanderOffset
     );
+    const wanderPosition: Vector = add(kinematic.position, offset);
 
     const wanderOrientation = Math.random() * 360;
 
@@ -32,6 +36,8 @@ export default class Wander extends AbstractBehaviour {
       wanderPosition,
       multiply(degreesToVector(wanderOrientation), this.wanderRadius * 2)
     );
+
+    this.debugPosition = nextTargetPosition;
 
     const { angular } = this.face.calculate(kinematic, nextTargetPosition);
 

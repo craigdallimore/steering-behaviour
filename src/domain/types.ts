@@ -80,6 +80,7 @@ export type State = {
   ui: {
     actionFeedbackCount: number;
     canvasDimensions: Vector;
+    isDebugMode: boolean;
     isPaused: boolean;
     isSettingTarget: boolean;
     focussedCharacterId: null | CharacterId;

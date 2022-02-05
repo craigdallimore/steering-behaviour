@@ -8,6 +8,7 @@ import drawCircle from "./drawCircle";
 import type { State, Character, Path, Shape } from "@domain/types";
 import getFocussedCharacter from "@lib/getFocussedCharacter";
 import getFocussedScenario from "@lib/getFocussedScenario";
+import drawVector from "./drawVector";
 
 export default function drawScene(
   ctx: CanvasRenderingContext2D,
@@ -53,6 +54,14 @@ export default function drawScene(
 
   scenario.characters.forEach((cha: Character) => {
     drawArrow(ctx, cha.kinematic);
+    if (state.ui.isDebugMode && "debugPosition" in cha.behaviour) {
+      drawVector(
+        ctx,
+        cha.kinematic.position,
+        cha.behaviour.debugPosition,
+        "red"
+      );
+    }
   });
 
   scenario.paths.forEach((p: Path) => {
