@@ -1,6 +1,7 @@
 ## References
 
 https://github.com/libgdx/gdx-ai/wiki/Steering-Behaviors
+https://andrewfray.wordpress.com/2013/03/26/context-behaviours-know-how-to-share/
 
 Closest point algorithms for various path geometries:
 Schneider and Eberly [2003].
