@@ -37,6 +37,7 @@
     "use-immer": "^0.6.0"
   },
   "scripts": {
+    "clean": "tsc --build --clean && jest --clearCache",
     "test": "jest",
     "lint": "eslint . --ext .ts",
     "build": "rollup -c",
