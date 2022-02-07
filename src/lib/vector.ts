@@ -35,7 +35,7 @@ export function degreesToVector(angle: number): Vector {
 }
 
 export function radiansToVector(rad: number): Vector {
-  return [Math.sin(rad), Math.cos(rad)];
+  return [Math.cos(rad), Math.sin(rad)];
 }
 
 export function normalise(v: Vector): Vector {

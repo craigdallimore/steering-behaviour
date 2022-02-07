@@ -13,6 +13,28 @@ Schneider and Eberly [2003].
 `[0, -20]` To North
 `[0, 20]` To South
 
+## Unit circle, degrees
+
+>         90
+>         |
+>         |
+> 180 ----+---- 0
+>         |
+>         |
+>        270
+>
+>
+
+## Unit circle, radians
+
+>        PI/2
+>         |
+>         |
+> PI -----+---- 0, 2PI
+>         |
+>         |
+>       3PI/2
+
 ## Orientations
 
 Positive increments are clockwise

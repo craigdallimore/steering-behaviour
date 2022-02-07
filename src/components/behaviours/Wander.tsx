@@ -15,7 +15,7 @@ const WanderControls = (props: Props) => {
     <>
       <NumericField
         id="max-acceleration"
-        label="Max. angular acceleration"
+        label="Max. acceleration"
         value={behaviour.maxAcceleration}
         onChange={(maxAcceleration) => {
           props.onBehaviourChange(
