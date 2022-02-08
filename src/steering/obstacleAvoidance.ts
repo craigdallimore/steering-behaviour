@@ -1,7 +1,15 @@
 import { AbstractBehaviour } from "./abstractBehaviour";
 import getCollision from "@lib/getCollision";
-import { add, multiply, vectorToRadians, radiansToVector } from "@lib/vector";
+import {
+  add,
+  length,
+  multiply,
+  radiansToVector,
+  subtract,
+  vectorToRadians,
+} from "@lib/vector";
 import type {
+  Collision,
   Debug,
   Edge,
   Kinematic,
@@ -54,16 +62,34 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
   }
   calculate(kinematic: Kinematic, shape: Shape): Steering {
     const w0 = getWhiskerRay(kinematic, 0, this.lookaheadMain);
-    const w1 = getWhiskerRay(kinematic, 0.2, this.lookaheadSide);
-    const w2 = getWhiskerRay(kinematic, -0.2, this.lookaheadSide);
+    const w1 = getWhiskerRay(kinematic, 0.1, this.lookaheadSide);
+    const w2 = getWhiskerRay(kinematic, -0.1, this.lookaheadSide);
 
-    const collision =
-      getCollision(w1, shape) ||
-      getCollision(w2, shape) ||
-      getCollision(w0, shape);
+    // find the nearest collision to the kinematic
+    const collision: Collision | null = [w0, w1, w2].reduce(
+      (acc: Collision | null, ray) => {
+        const collision = getCollision(ray, shape);
+        if (!acc) {
+          return collision;
+        }
+        if (!collision) {
+          return acc;
+        }
 
-    this.debug.vectors = collision ? [multiply(collision.normal, 15)] : [];
-    this.debug.points = collision ? [collision.position] : [];
+        const distanceFromCollision = length(
+          subtract(kinematic.position, collision.position)
+        );
+        const distanceFromAcc = length(
+          subtract(kinematic.position, acc.position)
+        );
+
+        return distanceFromCollision < distanceFromAcc ? collision : acc;
+      },
+      null
+    );
+
+    // Show the whiskers
+    this.debug.edges = [w0, w1, w2];
 
     // If have no collision, do nothing
     if (!collision) {
@@ -72,6 +98,11 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
         linear: [0, 0],
       };
     }
+
+    // Show collision points
+    this.debug.points = [collision.position];
+
+    this.debug.vectors = [multiply(collision.normal, 25)];
 
     // Otherwise create a target
     const targetPosition = add(

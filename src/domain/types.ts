@@ -81,6 +81,11 @@ export type Intersection = {
   point: Vector;
 };
 
+export type Collision = {
+  position: Vector;
+  normal: Vector;
+};
+
 export type State = {
   ui: {
     actionFeedbackCount: number;
