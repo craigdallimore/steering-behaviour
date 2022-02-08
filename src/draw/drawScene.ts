@@ -53,7 +53,7 @@ export default function drawScene(
     drawArrow(ctx, cha.kinematic);
     if (state.ui.isDebugMode && "debug" in cha.behaviour) {
       cha.behaviour.debug.points.forEach((point) => {
-        drawCircle(ctx, point, 5, "red");
+        drawCircle(ctx, point, 2, "cyan");
       });
 
       cha.behaviour.debug.vectors.forEach((vector) => {

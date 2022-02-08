@@ -47,8 +47,8 @@ function getCollision(seg: Edge, shape: Shape): Collision | null {
     // We want the normal on the same side as the kinematic
     const closestNormal =
       distance(normals[0], seg[0]) < distance(normals[1], seg[0])
-        ? normals[0]
-        : normals[1];
+        ? normals[1]
+        : normals[0];
 
     // Let's define the normal as a vector relative to the intersection point,
     // with a distance of 1, on the kinematic side of the intersection.
@@ -87,11 +87,11 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
     super();
     // Holds the minimum distance to a wall (i.e., how far to avoid collision)
     // should be greater than the radius of the character
-    this.avoidDistance = avoidDistance || 20;
+    this.avoidDistance = avoidDistance || 50;
     // Holds the distance to look ahead for a collision
     // (i.e., the length of the collision ray)
     this.lookaheadMain = lookaheadMain || 150;
-    this.lookaheadSide = lookaheadSide || 75;
+    this.lookaheadSide = lookaheadSide || 85;
 
     this.shapeId = shapeId;
     this.seek = new Seek("");
@@ -112,7 +112,7 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
       getCollision(w2, shape) ||
       getCollision(w0, shape);
 
-    this.debug.edges = [w0, w1, w2];
+    this.debug.vectors = collision ? [multiply(collision.normal, 15)] : [];
     this.debug.points = collision ? [collision.position] : [];
 
     // If have no collision, do nothing

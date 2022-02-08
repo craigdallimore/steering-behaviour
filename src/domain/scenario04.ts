@@ -12,9 +12,9 @@ export default function initScenario(): Scenario {
         new Character(
           {
             maxSpeed: 45,
-            position: [400, 280],
-            velocity: [0, 25],
-            orientation: 1.5,
+            position: [400, 580],
+            velocity: [0, -15],
+            orientation: -1.5,
             rotation: 0,
           },
           new steering.ObstacleAvoidance("s1")
