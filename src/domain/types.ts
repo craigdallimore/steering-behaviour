@@ -86,7 +86,8 @@ export type State = {
     focussedCharacterId: null | CharacterId;
     focussedScenarioId: null | ScenarioId;
   };
-  scenarioMap: ScenarioMap;
+  scenarioIds: Array<ScenarioId>;
+  scenario: Scenario | null;
 };
 
 export type ScenarioId = string;

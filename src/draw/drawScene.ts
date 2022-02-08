@@ -7,7 +7,6 @@ import drawCircle from "./drawCircle";
 
 import type { State, Character, Path, Shape } from "@domain/types";
 import getFocussedCharacter from "@lib/getFocussedCharacter";
-import getFocussedScenario from "@lib/getFocussedScenario";
 import drawVector from "./drawVector";
 
 export default function drawScene(
@@ -22,13 +21,11 @@ export default function drawScene(
   );
   drawGrid(ctx, state.ui.canvasDimensions);
 
-  const scenario = getFocussedScenario(state);
-
-  if (!scenario) {
+  if (!state.scenario) {
     return;
   }
 
-  scenario.shapes.forEach((s: Shape) => {
+  state.scenario.shapes.forEach((s: Shape) => {
     drawShape(ctx, s, "rgba(74, 20, 140, 1)", "rgba(237, 231, 246, 1)");
   });
 
@@ -39,7 +36,7 @@ export default function drawScene(
     focussedCharacter &&
     "targetId" in focussedCharacter.behaviour
   ) {
-    const target = scenario.characters.get(
+    const target = state.scenario.characters.get(
       focussedCharacter.behaviour.targetId
     );
     if (target) {
@@ -52,7 +49,7 @@ export default function drawScene(
     }
   }
 
-  scenario.characters.forEach((cha: Character) => {
+  state.scenario.characters.forEach((cha: Character) => {
     drawArrow(ctx, cha.kinematic);
     if (state.ui.isDebugMode && "debugPosition" in cha.behaviour) {
       drawVector(
@@ -64,7 +61,7 @@ export default function drawScene(
     }
   });
 
-  scenario.paths.forEach((p: Path) => {
+  state.scenario.paths.forEach((p: Path) => {
     drawPath(ctx, p, "rgba(178, 223, 219, 1)");
   });
 

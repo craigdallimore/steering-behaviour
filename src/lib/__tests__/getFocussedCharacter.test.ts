@@ -1,5 +1,4 @@
 import { initialState } from "@domain/initialState";
-import getFocussedScenario from "@lib/getFocussedScenario";
 import getFocussedCharacter from "../getFocussedCharacter";
 
 describe("getCharacter", () => {
@@ -15,8 +14,9 @@ describe("getCharacter", () => {
   });
   it("returns the character, given it can be looked up by id", () => {
     const state = { ...initialState };
-    const scenario = getFocussedScenario(state);
-    state.ui.focussedCharacterId = scenario?.characters.keys().next().value;
+    state.ui.focussedCharacterId = state.scenario?.characters
+      .keys()
+      .next().value;
     expect(getFocussedCharacter(state)).not.toBe(null);
   });
 });

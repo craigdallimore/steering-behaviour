@@ -1,31 +1,13 @@
 import React from "react";
 import { render, userEvent } from "@test-utils";
 import ScenarioSidebar from "../ScenarioSidebar";
-import { initialState } from "@domain/initialState";
+import { getScenario, initialState } from "@domain/initialState";
 
 describe("Scenario sidebar", () => {
-  const getState = () => {
-    const scenario1 = {
-      name: "Scenario 1",
-      description: "Scenario 1 description",
-      characters: new Map(),
-      shapes: new Map(),
-      paths: new Map(),
-    };
-    const scenario2 = {
-      name: "Scenario 2",
-      description: "Scenario 2 description",
-      characters: new Map(),
-      shapes: new Map(),
-      paths: new Map(),
-    };
-
+  const getState = (changes = {}) => {
     return {
       ...initialState,
-      scenarioMap: new Map([
-        ["SC_01", scenario1],
-        ["SC_02", scenario2],
-      ]),
+      ...changes,
     };
   };
 
@@ -67,32 +49,39 @@ describe("Scenario sidebar", () => {
     });
     const select = getByDataId("pick-scenario");
 
-    for (let key in state.scenarioMap.keys()) {
-      const option = select.querySelector(`[value="${key}"]`);
+    state.scenarioIds.forEach((id) => {
+      const option = select.querySelector(`[value="${id}"]`);
       expect(option).not.toBe(null);
-      expect(option?.textContent).toBe(state.scenarioMap.get(key)?.name);
-    }
+      expect(option?.textContent).toBe(getScenario(id)?.name);
+    });
   });
 
   it("shows a description of the selected scenario", () => {
-    const state = getState();
-    state.ui.focussedScenarioId = "SC_02";
+    const state = getState({
+      ui: {
+        ...initialState.ui,
+        focussedScenarioId: "SC_02",
+      },
+      scenario: getScenario("SC_02"),
+    });
     const { getByDataId } = render(<ScenarioSidebar />, {
       state,
     });
     const description = getByDataId("scenario-description");
 
-    expect(description?.textContent).toBe(
-      state.scenarioMap.get("SC_02")?.description
-    );
+    expect(description?.textContent).toBe(getScenario("SC_02")?.description);
   });
 
   test(`given the scenario is paused
 - the play/pause button will indicate that clicking it will unpause
 - clicking the play/pause button will unpause the scenario`, () => {
     const dispatch = jest.fn();
-    const state = getState();
-    state.ui.isPaused = true;
+    const state = getState({
+      ui: {
+        ...initialState.ui,
+        isPaused: true,
+      },
+    });
     const { getByDataId } = render(<ScenarioSidebar />, {
       state,
       dispatch,
@@ -108,8 +97,12 @@ describe("Scenario sidebar", () => {
 - the play/pause button will indicate that clicking it will pause
 - clicking the play/pause button will pause the scenario`, () => {
     const dispatch = jest.fn();
-    const state = getState();
-    state.ui.isPaused = false;
+    const state = getState({
+      ui: {
+        ...initialState.ui,
+        isPaused: false,
+      },
+    });
     const { getByDataId } = render(<ScenarioSidebar />, {
       state,
       dispatch,

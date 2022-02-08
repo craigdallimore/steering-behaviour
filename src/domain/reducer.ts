@@ -1,4 +1,5 @@
-import { initialState } from "@domain/initialState";
+import { getScenario, initialState } from "@domain/initialState";
+import { produce } from "immer";
 import {
   CharacterId,
   State,
@@ -9,7 +10,6 @@ import {
 import { distance } from "@lib/vector";
 import updateFocussedCharacter from "@lib/updateFocussedCharacter";
 import applyBehaviour from "@lib/applyBehaviour";
-import getFocussedScenario from "@lib/getFocussedScenario";
 
 // TYPES ----------------------------------------------------------------------
 
@@ -83,15 +83,17 @@ export type Action =
 
 export function reducer(state: State, action: Action): State {
   switch (action.type) {
-    case "RESET_BUTTON_CLICKED":
+    case "RESET_BUTTON_CLICKED": {
       const canvasDimensions = state.ui.canvasDimensions;
-      return {
-        ...initialState,
-        ui: {
-          ...initialState.ui,
-          canvasDimensions,
-        },
-      };
+
+      return produce(initialState, (draft) => {
+        draft.ui.canvasDimensions = canvasDimensions;
+        draft.scenario = draft.ui.focussedScenarioId
+          ? getScenario(draft.ui.focussedScenarioId)
+          : null;
+        return draft;
+      });
+    }
     case "PLAY_BUTTON_CLICKED":
       state.ui.isPaused = !state.ui.isPaused;
       return state;
@@ -99,19 +101,20 @@ export function reducer(state: State, action: Action): State {
       state.ui.canvasDimensions = action.payload;
       return state;
     case "CANVAS_CLICKED": {
-      const scenario = getFocussedScenario(state);
-
-      if (!scenario) {
+      if (!state.scenario) {
         return state;
       }
 
       const clickPosition: Vector = action.payload;
 
-      const distanceMap = [...scenario.characters].reduce((m, [id, char]) => {
-        const d = distance(clickPosition, char.kinematic.position);
-        m.set(id, d);
-        return m;
-      }, new Map());
+      const distanceMap = [...state.scenario.characters].reduce(
+        (m, [id, char]) => {
+          const d = distance(clickPosition, char.kinematic.position);
+          m.set(id, d);
+          return m;
+        },
+        new Map()
+      );
 
       const closestToClick = [...distanceMap].reduce(
         (acc, entry) => {
@@ -153,7 +156,8 @@ export function reducer(state: State, action: Action): State {
 
       state.ui.focussedCharacterId = clickedCharacterId;
 
-      const focussedCharacter = scenario.characters.get(clickedCharacterId);
+      const focussedCharacter =
+        state.scenario.characters.get(clickedCharacterId);
 
       // The newly focussed character may be able to have a target assigned.
       state.ui.isSettingTarget = !!(
@@ -162,7 +166,7 @@ export function reducer(state: State, action: Action): State {
       return state;
     }
 
-    case "BEHAVIOUR_CHANGED":
+    case "BEHAVIOUR_CHANGED": {
       const nextState = updateFocussedCharacter(state, (char) => {
         char.behaviour = action.payload;
         return char;
@@ -173,9 +177,11 @@ export function reducer(state: State, action: Action): State {
       }
 
       return nextState;
+    }
 
     case "SCENARIO_CHANGED":
       state.ui.focussedScenarioId = action.payload;
+      state.scenario = getScenario(action.payload);
       return state;
 
     case "ROTATION_CHANGED":
@@ -240,11 +246,11 @@ export function reducer(state: State, action: Action): State {
       }
       const time = action.payload;
 
-      const scenario = getFocussedScenario(state);
-
-      if (!scenario) {
+      if (!state.scenario) {
         return state;
       }
+
+      const scenario = state.scenario;
 
       if (state.ui.actionFeedbackCount > -1) {
         state.ui.actionFeedbackCount--;

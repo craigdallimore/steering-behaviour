@@ -1,14 +1,14 @@
 import React from "react";
 import DispatchContext from "@components/DispatchContext";
 import StateContext from "@components/StateContext";
-import getFocussedScenario from "@lib/getFocussedScenario";
 import { Scenario, ScenarioId } from "@domain/types";
+import { getScenario } from "@domain/initialState";
 
 const ScenarioSidebar = () => {
   const dispatch = React.useContext(DispatchContext);
   const state = React.useContext(StateContext);
 
-  const focussedScenario = getFocussedScenario(state);
+  const focussedScenario = state.scenario;
 
   return (
     <aside className="scenario-sidebar" aria-label="Scenario sidebar">
@@ -25,13 +25,11 @@ const ScenarioSidebar = () => {
             });
           }}
         >
-          {[...state.scenarioMap].map(
-            ([id, scenario]: [id: ScenarioId, scenario: Scenario]) => (
-              <option key={id} value={id}>
-                {scenario.name}
-              </option>
-            )
-          )}
+          {...state.scenarioIds.map((id: ScenarioId) => (
+            <option key={id} value={id}>
+              {getScenario(id)?.name}
+            </option>
+          ))}
         </select>
         <span data-id="scenario-description">
           {focussedScenario?.description}
