@@ -2,7 +2,6 @@
 
 ## Bugs
 
-- [ ] Reset doesn't really work?
 - [ ] Reset button on scenario picker should not be present until the scenario has been started
 - [ ] COLLISION_AVOIDANCE Not really working well?
 - [ ] Check Obstacle Avoidance (recently changed radiansToVector)

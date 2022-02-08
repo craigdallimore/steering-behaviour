@@ -1,5 +1,4 @@
 import type { Scenario, ScenarioId, State } from "@domain/types";
-import { freeze } from "immer";
 import init01 from "./scenario01";
 import init02 from "./scenario02";
 import init03 from "./scenario03";
@@ -33,8 +32,3 @@ export const initialState: State = {
   scenarioIds: ["SC_01", "SC_02", "SC_03"],
   scenario: getScenario("SC_03"),
 };
-
-export const initialFrozenUIState: State["ui"] = freeze(
-  { ...initialState.ui },
-  true
-);
