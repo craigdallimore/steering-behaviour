@@ -1,13 +1,6 @@
 import { AbstractBehaviour } from "./abstractBehaviour";
-import {
-  add,
-  distance,
-  multiply,
-  subtract,
-  normalise,
-  vectorToRadians,
-  radiansToVector,
-} from "@lib/vector";
+import getCollision from "@lib/getCollision";
+import { add, multiply, vectorToRadians, radiansToVector } from "@lib/vector";
 import type {
   Debug,
   Edge,
@@ -15,52 +8,9 @@ import type {
   Shape,
   ShapeId,
   Steering,
-  Vector,
 } from "@domain/types";
 
-import { findFirstIntersection } from "@lib/shape";
-
 import Seek from "./seek";
-
-type Collision = {
-  position: Vector;
-  normal: Vector;
-};
-
-function getNormals([a, b]: Edge): [Vector, Vector] {
-  const [dx, dy] = subtract(a, b);
-  return [
-    [-dy, dx],
-    [dy, -dx],
-  ];
-}
-
-function getCollision(seg: Edge, shape: Shape): Collision | null {
-  // The line extending from the kinematic
-
-  const intersection = findFirstIntersection(seg, shape);
-
-  if (intersection) {
-    // Here we get the normals for the intersected edge
-    const normals = getNormals(intersection.edge);
-
-    // We want the normal on the same side as the kinematic
-    const closestNormal =
-      distance(normals[0], seg[0]) < distance(normals[1], seg[0])
-        ? normals[1]
-        : normals[0];
-
-    // Let's define the normal as a vector relative to the intersection point,
-    // with a distance of 1, on the kinematic side of the intersection.
-
-    return {
-      position: intersection.point,
-      normal: normalise(closestNormal),
-    };
-  }
-
-  return null;
-}
 
 function getWhiskerRay(k: Kinematic, radians: number, magnitude: number): Edge {
   const bearing = vectorToRadians(k.velocity) - radians;
