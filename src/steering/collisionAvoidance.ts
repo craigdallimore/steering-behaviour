@@ -13,15 +13,17 @@ type Final = {
 
 export default class CollisionAvoidance extends AbstractBehaviour {
   readonly name = "COLLISION_AVOIDANCE";
+  debugPosition: Vector;
   maxAcceleration: number;
   radius: number;
   constructor(maxAcceleration?: number, radius?: number) {
     super();
     // Holds the maximum acceleration
-    this.maxAcceleration = maxAcceleration || 5;
+    this.maxAcceleration = maxAcceleration || 45;
     // Holds the collision radius of a character (we assume all characters have
     // the same radius here)
-    this.radius = radius || 7.5;
+    this.radius = radius || 20;
+    this.debugPosition = [0, 0];
   }
   calculate(kinematic: Kinematic, targets: Array<Kinematic>): Steering {
     const init: Final = {
@@ -78,6 +80,8 @@ export default class CollisionAvoidance extends AbstractBehaviour {
             final.firstRelativePos,
             multiply(final.firstRelativeVel, final.shortestTime)
           );
+
+    this.debugPosition = relativePos;
 
     // Avoid the target
     return {
