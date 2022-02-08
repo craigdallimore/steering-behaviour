@@ -36,6 +36,11 @@ export type Behaviour =
   | Separation
   | Wander;
 
+export type Debug = {
+  edges: Array<Edge>;
+  points: Array<Vector>;
+  vectors: Array<Vector>;
+};
 export type SteeringBehaviourName = Behaviour["name"];
 
 export type Vector = [x: number, z: number];

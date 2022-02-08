@@ -2,6 +2,7 @@ import type { Scenario, ScenarioId, State } from "@domain/types";
 import init01 from "./scenario01";
 import init02 from "./scenario02";
 import init03 from "./scenario03";
+import init04 from "./scenario04";
 
 // The scenarios use stateful class instances to represent various items.
 // It is not straightforward to make these immutable; for simplicities sake
@@ -14,6 +15,8 @@ export function getScenario(id: ScenarioId): Scenario | null {
       return init02();
     case "SC_03":
       return init03();
+    case "SC_04":
+      return init04();
     default:
       return null;
   }
@@ -27,8 +30,8 @@ export const initialState: State = {
     isPaused: true,
     isSettingTarget: false,
     focussedCharacterId: "_1",
-    focussedScenarioId: "SC_03",
+    focussedScenarioId: "SC_04",
   },
-  scenarioIds: ["SC_01", "SC_02", "SC_03"],
-  scenario: getScenario("SC_03"),
+  scenarioIds: ["SC_01", "SC_02", "SC_03", "SC_04"],
+  scenario: getScenario("SC_04"),
 };

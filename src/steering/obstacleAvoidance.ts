@@ -9,6 +9,7 @@ import {
   radiansToVector,
 } from "@lib/vector";
 import type {
+  Debug,
   Edge,
   Kinematic,
   Shape,
@@ -76,6 +77,7 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
   avoidDistance: number;
   lookaheadMain: number;
   lookaheadSide: number;
+  debug: Debug;
   constructor(
     shapeId: ShapeId,
     avoidDistance?: number,
@@ -93,6 +95,12 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
 
     this.shapeId = shapeId;
     this.seek = new Seek("");
+
+    this.debug = {
+      edges: [],
+      points: [],
+      vectors: [],
+    };
   }
   calculate(kinematic: Kinematic, shape: Shape): Steering {
     const w0 = getWhiskerRay(kinematic, 0, this.lookaheadMain);
@@ -103,6 +111,9 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
       getCollision(w1, shape) ||
       getCollision(w2, shape) ||
       getCollision(w0, shape);
+
+    this.debug.edges = [w0, w1, w2];
+    this.debug.points = collision ? [collision.position] : [];
 
     // If have no collision, do nothing
     if (!collision) {

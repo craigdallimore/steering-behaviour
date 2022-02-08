@@ -51,13 +51,22 @@ export default function drawScene(
 
   state.scenario.characters.forEach((cha: Character) => {
     drawArrow(ctx, cha.kinematic);
-    if (state.ui.isDebugMode && "debugPosition" in cha.behaviour) {
-      drawVector(
-        ctx,
-        cha.kinematic.position,
-        cha.behaviour.debugPosition,
-        "red"
-      );
+    if (state.ui.isDebugMode && "debug" in cha.behaviour) {
+      cha.behaviour.debug.points.forEach((point) => {
+        drawCircle(ctx, point, 5, "red");
+      });
+
+      cha.behaviour.debug.vectors.forEach((vector) => {
+        drawVector(ctx, cha.kinematic.position, vector, "red");
+      });
+
+      cha.behaviour.debug.edges.forEach((edge) => {
+        drawPath(
+          ctx,
+          { position: cha.kinematic.position, points: edge },
+          "silver"
+        );
+      });
     }
   });
 

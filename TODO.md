@@ -5,6 +5,7 @@
 - [ ] Reset button on scenario picker should not be present until the scenario has been started
 - [ ] COLLISION_AVOIDANCE Not really working well?
 - [ ] Check Obstacle Avoidance (recently changed radiansToVector)
+- [ ] Altering steering doesn't work very well.
 
 ## Test debt
 
@@ -25,8 +26,6 @@
 - [ ] A character should be able to have multiple blendable behaviours
 - [ ] Move helpers out from class files
 - [ ] Reducer can be more imperative
-- [ ] Find a way to have a debug variant for each view
-- [ ] Scenario picker. It would be neat to select a scenario to play, and have the app restart with fresh state.
 - [ ] Make it possible to dynamically add characters to a scenario
 - [ ] Make it possible to draw paths
 - [ ] Path should be closable?

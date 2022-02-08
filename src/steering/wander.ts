@@ -1,6 +1,6 @@
 import { AbstractBehaviour } from "./abstractBehaviour";
 import { multiply, radiansToVector, add } from "@lib/vector";
-import type { Kinematic, Vector, Steering } from "@domain/types";
+import type { Kinematic, Vector, Steering, Debug } from "@domain/types";
 import LookWhereYouAreGoing from "./lookWhereYouAreGoing";
 
 export default class Wander extends AbstractBehaviour {
@@ -11,7 +11,7 @@ export default class Wander extends AbstractBehaviour {
   wanderOrientation: number;
   maxAcceleration: number;
   lookWhereYouAreGoing: LookWhereYouAreGoing;
-  debugPosition: Vector;
+  debug: Debug;
   constructor(
     wanderOffset?: number,
     wanderRadius?: number,
@@ -29,7 +29,11 @@ export default class Wander extends AbstractBehaviour {
 
     this.wanderOrientation = 0;
 
-    this.debugPosition = [0, 0];
+    this.debug = {
+      edges: [],
+      points: [],
+      vectors: [],
+    };
 
     this.lookWhereYouAreGoing = new LookWhereYouAreGoing();
   }
@@ -55,7 +59,7 @@ export default class Wander extends AbstractBehaviour {
     const { angular } = this.lookWhereYouAreGoing.calculate(kinematic);
 
     const linear = multiply(nextTargetPosition, this.maxAcceleration);
-    this.debugPosition = nextTargetPosition;
+    this.debug.vectors = [nextTargetPosition];
 
     return {
       angular,
