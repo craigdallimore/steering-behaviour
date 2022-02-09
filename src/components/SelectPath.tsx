@@ -11,19 +11,23 @@ const SelectPath = (props: Props) => {
   const entries = Array.from(props.pathMap);
 
   return (
-    <select
-      id="behaviour"
-      value={props.pathId}
-      onChange={(e) => {
-        props.onSelectPath(e.target.value as PathId);
-      }}
-    >
-      {entries.map(([pathId, path]) => (
-        <option key={pathId} value={pathId}>
-          {path.label}
-        </option>
-      ))}
-    </select>
+    <>
+      <label htmlFor="select-path">Select a path</label>
+      <select
+        id="select-path"
+        value={props.pathId}
+        onChange={(e) => {
+          props.onSelectPath(e.target.value as PathId);
+        }}
+      >
+        <option>No path selected</option>
+        {entries.map(([pathId, path]) => (
+          <option key={pathId} value={pathId}>
+            {path.label}
+          </option>
+        ))}
+      </select>
+    </>
   );
 };
 

@@ -1,7 +1,9 @@
 import * as steering from "@steering/index";
 import { Behaviour, Kinematic } from "./types";
+import { immerable } from "immer";
 
 export default class Character {
+  [immerable] = true;
   constructor(kinematic?: Kinematic, behaviour?: Behaviour) {
     this.kinematic = kinematic || {
       maxSpeed: 45,

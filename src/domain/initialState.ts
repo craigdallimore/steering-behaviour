@@ -22,6 +22,8 @@ export function getScenario(id: ScenarioId): Scenario | null {
   }
 }
 
+const focussedScenarioId = "SC_01";
+
 export const initialState: State = {
   ui: {
     actionFeedbackCount: -1,
@@ -30,8 +32,8 @@ export const initialState: State = {
     isPaused: true,
     isSettingTarget: false,
     focussedCharacterId: "_1",
-    focussedScenarioId: "SC_04",
+    focussedScenarioId,
   },
   scenarioIds: ["SC_01", "SC_02", "SC_03", "SC_04"],
-  scenario: getScenario("SC_04"),
+  scenario: getScenario(focussedScenarioId),
 };

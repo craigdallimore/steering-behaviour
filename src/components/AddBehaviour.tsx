@@ -1,5 +1,5 @@
-import React from "react";
-import { SteeringBehaviourName, Behaviour } from "@domain/types";
+import React, { useContext } from "react";
+import { SteeringBehaviourName, Behaviour, Scenario } from "@domain/types";
 import SelectBehaviour from "@components/SelectBehaviour";
 import {
   Align,
@@ -19,8 +19,12 @@ import {
   Separation,
   Wander,
 } from "@steering/index";
+import StateContext from "./StateContext";
 
-const getDefaultBehaviour = (name: SteeringBehaviourName): Behaviour => {
+const getDefaultBehaviour = (
+  name: SteeringBehaviourName,
+  scenario: Scenario | null
+): Behaviour => {
   switch (name) {
     case "ALIGN":
       return new Align("");
@@ -34,10 +38,14 @@ const getDefaultBehaviour = (name: SteeringBehaviourName): Behaviour => {
       return new Face("");
     case "FLEE":
       return new Flee("");
-    case "FOLLOW_PATH_CHASE_RABBIT":
-      return new FollowPathChaseRabbit("");
-    case "FOLLOW_PATH_PREDICT":
-      return new FollowPathPredict("");
+    case "FOLLOW_PATH_CHASE_RABBIT": {
+      const firstPath = scenario?.paths.keys().next().value ?? "";
+      return new FollowPathChaseRabbit(firstPath);
+    }
+    case "FOLLOW_PATH_PREDICT": {
+      const firstPath = scenario?.paths.keys().next().value ?? "";
+      return new FollowPathPredict(firstPath);
+    }
     case "LOOK_WHERE_YOU_ARE_GOING":
       return new LookWhereYouAreGoing();
     case "MATCH_VELOCITY":
@@ -63,6 +71,7 @@ type Props = {
 
 const AddBehaviour = (props: Props) => {
   const [isAddingBehaviour, setIsAddingBehaviour] = React.useState(false);
+  const state = useContext(StateContext);
 
   if (isAddingBehaviour) {
     return (
@@ -70,7 +79,9 @@ const AddBehaviour = (props: Props) => {
         <SelectBehaviour
           behaviourName={"NONE"}
           onSelectBehaviour={(nextBehaviourName: SteeringBehaviourName) => {
-            props.onBehaviourChange(getDefaultBehaviour(nextBehaviourName));
+            props.onBehaviourChange(
+              getDefaultBehaviour(nextBehaviourName, state.scenario)
+            );
           }}
         />
         <button

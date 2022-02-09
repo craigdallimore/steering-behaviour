@@ -51,11 +51,11 @@ describe("SelectPath", () => {
       "option"
     ) as NodeListOf<HTMLOptionElement>;
 
-    expect(options.length).toBe(3);
+    expect(options.length).toBe(4); // 3 paths + 1 placeholder
 
-    expect(options[0].textContent).toBe(path1.label);
-    expect(options[1].textContent).toBe(path2.label);
-    expect(options[2].textContent).toBe(path3.label);
+    expect(options[1].textContent).toBe(path1.label);
+    expect(options[2].textContent).toBe(path2.label);
+    expect(options[3].textContent).toBe(path3.label);
   });
 
   test("Selecting a path will call a callback with the pathId", () => {

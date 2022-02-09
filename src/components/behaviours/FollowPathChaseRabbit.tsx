@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import NumericField from "components/NumericField";
 import FollowPathChaseRabbit from "@steering/followPathChaseRabbit";
 import makeUpdatedClone from "@lib/makeUpdatedClone";
+import SelectPath from "@components/SelectPath";
+import StateContext from "@components/StateContext";
 
 type Props = {
   behaviour: FollowPathChaseRabbit;
@@ -10,6 +12,7 @@ type Props = {
 
 const FollowPathChaseRabbitControls = (props: Props) => {
   const { behaviour } = props;
+  const state = useContext(StateContext);
 
   return (
     <>
@@ -22,6 +25,15 @@ const FollowPathChaseRabbitControls = (props: Props) => {
             makeUpdatedClone(behaviour, "pathOffset", pathOffset)
           );
         }}
+      />
+      <SelectPath
+        pathId={behaviour.pathId}
+        onSelectPath={(pathId) => {
+          props.onBehaviourChange(
+            makeUpdatedClone(behaviour, "pathId", pathId)
+          );
+        }}
+        pathMap={state.scenario?.paths ?? new Map()}
       />
     </>
   );
