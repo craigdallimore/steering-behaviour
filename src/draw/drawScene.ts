@@ -63,7 +63,7 @@ export default function drawScene(
       cha.behaviour.debug.edges.forEach((edge) => {
         drawPath(
           ctx,
-          { position: cha.kinematic.position, points: edge },
+          { position: cha.kinematic.position, points: edge, label: "Debug" },
           "silver"
         );
       });

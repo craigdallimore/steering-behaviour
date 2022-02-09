@@ -11,6 +11,7 @@ describe("findClosestPointOnPath", () => {
   it("gives back the target point, given the path has fewer than two points", () => {
     const point: Vector = [0, 0];
     const path: Path = {
+      label: "A",
       position: [0, 0],
       points: [[1, 1]],
     };
@@ -28,6 +29,7 @@ describe("findClosestPointOnPath", () => {
     // 5
     const point: Vector = [3, 0];
     const path: Path = {
+      label: "A",
       position: [0, 0],
       points: [
         [0, 3],
@@ -49,6 +51,7 @@ describe("findClosestPointOnPath", () => {
     // 5
     const point: Vector = [0, 0];
     const path: Path = {
+      label: "A",
       position: [0, 0],
       points: [
         [0, 3],
@@ -70,6 +73,7 @@ describe("findClosestPointOnPath", () => {
     // 5
     const point: Vector = [3, 4];
     const path: Path = {
+      label: "A",
       position: [0, 0],
       points: [
         [0, 3],
@@ -91,6 +95,7 @@ describe("findClosestPointOnPath", () => {
     // 5
     const point: Vector = [3, 2];
     const path: Path = {
+      label: "A",
       position: [0, 0],
       points: [
         [0, 3],
@@ -268,6 +273,7 @@ describe("getPosition", () => {
     // 5
     const param = 3;
     const path: Path = {
+      label: "A",
       position: [0, 0],
       points: [
         [0, 3],
@@ -288,6 +294,7 @@ describe("getPosition", () => {
     // 5
     const param = 0;
     const path: Path = {
+      label: "A",
       position: [0, 0],
       points: [
         [0, 3],
@@ -308,6 +315,7 @@ describe("getPosition", () => {
     // 5
     const param = -10;
     const path: Path = {
+      label: "A",
       position: [0, 0],
       points: [
         [0, 3],
@@ -328,6 +336,7 @@ describe("getPosition", () => {
     // 5
     const param = 5;
     const path: Path = {
+      label: "A",
       position: [0, 0],
       points: [
         [0, 4],
@@ -352,6 +361,7 @@ describe("getParam", () => {
     // 5
     const point: Vector = [3, 0];
     const path: Path = {
+      label: "A",
       position: [3, 0],
       points: [
         [0, 3],
@@ -372,6 +382,7 @@ describe("getParam", () => {
     // 5
     const point: Vector = [0, 0];
     const path: Path = {
+      label: "A",
       position: [0, 0],
       points: [
         [0, 3],
@@ -392,6 +403,7 @@ describe("getParam", () => {
     // 5
     const point: Vector = [3, 4];
     const path: Path = {
+      label: "A",
       position: [0, 0],
       points: [
         [0, 3],
@@ -412,6 +424,7 @@ describe("getParam", () => {
     // 5
     const point: Vector = [3, 2];
     const path: Path = {
+      label: "A",
       position: [0, 0],
       points: [
         [0, 3],

@@ -15,9 +15,9 @@ describe("findFirstIntersection", () => {
       [6, 4],
     ];
     const shapes: Array<Shape> = [
-      // A
       {
         path: {
+          label: "A",
           position: [0, 0],
           points: [
             [0, 0],
@@ -27,9 +27,9 @@ describe("findFirstIntersection", () => {
           ],
         },
       },
-      // B
       {
         path: {
+          label: "B",
           position: [0, 0],
           points: [
             [3, 0],
@@ -60,9 +60,9 @@ describe("findFirstIntersection", () => {
       [6, 4],
     ];
     const shapes: Array<Shape> = [
-      // A
       {
         path: {
+          label: "A",
           position: [0, 0],
           points: [
             [2, 1],
@@ -72,9 +72,9 @@ describe("findFirstIntersection", () => {
           ],
         },
       },
-      // B
       {
         path: {
+          label: "B",
           position: [0, 0],
           points: [
             [4, 1],
@@ -110,9 +110,9 @@ describe("findFirstIntersection", () => {
       [0, 4],
     ];
     const shapes: Array<Shape> = [
-      // A
       {
         path: {
+          label: "A",
           position: [0, 0],
           points: [
             [2, 1],
@@ -122,9 +122,9 @@ describe("findFirstIntersection", () => {
           ],
         },
       },
-      // B
       {
         path: {
+          label: "B",
           position: [0, 0],
           points: [
             [4, 1],

@@ -8,6 +8,8 @@ type Props = {
 };
 
 const SelectPath = (props: Props) => {
+  const entries = Array.from(props.pathMap);
+
   return (
     <select
       id="behaviour"
@@ -15,7 +17,13 @@ const SelectPath = (props: Props) => {
       onChange={(e) => {
         props.onSelectPath(e.target.value as PathId);
       }}
-    ></select>
+    >
+      {entries.map(([pathId, path]) => (
+        <option key={pathId} value={pathId}>
+          {path.label}
+        </option>
+      ))}
+    </select>
   );
 };
 

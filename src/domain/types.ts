@@ -62,6 +62,7 @@ export type Kinematic = {
 };
 
 export type Path = {
+  label: string;
   position: Vector;
   points: Array<[number, number]>;
 };

@@ -46,6 +46,7 @@ export default function initScenario(): Scenario {
         "s1",
         {
           path: {
+            label: "Shape path",
             position: [400, 400],
             points: [
               [-20, -25], // TL
@@ -61,6 +62,7 @@ export default function initScenario(): Scenario {
       [
         "p1",
         {
+          label: "Path 1",
           position: [200, 200],
           points: [
             [600, 50],

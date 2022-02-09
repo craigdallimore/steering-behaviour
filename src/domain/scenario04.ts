@@ -12,6 +12,7 @@ function makePair(x: number, z: number): Pair {
   const id: ShapeId = `${x}:${z}`;
   const shape: Shape = {
     path: {
+      label: id,
       position: [x, z],
       points: [
         [-10, -10], // TL
