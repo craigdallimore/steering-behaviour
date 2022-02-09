@@ -1,7 +1,7 @@
 import React from "react";
 import DispatchContext from "@components/DispatchContext";
 import StateContext from "@components/StateContext";
-import { Scenario, ScenarioId } from "@domain/types";
+import { ScenarioId } from "@domain/types";
 import { getScenario } from "@domain/initialState";
 
 const ScenarioSidebar = () => {

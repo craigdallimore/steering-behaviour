@@ -43,7 +43,7 @@ const getDefaultBehaviour = (name: SteeringBehaviourName): Behaviour => {
     case "MATCH_VELOCITY":
       return new MatchVelocity("");
     case "OBSTACLE_AVOIDANCE":
-      return new ObstacleAvoidance("");
+      return new ObstacleAvoidance();
     case "PURSUE":
       return new Pursue("");
     case "SEEK":
