@@ -1,6 +1,37 @@
 import Character from "./character";
-import { Scenario } from "./types";
+import { Scenario, Shape, ShapeId } from "./types";
 import * as steering from "@steering/index";
+
+const range1 = [50, 150, 250, 350, 450, 550];
+const range2 = [100, 200, 300, 400, 500, 600];
+const range3 = [150, 250, 350, 450, 550, 650];
+
+type Pair = [ShapeId, Shape];
+
+function makePair(x: number, z: number): Pair {
+  const id: ShapeId = `${x}:${z}`;
+  const shape: Shape = {
+    path: {
+      position: [x, z],
+      points: [
+        [-10, -10], // TL
+        [-10, 10], // BL
+        [10, 10], // BR
+        [10, -10], // TR
+      ],
+    },
+  };
+
+  return [id, shape];
+}
+
+const pairs1: Array<Pair> = range1
+  .map((x) => range2.map((z) => makePair(x, z)))
+  .flat();
+
+const pairs2: Array<Pair> = range2
+  .map((x) => range3.map((z) => makePair(x, z)))
+  .flat();
 
 export default function initScenario(): Scenario {
   return {
@@ -12,31 +43,16 @@ export default function initScenario(): Scenario {
         new Character(
           {
             maxSpeed: 45,
-            position: [450, 580],
-            velocity: [-2, -15],
-            orientation: -1.5,
+            position: [300, 25],
+            velocity: [2, 10],
+            orientation: 1.5,
             rotation: 0,
           },
-          new steering.ObstacleAvoidance("s1")
+          new steering.ObstacleAvoidance()
         ),
       ],
     ]),
-    shapes: new Map([
-      [
-        "s1",
-        {
-          path: {
-            position: [400, 400],
-            points: [
-              [-20, -25], // TL
-              [-20, 20], // BL
-              [-15, -15], // BR
-              [75, -35], // TR
-            ],
-          },
-        },
-      ],
-    ]),
+    shapes: new Map([...pairs1, ...pairs2]),
     paths: new Map(),
   };
 }

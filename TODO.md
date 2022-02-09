@@ -20,21 +20,20 @@
 - [ ] Make sure targets/paths/shapes can be picked for all behaviours
   - [ ] FOLLOW_PATH_CHASE_RABBIT
   - [ ] FOLLOW_PATH_PREDICT
-  - [ ] OBSTACLE_AVOIDANCE
 - [ ] Behaviour config should include configuring dependent behaviour
-- [ ] Are path offsets respected?
+- [ ] Paths
+  - [ ] Are path offsets respected?
+  - [ ] Make it possible to draw paths
+  - [ ] Path should be closable?
 - [ ] A character should be able to have multiple blendable behaviours
 - [ ] Move helpers out from class files
 - [ ] Reducer can be more imperative
-- [ ] Make it possible to draw paths
-- [ ] Path should be closable?
 - [ ] Should be possible to make the mouse a target
 - [ ] The orientation picker should be more like a dial
 - [ ] Help new users understand what they are looking at!
 - [ ] Hovering an id should highlight the character
 - [ ] The kinematic controls could be hidden until revealed
 - [ ] Gather descriptions of each behaviour
-- [ ] Add a button to stop a kinematic from moving
 - [ ] Does dispatch cause unexpected re-renders?
 - [ ] Do state changes cause unexpected re-renders?
 
@@ -43,6 +42,9 @@
 - [ ] Characters should not be able to leave the canvas. Bounce off the sides maybe?
 - [ ] Add Art Deco styling
 - [ ] Make it possible to dynamically add characters to a scenario
+- [ ] Convert behaviour classes back to regular objects
+- [ ] Add a button to stop a kinematic from moving
+- [ ] Add a button to match the velocity to the orientation
 
 ## Steering pipeline
 

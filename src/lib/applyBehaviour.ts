@@ -104,11 +104,9 @@ export default function applyBehaviour(
       return char;
     }
     case "OBSTACLE_AVOIDANCE": {
-      const shape = shapes.get(char.behaviour.shapeId);
-      if (!shape) {
-        return char;
-      }
-      const steering = char.behaviour.calculate(char.kinematic, shape);
+      const steering = char.behaviour.calculate(char.kinematic, [
+        ...shapes.values(),
+      ]);
       char.kinematic = updateKinematic(steering, char.kinematic, time);
       return char;
     }

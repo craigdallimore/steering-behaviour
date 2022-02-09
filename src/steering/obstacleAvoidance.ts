@@ -1,5 +1,4 @@
 import { AbstractBehaviour } from "./abstractBehaviour";
-import getCollision from "@lib/getCollision";
 import {
   add,
   length,
@@ -14,11 +13,11 @@ import type {
   Edge,
   Kinematic,
   Shape,
-  ShapeId,
   Steering,
 } from "@domain/types";
 
 import Seek from "./seek";
+import getCollision from "@lib/shape";
 
 function getWhiskerRay(k: Kinematic, radians: number, magnitude: number): Edge {
   const bearing = vectorToRadians(k.velocity) - radians;
@@ -30,14 +29,12 @@ function getWhiskerRay(k: Kinematic, radians: number, magnitude: number): Edge {
 
 export default class ObstacleAvoidance extends AbstractBehaviour {
   readonly name = "OBSTACLE_AVOIDANCE";
-  shapeId: ShapeId;
   seek: Seek;
   avoidDistance: number;
   lookaheadMain: number;
   lookaheadSide: number;
   debug: Debug;
   constructor(
-    shapeId: ShapeId,
     avoidDistance?: number,
     lookaheadMain?: number,
     lookaheadSide?: number
@@ -51,7 +48,6 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
     this.lookaheadMain = lookaheadMain || 150;
     this.lookaheadSide = lookaheadSide || 85;
 
-    this.shapeId = shapeId;
     this.seek = new Seek("");
 
     this.debug = {
@@ -60,15 +56,15 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
       vectors: [],
     };
   }
-  calculate(kinematic: Kinematic, shape: Shape): Steering {
+  calculate(kinematic: Kinematic, shapes: Array<Shape>): Steering {
     const w0 = getWhiskerRay(kinematic, 0, this.lookaheadMain);
     const w1 = getWhiskerRay(kinematic, 0.1, this.lookaheadSide);
     const w2 = getWhiskerRay(kinematic, -0.1, this.lookaheadSide);
 
     // find the nearest collision to the kinematic
     const collision: Collision | null = [w0, w1, w2].reduce(
-      (acc: Collision | null, ray) => {
-        const collision = getCollision(ray, shape);
+      (acc: Collision | null, edge: Edge) => {
+        const collision = getCollision(edge, shapes);
         if (!acc) {
           return collision;
         }
