@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import NumericField from "components/NumericField";
 import FollowPathPredict from "@steering/followPathPredict";
 import makeUpdatedClone from "@lib/makeUpdatedClone";
+import SelectPath from "@components/SelectPath";
+import StateContext from "@components/StateContext";
 
 type Props = {
   behaviour: FollowPathPredict;
@@ -10,6 +12,7 @@ type Props = {
 
 const FollowPathPredictControls = (props: Props) => {
   const { behaviour } = props;
+  const state = useContext(StateContext);
 
   return (
     <>
@@ -32,6 +35,15 @@ const FollowPathPredictControls = (props: Props) => {
             makeUpdatedClone(behaviour, "predictTime", predictTime)
           );
         }}
+      />
+      <SelectPath
+        pathId={behaviour.pathId}
+        onSelectPath={(pathId) => {
+          props.onBehaviourChange(
+            makeUpdatedClone(behaviour, "pathId", pathId)
+          );
+        }}
+        pathMap={state.scenario?.paths ?? new Map()}
       />
     </>
   );

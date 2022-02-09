@@ -17,10 +17,8 @@
 
 ## Features
 
-- [ ] Make sure targets/paths/shapes can be picked for all behaviours
-  - [ ] FOLLOW_PATH_CHASE_RABBIT
-  - [ ] FOLLOW_PATH_PREDICT
 - [ ] Behaviour config should include configuring dependent behaviour
+- [ ] Remove LookWhereYouAreGoing from wander
 - [ ] Paths
   - [ ] Are path offsets respected?
   - [ ] Make it possible to draw paths

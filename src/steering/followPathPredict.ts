@@ -1,6 +1,6 @@
 import { AbstractBehaviour } from "./abstractBehaviour";
 import { getParam, getPosition } from "@lib/path";
-import { Kinematic, Path, PathId, Steering } from "@domain/types";
+import { Debug, Kinematic, Path, PathId, Steering } from "@domain/types";
 import { add, multiply } from "@lib/vector";
 import Seek from "./seek";
 
@@ -10,6 +10,7 @@ export default class FollowPathPredict extends AbstractBehaviour {
   pathOffset: number;
   predictTime: number;
   seek: Seek;
+  debug: Debug;
   constructor(pathId: PathId, pathOffset?: number, predictTime?: number) {
     super();
     this.pathId = pathId;
@@ -19,6 +20,11 @@ export default class FollowPathPredict extends AbstractBehaviour {
     // Holds the time in the future to predict the character position
     this.predictTime = predictTime || 0.1;
     this.seek = new Seek("");
+    this.debug = {
+      edges: [],
+      points: [],
+      vectors: [],
+    };
   }
   calculate(kinematic: Kinematic, path: Path): Steering {
     // Find the predicted future location
@@ -35,6 +41,9 @@ export default class FollowPathPredict extends AbstractBehaviour {
 
     // Get the target position
     const targetPosition = getPosition(path, targetParam);
+
+    this.debug.edges = [[futurePos, targetPosition]];
+    this.debug.points = [futurePos];
 
     const { linear } = this.seek.calculate(kinematic, targetPosition);
     return { angular: 0, linear };
