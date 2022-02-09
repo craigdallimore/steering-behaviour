@@ -12,8 +12,8 @@ export default function initScenario(): Scenario {
         new Character(
           {
             maxSpeed: 45,
-            position: [400, 580],
-            velocity: [0, -15],
+            position: [450, 580],
+            velocity: [-2, -15],
             orientation: -1.5,
             rotation: 0,
           },

@@ -4,13 +4,13 @@
 
 - [ ] Reset button on scenario picker should not be present until the scenario has been started
 - [ ] COLLISION_AVOIDANCE Not really working well?
-- [ ] Check Obstacle Avoidance (recently changed radiansToVector)
 - [ ] Altering steering doesn't work very well.
 
 ## Test debt
 
 - [ ] lib
   - [ ] applyBehaviour
+  - [ ] getCollision
 - [ ] components
 - [ ] steering
 - [ ] reducer
@@ -26,7 +26,6 @@
 - [ ] A character should be able to have multiple blendable behaviours
 - [ ] Move helpers out from class files
 - [ ] Reducer can be more imperative
-- [ ] Make it possible to dynamically add characters to a scenario
 - [ ] Make it possible to draw paths
 - [ ] Path should be closable?
 - [ ] Should be possible to make the mouse a target
@@ -43,6 +42,7 @@
 
 - [ ] Characters should not be able to leave the canvas. Bounce off the sides maybe?
 - [ ] Add Art Deco styling
+- [ ] Make it possible to dynamically add characters to a scenario
 
 ## Steering pipeline
 
