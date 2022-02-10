@@ -22,7 +22,7 @@ export function getScenario(id: ScenarioId): Scenario | null {
   }
 }
 
-const focussedScenarioId = "SC_01";
+const focussedScenarioId = "SC_03";
 
 export const initialState: State = {
   ui: {

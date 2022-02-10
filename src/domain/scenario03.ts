@@ -33,6 +33,7 @@ export default function initScenario(): Scenario {
           new steering.None()
         ),
       ],
+      /*
       [
         "_3",
         new Character(
@@ -124,6 +125,7 @@ export default function initScenario(): Scenario {
           new steering.None()
         ),
       ],
+      */
     ]),
     shapes: new Map(),
     paths: new Map(),

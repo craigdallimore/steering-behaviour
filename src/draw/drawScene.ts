@@ -67,6 +67,10 @@ export default function drawScene(
           "silver"
         );
       });
+
+      cha.behaviour.debug.circles.forEach(({ position, radius, fillStyle }) => {
+        drawCircle(ctx, position, radius, fillStyle);
+      });
     }
   });
 

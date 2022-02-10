@@ -17,6 +17,7 @@ export default class FollowPathChaseRabbit extends AbstractBehaviour {
     this.pathOffset = pathOffset || 30;
     this.seek = new Seek("");
     this.debug = {
+      circles: [],
       edges: [],
       points: [],
       vectors: [],

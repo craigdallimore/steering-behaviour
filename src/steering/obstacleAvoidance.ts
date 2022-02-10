@@ -51,6 +51,7 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
     this.seek = new Seek("");
 
     this.debug = {
+      circles: [],
       edges: [],
       points: [],
       vectors: [],

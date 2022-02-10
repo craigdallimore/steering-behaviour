@@ -40,6 +40,11 @@ export type Debug = {
   edges: Array<Edge>;
   points: Array<Vector>;
   vectors: Array<Vector>;
+  circles: Array<{
+    position: Vector;
+    radius: number;
+    fillStyle: string;
+  }>;
 };
 export type SteeringBehaviourName = Behaviour["name"];
 

@@ -21,6 +21,7 @@ export default class FollowPathPredict extends AbstractBehaviour {
     this.predictTime = predictTime || 0.1;
     this.seek = new Seek("");
     this.debug = {
+      circles: [],
       edges: [],
       points: [],
       vectors: [],

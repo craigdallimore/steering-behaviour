@@ -30,6 +30,7 @@ export default class Wander extends AbstractBehaviour {
     this.wanderOrientation = 0;
 
     this.debug = {
+      circles: [],
       edges: [],
       points: [],
       vectors: [],
