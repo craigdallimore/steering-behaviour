@@ -3,7 +3,6 @@
 ## Bugs
 
 - [ ] Reset button on scenario picker should not be present until the scenario has been started
-- [ ] Reset button should reset the scenario only
 - [ ] COLLISION_AVOIDANCE Not really working well?
 - [ ] OBSTACLE_AVOIDANCE Not really working well?
 - [ ] Altering steering doesn't work very well.
@@ -25,6 +24,7 @@
   - [ ] Improve colouring
   - [ ] Add to all behaviours
 - [ ] Behaviour config should include configuring dependent behaviour
+- [ ] Removing a behaviour should stop the kinematic from moving
 - [ ] Remove LookWhereYouAreGoing from wander
 - [ ] Paths
   - [ ] Are path offsets respected?

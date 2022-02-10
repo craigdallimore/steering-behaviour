@@ -9,36 +9,31 @@ test('TICK', () => {});
 test('PLAY_BUTTON_CLICKED', () => {});
 */
 describe("RESET_BUTTON_CLICKED", () => {
-  it("restores initial values of the state", () => {
+  it("restores initial value of the scenario", () => {
     const changedState = {
       ...initialState,
-      ui: {
-        ...initialState.ui,
-        focussedCharacterId: "ABC",
-      },
+      scenario: null,
     };
     const nextState = reducer(changedState, {
       type: "RESET_BUTTON_CLICKED",
     });
 
-    expect(nextState.ui.focussedCharacterId).toBe(
-      initialState.ui.focussedCharacterId
-    );
+    expect(nextState.scenario).toEqual(initialState.scenario);
+    expect(nextState.scenario).not.toBe(null);
   });
-  it("preserves the current canvas size - so it doesn't need to be recalculated", () => {
+  it("pauses the scenario", () => {
     const changedState = {
       ...initialState,
       ui: {
         ...initialState.ui,
-        focussedCharacterId: "ABC",
-        canvasDimensions: [123, 123] as Vector,
+        isPaused: false,
       },
     };
     const nextState = reducer(changedState, {
       type: "RESET_BUTTON_CLICKED",
     });
 
-    expect(nextState.ui.canvasDimensions).toEqual([123, 123]);
+    expect(nextState.ui.isPaused).toBe(true);
   });
 });
 /*

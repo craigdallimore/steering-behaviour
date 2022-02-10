@@ -1,4 +1,4 @@
-import { getScenario, initialState } from "@domain/initialState";
+import { getScenario } from "@domain/initialState";
 import { produce } from "immer";
 import {
   CharacterId,
@@ -84,15 +84,11 @@ export type Action =
 export function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "RESET_BUTTON_CLICKED": {
-      const canvasDimensions = state.ui.canvasDimensions;
-
-      return produce(initialState, (draft) => {
-        draft.ui.canvasDimensions = canvasDimensions;
-        draft.scenario = draft.ui.focussedScenarioId
-          ? getScenario(draft.ui.focussedScenarioId)
-          : null;
-        return draft;
-      });
+      state.ui.isPaused = true;
+      state.scenario = state.ui.focussedScenarioId
+        ? getScenario(state.ui.focussedScenarioId)
+        : null;
+      return state;
     }
     case "PLAY_BUTTON_CLICKED":
       state.ui.isPaused = !state.ui.isPaused;
