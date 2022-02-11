@@ -56,20 +56,24 @@ export default class CollisionAvoidance extends AbstractBehaviour {
       const timeToCollision =
         dot(relativePos, relativeVel) / relativeSpeed ** 2;
 
-      const distance = length(relativePos);
+      const distance = length(relativePos); // Gap between character and target in pixels
       const minSeparation = distance - relativeSpeed * acc.timeToCollision;
 
       // THINK: minSeparation is -Infinity
       // This is because it is multiplied by acc.timeToCollision, which is initialised to Infinity.
-      // As a result the
-      console.log(`M ${minSeparation}`);
+      // This poses a problem:
+      // A ttc can be generated the implies they will collide, when in fact they are far apart.
+      // The condition below ought to skip the selection of far-apart targets, but cannot due to the -Infinity.
 
-      if (minSeparation < 2 * this.radius) {
+      if (minSeparation > 2 * this.radius) {
+        // This doesn't get called, as minSeparation is alway -Infinity
+        // console.info("YAAY");
         return acc;
       }
 
       // Given a negative timeToCollision, the characters are moving apart.
       if (timeToCollision > 0 && timeToCollision < acc.timeToCollision) {
+        // Will collide with this target first
         return {
           timeToCollision,
           minSeparation,
@@ -104,17 +108,23 @@ export default class CollisionAvoidance extends AbstractBehaviour {
       //console.log(final);
     }
 
+    const steeringBasedOnCurrentPosition = subtract(
+      kinematic.position,
+      final.target.position
+    );
+
+    const steeringBasedOnFutureRelativePosition = add(
+      final.relativePos,
+      multiply(final.relativeVel, final.timeToCollision)
+    );
+
     const relativePos = isCollisionExpected
       ? // If we’re going to hit exactly, or if we’re already colliding, then
         // do the steering based on current position.
-        subtract(kinematic.position, final.target.position)
+        steeringBasedOnCurrentPosition
       : // Otherwise calculate the future relative position
-        add(
-          final.relativePos,
-          multiply(final.relativeVel, final.timeToCollision)
-        );
+        steeringBasedOnFutureRelativePosition;
 
-    this.debug.vectors = [relativePos];
     this.debug.circles = [
       {
         position: kinematic.position,
@@ -122,6 +132,21 @@ export default class CollisionAvoidance extends AbstractBehaviour {
         fillStyle: isCollisionExpected
           ? "rgba(255, 0, 0, 0.1)"
           : "rgba(0, 255, 0, 0.1)",
+      },
+      {
+        // Green
+        position: add(
+          kinematic.position,
+          steeringBasedOnFutureRelativePosition
+        ),
+        radius: 2,
+        fillStyle: "rgba(0, 255, 0, 1)",
+      },
+      {
+        // Red
+        position: add(kinematic.position, steeringBasedOnCurrentPosition),
+        radius: 2,
+        fillStyle: "rgba(255, 0, 0, 1)",
       },
     ];
 

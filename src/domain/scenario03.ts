@@ -13,7 +13,7 @@ export default function initScenario(): Scenario {
           {
             maxSpeed: 45,
             position: [400, 280],
-            velocity: [0, 25],
+            velocity: [0, 15],
             orientation: 1.5,
             rotation: 0,
           },
