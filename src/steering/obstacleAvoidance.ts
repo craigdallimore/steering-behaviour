@@ -99,13 +99,19 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
     // Show collision points
     this.debug.points = [collision.position];
 
-    this.debug.vectors = [multiply(collision.normal, 25)];
-
     // Otherwise create a target
     const targetPosition = add(
       collision.position,
-      multiply(collision.normal, this.avoidDistance)
+      multiply(collision.normal, 0 - this.avoidDistance)
     );
+
+    this.debug.circles = [
+      {
+        position: targetPosition,
+        radius: 2,
+        fillStyle: "rgba(0, 255,0, 0.5)",
+      },
+    ];
 
     // 2. Delegate to seek
     return this.seek.calculate(kinematic, targetPosition);
