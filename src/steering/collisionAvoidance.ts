@@ -41,33 +41,23 @@ export default class CollisionAvoidance extends AbstractBehaviour {
     };
 
     const final = targets.reduce((acc, target) => {
+      // We find the relationship between the character kinematic and each target kinematic
       const relativePos = subtract(target.position, kinematic.position);
-      const relativeVel = subtract(target.velocity, kinematic.velocity);
+      const relativeVel = subtract(kinematic.velocity, target.velocity);
       const relativeSpeed = length(relativeVel);
 
-      // Each target is examined.  The time to the nearest collision is given
-      // by the dot product of the relative position and relative velocity,
-      // divided by the square of the relative speed.
-
-      // When characters are moving towards each other (regardless of whether
-      // they'll collide) timeToCollision is negative - and it approaches 0 as
-      // they close in on each other.  When characters move apart,
-      // timeToCollision is positive and will increase as they separate.
+      // A positive value for the dot product implies the character and target may cross paths
       const timeToCollision =
         dot(relativePos, relativeVel) / relativeSpeed ** 2;
 
-      const distance = length(relativePos); // Gap between character and target in pixels
-      const minSeparation = distance - relativeSpeed * acc.timeToCollision;
+      // `distance` is the gap between the kinematics in pixels
+      const distance = length(relativePos);
 
-      // THINK: minSeparation is -Infinity
-      // This is because it is multiplied by acc.timeToCollision, which is initialised to Infinity.
-      // This poses a problem:
-      // A ttc can be generated the implies they will collide, when in fact they are far apart.
-      // The condition below ought to skip the selection of far-apart targets, but cannot due to the -Infinity.
+      // `minSeparation` is the distance between the two kinematics at the time of the closest
+      // approach. Given they will not collide, no steering is needed.
+      const minSeparation = distance - relativeSpeed * timeToCollision;
 
       if (minSeparation > 2 * this.radius) {
-        // This doesn't get called, as minSeparation is alway -Infinity
-        // console.info("YAAY");
         return acc;
       }
 
@@ -104,15 +94,13 @@ export default class CollisionAvoidance extends AbstractBehaviour {
     const isCollisionExpected =
       final.minSeparation <= 0 || final.distance < 2 * this.radius;
 
-    if (isCollisionExpected) {
-      //console.log(final);
-    }
-
+    // Avoid by altering course
     const steeringBasedOnCurrentPosition = subtract(
       kinematic.position,
       final.target.position
     );
 
+    // Avoid by slamming the brakes and altering course
     const steeringBasedOnFutureRelativePosition = add(
       final.relativePos,
       multiply(final.relativeVel, final.timeToCollision)

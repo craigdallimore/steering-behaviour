@@ -33,13 +33,12 @@ export default function initScenario(): Scenario {
           new steering.None()
         ),
       ],
-      /*
       [
         "_3",
         new Character(
           {
             maxSpeed: 45,
-            position: [402, 420],
+            position: [402, 440],
             velocity: [0, -8],
             orientation: 1.5 * Math.PI,
             rotation: 0,
@@ -52,7 +51,7 @@ export default function initScenario(): Scenario {
         new Character(
           {
             maxSpeed: 45,
-            position: [420, 400],
+            position: [420, 480],
             velocity: [0, -12],
             orientation: 1.5 * Math.PI,
             rotation: 0,
@@ -65,7 +64,7 @@ export default function initScenario(): Scenario {
         new Character(
           {
             maxSpeed: 45,
-            position: [340, 430],
+            position: [340, 520],
             velocity: [0, -12],
             orientation: 1.5 * Math.PI,
             rotation: 0,
@@ -78,7 +77,7 @@ export default function initScenario(): Scenario {
         new Character(
           {
             maxSpeed: 45,
-            position: [360, 490],
+            position: [360, 540],
             velocity: [0, -8],
             orientation: 1.5 * Math.PI,
             rotation: 0,
@@ -91,7 +90,7 @@ export default function initScenario(): Scenario {
         new Character(
           {
             maxSpeed: 45,
-            position: [380, 490],
+            position: [380, 600],
             velocity: [0, -15],
             orientation: 1.5 * Math.PI,
             rotation: 0,
@@ -104,7 +103,7 @@ export default function initScenario(): Scenario {
         new Character(
           {
             maxSpeed: 45,
-            position: [400, 540],
+            position: [400, 650],
             velocity: [0, -8],
             orientation: 1.5 * Math.PI,
             rotation: 0,
@@ -125,7 +124,6 @@ export default function initScenario(): Scenario {
           new steering.None()
         ),
       ],
-      */
     ]),
     shapes: new Map(),
     paths: new Map(),
