@@ -4,6 +4,7 @@
 
 - [ ] Reset button on scenario picker should not be present until the scenario has been started
 - [ ] Altering steering doesn't work very well.
+- [ ] OBSTACLE_AVOIDANCE still clips when entering from right.
 
 ## Test debt
 
