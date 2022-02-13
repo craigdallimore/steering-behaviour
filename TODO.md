@@ -3,7 +3,6 @@
 ## Bugs
 
 - [ ] Reset button on scenario picker should not be present until the scenario has been started
-- [ ] OBSTACLE_AVOIDANCE Not really working well?
 - [ ] Altering steering doesn't work very well.
 - [ ] Remove behaviour button misaligned in firefox
 
@@ -12,6 +11,7 @@
 - [ ] lib
   - [ ] applyBehaviour
   - [ ] getCollision
+  - [ ] path
 - [ ] components
 - [ ] steering
 - [ ] reducer

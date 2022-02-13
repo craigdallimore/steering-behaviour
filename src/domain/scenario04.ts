@@ -16,9 +16,9 @@ function makePair(x: number, z: number): Pair {
       position: [x, z],
       points: [
         [-10, -10], // TL
-        [-10, 10], // BL
-        [10, 10], // BR
         [10, -10], // TR
+        [10, 10], // BR
+        [-10, 10], // BL
       ],
     },
   };
