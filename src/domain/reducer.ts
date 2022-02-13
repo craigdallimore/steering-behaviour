@@ -13,17 +13,18 @@ import applyBehaviour from "@lib/applyBehaviour";
 
 // TYPES ----------------------------------------------------------------------
 
-const TICK = "TICK";
-const PLAY_BUTTON_CLICKED = "PLAY_BUTTON_CLICKED";
-const RESET_BUTTON_CLICKED = "RESET_BUTTON_CLICKED";
+const BEHAVIOUR_CHANGED = "BEHAVIOUR_CHANGED";
 const CANVAS_CLICKED = "CANVAS_CLICKED";
 const CANVAS_RESIZED = "CANVAS_RESIZED";
-const BEHAVIOUR_CHANGED = "BEHAVIOUR_CHANGED";
-const SCENARIO_CHANGED = "SCENARIO_CHANGED";
+const DEBUG_MODE_CHANGED = "DEBUG_MODE_CHANGED";
 const ORIENTATION_CHANGED = "ORIENTATION_CHANGED";
-const ROTATION_CHANGED = "ROTATION_CHANGED";
+const PLAY_BUTTON_CLICKED = "PLAY_BUTTON_CLICKED";
 const POSX_CHANGED = "POSX_CHANGED";
 const POSZ_CHANGED = "POSZ_CHANGED";
+const RESET_BUTTON_CLICKED = "RESET_BUTTON_CLICKED";
+const ROTATION_CHANGED = "ROTATION_CHANGED";
+const SCENARIO_CHANGED = "SCENARIO_CHANGED";
+const TICK = "TICK";
 const VELX_CHANGED = "VELX_CHANGED";
 const VELZ_CHANGED = "VELZ_CHANGED";
 
@@ -39,6 +40,9 @@ export type Action =
   | {
       type: typeof SCENARIO_CHANGED;
       payload: ScenarioId;
+    }
+  | {
+      type: typeof DEBUG_MODE_CHANGED;
     }
   | {
       type: typeof ROTATION_CHANGED;
@@ -92,6 +96,9 @@ export function reducer(state: State, action: Action): State {
     }
     case "PLAY_BUTTON_CLICKED":
       state.ui.isPaused = !state.ui.isPaused;
+      return state;
+    case "DEBUG_MODE_CHANGED":
+      state.ui.isDebugMode = !state.ui.isDebugMode;
       return state;
     case "CANVAS_RESIZED":
       state.ui.canvasDimensions = action.payload;

@@ -36,6 +36,15 @@ describe("RESET_BUTTON_CLICKED", () => {
     expect(nextState.ui.isPaused).toBe(true);
   });
 });
+describe("DEBUG_MODE_CHANGED", () => {
+  it("inverts the value of the debug mode", () => {
+    expect(initialState.ui.isDebugMode).toBe(false);
+    const nextState = reducer(initialState, {
+      type: "DEBUG_MODE_CHANGED",
+    });
+    expect(nextState.ui.isDebugMode).toBe(true);
+  });
+});
 /*
 test('CANVAS_CLICKED', () => {});
 test('CANVAS_RESIZED', () => {});

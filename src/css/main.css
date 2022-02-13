@@ -59,3 +59,10 @@ button:active {
   letter-spacing: 1px;
   border: 2px solid var(--base00);
 }
+
+.checkbox-pair {
+  display: flex;
+}
+.checkbox-pair input {
+  margin-left: auto;
+}

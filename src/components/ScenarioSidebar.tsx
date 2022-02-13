@@ -3,6 +3,7 @@ import DispatchContext from "@components/DispatchContext";
 import StateContext from "@components/StateContext";
 import { ScenarioId } from "@domain/types";
 import { getScenario } from "@domain/initialState";
+import DebugControl from "./DebugControl";
 
 const ScenarioSidebar = () => {
   const dispatch = React.useContext(DispatchContext);
@@ -34,6 +35,7 @@ const ScenarioSidebar = () => {
         <span data-id="scenario-description">
           {focussedScenario?.description}
         </span>
+        <DebugControl />
       </fieldset>
 
       <button

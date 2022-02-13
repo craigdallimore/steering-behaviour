@@ -31,7 +31,7 @@ export const initialState: State = {
   ui: {
     actionFeedbackCount: -1,
     canvasDimensions: [800, 800],
-    isDebugMode: true,
+    isDebugMode: false,
     isPaused: true,
     isSettingTarget: false,
     focussedCharacterId: "_1",
