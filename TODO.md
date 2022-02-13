@@ -4,7 +4,6 @@
 
 - [ ] Reset button on scenario picker should not be present until the scenario has been started
 - [ ] Altering steering doesn't work very well.
-- [ ] Remove behaviour button misaligned in firefox
 
 ## Test debt
 
@@ -18,7 +17,6 @@
 ## Features
 
 - [ ] Debug
-  - [ ] Add button to toggle
   - [ ] Improve colouring
   - [ ] Add to all behaviours
 - [ ] Behaviour config should include configuring dependent behaviour
