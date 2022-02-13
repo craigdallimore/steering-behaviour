@@ -10,8 +10,7 @@
 
 - [ ] lib
   - [ ] applyBehaviour
-  - [ ] getCollision
-  - [ ] path
+  - [ ] updateKinematic
 - [ ] components
 - [ ] steering
 - [ ] reducer
