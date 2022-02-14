@@ -1,6 +1,5 @@
 import { initialState } from "@domain/initialState";
 import { reducer } from "@domain/reducer";
-import { Vector } from "@domain/types";
 
 Object.freeze(initialState);
 
