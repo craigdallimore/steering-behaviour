@@ -17,10 +17,18 @@
 
 ## Features
 
+- [ ] Behaviour config should include configuring dependent behaviour
+  - [ ] Evade uses Flee
+  - [x] Face uses Align
+  - [ ] FPCR uses Seek
+  - [ ] FPP uses Seek
+  - [ ] LWYAG uses Align
+  - [ ] ObstacleAvoidance uses Seek
+  - [ ] Pursue uses Seek
+  - [ ] Wander uses Face uses Seek
 - [ ] Debug
   - [ ] Improve colouring
   - [ ] Add to all behaviours
-- [ ] Behaviour config should include configuring dependent behaviour
 - [ ] Removing a behaviour should stop the kinematic from moving
 - [ ] Remove LookWhereYouAreGoing from wander
 - [ ] Paths
