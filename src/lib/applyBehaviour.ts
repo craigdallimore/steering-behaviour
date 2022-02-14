@@ -123,7 +123,7 @@ export default function applyBehaviour(
       return char;
     }
     case "EVADE": {
-      const target = getCharacter(char.behaviour.flee.targetId, characters);
+      const target = getCharacter(char.behaviour.targetId, characters);
       if (!target) {
         return char;
       }

@@ -4,11 +4,12 @@ import * as steering from "@steering/index";
 
 export default function initScenario(): Scenario {
   return {
-    name: "Blank",
-    description: "Blank",
+    name: "Evade",
+    description:
+      "The evading character will attempt to flee the predicted future position of the pursuer",
     characters: new Map([
       [
-        "_1",
+        "mouse",
         new Character(
           {
             maxSpeed: 45,
@@ -18,6 +19,19 @@ export default function initScenario(): Scenario {
             rotation: 0,
           },
           new steering.None()
+        ),
+      ],
+      [
+        "cat",
+        new Character(
+          {
+            maxSpeed: 45,
+            position: [350, 350],
+            velocity: [0, 0],
+            orientation: 2 * Math.PI,
+            rotation: 0,
+          },
+          new steering.Pursue("mouse")
         ),
       ],
     ]),

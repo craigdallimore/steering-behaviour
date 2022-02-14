@@ -4,6 +4,7 @@ import init02 from "./scenario02";
 import init03 from "./scenario03";
 import init04 from "./scenario04";
 import init05 from "./scenario05";
+import initEvade from "./scenario_evade";
 
 // The scenarios use stateful class instances to represent various items.
 // It is not straightforward to make these immutable; for simplicities sake
@@ -20,12 +21,14 @@ export function getScenario(id: ScenarioId): Scenario | null {
       return init04();
     case "SC_05":
       return init05();
+    case "SC_EVADE":
+      return initEvade();
     default:
       return null;
   }
 }
 
-const focussedScenarioId = "SC_05";
+const focussedScenarioId = "SC_EVADE";
 
 export const initialState: State = {
   ui: {
@@ -37,6 +40,6 @@ export const initialState: State = {
     focussedCharacterId: "_1",
     focussedScenarioId,
   },
-  scenarioIds: ["SC_01", "SC_02", "SC_03", "SC_04", "SC_05"],
+  scenarioIds: ["SC_01", "SC_02", "SC_03", "SC_04", "SC_05", "SC_EVADE"],
   scenario: getScenario(focussedScenarioId),
 };

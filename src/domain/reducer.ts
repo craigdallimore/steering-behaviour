@@ -1,5 +1,4 @@
 import { getScenario } from "@domain/initialState";
-import { produce } from "immer";
 import {
   CharacterId,
   State,

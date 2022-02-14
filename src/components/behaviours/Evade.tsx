@@ -3,6 +3,7 @@ import NumericField from "components/NumericField";
 import Evade from "@steering/evade";
 import AssignedTarget from "@components/AssignedTarget";
 import makeUpdatedClone from "@lib/makeUpdatedClone";
+import FleeControls from "./Flee";
 
 type Props = {
   behaviour: Evade;
@@ -24,7 +25,12 @@ const EvadeControls = (props: Props) => {
           );
         }}
       />
-      <AssignedTarget targetId={behaviour.targetId} />
+      <FleeControls
+        behaviour={behaviour.flee}
+        onBehaviourChange={(flee) => {
+          props.onBehaviourChange(makeUpdatedClone(behaviour, "flee", flee));
+        }}
+      />
     </>
   );
 };
