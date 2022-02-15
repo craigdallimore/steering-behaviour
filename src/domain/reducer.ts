@@ -171,6 +171,11 @@ export function reducer(state: State, action: Action): State {
     case "BEHAVIOUR_CHANGED": {
       const nextState = updateFocussedCharacter(state, (char) => {
         char.behaviour = action.payload;
+
+        if (action.payload.name === "NONE") {
+          char.kinematic.velocity = [0, 0];
+        }
+
         return char;
       });
 

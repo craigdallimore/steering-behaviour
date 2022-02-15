@@ -3,6 +3,7 @@
 ## Bugs
 
 - [ ] Buttons feel really gummy
+- [ ] Orientation controls sucks
 - [ ] Reset button on scenario picker should not be present until the scenario has been started
 - [ ] Altering steering doesn't work very well.
 - [ ] OBSTACLE_AVOIDANCE still clips when entering from right.
@@ -21,7 +22,6 @@
 - [ ] Debug
   - [ ] Improve colouring
   - [ ] Add to all behaviours
-- [ ] Removing a behaviour should stop the kinematic from moving
 - [ ] Paths
   - [ ] Are path offsets respected?
   - [ ] Make it possible to draw paths
