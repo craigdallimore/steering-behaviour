@@ -5,6 +5,7 @@ import initColl from "./scenario_collision";
 import initOb1 from "./scenario_many_obstacles";
 import initOb2 from "./scenario_obstacle_walls";
 import initEvade from "./scenario_evade";
+import initPath from "./scenario_path";
 
 // The scenarios use stateful class instances to represent various items.
 // It is not straightforward to make these immutable; for simplicities sake
@@ -23,12 +24,14 @@ export function getScenario(id: ScenarioId): Scenario | null {
       return initOb2();
     case "SC_EVADE":
       return initEvade();
+    case "SC_PATH":
+      return initPath();
     default:
       return null;
   }
 }
 
-const focussedScenarioId = "SC_EVADE";
+const focussedScenarioId = "SC_PATH";
 
 export const initialState: State = {
   ui: {
@@ -47,6 +50,7 @@ export const initialState: State = {
     "SC_OB_1",
     "SC_OB_2",
     "SC_EVADE",
+    "SC_PATH",
   ],
   scenario: getScenario(focussedScenarioId),
 };

@@ -17,13 +17,12 @@
 
 ## Features
 
-- [ ] Behaviour config should include configuring dependent behaviour
-  - [ ] FPCR uses Seek
-  - [ ] FPP uses Seek
 - [ ] "No target has been assigned yet"
   - [ ] Does not make sense in
     - [ ] LWYAG
     - [ ] Obstacle Avoidance
+    - [ ] FPCR
+    - [ ] FPP
   - [ ] Needs to be more obvious / urgent when it is needed.
 - [ ] Debug
   - [ ] Improve colouring

@@ -4,6 +4,7 @@ import FollowPathChaseRabbit from "@steering/followPathChaseRabbit";
 import makeUpdatedClone from "@lib/makeUpdatedClone";
 import SelectPath from "@components/SelectPath";
 import StateContext from "@components/StateContext";
+import SeekControls from "./Seek";
 
 type Props = {
   behaviour: FollowPathChaseRabbit;
@@ -24,6 +25,12 @@ const FollowPathChaseRabbitControls = (props: Props) => {
           props.onBehaviourChange(
             makeUpdatedClone(behaviour, "pathOffset", pathOffset)
           );
+        }}
+      />
+      <SeekControls
+        behaviour={behaviour.seek}
+        onBehaviourChange={(seek) => {
+          props.onBehaviourChange(makeUpdatedClone(behaviour, "seek", seek));
         }}
       />
       <SelectPath
