@@ -49,6 +49,7 @@
 
 ## Maybe
 
+- [ ] Cat and mouse characters
 - [ ] Characters should not be able to leave the canvas. Bounce off the sides maybe?
 - [ ] Add Art Deco styling
 - [ ] Make it possible to dynamically add characters to a scenario
