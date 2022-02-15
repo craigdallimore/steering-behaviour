@@ -39,7 +39,7 @@
   "scripts": {
     "clean": "tsc --build --clean && jest --clearCache",
     "test": "jest",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint . --ext .ts,.tsx",
     "build": "rollup -c",
     "dev": "rollup -c --watch",
     "postinstall": "husky install",
