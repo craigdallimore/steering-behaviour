@@ -31,7 +31,7 @@ export function getScenario(id: ScenarioId): Scenario | null {
   }
 }
 
-const focussedScenarioId = "SC_PATH";
+const focussedScenarioId = "SC_BLANK";
 
 export const initialState: State = {
   ui: {

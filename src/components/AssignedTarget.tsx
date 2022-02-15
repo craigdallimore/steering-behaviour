@@ -14,7 +14,7 @@ const AssignedTarget = (props: Props) => {
           <code>ID: {props.targetId}</code>
         </label>
       ) : (
-        <label className="label-target-id">
+        <label className="label-target-id no-target">
           No target has been assigned yet
         </label>
       )}

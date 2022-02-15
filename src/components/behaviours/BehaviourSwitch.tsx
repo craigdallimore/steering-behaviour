@@ -15,6 +15,7 @@ import SeekControls from "./Seek";
 import SeparationControls from "./Separation";
 import WanderControls from "./Wander";
 import { Behaviour } from "@domain/types";
+import AssignedTarget from "@components/AssignedTarget";
 
 type Props = {
   behaviour: Behaviour;
@@ -27,17 +28,23 @@ const BehaviourSpecificControls = (props: Props) => {
   switch (behaviour.name) {
     case "ALIGN":
       return (
-        <AlignControls
-          behaviour={behaviour}
-          onBehaviourChange={props.onBehaviourChange}
-        />
+        <>
+          <AlignControls
+            behaviour={behaviour}
+            onBehaviourChange={props.onBehaviourChange}
+          />
+          <AssignedTarget targetId={behaviour.targetId} />
+        </>
       );
     case "ARRIVE":
       return (
-        <ArriveControls
-          behaviour={behaviour}
-          onBehaviourChange={props.onBehaviourChange}
-        />
+        <>
+          <ArriveControls
+            behaviour={behaviour}
+            onBehaviourChange={props.onBehaviourChange}
+          />
+          <AssignedTarget targetId={behaviour.targetId} />
+        </>
       );
     case "COLLISION_AVOIDANCE":
       return (
@@ -48,24 +55,33 @@ const BehaviourSpecificControls = (props: Props) => {
       );
     case "EVADE":
       return (
-        <EvadeControls
-          behaviour={behaviour}
-          onBehaviourChange={props.onBehaviourChange}
-        />
+        <>
+          <EvadeControls
+            behaviour={behaviour}
+            onBehaviourChange={props.onBehaviourChange}
+          />
+          <AssignedTarget targetId={behaviour.targetId} />
+        </>
       );
     case "FACE":
       return (
-        <FaceControls
-          behaviour={behaviour}
-          onBehaviourChange={props.onBehaviourChange}
-        />
+        <>
+          <FaceControls
+            behaviour={behaviour}
+            onBehaviourChange={props.onBehaviourChange}
+          />
+          <AssignedTarget targetId={behaviour.targetId} />
+        </>
       );
     case "FLEE":
       return (
-        <FleeControls
-          behaviour={behaviour}
-          onBehaviourChange={props.onBehaviourChange}
-        />
+        <>
+          <FleeControls
+            behaviour={behaviour}
+            onBehaviourChange={props.onBehaviourChange}
+          />
+          <AssignedTarget targetId={behaviour.targetId} />
+        </>
       );
     case "FOLLOW_PATH_CHASE_RABBIT":
       return (
@@ -90,10 +106,13 @@ const BehaviourSpecificControls = (props: Props) => {
       );
     case "MATCH_VELOCITY":
       return (
-        <MatchVelocityControls
-          behaviour={behaviour}
-          onBehaviourChange={props.onBehaviourChange}
-        />
+        <>
+          <MatchVelocityControls
+            behaviour={behaviour}
+            onBehaviourChange={props.onBehaviourChange}
+          />
+          <AssignedTarget targetId={behaviour.targetId} />
+        </>
       );
     case "OBSTACLE_AVOIDANCE":
       return (
@@ -104,17 +123,23 @@ const BehaviourSpecificControls = (props: Props) => {
       );
     case "PURSUE":
       return (
-        <PursueControls
-          behaviour={behaviour}
-          onBehaviourChange={props.onBehaviourChange}
-        />
+        <>
+          <PursueControls
+            behaviour={behaviour}
+            onBehaviourChange={props.onBehaviourChange}
+          />
+          <AssignedTarget targetId={behaviour.targetId} />
+        </>
       );
     case "SEEK":
       return (
-        <SeekControls
-          behaviour={behaviour}
-          onBehaviourChange={props.onBehaviourChange}
-        />
+        <>
+          <SeekControls
+            behaviour={behaviour}
+            onBehaviourChange={props.onBehaviourChange}
+          />
+          <AssignedTarget targetId={behaviour.targetId} />
+        </>
       );
     case "SEPARATION":
       return (

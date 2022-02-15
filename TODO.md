@@ -2,6 +2,7 @@
 
 ## Bugs
 
+- [ ] Buttons feel really gummy
 - [ ] Reset button on scenario picker should not be present until the scenario has been started
 - [ ] Altering steering doesn't work very well.
 - [ ] OBSTACLE_AVOIDANCE still clips when entering from right.
@@ -17,13 +18,6 @@
 
 ## Features
 
-- [ ] "No target has been assigned yet"
-  - [ ] Does not make sense in
-    - [ ] LWYAG
-    - [ ] Obstacle Avoidance
-    - [ ] FPCR
-    - [ ] FPP
-  - [ ] Needs to be more obvious / urgent when it is needed.
 - [ ] Debug
   - [ ] Improve colouring
   - [ ] Add to all behaviours
