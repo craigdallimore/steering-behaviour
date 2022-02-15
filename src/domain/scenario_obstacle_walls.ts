@@ -4,7 +4,7 @@ import * as steering from "@steering/index";
 
 export default function initScenario(): Scenario {
   return {
-    name: "Obstacle Avoidance",
+    name: "Obstacle Avoidance (walls)",
     description: "This character exhibits the collision avoidance behaviour",
     characters: new Map([
       [

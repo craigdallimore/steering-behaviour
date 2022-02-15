@@ -1,9 +1,9 @@
 import type { Scenario, ScenarioId, State } from "@domain/types";
-import init01 from "./scenario01";
-import init02 from "./scenario02";
-import init03 from "./scenario03";
-import init04 from "./scenario04";
-import init05 from "./scenario05";
+import initBlank from "./scenario_blank";
+import initWander from "./scenario_wander";
+import initColl from "./scenario_collision";
+import initOb1 from "./scenario_many_obstacles";
+import initOb2 from "./scenario_obstacle_walls";
 import initEvade from "./scenario_evade";
 
 // The scenarios use stateful class instances to represent various items.
@@ -11,16 +11,16 @@ import initEvade from "./scenario_evade";
 // we will reinitialise each scenario when we switch to it.
 export function getScenario(id: ScenarioId): Scenario | null {
   switch (id) {
-    case "SC_01":
-      return init01();
-    case "SC_02":
-      return init02();
-    case "SC_03":
-      return init03();
-    case "SC_04":
-      return init04();
-    case "SC_05":
-      return init05();
+    case "SC_BLANK":
+      return initBlank();
+    case "SC_WANDER":
+      return initWander();
+    case "SC_COLL":
+      return initColl();
+    case "SC_OB_1":
+      return initOb1();
+    case "SC_OB_2":
+      return initOb2();
     case "SC_EVADE":
       return initEvade();
     default:
@@ -40,6 +40,13 @@ export const initialState: State = {
     focussedCharacterId: "_1",
     focussedScenarioId,
   },
-  scenarioIds: ["SC_01", "SC_02", "SC_03", "SC_04", "SC_05", "SC_EVADE"],
+  scenarioIds: [
+    "SC_BLANK",
+    "SC_WANDER",
+    "SC_COLL",
+    "SC_OB_1",
+    "SC_OB_2",
+    "SC_EVADE",
+  ],
   scenario: getScenario(focussedScenarioId),
 };

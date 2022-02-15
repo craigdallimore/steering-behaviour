@@ -36,7 +36,7 @@ const pairs2: Array<Pair> = range2
 
 export default function initScenario(): Scenario {
   return {
-    name: "Obstacle Avoidance",
+    name: "Obstacle Avoidance (many)",
     description: "This character exhibits the collision avoidance behaviour",
     characters: new Map([
       [

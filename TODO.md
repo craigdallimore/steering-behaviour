@@ -18,13 +18,8 @@
 ## Features
 
 - [ ] Behaviour config should include configuring dependent behaviour
-  - [x] Evade uses Flee
-  - [x] Face uses Align
   - [ ] FPCR uses Seek
   - [ ] FPP uses Seek
-  - [x] LWYAG uses Align
-  - [x] ObstacleAvoidance uses Seek
-  - [x] Pursue uses Seek
 - [ ] "No target has been assigned yet"
   - [ ] Does not make sense in
     - [ ] LWYAG
