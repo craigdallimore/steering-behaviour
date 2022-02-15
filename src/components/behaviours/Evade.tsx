@@ -1,7 +1,6 @@
 import React from "react";
 import NumericField from "components/NumericField";
 import Evade from "@steering/evade";
-import AssignedTarget from "@components/AssignedTarget";
 import makeUpdatedClone from "@lib/makeUpdatedClone";
 import FleeControls from "./Flee";
 

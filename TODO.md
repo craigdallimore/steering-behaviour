@@ -18,19 +18,22 @@
 ## Features
 
 - [ ] Behaviour config should include configuring dependent behaviour
-  - [ ] Evade uses Flee
+  - [x] Evade uses Flee
   - [x] Face uses Align
   - [ ] FPCR uses Seek
   - [ ] FPP uses Seek
-  - [ ] LWYAG uses Align
-  - [ ] ObstacleAvoidance uses Seek
-  - [ ] Pursue uses Seek
-  - [ ] Wander uses Face uses Seek
+  - [x] LWYAG uses Align
+  - [x] ObstacleAvoidance uses Seek
+  - [x] Pursue uses Seek
+- [ ] "No target has been assigned yet"
+  - [ ] Does not make sense in
+    - [ ] LWYAG
+    - [ ] Obstacle Avoidance
+  - [ ] Needs to be more obvious / urgent when it is needed.
 - [ ] Debug
   - [ ] Improve colouring
   - [ ] Add to all behaviours
 - [ ] Removing a behaviour should stop the kinematic from moving
-- [ ] Remove LookWhereYouAreGoing from wander
 - [ ] Paths
   - [ ] Are path offsets respected?
   - [ ] Make it possible to draw paths

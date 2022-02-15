@@ -7,6 +7,7 @@ import FaceControls from "./Face";
 import FleeControls from "./Flee";
 import FollowPathChaseRabbitControls from "./FollowPathChaseRabbit";
 import FollowPathPredictControls from "./FollowPathPredict";
+import LookWhereYouAreGoingControls from "./LookWhereYouAreGoing";
 import MatchVelocityControls from "./MatchVelocity";
 import ObstacleAvoidanceControls from "./ObstacleAvoidance";
 import PursueControls from "./Pursue";
@@ -81,7 +82,12 @@ const BehaviourSpecificControls = (props: Props) => {
         />
       );
     case "LOOK_WHERE_YOU_ARE_GOING":
-      return null;
+      return (
+        <LookWhereYouAreGoingControls
+          behaviour={behaviour}
+          onBehaviourChange={props.onBehaviourChange}
+        />
+      );
     case "MATCH_VELOCITY":
       return (
         <MatchVelocityControls
