@@ -1,6 +1,6 @@
 import { AbstractBehaviour } from "./abstractBehaviour";
 import { getParam, getPosition } from "@lib/path";
-import type { PathId, Kinematic, Path, Steering, Debug } from "@domain/types";
+import type { PathId, Kinematic, Path, Steering } from "@domain/types";
 import Seek from "./seek";
 
 export default class FollowPathChaseRabbit extends AbstractBehaviour {
@@ -8,7 +8,6 @@ export default class FollowPathChaseRabbit extends AbstractBehaviour {
   pathId: PathId;
   pathOffset: number;
   seek: Seek;
-  debug: Debug;
   constructor(pathId: PathId, pathOffset?: number) {
     super();
     this.pathId = pathId;
@@ -16,12 +15,6 @@ export default class FollowPathChaseRabbit extends AbstractBehaviour {
     // if the character is to move along the reverse direction
     this.pathOffset = pathOffset || 30;
     this.seek = new Seek("");
-    this.debug = {
-      circles: [],
-      edges: [],
-      points: [],
-      vectors: [],
-    };
   }
   calculate(kinematic: Kinematic, path: Path): Steering {
     // Find the current position on the path

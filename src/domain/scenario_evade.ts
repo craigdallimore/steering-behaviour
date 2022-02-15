@@ -18,7 +18,7 @@ export default function initScenario(): Scenario {
             orientation: 2 * Math.PI,
             rotation: 0,
           },
-          new steering.None()
+          []
         ),
       ],
       [
@@ -31,7 +31,7 @@ export default function initScenario(): Scenario {
             orientation: 2 * Math.PI,
             rotation: 0,
           },
-          new steering.Pursue("mouse")
+          [new steering.Pursue("mouse")]
         ),
       ],
     ]),

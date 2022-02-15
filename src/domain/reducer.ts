@@ -5,14 +5,18 @@ import {
   Behaviour,
   Vector,
   ScenarioId,
+  SteeringBehaviourName,
 } from "@domain/types";
 import { distance } from "@lib/vector";
 import updateFocussedCharacter from "@lib/updateFocussedCharacter";
-import applyBehaviour from "@lib/applyBehaviour";
+import applyBehaviours from "@lib/applyBehaviours";
+import getFirstTargetId from "@lib/getFirstTargetId";
 
 // TYPES ----------------------------------------------------------------------
 
+const BEHAVIOUR_ADDED = "BEHAVIOUR_ADDED";
 const BEHAVIOUR_CHANGED = "BEHAVIOUR_CHANGED";
+const BEHAVIOUR_REMOVED = "BEHAVIOUR_REMOVED";
 const CANVAS_CLICKED = "CANVAS_CLICKED";
 const CANVAS_RESIZED = "CANVAS_RESIZED";
 const DEBUG_MODE_CHANGED = "DEBUG_MODE_CHANGED";
@@ -33,8 +37,16 @@ export type Action =
       payload: number;
     }
   | {
+      type: typeof BEHAVIOUR_ADDED;
+      payload: Behaviour;
+    }
+  | {
       type: typeof BEHAVIOUR_CHANGED;
       payload: Behaviour;
+    }
+  | {
+      type: typeof BEHAVIOUR_REMOVED;
+      payload: SteeringBehaviourName;
     }
   | {
       type: typeof SCENARIO_CHANGED;
@@ -147,9 +159,11 @@ export function reducer(state: State, action: Action): State {
         clickedCharacterId !== state.ui.focussedCharacterId // A character cannot target themselves
       ) {
         const nextState = updateFocussedCharacter(state, (char) => {
-          if ("targetId" in char.behaviour) {
-            char.behaviour.targetId = clickedCharacterId;
-          }
+          char.behaviours.forEach((behaviour) => {
+            if ("targetId" in behaviour) {
+              behaviour.targetId = clickedCharacterId;
+            }
+          });
           return char;
         });
         nextState.ui.actionFeedbackCount = 60;
@@ -163,17 +177,30 @@ export function reducer(state: State, action: Action): State {
 
       // The newly focussed character may be able to have a target assigned.
       state.ui.isSettingTarget = !!(
-        focussedCharacter && "targetId" in focussedCharacter.behaviour
+        focussedCharacter && getFirstTargetId(focussedCharacter.behaviours)
       );
       return state;
+    }
+    case "BEHAVIOUR_ADDED": {
+      const nextState = updateFocussedCharacter(state, (char) => {
+        char.behaviours = [...char.behaviours, action.payload];
+        return char;
+      });
+
+      if ("targetId" in action.payload) {
+        nextState.ui.isSettingTarget = true;
+      }
+
+      return nextState;
     }
 
     case "BEHAVIOUR_CHANGED": {
       const nextState = updateFocussedCharacter(state, (char) => {
-        char.behaviour = action.payload;
-
-        if (action.payload.name === "NONE") {
-          char.kinematic.velocity = [0, 0];
+        const index = char.behaviours.findIndex((behaviour) => {
+          behaviour.name === action.payload.name;
+        });
+        if (index > -1) {
+          char.behaviours[index] = action.payload;
         }
 
         return char;
@@ -182,6 +209,17 @@ export function reducer(state: State, action: Action): State {
       if ("targetId" in action.payload) {
         nextState.ui.isSettingTarget = true;
       }
+
+      return nextState;
+    }
+
+    case "BEHAVIOUR_REMOVED": {
+      const nextState = updateFocussedCharacter(state, (char) => {
+        char.behaviours = char.behaviours.filter(
+          (behaviour: Behaviour) => behaviour.name !== action.payload
+        );
+        return char;
+      });
 
       return nextState;
     }
@@ -265,13 +303,7 @@ export function reducer(state: State, action: Action): State {
 
       scenario.characters = new Map(
         [...scenario.characters].map(([id, char]) => {
-          const nextChar = applyBehaviour(
-            char,
-            time,
-            scenario.characters,
-            scenario.paths,
-            scenario.shapes
-          );
+          const nextChar = applyBehaviours(char, time, scenario);
           return [id, nextChar];
         })
       );

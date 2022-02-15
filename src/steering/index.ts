@@ -8,7 +8,6 @@ import FollowPathChaseRabbit from "./followPathChaseRabbit";
 import FollowPathPredict from "./followPathPredict";
 import LookWhereYouAreGoing from "./lookWhereYouAreGoing";
 import MatchVelocity from "./matchVelocity";
-import None from "./none";
 import ObstacleAvoidance from "./obstacleAvoidance";
 import Pursue from "./pursue";
 import Seek from "./seek";
@@ -26,7 +25,6 @@ export {
   FollowPathPredict,
   LookWhereYouAreGoing,
   MatchVelocity,
-  None,
   ObstacleAvoidance,
   Pursue,
   Seek,

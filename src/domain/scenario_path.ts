@@ -18,7 +18,7 @@ export default function initScenario(): Scenario {
             orientation: 0,
             rotation: 0,
           },
-          new steering.None()
+          []
         ),
       ],
     ]),

@@ -5,7 +5,6 @@ import AddBehaviour from "./AddBehaviour";
 import RemoveBehaviour from "./RemoveBehaviour";
 
 import { Action } from "@domain/reducer";
-import None from "@steering/none";
 
 type Props = {
   character: Character;
@@ -54,22 +53,14 @@ const Behaviours = (props: Props) => {
     <fieldset className="behaviours">
       <legend>Behaviours</legend>
       <ul>
-        <li>
-          <header>
-            <h3>{getName(props.character.behaviour.name)}</h3>
-            {props.character.behaviour instanceof None || <RemoveBehaviour />}
-          </header>
-          <BehaviourSwitch
-            behaviour={props.character.behaviour}
-            onBehaviourChange={(payload: Behaviour) => {
-              props.dispatch({
-                type: "BEHAVIOUR_CHANGED",
-                payload,
-              });
-            }}
-          />
-          {props.character.behaviour instanceof None && (
-            <AddBehaviour
+        {props.character.behaviours.map((behaviour) => (
+          <li key={behaviour.name}>
+            <header>
+              <h3>{getName(behaviour.name)}</h3>
+              <RemoveBehaviour name={behaviour.name} />
+            </header>
+            <BehaviourSwitch
+              behaviour={behaviour}
               onBehaviourChange={(payload: Behaviour) => {
                 props.dispatch({
                   type: "BEHAVIOUR_CHANGED",
@@ -77,9 +68,19 @@ const Behaviours = (props: Props) => {
                 });
               }}
             />
-          )}
-        </li>
+          </li>
+        ))}
       </ul>
+      {props.character.behaviours.length === 0 && (
+        <AddBehaviour
+          onBehaviourChange={(payload: Behaviour) => {
+            props.dispatch({
+              type: "BEHAVIOUR_ADDED",
+              payload,
+            });
+          }}
+        />
+      )}
     </fieldset>
   );
 };

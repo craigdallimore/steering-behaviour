@@ -1,6 +1,6 @@
 import { AbstractBehaviour } from "./abstractBehaviour";
 import { multiply, radiansToVector, add } from "@lib/vector";
-import type { Kinematic, Vector, Steering, Debug } from "@domain/types";
+import type { Kinematic, Vector, Steering } from "@domain/types";
 
 export default class Wander extends AbstractBehaviour {
   readonly name = "WANDER";
@@ -9,7 +9,6 @@ export default class Wander extends AbstractBehaviour {
   wanderRate: number;
   wanderOrientation: number;
   maxAcceleration: number;
-  debug: Debug;
   constructor(
     wanderOffset?: number,
     wanderRadius?: number,
@@ -26,13 +25,6 @@ export default class Wander extends AbstractBehaviour {
     this.wanderRate = wanderRate || 0.4;
 
     this.wanderOrientation = 0;
-
-    this.debug = {
-      circles: [],
-      edges: [],
-      points: [],
-      vectors: [],
-    };
   }
   calculate(kinematic: Kinematic): Steering {
     const random = Math.random() - Math.random();

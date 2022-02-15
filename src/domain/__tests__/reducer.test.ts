@@ -50,9 +50,8 @@ describe("DEBUG_MODE_CHANGED", () => {
 /*
 describe('CANVAS_CLICKED', () => {});
 describe('CANVAS_RESIZED', () => {});
-*/
-describe("BEHAVIOUR_CHANGED", () => {
-  it("given the behaviour is changed to NONE, it zeroes the velocity of the character", () => {
+describe("BEHAVIOUR_REMOVED", () => {
+  it("given the last behaviour is removed, the character will stop moving", () => {
     const scenario = initBlankScenario();
     scenario.characters = new Map([
       [
@@ -65,7 +64,7 @@ describe("BEHAVIOUR_CHANGED", () => {
             orientation: 0,
             rotation: 0,
           },
-          new steering.Wander()
+          [new steering.Wander()]
         ),
       ],
     ]);
@@ -83,7 +82,6 @@ describe("BEHAVIOUR_CHANGED", () => {
     expect(char?.kinematic.velocity).toEqual([0, 0]);
   });
 });
-/*
 describe('SCENARIO_CHANGED', () => {});
 describe('ORIENTATION_CHANGED', () => {});
 describe('ROTATION_CHANGED', () => {});

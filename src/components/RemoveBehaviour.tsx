@@ -1,8 +1,12 @@
 import React from "react";
 import DispatchContext from "@components/DispatchContext";
-import None from "@steering/none";
+import { SteeringBehaviourName } from "@domain/types";
 
-const RemoveBehaviour = () => {
+type Props = {
+  name: SteeringBehaviourName;
+};
+
+const RemoveBehaviour = (props: Props) => {
   const dispatch = React.useContext(DispatchContext);
   return (
     <button
@@ -10,7 +14,7 @@ const RemoveBehaviour = () => {
       aria-label="Remove behaviour"
       role="button"
       onClick={() => {
-        dispatch({ type: "BEHAVIOUR_CHANGED", payload: new None() });
+        dispatch({ type: "BEHAVIOUR_REMOVED", payload: props.name });
       }}
     >
       ×

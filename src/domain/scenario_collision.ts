@@ -17,7 +17,7 @@ export default function initScenario(): Scenario {
             orientation: 1.5,
             rotation: 0,
           },
-          new steering.CollisionAvoidance()
+          [new steering.CollisionAvoidance()]
         ),
       ],
       [
@@ -30,7 +30,7 @@ export default function initScenario(): Scenario {
             orientation: 1.5 * Math.PI,
             rotation: 0,
           },
-          new steering.None()
+          []
         ),
       ],
       [
@@ -43,7 +43,7 @@ export default function initScenario(): Scenario {
             orientation: 1.5 * Math.PI,
             rotation: 0,
           },
-          new steering.None()
+          []
         ),
       ],
       [
@@ -56,7 +56,7 @@ export default function initScenario(): Scenario {
             orientation: 1.5 * Math.PI,
             rotation: 0,
           },
-          new steering.None()
+          []
         ),
       ],
       [
@@ -69,7 +69,7 @@ export default function initScenario(): Scenario {
             orientation: 1.5 * Math.PI,
             rotation: 0,
           },
-          new steering.None()
+          []
         ),
       ],
       [
@@ -82,7 +82,7 @@ export default function initScenario(): Scenario {
             orientation: 1.5 * Math.PI,
             rotation: 0,
           },
-          new steering.None()
+          []
         ),
       ],
       [
@@ -95,7 +95,7 @@ export default function initScenario(): Scenario {
             orientation: 1.5 * Math.PI,
             rotation: 0,
           },
-          new steering.None()
+          []
         ),
       ],
       [
@@ -108,7 +108,7 @@ export default function initScenario(): Scenario {
             orientation: 1.5 * Math.PI,
             rotation: 0,
           },
-          new steering.None()
+          []
         ),
       ],
       [
@@ -121,7 +121,7 @@ export default function initScenario(): Scenario {
             orientation: 1.5 * Math.PI,
             rotation: 0,
           },
-          new steering.None()
+          []
         ),
       ],
     ]),

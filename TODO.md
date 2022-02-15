@@ -20,6 +20,7 @@
 
 ## Features
 
+- [ ] A character should be able to have multiple blendable behaviours
 - [ ] Debug
   - [ ] Improve colouring
   - [ ] Add to all behaviours
@@ -27,7 +28,6 @@
   - [ ] Are path offsets respected?
   - [ ] Make it possible to draw paths
   - [ ] Path should be closable?
-- [ ] A character should be able to have multiple blendable behaviours
 - [ ] Move helpers out from class files
 - [ ] Reducer can be more imperative
 - [ ] Should be possible to make the mouse a target

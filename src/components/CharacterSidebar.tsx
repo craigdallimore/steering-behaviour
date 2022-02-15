@@ -4,21 +4,12 @@ import StateContext from "@components/StateContext";
 import Behaviours from "./Behaviours";
 import NumericField from "./NumericField";
 import getFocussedCharacter from "@lib/getFocussedCharacter";
-import type { Behaviour } from "@domain/types";
-
-const getClassname = (behaviour: Behaviour): string => {
-  return "targetId" in behaviour ? "has-target" : "";
-};
 
 const CharacterSidebar = () => {
   const dispatch = React.useContext(DispatchContext);
   const state = React.useContext(StateContext);
 
   const focussedCharacter = getFocussedCharacter(state);
-
-  const className = focussedCharacter
-    ? getClassname(focussedCharacter.behaviour)
-    : "";
 
   const idText = state.ui.focussedCharacterId
     ? `ID: ${state.ui.focussedCharacterId}`
@@ -28,7 +19,7 @@ const CharacterSidebar = () => {
     <aside className="character-sidebar" aria-label="Character sidebar">
       <h2>{focussedCharacter ? "Selected Item" : "Nothing selected"}</h2>
       {focussedCharacter && (
-        <form className={className}>
+        <form>
           <fieldset>
             <legend>
               Kinematic <code>{idText}</code>

@@ -1,6 +1,6 @@
 import { AbstractBehaviour } from "./abstractBehaviour";
 import { add, dot, length, subtract, multiply, normalise } from "@lib/vector";
-import type { Kinematic, Vector, Steering, Debug } from "@domain/types";
+import type { Kinematic, Vector, Steering } from "@domain/types";
 
 type Acc = {
   timeToCollision: number;
@@ -13,7 +13,6 @@ type Acc = {
 
 export default class CollisionAvoidance extends AbstractBehaviour {
   readonly name = "COLLISION_AVOIDANCE";
-  debug: Debug;
   maxAcceleration: number;
   radius: number;
   constructor(maxAcceleration?: number, radius?: number) {
@@ -23,12 +22,6 @@ export default class CollisionAvoidance extends AbstractBehaviour {
     // Holds the collision radius of a character (we assume all characters have
     // the same radius here)
     this.radius = radius || 10;
-    this.debug = {
-      circles: [],
-      edges: [],
-      points: [],
-      vectors: [],
-    };
   }
   calculate(kinematic: Kinematic, targets: Array<Kinematic>): Steering {
     const init: Acc = {

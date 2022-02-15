@@ -1,10 +1,9 @@
-import * as steering from "@steering/index";
 import { Behaviour, Kinematic } from "./types";
 import { immerable } from "immer";
 
 export default class Character {
   [immerable] = true;
-  constructor(kinematic?: Kinematic, behaviour?: Behaviour) {
+  constructor(kinematic?: Kinematic, behaviours?: Array<Behaviour>) {
     this.kinematic = kinematic || {
       maxSpeed: 45,
       position: [0, 0],
@@ -12,8 +11,8 @@ export default class Character {
       orientation: 0,
       rotation: 0,
     };
-    this.behaviour = behaviour || new steering.None();
+    this.behaviours = behaviours || [];
   }
   kinematic: Kinematic;
-  behaviour: Behaviour;
+  behaviours: Array<Behaviour>;
 }

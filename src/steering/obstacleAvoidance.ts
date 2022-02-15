@@ -9,7 +9,6 @@ import {
 } from "@lib/vector";
 import type {
   Collision,
-  Debug,
   Edge,
   Kinematic,
   Shape,
@@ -33,7 +32,6 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
   avoidDistance: number;
   lookaheadMain: number;
   lookaheadSide: number;
-  debug: Debug;
   constructor(
     avoidDistance?: number,
     lookaheadMain?: number,
@@ -49,13 +47,6 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
     this.lookaheadSide = lookaheadSide || 85;
 
     this.seek = new Seek("");
-
-    this.debug = {
-      circles: [],
-      edges: [],
-      points: [],
-      vectors: [],
-    };
   }
   calculate(kinematic: Kinematic, shapes: Array<Shape>): Steering {
     const w0 = getWhiskerRay(kinematic, 0, this.lookaheadMain);

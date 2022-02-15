@@ -12,7 +12,6 @@ import {
   FollowPathPredict,
   LookWhereYouAreGoing,
   MatchVelocity,
-  None,
   ObstacleAvoidance,
   Pursue,
   Seek,
@@ -61,7 +60,7 @@ const getDefaultBehaviour = (
     case "WANDER":
       return new Wander();
     default:
-      return new None();
+      return new Wander();
   }
 };
 

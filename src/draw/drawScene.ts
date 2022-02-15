@@ -7,7 +7,8 @@ import drawCircle from "./drawCircle";
 
 import type { State, Character, Path, Shape } from "@domain/types";
 import getFocussedCharacter from "@lib/getFocussedCharacter";
-import drawVector from "./drawVector";
+import drawDebug from "./drawDebug";
+import getFirstTargetId from "@lib/getFirstTargetId";
 
 export default function drawScene(
   ctx: CanvasRenderingContext2D,
@@ -31,14 +32,12 @@ export default function drawScene(
 
   const focussedCharacter = getFocussedCharacter(state);
 
-  if (
-    state.ui.actionFeedbackCount > -1 &&
-    focussedCharacter &&
-    "targetId" in focussedCharacter.behaviour
-  ) {
-    const target = state.scenario.characters.get(
-      focussedCharacter.behaviour.targetId
-    );
+  const targetId = focussedCharacter
+    ? getFirstTargetId(focussedCharacter.behaviours)
+    : null;
+
+  if (state.ui.actionFeedbackCount > -1 && focussedCharacter && targetId) {
+    const target = state.scenario.characters.get(targetId);
     if (target) {
       drawCircle(
         ctx,
@@ -51,25 +50,9 @@ export default function drawScene(
 
   state.scenario.characters.forEach((cha: Character) => {
     drawArrow(ctx, cha.kinematic);
-    if (state.ui.isDebugMode && "debug" in cha.behaviour) {
-      cha.behaviour.debug.points.forEach((point) => {
-        drawCircle(ctx, point, 2, "cyan");
-      });
-
-      cha.behaviour.debug.vectors.forEach((vector) => {
-        drawVector(ctx, cha.kinematic.position, vector, "red");
-      });
-
-      cha.behaviour.debug.edges.forEach((edge) => {
-        drawPath(
-          ctx,
-          { position: cha.kinematic.position, points: edge, label: "Debug" },
-          "silver"
-        );
-      });
-
-      cha.behaviour.debug.circles.forEach(({ position, radius, fillStyle }) => {
-        drawCircle(ctx, position, radius, fillStyle);
+    if (state.ui.isDebugMode) {
+      cha.behaviours.forEach((behaviour) => {
+        drawDebug(ctx, behaviour.debug, cha.kinematic);
       });
     }
   });

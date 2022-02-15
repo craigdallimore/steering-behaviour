@@ -17,7 +17,7 @@ export default function initScenario(): Scenario {
             orientation: 1.5,
             rotation: 0,
           },
-          new steering.ObstacleAvoidance()
+          [new steering.ObstacleAvoidance()]
         ),
       ],
     ]),

@@ -3,7 +3,7 @@ import type { SteeringBehaviourName } from "@domain/types";
 
 type Props = {
   onSelectBehaviour: (name: SteeringBehaviourName) => void;
-  behaviourName?: SteeringBehaviourName;
+  behaviourName?: string;
 };
 
 const SelectBehaviour = (props: Props) => {
@@ -12,6 +12,9 @@ const SelectBehaviour = (props: Props) => {
       id="behaviour"
       value={props.behaviourName}
       onChange={(e) => {
+        if (e.target.value === "NONE") {
+          return;
+        }
         props.onSelectBehaviour(e.target.value as SteeringBehaviourName);
       }}
     >

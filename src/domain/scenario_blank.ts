@@ -1,6 +1,5 @@
 import Character from "./character";
 import { Scenario } from "./types";
-import * as steering from "@steering/index";
 
 export default function initScenario(): Scenario {
   return {
@@ -17,7 +16,7 @@ export default function initScenario(): Scenario {
             orientation: 2 * Math.PI,
             rotation: 0,
           },
-          new steering.None()
+          []
         ),
       ],
     ]),

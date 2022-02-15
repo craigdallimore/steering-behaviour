@@ -9,7 +9,6 @@ import {
   FollowPathPredict,
   LookWhereYouAreGoing,
   MatchVelocity,
-  None,
   ObstacleAvoidance,
   Pursue,
   Seek,
@@ -29,7 +28,6 @@ export type Behaviour =
   | FollowPathPredict
   | LookWhereYouAreGoing
   | MatchVelocity
-  | None
   | ObstacleAvoidance
   | Pursue
   | Seek

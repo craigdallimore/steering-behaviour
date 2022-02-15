@@ -8,7 +8,7 @@ describe("updateFocussedCharacter", () => {
       ? getScenario(initialState.ui.focussedCharacterId)
       : null;
     scenario?.characters.forEach((char) => {
-      char.behaviour = new steering.None();
+      char.behaviours = [];
     });
     return {
       ...initialState,
@@ -23,12 +23,12 @@ describe("updateFocussedCharacter", () => {
       },
     });
     const nextState = updateFocussedCharacter(state, (char) => {
-      char.behaviour = new steering.Wander();
+      char.behaviours = [new steering.Wander()];
       return char;
     });
 
     nextState.scenario?.characters.forEach((char) => {
-      expect(char.behaviour instanceof steering.Wander).toBe(false);
+      expect(char.behaviours[0] instanceof steering.Wander).toBe(false);
     });
   });
   test("nothing is changed given the id is invalid", () => {
@@ -39,12 +39,12 @@ describe("updateFocussedCharacter", () => {
       },
     });
     const nextState = updateFocussedCharacter(state, (char) => {
-      char.behaviour = new steering.Wander();
+      char.behaviours = [new steering.Wander()];
       return char;
     });
 
     nextState.scenario?.characters.forEach((char) => {
-      expect(char.behaviour instanceof steering.Wander).toBe(false);
+      expect(char.behaviours[0] instanceof steering.Wander).toBe(false);
     });
   });
   test("only the focussed character is changed", () => {
@@ -54,16 +54,16 @@ describe("updateFocussedCharacter", () => {
         .value,
     });
     const nextState = updateFocussedCharacter(state, (char) => {
-      char.behaviour = new steering.Wander();
+      char.behaviours = [new steering.Wander()];
       return char;
     });
 
     for (const key in nextState.scenario?.characters) {
       const char = nextState.scenario?.characters.get(key);
       if (key === state.ui.focussedCharacterId) {
-        expect(char?.behaviour instanceof steering.Wander).toBe(true);
+        expect(char?.behaviours[0] instanceof steering.Wander).toBe(true);
       } else {
-        expect(char?.behaviour instanceof steering.Wander).toBe(false);
+        expect(char?.behaviours[0] instanceof steering.Wander).toBe(false);
       }
     }
   });
