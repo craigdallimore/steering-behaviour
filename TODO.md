@@ -2,12 +2,15 @@
 
 ## Bugs
 
+- [ ] Buttons feel really gummy
+- [ ] Orientation controls sucks
 - [ ] Reset button on scenario picker should not be present until the scenario has been started
 - [ ] Altering steering doesn't work very well.
 - [ ] OBSTACLE_AVOIDANCE still clips when entering from right.
 
 ## Test debt
 
+- [ ] domain/reducer
 - [ ] lib
   - [ ] applyBehaviour
   - [ ] updateKinematic
@@ -17,20 +20,9 @@
 
 ## Features
 
-- [ ] Behaviour config should include configuring dependent behaviour
-  - [ ] Evade uses Flee
-  - [x] Face uses Align
-  - [ ] FPCR uses Seek
-  - [ ] FPP uses Seek
-  - [ ] LWYAG uses Align
-  - [ ] ObstacleAvoidance uses Seek
-  - [ ] Pursue uses Seek
-  - [ ] Wander uses Face uses Seek
 - [ ] Debug
   - [ ] Improve colouring
   - [ ] Add to all behaviours
-- [ ] Removing a behaviour should stop the kinematic from moving
-- [ ] Remove LookWhereYouAreGoing from wander
 - [ ] Paths
   - [ ] Are path offsets respected?
   - [ ] Make it possible to draw paths

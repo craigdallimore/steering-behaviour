@@ -1,7 +1,6 @@
 import React from "react";
 import NumericField from "components/NumericField";
 import Arrive from "@steering/arrive";
-import AssignedTarget from "@components/AssignedTarget";
 import makeUpdatedClone from "@lib/makeUpdatedClone";
 
 type Props = {
@@ -64,7 +63,6 @@ const ArriveControls = (props: Props) => {
           );
         }}
       />
-      <AssignedTarget targetId={behaviour.targetId} />
     </>
   );
 };

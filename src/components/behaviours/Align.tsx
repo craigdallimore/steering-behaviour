@@ -72,7 +72,6 @@ const AlignControls = (props: Props) => {
           );
         }}
       />
-      <AssignedTarget targetId={behaviour.targetId} />
     </>
   );
 };

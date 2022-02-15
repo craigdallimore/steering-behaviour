@@ -2,6 +2,7 @@ import React from "react";
 import NumericField from "components/NumericField";
 import ObstacleAvoidance from "@steering/obstacleAvoidance";
 import makeUpdatedClone from "@lib/makeUpdatedClone";
+import SeekControls from "./Seek";
 
 type Props = {
   behaviour: ObstacleAvoidance;
@@ -41,6 +42,12 @@ const ObstacleAvoidanceControls = (props: Props) => {
           props.onBehaviourChange(
             makeUpdatedClone(behaviour, "lookaheadSide", lookaheadSide)
           );
+        }}
+      />
+      <SeekControls
+        behaviour={behaviour.seek}
+        onBehaviourChange={(seek) => {
+          props.onBehaviourChange(makeUpdatedClone(behaviour, "seek", seek));
         }}
       />
     </>

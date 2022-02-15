@@ -1,5 +1,8 @@
+import Character from "@domain/character";
 import { initialState } from "@domain/initialState";
 import { reducer } from "@domain/reducer";
+import * as steering from "@steering/index";
+import initBlankScenario from "@domain/scenario_blank";
 
 Object.freeze(initialState);
 
@@ -45,14 +48,47 @@ describe("DEBUG_MODE_CHANGED", () => {
   });
 });
 /*
-test('CANVAS_CLICKED', () => {});
-test('CANVAS_RESIZED', () => {});
-test('BEHAVIOUR_CHANGED', () => {});
-test('SCENARIO_CHANGED', () => {});
-test('ORIENTATION_CHANGED', () => {});
-test('ROTATION_CHANGED', () => {});
-test('POSX_CHANGED', () => {});
-test('POSZ_CHANGED', () => {});
-test('VELX_CHANGED', () => {});
-test('VELZ_CHANGED', () => {});
+describe('CANVAS_CLICKED', () => {});
+describe('CANVAS_RESIZED', () => {});
+*/
+describe("BEHAVIOUR_CHANGED", () => {
+  it("given the behaviour is changed to NONE, it zeroes the velocity of the character", () => {
+    const scenario = initBlankScenario();
+    scenario.characters = new Map([
+      [
+        "_1",
+        new Character(
+          {
+            maxSpeed: 45,
+            position: [0, 0],
+            velocity: [10, 10],
+            orientation: 0,
+            rotation: 0,
+          },
+          new steering.Wander()
+        ),
+      ],
+    ]);
+    const changedState = {
+      ...initialState,
+      scenario,
+    };
+    changedState.ui.focussedCharacterId = "_1";
+    const nextState = reducer(changedState, {
+      type: "BEHAVIOUR_CHANGED",
+      payload: new steering.None(),
+    });
+    const char = nextState.scenario?.characters.get("_1");
+
+    expect(char?.kinematic.velocity).toEqual([0, 0]);
+  });
+});
+/*
+describe('SCENARIO_CHANGED', () => {});
+describe('ORIENTATION_CHANGED', () => {});
+describe('ROTATION_CHANGED', () => {});
+describe('POSX_CHANGED', () => {});
+describe('POSZ_CHANGED', () => {});
+describe('VELX_CHANGED', () => {});
+describe('VELZ_CHANGED', () => {});
 */

@@ -20,11 +20,11 @@ describe("Scenario sidebar", () => {
     });
     const select = getByDataId("pick-scenario");
 
-    userEvent.selectOptions(select, ["SC_02"]);
+    userEvent.selectOptions(select, ["SC_WANDER"]);
 
     expect(dispatch).toBeCalledWith({
       type: "SCENARIO_CHANGED",
-      payload: "SC_02",
+      payload: "SC_WANDER",
     });
   });
 
@@ -60,16 +60,18 @@ describe("Scenario sidebar", () => {
     const state = getState({
       ui: {
         ...initialState.ui,
-        focussedScenarioId: "SC_02",
+        focussedScenarioId: "SC_WANDER",
       },
-      scenario: getScenario("SC_02"),
+      scenario: getScenario("SC_WANDER"),
     });
     const { getByDataId } = render(<ScenarioSidebar />, {
       state,
     });
     const description = getByDataId("scenario-description");
 
-    expect(description?.textContent).toBe(getScenario("SC_02")?.description);
+    expect(description?.textContent).toBe(
+      getScenario("SC_WANDER")?.description
+    );
   });
 
   test(`given the scenario is paused

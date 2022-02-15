@@ -2,7 +2,7 @@ import React from "react";
 import NumericField from "components/NumericField";
 import Pursue from "@steering/pursue";
 import makeUpdatedClone from "@lib/makeUpdatedClone";
-import AssignedTarget from "@components/AssignedTarget";
+import SeekControls from "./Seek";
 
 type Props = {
   behaviour: Pursue;
@@ -24,7 +24,12 @@ const PursueControls = (props: Props) => {
           );
         }}
       />
-      <AssignedTarget targetId={behaviour.targetId} />
+      <SeekControls
+        behaviour={behaviour.seek}
+        onBehaviourChange={(seek) => {
+          props.onBehaviourChange(makeUpdatedClone(behaviour, "seek", seek));
+        }}
+      />
     </>
   );
 };
