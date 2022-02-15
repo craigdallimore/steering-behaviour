@@ -10,6 +10,7 @@
 
 ## Test debt
 
+- [ ] domain/reducer
 - [ ] lib
   - [ ] applyBehaviour
   - [ ] updateKinematic
