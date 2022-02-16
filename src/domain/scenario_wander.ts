@@ -17,7 +17,7 @@ export default function initScenario(): Scenario {
             orientation: (3 * Math.PI) / 2,
             rotation: 0,
           },
-          [new steering.Wander()]
+          [new steering.Wander(), new steering.LookWhereYouAreGoing()]
         ),
       ],
       [
@@ -30,7 +30,7 @@ export default function initScenario(): Scenario {
             orientation: Math.PI,
             rotation: 0,
           },
-          [new steering.Wander()]
+          [new steering.Wander(), new steering.LookWhereYouAreGoing()]
         ),
       ],
       [
@@ -43,7 +43,7 @@ export default function initScenario(): Scenario {
             orientation: Math.PI / 2,
             rotation: 0,
           },
-          [new steering.Wander()]
+          [new steering.Wander(), new steering.LookWhereYouAreGoing()]
         ),
       ],
       [
@@ -56,7 +56,7 @@ export default function initScenario(): Scenario {
             orientation: 0,
             rotation: 0,
           },
-          [new steering.Wander()]
+          [new steering.Wander(), new steering.LookWhereYouAreGoing()]
         ),
       ],
     ]),
