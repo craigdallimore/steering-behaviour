@@ -106,23 +106,34 @@ function getSteering(
   }
 }
 
+function blendSteerings(steerings: Array<[Steering, number]>): Steering {
+  if (steerings.length === 0) {
+    return {
+      linear: [0, 0],
+      angular: 0,
+    };
+  }
+  return steerings[0][0];
+}
+
 export default function applyBehaviours(
   char: Character,
   time: number,
   scenario: Scenario
 ): Character {
   const steerings = char.behaviours.reduce(
-    (acc: Array<Steering>, behaviour: Behaviour): Array<Steering> => {
+    (
+      acc: Array<[Steering, number]>,
+      behaviour: Behaviour
+    ): Array<[Steering, number]> => {
       const steering = getSteering(char, scenario, behaviour);
-      return steering ? [...acc, steering] : acc;
+      return steering ? [...acc, [steering, behaviour.weight]] : acc;
     },
     []
   );
 
-  const steering = steerings[0];
+  const steering = blendSteerings(steerings);
 
-  if (steering) {
-    char.kinematic = updateKinematic(steerings[0], char.kinematic, time);
-  }
+  char.kinematic = updateKinematic(steering, char.kinematic, time);
   return char;
 }
