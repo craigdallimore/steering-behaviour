@@ -7,6 +7,8 @@
 - [ ] Reset button on scenario picker should not be present until the scenario has been started
 - [ ] Altering steering doesn't work very well.
 - [ ] OBSTACLE_AVOIDANCE still clips when entering from right.
+- [ ] Resizing canvas makes it disappear
+- [ ] CollisionAvoidance - can't update
 
 ## Test debt
 
@@ -22,6 +24,8 @@
 
 - [ ] A character should be able to have multiple blendable behaviours
   - [ ] make maxAcceleration and maxAngularAcceleration properties of the kinematic
+- [ ] Should be possible to add a second behaviour
+- [ ] Add a gap between behaviours
 - [ ] Debug
   - [ ] Improve colouring
   - [ ] Add to all behaviours
@@ -42,6 +46,7 @@
 
 ## Maybe
 
+- [ ] Store selected scenario in page url
 - [ ] Cat and mouse characters
 - [ ] Characters should not be able to leave the canvas. Bounce off the sides maybe?
 - [ ] Add Art Deco styling
