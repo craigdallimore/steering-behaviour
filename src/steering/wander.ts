@@ -8,15 +8,12 @@ export default class Wander extends AbstractBehaviour {
   wanderRadius: number;
   wanderRate: number;
   wanderOrientation: number;
-  maxAcceleration: number;
   constructor(
     wanderOffset?: number,
     wanderRadius?: number,
-    wanderRate?: number,
-    maxAcceleration?: number
+    wanderRate?: number
   ) {
     super();
-    this.maxAcceleration = maxAcceleration || 5;
 
     // The offset and radius of the wander circle
     this.wanderOffset = wanderOffset || 40;
@@ -45,7 +42,7 @@ export default class Wander extends AbstractBehaviour {
       multiply(targetOrientationAsVector, this.wanderRadius)
     );
 
-    const linear = multiply(nextTargetPosition, this.maxAcceleration);
+    const linear = multiply(nextTargetPosition, kinematic.maxAcceleration);
     this.debug.vectors = [nextTargetPosition];
 
     return {

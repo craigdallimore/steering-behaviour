@@ -11,6 +11,8 @@ export default function initScenario(): Scenario {
         "_0",
         new Character(
           {
+            maxAcceleration: 25,
+            maxAngularAcceleration: 140,
             maxSpeed: 45,
             position: [400, 200],
             velocity: [0, 20],
@@ -24,6 +26,8 @@ export default function initScenario(): Scenario {
         "_1",
         new Character(
           {
+            maxAcceleration: 25,
+            maxAngularAcceleration: 140,
             maxSpeed: 45,
             position: [399, 400],
             velocity: [0, 0],
@@ -37,6 +41,8 @@ export default function initScenario(): Scenario {
         "_2",
         new Character(
           {
+            maxAcceleration: 25,
+            maxAngularAcceleration: 140,
             maxSpeed: 45,
             position: [399, 401],
             velocity: [0, 0],
@@ -50,6 +56,8 @@ export default function initScenario(): Scenario {
         "_3",
         new Character(
           {
+            maxAcceleration: 25,
+            maxAngularAcceleration: 140,
             maxSpeed: 45,
             position: [399, 399],
             velocity: [0, 0],
@@ -63,6 +71,8 @@ export default function initScenario(): Scenario {
         "_4",
         new Character(
           {
+            maxAcceleration: 25,
+            maxAngularAcceleration: 140,
             maxSpeed: 45,
             position: [400, 400],
             velocity: [0, 0],
@@ -76,6 +86,8 @@ export default function initScenario(): Scenario {
         "_5",
         new Character(
           {
+            maxAcceleration: 25,
+            maxAngularAcceleration: 140,
             maxSpeed: 45,
             position: [400, 401],
             velocity: [0, 0],
@@ -89,6 +101,8 @@ export default function initScenario(): Scenario {
         "_6",
         new Character(
           {
+            maxAcceleration: 25,
+            maxAngularAcceleration: 140,
             maxSpeed: 45,
             position: [400, 399],
             velocity: [0, 0],
@@ -102,6 +116,8 @@ export default function initScenario(): Scenario {
         "_7",
         new Character(
           {
+            maxAcceleration: 25,
+            maxAngularAcceleration: 140,
             maxSpeed: 45,
             position: [401, 400],
             velocity: [0, 0],
@@ -115,6 +131,8 @@ export default function initScenario(): Scenario {
         "_8",
         new Character(
           {
+            maxAcceleration: 25,
+            maxAngularAcceleration: 140,
             maxSpeed: 45,
             position: [401, 399],
             velocity: [0, 0],
@@ -128,6 +146,8 @@ export default function initScenario(): Scenario {
         "_9",
         new Character(
           {
+            maxAcceleration: 25,
+            maxAngularAcceleration: 140,
             maxSpeed: 45,
             position: [401, 401],
             velocity: [0, 0],

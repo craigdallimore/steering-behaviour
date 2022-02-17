@@ -14,16 +14,6 @@ const ArriveControls = (props: Props) => {
   return (
     <>
       <NumericField
-        id="max-acceleration"
-        label="Max. acceleration"
-        value={behaviour.maxAcceleration}
-        onChange={(maxAcceleration) => {
-          props.onBehaviourChange(
-            makeUpdatedClone(behaviour, "maxAcceleration", maxAcceleration)
-          );
-        }}
-      />
-      <NumericField
         id="max-speed"
         label="Max. speed"
         value={behaviour.maxSpeed}

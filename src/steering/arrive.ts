@@ -1,10 +1,3 @@
-/*
- * Takes a target.
- *
- * Accelerates towards a target
- * Slows within slowRadius
- * Stops within targetRadius
- */
 import { AbstractBehaviour } from "./abstractBehaviour";
 import { length, distance, subtract, multiply, normalise } from "@lib/vector";
 import type { CharacterId, Kinematic, Steering, Vector } from "@domain/types";
@@ -12,14 +5,12 @@ import type { CharacterId, Kinematic, Steering, Vector } from "@domain/types";
 export default class Arrive extends AbstractBehaviour {
   readonly name = "ARRIVE";
   targetId: CharacterId;
-  maxAcceleration: number;
   timeToTarget: number;
   maxSpeed: number;
   targetRadius: number;
   slowRadius: number;
   constructor(
     targetId: CharacterId,
-    maxAcceleration?: number,
     timeToTarget?: number,
     maxSpeed?: number,
     targetRadius?: number,
@@ -27,7 +18,6 @@ export default class Arrive extends AbstractBehaviour {
   ) {
     super();
     this.targetId = targetId;
-    this.maxAcceleration = maxAcceleration || 25;
     this.timeToTarget = timeToTarget || 3;
     this.maxSpeed = maxSpeed || 55;
     this.targetRadius = targetRadius || 5;
@@ -56,8 +46,8 @@ export default class Arrive extends AbstractBehaviour {
     const linear = multiply(reduced, 1 / this.timeToTarget);
 
     const finalLinear =
-      length(linear) > this.maxAcceleration
-        ? multiply(normalise(linear), this.maxAcceleration)
+      length(linear) > kinematic.maxAcceleration
+        ? multiply(normalise(linear), kinematic.maxAcceleration)
         : linear;
 
     return {

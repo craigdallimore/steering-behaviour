@@ -23,7 +23,6 @@ function mapToRange(orientation: number): number {
 export default class Align extends AbstractBehaviour {
   readonly name = "ALIGN";
   targetId: CharacterId;
-  maxAngularAcceleration: number;
   maxRotation: number;
   decelerationTolerance: number;
   alignTolerance: number;
@@ -31,7 +30,6 @@ export default class Align extends AbstractBehaviour {
 
   constructor(
     targetId: CharacterId,
-    maxAngularAcceleration?: number,
     maxRotation?: number,
     decelerationTolerance?: number,
     alignTolerance?: number,
@@ -39,7 +37,6 @@ export default class Align extends AbstractBehaviour {
   ) {
     super();
     this.targetId = targetId;
-    this.maxAngularAcceleration = maxAngularAcceleration || 140;
     this.maxRotation = maxRotation || 120;
     this.decelerationTolerance = decelerationTolerance || 2;
     this.alignTolerance = alignTolerance || 0.01;
@@ -72,8 +69,8 @@ export default class Align extends AbstractBehaviour {
 
     const angularAcceleration = Math.abs(angular);
     const finalAngular =
-      angularAcceleration > this.maxAngularAcceleration
-        ? (angular * this.maxAngularAcceleration) / angularAcceleration
+      angularAcceleration > kinematic.maxAngularAcceleration
+        ? (angular * kinematic.maxAngularAcceleration) / angularAcceleration
         : angular;
 
     return {

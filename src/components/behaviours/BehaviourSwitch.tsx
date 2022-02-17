@@ -4,14 +4,12 @@ import ArriveControls from "./Arrive";
 import CollisionAvoidanceControls from "./CollisionAvoidance";
 import EvadeControls from "./Evade";
 import FaceControls from "./Face";
-import FleeControls from "./Flee";
 import FollowPathChaseRabbitControls from "./FollowPathChaseRabbit";
 import FollowPathPredictControls from "./FollowPathPredict";
 import LookWhereYouAreGoingControls from "./LookWhereYouAreGoing";
 import MatchVelocityControls from "./MatchVelocity";
 import ObstacleAvoidanceControls from "./ObstacleAvoidance";
 import PursueControls from "./Pursue";
-import SeekControls from "./Seek";
 import SeparationControls from "./Separation";
 import WanderControls from "./Wander";
 import { Behaviour } from "@domain/types";
@@ -74,15 +72,7 @@ const BehaviourSpecificControls = (props: Props) => {
         </>
       );
     case "FLEE":
-      return (
-        <>
-          <FleeControls
-            behaviour={behaviour}
-            onBehaviourChange={props.onBehaviourChange}
-          />
-          <AssignedTarget targetId={behaviour.targetId} />
-        </>
-      );
+      return <AssignedTarget targetId={behaviour.targetId} />;
     case "FOLLOW_PATH_CHASE_RABBIT":
       return (
         <FollowPathChaseRabbitControls
@@ -132,15 +122,7 @@ const BehaviourSpecificControls = (props: Props) => {
         </>
       );
     case "SEEK":
-      return (
-        <>
-          <SeekControls
-            behaviour={behaviour}
-            onBehaviourChange={props.onBehaviourChange}
-          />
-          <AssignedTarget targetId={behaviour.targetId} />
-        </>
-      );
+      return <AssignedTarget targetId={behaviour.targetId} />;
     case "SEPARATION":
       return (
         <SeparationControls

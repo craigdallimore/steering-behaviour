@@ -5,6 +5,8 @@ export default class Character {
   [immerable] = true;
   constructor(kinematic?: Kinematic, behaviours?: Array<Behaviour>) {
     this.kinematic = kinematic || {
+      maxAcceleration: 25,
+      maxAngularAcceleration: 140,
       maxSpeed: 45,
       position: [0, 0],
       velocity: [0, 0],

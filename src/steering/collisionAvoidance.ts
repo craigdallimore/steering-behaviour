@@ -13,12 +13,9 @@ type Acc = {
 
 export default class CollisionAvoidance extends AbstractBehaviour {
   readonly name = "COLLISION_AVOIDANCE";
-  maxAcceleration: number;
   radius: number;
-  constructor(maxAcceleration?: number, radius?: number) {
+  constructor(radius?: number) {
     super();
-    // Holds the maximum acceleration
-    this.maxAcceleration = maxAcceleration || 45;
     // Holds the collision radius of a character (we assume all characters have
     // the same radius here)
     this.radius = radius || 10;
@@ -133,7 +130,7 @@ export default class CollisionAvoidance extends AbstractBehaviour {
 
     // Avoid the target
     return {
-      linear: multiply(normalise(relativePos), this.maxAcceleration),
+      linear: multiply(normalise(relativePos), kinematic.maxAcceleration),
       angular: 0,
     };
   }

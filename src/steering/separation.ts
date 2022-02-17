@@ -6,19 +6,12 @@ export default class Separation extends AbstractBehaviour {
   readonly name = "SEPARATION";
   threshold: number;
   decayCoefficient: number;
-  maxAcceleration: number;
-  constructor(
-    threshold?: number,
-    decayCoefficient?: number,
-    maxAcceleration?: number
-  ) {
+  constructor(threshold?: number, decayCoefficient?: number) {
     super();
     // The threshold to take action
     this.threshold = threshold || 250;
     // Holds the constant coefficient of decay for the inverse square law force
     this.decayCoefficient = decayCoefficient || 1500;
-    // Holds the maximum acceleration of the character
-    this.maxAcceleration = maxAcceleration || 25;
   }
   calculate(kinematic: Kinematic, targets: Array<Kinematic>): Steering {
     return targets.reduce(
@@ -29,7 +22,7 @@ export default class Separation extends AbstractBehaviour {
         if (distance < this.threshold) {
           const strength = Math.min(
             this.decayCoefficient / distance ** 2,
-            this.maxAcceleration
+            kinematic.maxAcceleration
           );
 
           const normalDirection = normalise(direction);

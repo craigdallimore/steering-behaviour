@@ -14,16 +14,6 @@ const WanderControls = (props: Props) => {
   return (
     <>
       <NumericField
-        id="max-acceleration"
-        label="Max. acceleration"
-        value={behaviour.maxAcceleration}
-        onChange={(maxAcceleration) => {
-          props.onBehaviourChange(
-            makeUpdatedClone(behaviour, "maxAcceleration", maxAcceleration)
-          );
-        }}
-      />
-      <NumericField
         id="wander-offset"
         label="Wander offset"
         value={behaviour.wanderOffset}

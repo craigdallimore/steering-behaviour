@@ -14,20 +14,6 @@ const AlignControls = (props: Props) => {
   return (
     <>
       <NumericField
-        id="max-angular-acceleration"
-        label="Max. angular acceleration"
-        value={behaviour.maxAngularAcceleration}
-        onChange={(maxAngularAcceleration) => {
-          props.onBehaviourChange(
-            makeUpdatedClone(
-              behaviour,
-              "maxAngularAcceleration",
-              maxAngularAcceleration
-            )
-          );
-        }}
-      />
-      <NumericField
         id="max-rotation"
         label="Max. rotation"
         value={behaviour.maxRotation}

@@ -5,16 +5,14 @@ import type { CharacterId, Vector, Kinematic, Steering } from "@domain/types";
 export default class Flee extends AbstractBehaviour {
   readonly name = "FLEE";
   targetId: CharacterId;
-  maxAcceleration: number;
-  constructor(targetId: CharacterId, maxAcceleration?: number) {
+  constructor(targetId: CharacterId) {
     super();
     this.targetId = targetId;
-    this.maxAcceleration = maxAcceleration || 25;
   }
   calculate(kinematic: Kinematic, targetPosition: Vector): Steering {
     const linear = multiply(
       normalise(subtract(kinematic.position, targetPosition)),
-      this.maxAcceleration
+      kinematic.maxAcceleration
     );
 
     const angular = 0;

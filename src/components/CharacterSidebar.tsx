@@ -42,6 +42,28 @@ const CharacterSidebar = () => {
                 }
               }}
             />
+            <NumericField
+              id="max-acceleration"
+              label="Max. Acceleration"
+              value={focussedCharacter?.kinematic.maxAcceleration}
+              onChange={(payload) => {
+                dispatch({
+                  type: "MAX_ACCELERATION_CHANGED",
+                  payload,
+                });
+              }}
+            />
+            <NumericField
+              id="max-angular-acceleration"
+              label="Max. Angular Acceleration"
+              value={focussedCharacter?.kinematic.maxAngularAcceleration}
+              onChange={(payload) => {
+                dispatch({
+                  type: "MAX_ANGULAR_ACCELERATION_CHANGED",
+                  payload,
+                });
+              }}
+            />
 
             <NumericField
               label="Rotation"

@@ -21,6 +21,8 @@ const CANVAS_CLICKED = "CANVAS_CLICKED";
 const CANVAS_RESIZED = "CANVAS_RESIZED";
 const DEBUG_MODE_CHANGED = "DEBUG_MODE_CHANGED";
 const ORIENTATION_CHANGED = "ORIENTATION_CHANGED";
+const MAX_ANGULAR_ACCELERATION_CHANGED = "MAX_ANGULAR_ACCELERATION_CHANGED";
+const MAX_ACCELERATION_CHANGED = "MAX_ACCELERATION_CHANGED";
 const PLAY_BUTTON_CLICKED = "PLAY_BUTTON_CLICKED";
 const POSX_CHANGED = "POSX_CHANGED";
 const POSZ_CHANGED = "POSZ_CHANGED";
@@ -61,6 +63,14 @@ export type Action =
     }
   | {
       type: typeof ORIENTATION_CHANGED;
+      payload: number;
+    }
+  | {
+      type: typeof MAX_ACCELERATION_CHANGED;
+      payload: number;
+    }
+  | {
+      type: typeof MAX_ANGULAR_ACCELERATION_CHANGED;
       payload: number;
     }
   | {
@@ -240,6 +250,16 @@ export function reducer(state: State, action: Action): State {
         };
       });
     case "ORIENTATION_CHANGED":
+      return updateFocussedCharacter(state, (char) => {
+        char.kinematic.maxAcceleration = action.payload;
+        return char;
+      });
+    case "MAX_ACCELERATION_CHANGED":
+      return updateFocussedCharacter(state, (char) => {
+        char.kinematic.maxAngularAcceleration = action.payload;
+        return char;
+      });
+    case "MAX_ANGULAR_ACCELERATION_CHANGED":
       return updateFocussedCharacter(state, (char) => {
         char.kinematic.orientation = Math.PI * action.payload;
         return char;

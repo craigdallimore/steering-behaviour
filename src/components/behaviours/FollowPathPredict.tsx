@@ -4,7 +4,6 @@ import FollowPathPredict from "@steering/followPathPredict";
 import makeUpdatedClone from "@lib/makeUpdatedClone";
 import SelectPath from "@components/SelectPath";
 import StateContext from "@components/StateContext";
-import SeekControls from "./Seek";
 
 type Props = {
   behaviour: FollowPathPredict;
@@ -35,12 +34,6 @@ const FollowPathPredictControls = (props: Props) => {
           props.onBehaviourChange(
             makeUpdatedClone(behaviour, "predictTime", predictTime)
           );
-        }}
-      />
-      <SeekControls
-        behaviour={behaviour.seek}
-        onBehaviourChange={(seek) => {
-          props.onBehaviourChange(makeUpdatedClone(behaviour, "seek", seek));
         }}
       />
       <SelectPath

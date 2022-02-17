@@ -57,6 +57,8 @@ export type PathMap = Map<PathId, Path>;
 export type ShapeMap = Map<ShapeId, Shape>;
 
 export type Kinematic = {
+  maxAcceleration: number;
+  maxAngularAcceleration: number;
   maxSpeed: number;
   position: Vector;
   orientation: number;

@@ -33,16 +33,6 @@ const SeparationControls = (props: Props) => {
           );
         }}
       />
-      <NumericField
-        id="max-acceleration"
-        label="Max. Acceleration"
-        value={behaviour.maxAcceleration}
-        onChange={(maxAcceleration) => {
-          props.onBehaviourChange(
-            makeUpdatedClone(behaviour, "maxAcceleration", maxAcceleration)
-          );
-        }}
-      />
     </>
   );
 };

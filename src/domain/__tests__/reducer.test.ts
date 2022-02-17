@@ -1,8 +1,5 @@
-import Character from "@domain/character";
 import { initialState } from "@domain/initialState";
 import { reducer } from "@domain/reducer";
-import * as steering from "@steering/index";
-import initBlankScenario from "@domain/scenario_blank";
 
 Object.freeze(initialState);
 

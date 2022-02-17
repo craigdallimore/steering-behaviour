@@ -12,6 +12,8 @@ export default function initScenario(): Scenario {
         "mouse",
         new Character(
           {
+            maxAcceleration: 25,
+            maxAngularAcceleration: 140,
             maxSpeed: 45,
             position: [150, 150],
             velocity: [0, 0],
@@ -25,6 +27,8 @@ export default function initScenario(): Scenario {
         "cat",
         new Character(
           {
+            maxAcceleration: 25,
+            maxAngularAcceleration: 140,
             maxSpeed: 45,
             position: [350, 350],
             velocity: [0, 0],

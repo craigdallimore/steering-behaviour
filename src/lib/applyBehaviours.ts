@@ -1,6 +1,12 @@
 import updateKinematic from "@lib/updateKinematic";
 import getCharacter from "@lib/getCharacter";
-import { Behaviour, Character, Scenario, Steering } from "@domain/types";
+import {
+  Behaviour,
+  Character,
+  Kinematic,
+  Scenario,
+  Steering,
+} from "@domain/types";
 import { add, multiply, length, normalise } from "./vector";
 
 function getSteering(
@@ -107,8 +113,10 @@ function getSteering(
   }
 }
 
-function blendSteerings(steerings: Array<[Steering, number]>): Steering {
-  //return steerings[0][0];
+function blendSteerings(
+  steerings: Array<[Steering, number]>,
+  kinematic: Kinematic
+): Steering {
   return steerings.reduce(
     (acc: Steering, [steering, weight]): Steering => {
       if (weight === 0) {
@@ -119,12 +127,12 @@ function blendSteerings(steerings: Array<[Steering, number]>): Steering {
       const linear = add(acc.linear, steering.linear);
       const scale = length(linear);
 
-      const maxAcceleration = 25;
-      const maxAngularAcceleration = 140;
-
       return {
-        linear: multiply(normalise(linear), Math.min(scale, maxAcceleration)),
-        angular: Math.min(maxAngularAcceleration, angular),
+        linear: multiply(
+          normalise(linear),
+          Math.min(scale, kinematic.maxAcceleration)
+        ),
+        angular: Math.min(kinematic.maxAngularAcceleration, angular),
       };
     },
     {
@@ -150,7 +158,7 @@ export default function applyBehaviours(
     []
   );
 
-  const steering = blendSteerings(steerings);
+  const steering = blendSteerings(steerings, char.kinematic);
 
   char.kinematic = updateKinematic(steering, char.kinematic, time);
   return char;

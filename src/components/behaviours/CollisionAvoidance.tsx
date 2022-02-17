@@ -12,28 +12,14 @@ const CollisionAvoidanceControls = (props: Props) => {
   const { behaviour } = props;
 
   return (
-    <>
-      <NumericField
-        id="max-acceleration"
-        label="Max. acceleration"
-        value={behaviour.maxAcceleration}
-        onChange={(maxAcceleration) => {
-          props.onBehaviourChange(
-            makeUpdatedClone(behaviour, "maxAcceleration", maxAcceleration)
-          );
-        }}
-      />
-      <NumericField
-        id="radius"
-        label="Radius"
-        value={behaviour.radius}
-        onChange={(radius) => {
-          props.onBehaviourChange(
-            makeUpdatedClone(behaviour, "radius", radius)
-          );
-        }}
-      />
-    </>
+    <NumericField
+      id="radius"
+      label="Radius"
+      value={behaviour.radius}
+      onChange={(radius) => {
+        props.onBehaviourChange(makeUpdatedClone(behaviour, "radius", radius));
+      }}
+    />
   );
 };
 
