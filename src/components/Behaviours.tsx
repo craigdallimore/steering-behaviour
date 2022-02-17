@@ -71,16 +71,14 @@ const Behaviours = (props: Props) => {
           </li>
         ))}
       </ul>
-      {props.character.behaviours.length === 0 && (
-        <AddBehaviour
-          onBehaviourChange={(payload: Behaviour) => {
-            props.dispatch({
-              type: "BEHAVIOUR_ADDED",
-              payload,
-            });
-          }}
-        />
-      )}
+      <AddBehaviour
+        onBehaviourChange={(payload: Behaviour) => {
+          props.dispatch({
+            type: "BEHAVIOUR_ADDED",
+            payload,
+          });
+        }}
+      />
     </fieldset>
   );
 };

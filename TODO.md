@@ -18,8 +18,6 @@
 
 ## Features
 
-- [ ] A character should be able to have multiple blendable behaviours
-- [ ] Should be possible to add a second behaviour
 - [ ] Debug
   - [ ] Improve colouring
   - [ ] Add to all behaviours
@@ -49,6 +47,7 @@
 - [ ] Add a button to stop a kinematic from moving
 - [ ] Add a button to match the velocity to the orientation
 - [ ] Reset button on scenario picker should not be present until the scenario has been started
+- [ ] Filter available behaviours based on the assigned behaviours
 
 ## Steering pipeline
 

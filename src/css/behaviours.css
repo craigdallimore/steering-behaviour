@@ -13,6 +13,11 @@
   padding: 0;
   margin: 0;
 }
+
+.behaviours ul:not(:empty) + * {
+  margin-top: 1rem;
+}
+
 .behaviours li {
   display: flex;
   flex-direction: column;

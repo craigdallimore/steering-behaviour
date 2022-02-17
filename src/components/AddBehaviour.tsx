@@ -78,6 +78,7 @@ const AddBehaviour = (props: Props) => {
         <SelectBehaviour
           behaviourName={"NONE"}
           onSelectBehaviour={(nextBehaviourName: SteeringBehaviourName) => {
+            setIsAddingBehaviour(false);
             props.onBehaviourChange(
               getDefaultBehaviour(nextBehaviourName, state.scenario)
             );
