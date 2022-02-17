@@ -19,9 +19,7 @@
 ## Features
 
 - [ ] A character should be able to have multiple blendable behaviours
-  - [ ] make maxAcceleration and maxAngularAcceleration properties of the kinematic
 - [ ] Should be possible to add a second behaviour
-- [ ] Add a gap between behaviours
 - [ ] Debug
   - [ ] Improve colouring
   - [ ] Add to all behaviours

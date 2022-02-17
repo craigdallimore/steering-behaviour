@@ -17,6 +17,9 @@
   display: flex;
   flex-direction: column;
 }
+.behaviours li + li {
+  margin-top: 2rem;
+}
 
 .behaviours header {
   display: flex;
