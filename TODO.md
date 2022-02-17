@@ -3,12 +3,8 @@
 ## Bugs
 
 - [ ] Buttons feel really gummy
-- [ ] Orientation controls sucks
-- [ ] Reset button on scenario picker should not be present until the scenario has been started
-- [ ] Altering steering doesn't work very well.
 - [ ] OBSTACLE_AVOIDANCE still clips when entering from right.
 - [ ] Resizing canvas makes it disappear
-- [ ] CollisionAvoidance - can't update
 
 ## Test debt
 
@@ -54,6 +50,7 @@
 - [ ] Convert behaviour classes back to regular objects
 - [ ] Add a button to stop a kinematic from moving
 - [ ] Add a button to match the velocity to the orientation
+- [ ] Reset button on scenario picker should not be present until the scenario has been started
 
 ## Steering pipeline
 

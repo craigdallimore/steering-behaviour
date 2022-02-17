@@ -206,9 +206,9 @@ export function reducer(state: State, action: Action): State {
 
     case "BEHAVIOUR_CHANGED": {
       const nextState = updateFocussedCharacter(state, (char) => {
-        const index = char.behaviours.findIndex((behaviour) => {
-          behaviour.name === action.payload.name;
-        });
+        const index = char.behaviours.findIndex(
+          (behaviour) => behaviour.name === action.payload.name
+        );
         if (index > -1) {
           char.behaviours[index] = action.payload;
         }
@@ -251,7 +251,7 @@ export function reducer(state: State, action: Action): State {
       });
     case "ORIENTATION_CHANGED":
       return updateFocussedCharacter(state, (char) => {
-        char.kinematic.maxAcceleration = action.payload;
+        char.kinematic.orientation = action.payload;
         return char;
       });
     case "MAX_ACCELERATION_CHANGED":
