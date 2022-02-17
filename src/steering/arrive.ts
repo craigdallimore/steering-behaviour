@@ -6,20 +6,17 @@ export default class Arrive extends AbstractBehaviour {
   readonly name = "ARRIVE";
   targetId: CharacterId;
   timeToTarget: number;
-  maxSpeed: number;
   targetRadius: number;
   slowRadius: number;
   constructor(
     targetId: CharacterId,
     timeToTarget?: number,
-    maxSpeed?: number,
     targetRadius?: number,
     slowRadius?: number
   ) {
     super();
     this.targetId = targetId;
     this.timeToTarget = timeToTarget || 3;
-    this.maxSpeed = maxSpeed || 55;
     this.targetRadius = targetRadius || 5;
     this.slowRadius = slowRadius || 60;
   }
@@ -33,8 +30,8 @@ export default class Arrive extends AbstractBehaviour {
 
     const idealSpeed =
       distanceToTarget > this.slowRadius
-        ? this.maxSpeed
-        : this.maxSpeed * (distanceToTarget / this.slowRadius);
+        ? kinematic.maxSpeed
+        : kinematic.maxSpeed * (distanceToTarget / this.slowRadius);
 
     // Here we appear to take a vector from the two points, and relate it to
     // the ideal speed
