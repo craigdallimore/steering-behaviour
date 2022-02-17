@@ -17,11 +17,12 @@ const NumericField = (props: Props) => {
   // The system will still represent it as the full 3.00000001 under the hood.
   // When the user is typing (and the input has focus) we stop using .toFixed on
   // the value as it interferes with the typing experience.
-  const value = props.value
-    ? isFocussed
-      ? props.value
-      : props.value.toFixed(2)
-    : undefined;
+  const value =
+    typeof props.value === "number"
+      ? isFocussed
+        ? props.value
+        : props.value.toFixed(2)
+      : undefined;
 
   return (
     <>
