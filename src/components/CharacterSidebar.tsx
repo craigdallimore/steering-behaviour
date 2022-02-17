@@ -32,7 +32,7 @@ const CharacterSidebar = () => {
               min="-2"
               max="2"
               step="0.1"
-              value={focussedCharacter?.kinematic.orientation.toString()}
+              value={focussedCharacter.kinematic.orientation.toString()}
               onChange={(e) => {
                 if (e.target instanceof HTMLInputElement) {
                   dispatch({
@@ -45,7 +45,7 @@ const CharacterSidebar = () => {
             <NumericField
               id="max-acceleration"
               label="Max. Acceleration"
-              value={focussedCharacter?.kinematic.maxAcceleration}
+              value={focussedCharacter.kinematic.maxAcceleration}
               onChange={(payload) => {
                 dispatch({
                   type: "MAX_ACCELERATION_CHANGED",
@@ -56,7 +56,7 @@ const CharacterSidebar = () => {
             <NumericField
               id="max-angular-acceleration"
               label="Max. Angular Acceleration"
-              value={focussedCharacter?.kinematic.maxAngularAcceleration}
+              value={focussedCharacter.kinematic.maxAngularAcceleration}
               onChange={(payload) => {
                 dispatch({
                   type: "MAX_ANGULAR_ACCELERATION_CHANGED",
@@ -68,7 +68,7 @@ const CharacterSidebar = () => {
             <NumericField
               label="Rotation"
               id="rotation"
-              value={focussedCharacter?.kinematic.rotation}
+              value={focussedCharacter.kinematic.rotation}
               onChange={(payload) => {
                 dispatch({
                   type: "ROTATION_CHANGED",
@@ -82,7 +82,7 @@ const CharacterSidebar = () => {
               id="position-x"
               min={0}
               max={800}
-              value={focussedCharacter?.kinematic.position[0]}
+              value={focussedCharacter.kinematic.position[0]}
               onChange={(payload) => {
                 dispatch({
                   type: "POSX_CHANGED",
@@ -96,7 +96,7 @@ const CharacterSidebar = () => {
               id="position-z"
               min={0}
               max={800}
-              value={focussedCharacter?.kinematic.position[1]}
+              value={focussedCharacter.kinematic.position[1]}
               onChange={(payload) => {
                 dispatch({
                   type: "POSZ_CHANGED",
@@ -108,7 +108,7 @@ const CharacterSidebar = () => {
             <NumericField
               label="Horizontal velocity"
               id="vel-x"
-              value={focussedCharacter?.kinematic.velocity[0]}
+              value={focussedCharacter.kinematic.velocity[0]}
               onChange={(payload) => {
                 dispatch({
                   type: "VELX_CHANGED",
@@ -120,7 +120,7 @@ const CharacterSidebar = () => {
             <NumericField
               label="Vertical velocity"
               id="vel-z"
-              value={focussedCharacter?.kinematic.velocity[1]}
+              value={focussedCharacter.kinematic.velocity[1]}
               onChange={(payload) => {
                 dispatch({
                   type: "VELZ_CHANGED",
@@ -129,9 +129,7 @@ const CharacterSidebar = () => {
               }}
             />
           </fieldset>
-          {focussedCharacter && (
-            <Behaviours dispatch={dispatch} character={focussedCharacter} />
-          )}
+          <Behaviours dispatch={dispatch} character={focussedCharacter} />
         </form>
       )}
     </aside>

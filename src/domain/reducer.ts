@@ -256,12 +256,12 @@ export function reducer(state: State, action: Action): State {
       });
     case "MAX_ACCELERATION_CHANGED":
       return updateFocussedCharacter(state, (char) => {
-        char.kinematic.maxAngularAcceleration = action.payload;
+        char.kinematic.maxAcceleration = action.payload;
         return char;
       });
     case "MAX_ANGULAR_ACCELERATION_CHANGED":
       return updateFocussedCharacter(state, (char) => {
-        char.kinematic.orientation = Math.PI * action.payload;
+        char.kinematic.maxAngularAcceleration = action.payload;
         return char;
       });
     case "POSX_CHANGED":
