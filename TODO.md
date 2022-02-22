@@ -9,12 +9,8 @@
 ## Test debt
 
 - [ ] domain/reducer
-- [ ] lib
-  - [ ] applyBehaviour
-  - [ ] getFirstTargetId
 - [ ] components
 - [ ] steering
-- [ ] reducer
 
 ## Features
 
