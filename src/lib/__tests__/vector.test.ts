@@ -149,6 +149,10 @@ describe("length", () => {
         return d <= v1[0] + v1[1];
       })
     ));
+  test("the length (hypotenuse) is 0 when the scalars are zero", () => {
+    const d = v.length([0, 0]);
+    expect(d).toBe(0);
+  });
 });
 
 describe("vectorToRadians", () => {

@@ -11,7 +11,7 @@
 - [ ] domain/reducer
 - [ ] lib
   - [ ] applyBehaviour
-  - [ ] updateKinematic
+  - [ ] getFirstTargetId
 - [ ] components
 - [ ] steering
 - [ ] reducer

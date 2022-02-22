@@ -25,7 +25,7 @@ export default function updateKinematic(
   const nextRotation = steering.angular * time;
 
   const finalVelocity =
-    length(nextVelocity) > kinematic.maxSpeed
+    length(nextVelocity) >= kinematic.maxSpeed
       ? multiply(normalise(nextVelocity), kinematic.maxSpeed)
       : nextVelocity;
 
