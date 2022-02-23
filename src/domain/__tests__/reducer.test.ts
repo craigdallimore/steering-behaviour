@@ -2,6 +2,7 @@ import { initialState } from "@domain/initialState";
 import { reducer } from "@domain/reducer";
 import { Vector } from "@domain/types";
 import getFocussedCharacter from "@lib/getFocussedCharacter";
+import * as steering from "@steering/index";
 
 Object.freeze(initialState);
 
@@ -102,6 +103,83 @@ describe("CANVAS_RESIZED", () => {
       payload: newDimensions,
     });
     expect(nextState.ui.canvasDimensions).toBe(newDimensions);
+  });
+});
+describe("BEHAVIOUR_ADDED", () => {
+  it("adds the new behaviour to the focussed character", () => {
+    const behaviour = new steering.Wander();
+    const char = getFocussedCharacter(initialState);
+    expect(char?.behaviours).not.toContain(behaviour);
+
+    const nextState = reducer(initialState, {
+      type: "BEHAVIOUR_ADDED",
+      payload: behaviour,
+    });
+    const nextChar = getFocussedCharacter(nextState);
+    expect(nextChar?.behaviours).toContain(behaviour);
+  });
+  it("does not put the ui into isSettingTarget mode, for a non-targetting behaviour", () => {
+    const behaviour = new steering.Wander();
+    expect(behaviour).not.toHaveProperty("targetId");
+
+    expect(initialState.ui.isSettingTarget).toBe(false);
+    const nextState = reducer(initialState, {
+      type: "BEHAVIOUR_ADDED",
+      payload: behaviour,
+    });
+    expect(nextState.ui.isSettingTarget).toBe(false);
+  });
+  it("puts the ui into isSettingTarget mode, for a targetting behaviour", () => {
+    const behaviour = new steering.Seek("");
+    expect(behaviour).toHaveProperty("targetId");
+
+    expect(initialState.ui.isSettingTarget).toBe(false);
+    const nextState = reducer(initialState, {
+      type: "BEHAVIOUR_ADDED",
+      payload: behaviour,
+    });
+    expect(nextState.ui.isSettingTarget).toBe(true);
+  });
+});
+describe("BEHAVIOUR_CHANGED", () => {
+  it("replaces an existing instance of a characters behaviour with a new instance", () => {
+    const seek1 = new steering.Seek("a");
+    const seek2 = new steering.Seek("b");
+    const char = getFocussedCharacter(initialState);
+    if (char) {
+      char.behaviours[0] = seek1;
+    }
+
+    const nextState = reducer(initialState, {
+      type: "BEHAVIOUR_CHANGED",
+      payload: seek2,
+    });
+
+    const nextChar = getFocussedCharacter(nextState);
+
+    expect(nextChar?.behaviours[0]).toBe(seek2);
+  });
+  it.skip("does not put the ui into isSettingTarget mode, for a non-targetting behaviour", () => {
+    const behaviour = new steering.Wander();
+    expect(behaviour).not.toHaveProperty("targetId");
+
+    expect(initialState.ui.isSettingTarget).toBe(false);
+    const nextState = reducer(initialState, {
+      type: "BEHAVIOUR_CHANGED",
+      payload: behaviour,
+    });
+    expect(nextState.ui.isSettingTarget).toBe(false);
+  });
+  it.skip("puts the UI into isSettingTarget mode, for targetting behaviours", () => {
+    const behaviour = new steering.Seek("");
+    expect(behaviour).toHaveProperty("targetId");
+
+    expect(initialState.ui.isSettingTarget).toBe(false);
+    const nextState = reducer(initialState, {
+      type: "BEHAVIOUR_CHANGED",
+      payload: behaviour,
+    });
+    expect(nextState.ui.isSettingTarget).toBe(true);
   });
 });
 /*
