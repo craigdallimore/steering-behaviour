@@ -6,9 +6,72 @@ import getFocussedCharacter from "@lib/getFocussedCharacter";
 import * as steering from "@steering/index";
 import Character from "@domain/character";
 
-/*
-describe('TICK', () => {});
-*/
+describe("TICK", () => {
+  it("does nothing, given the UI is paused", () => {
+    const initialState = getState();
+
+    const character = new Character();
+    character.kinematic.velocity = [10, 10];
+    character.kinematic.position = [0, 0];
+
+    initialState.scenario?.characters.set("x", character);
+    initialState.ui.isPaused = true;
+
+    const nextState = reducer(initialState, {
+      type: "TICK",
+      payload: 1,
+    });
+
+    const nextCharacter = nextState.scenario?.characters.get("x");
+
+    expect(nextCharacter?.kinematic.position).toStrictEqual([0, 0]);
+  });
+  it("does nothing, given no scenario is present", () => {
+    const initialState = getState();
+
+    initialState.scenario = null;
+    initialState.ui.isPaused = false;
+
+    const nextState = reducer(initialState, {
+      type: "TICK",
+      payload: 1,
+    });
+
+    nextState.ui.isPaused = true; // TODO this test is not strong
+    expect(nextState.ui).toEqual(initialState.ui);
+  });
+  it("updates the characters by applying behaviour", () => {
+    const initialState = getState();
+
+    const character = new Character();
+    character.kinematic.velocity = [10, 10];
+    character.kinematic.position = [0, 0];
+
+    initialState.scenario?.characters.set("x", character);
+    initialState.ui.isPaused = false;
+
+    const nextState = reducer(initialState, {
+      type: "TICK",
+      payload: 1,
+    });
+
+    const nextCharacter = nextState.scenario?.characters.get("x");
+
+    expect(nextCharacter?.kinematic.position).toStrictEqual([10, 10]);
+  });
+  it("adances the animation of action feeback", () => {
+    const initialState = getState();
+    initialState.ui.actionFeedbackCount = 5;
+    initialState.ui.isPaused = false;
+
+    const nextState = reducer(initialState, {
+      type: "TICK",
+      payload: 1,
+    });
+
+    expect(nextState.ui.actionFeedbackCount).toBe(4);
+  });
+});
 
 describe("PLAY_BUTTON_CLICKED", () => {
   it("changes the play state from false to true", () => {
@@ -96,6 +159,7 @@ describe("SCENARIO_CHANGED", () => {
     expect(nextState.scenario?.name).not.toBe(initialScenarioName);
   });
 });
+
 /*
 describe('CANVAS_CLICKED', () => {});
 */
@@ -213,6 +277,7 @@ describe("BEHAVIOUR_REMOVED", () => {
       payload: "WANDER",
     });
     const char = nextState.scenario?.characters.get("_1");
+    expect(char?.behaviours.length).toBe(0);
 
     expect(char?.kinematic.velocity).toEqual([0, 0]);
   });
