@@ -203,7 +203,6 @@ export function reducer(state: State, action: Action): State {
 
       return nextState;
     }
-
     case "BEHAVIOUR_CHANGED": {
       const nextState = updateFocussedCharacter(state, (char) => {
         const index = char.behaviours.findIndex(
@@ -222,23 +221,24 @@ export function reducer(state: State, action: Action): State {
 
       return nextState;
     }
-
     case "BEHAVIOUR_REMOVED": {
       const nextState = updateFocussedCharacter(state, (char) => {
         char.behaviours = char.behaviours.filter(
           (behaviour: Behaviour) => behaviour.name !== action.payload
         );
+
+        if (char.behaviours.length === 0) {
+          char.kinematic.velocity = [0, 0];
+        }
         return char;
       });
 
       return nextState;
     }
-
     case "SCENARIO_CHANGED":
       state.ui.focussedScenarioId = action.payload;
       state.scenario = getScenario(action.payload);
       return state;
-
     case "ROTATION_CHANGED":
       return updateFocussedCharacter(state, (char) => {
         return {

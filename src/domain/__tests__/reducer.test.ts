@@ -1,8 +1,10 @@
 import { getState } from "@domain/initialState";
+import initBlankScenario from "@domain/scenario_blank";
 import { reducer } from "@domain/reducer";
 import { Vector } from "@domain/types";
 import getFocussedCharacter from "@lib/getFocussedCharacter";
 import * as steering from "@steering/index";
+import Character from "@domain/character";
 
 /*
 describe('TICK', () => {});
@@ -40,7 +42,6 @@ describe("PLAY_BUTTON_CLICKED", () => {
     expect(nextState.ui.isPaused).toEqual(false);
   });
 });
-
 describe("RESET_BUTTON_CLICKED", () => {
   it("restores initial value of the scenario", () => {
     const initialState = getState();
@@ -81,19 +82,18 @@ describe("DEBUG_MODE_CHANGED", () => {
     expect(nextState.ui.isDebugMode).toBe(true);
   });
 });
-
 describe("SCENARIO_CHANGED", () => {
-  it.skip("replaces the current scenario and focussed scenario id", () => {
+  it("replaces the current scenario and focussed scenario id", () => {
     const initialState = getState();
+    const initialFocussedScenarioId = initialState.ui.focussedScenarioId;
+    const initialScenarioName = initialState.scenario?.name;
     const nextState = reducer(initialState, {
       type: "SCENARIO_CHANGED",
       payload: "SC_WANDER",
     });
     expect(nextState.ui.focussedScenarioId).toBe("SC_WANDER");
-    expect(nextState.ui.focussedScenarioId).not.toBe(
-      initialState.ui.focussedScenarioId
-    );
-    expect(nextState.scenario?.name).not.toBe(initialState.scenario?.name);
+    expect(nextState.ui.focussedScenarioId).not.toBe(initialFocussedScenarioId);
+    expect(nextState.scenario?.name).not.toBe(initialScenarioName);
   });
 });
 /*
@@ -193,40 +193,30 @@ describe("BEHAVIOUR_CHANGED", () => {
     expect(nextState.ui.isSettingTarget).toBe(true);
   });
 });
-/*
 describe("BEHAVIOUR_REMOVED", () => {
   it("given the last behaviour is removed, the character will stop moving", () => {
+    const initialState = getState();
     const scenario = initBlankScenario();
-    scenario.characters = new Map([
-      [
-        "_1",
-        new Character(
-          {
-            maxSpeed: 45,
-            position: [0, 0],
-            velocity: [10, 10],
-            orientation: 0,
-            rotation: 0,
-          },
-          [new steering.Wander()]
-        ),
-      ],
-    ]);
+
+    const character = new Character();
+    character.kinematic.velocity = [10, 10];
+    character.behaviours = [new steering.Wander()];
+
+    scenario.characters = new Map([["_1", character]]);
     const changedState = {
       ...initialState,
       scenario,
     };
     changedState.ui.focussedCharacterId = "_1";
     const nextState = reducer(changedState, {
-      type: "BEHAVIOUR_CHANGED",
-      payload: new steering.None(),
+      type: "BEHAVIOUR_REMOVED",
+      payload: "WANDER",
     });
     const char = nextState.scenario?.characters.get("_1");
 
     expect(char?.kinematic.velocity).toEqual([0, 0]);
   });
 });
-*/
 describe("ORIENTATION_CHANGED", () => {
   it("updates the orientation of the focussed character", () => {
     const initialState = getState();
