@@ -36,25 +36,27 @@ export function getScenario(id: ScenarioId): Scenario | null {
 
 const focussedScenarioId = "SC_BLANK";
 
-export const initialState: State = {
-  ui: {
-    actionFeedbackCount: -1,
-    canvasDimensions: [800, 800],
-    isDebugMode: false,
-    isPaused: true,
-    isSettingTarget: false,
-    focussedCharacterId: "_1",
-    focussedScenarioId,
-  },
-  scenarioIds: [
-    "SC_BLANK",
-    "SC_WANDER",
-    "SC_COLL",
-    "SC_OB_1",
-    "SC_OB_2",
-    "SC_EVADE",
-    "SC_PATH",
-    "SC_SEPARATION",
-  ],
-  scenario: getScenario(focussedScenarioId),
-};
+export function getState(): State {
+  return {
+    ui: {
+      actionFeedbackCount: -1,
+      canvasDimensions: [800, 800],
+      isDebugMode: false,
+      isPaused: true,
+      isSettingTarget: false,
+      focussedCharacterId: "_1",
+      focussedScenarioId,
+    },
+    scenarioIds: [
+      "SC_BLANK",
+      "SC_WANDER",
+      "SC_COLL",
+      "SC_OB_1",
+      "SC_OB_2",
+      "SC_EVADE",
+      "SC_PATH",
+      "SC_SEPARATION",
+    ],
+    scenario: getScenario(focussedScenarioId),
+  };
+}

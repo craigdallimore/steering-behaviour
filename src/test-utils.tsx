@@ -13,7 +13,7 @@ import userEvent from "@testing-library/user-event";
 import * as fc from "fast-check";
 import DispatchContext from "@components/DispatchContext";
 import StateContext from "@components/StateContext";
-import { initialState } from "@domain/initialState";
+import { getState } from "@domain/initialState";
 import { State } from "@domain/types";
 
 const queryAllByDataId = (
@@ -64,7 +64,7 @@ const customRender = (ui: ReactElement, options?: Options) => {
   return render(ui, {
     wrapper: AllTheProviders({
       dispatch: options?.dispatch ?? jest.fn(),
-      state: options?.state ?? initialState,
+      state: options?.state ?? getState(),
     }),
     queries: { ...queries, ...customQueries },
     ...options,

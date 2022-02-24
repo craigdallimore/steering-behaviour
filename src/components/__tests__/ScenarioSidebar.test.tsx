@@ -1,12 +1,12 @@
 import React from "react";
 import { render, userEvent } from "@test-utils";
 import ScenarioSidebar from "../ScenarioSidebar";
-import { getScenario, initialState } from "@domain/initialState";
+import { getScenario, getState as getInitialState } from "@domain/initialState";
 
 describe("Scenario sidebar", () => {
   const getState = (changes = {}) => {
     return {
-      ...initialState,
+      ...getInitialState(),
       ...changes,
     };
   };
@@ -59,7 +59,7 @@ describe("Scenario sidebar", () => {
   it("shows a description of the selected scenario", () => {
     const state = getState({
       ui: {
-        ...initialState.ui,
+        ...getInitialState().ui,
         focussedScenarioId: "SC_WANDER",
       },
       scenario: getScenario("SC_WANDER"),
@@ -80,7 +80,7 @@ describe("Scenario sidebar", () => {
     const dispatch = jest.fn();
     const state = getState({
       ui: {
-        ...initialState.ui,
+        ...getInitialState().ui,
         isPaused: true,
       },
     });
@@ -101,7 +101,7 @@ describe("Scenario sidebar", () => {
     const dispatch = jest.fn();
     const state = getState({
       ui: {
-        ...initialState.ui,
+        ...getInitialState().ui,
         isPaused: false,
       },
     });

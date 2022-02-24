@@ -1,9 +1,10 @@
-import { getScenario, initialState } from "@domain/initialState";
+import { getScenario, getState as getInitialState } from "@domain/initialState";
 import updateFocussedCharacter from "@lib/updateFocussedCharacter";
 import * as steering from "@steering/index";
 
 describe("updateFocussedCharacter", () => {
   const getState = (changes = {}) => {
+    const initialState = getInitialState();
     const scenario = initialState.ui.focussedCharacterId
       ? getScenario(initialState.ui.focussedCharacterId)
       : null;
@@ -18,7 +19,7 @@ describe("updateFocussedCharacter", () => {
   test("nothing is changed given no character is focussed", () => {
     const state = getState({
       ui: {
-        ...initialState.ui,
+        ...getInitialState().ui,
         focussedCharacterId: null,
       },
     });
@@ -34,7 +35,7 @@ describe("updateFocussedCharacter", () => {
   test("nothing is changed given the id is invalid", () => {
     const state = getState({
       ui: {
-        ...initialState.ui,
+        ...getInitialState().ui,
         focussedCharacterId: "NO_MATCH",
       },
     });
@@ -49,8 +50,8 @@ describe("updateFocussedCharacter", () => {
   });
   test("only the focussed character is changed", () => {
     const state = getState({
-      ...initialState.ui,
-      focussedCharacterId: initialState.scenario?.characters.keys().next()
+      ...getInitialState().ui,
+      focussedCharacterId: getInitialState().scenario?.characters.keys().next()
         .value,
     });
     const nextState = updateFocussedCharacter(state, (char) => {

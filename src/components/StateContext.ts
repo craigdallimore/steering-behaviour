@@ -1,4 +1,4 @@
-import { initialState } from "@domain/initialState";
+import { getState } from "@domain/initialState";
 import React from "react";
 
-export default React.createContext(initialState);
+export default React.createContext(getState());

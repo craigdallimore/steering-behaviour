@@ -1,12 +1,12 @@
 import React from "react";
 import { render, userEvent } from "@test-utils";
 import DebugControl from "../DebugControl";
-import { initialState } from "@domain/initialState";
+import { getState as getInitialState } from "@domain/initialState";
 
 describe("Debug Control", () => {
   const getState = (changes = {}) => {
     return {
-      ...initialState,
+      ...getInitialState(),
       ...changes,
     };
   };

@@ -5,7 +5,7 @@ import React from "react";
 import ScenarioSidebar from "./ScenarioSidebar";
 import Canvas from "./Canvas";
 import { reducer } from "@domain/reducer";
-import { initialState } from "@domain/initialState";
+import { getState } from "@domain/initialState";
 import DispatchContext from "./DispatchContext";
 import StateContext from "./StateContext";
 import "../css/main.css";
@@ -14,7 +14,7 @@ import CharacterSidebar from "./CharacterSidebar";
 enableMapSet(); // immer can understand Map and Set
 
 const Main = () => {
-  const [state, dispatch] = useImmerReducer(reducer, initialState);
+  const [state, dispatch] = useImmerReducer(reducer, getState());
 
   useRAF((tick: number) => {
     dispatch({ type: "TICK", payload: tick });

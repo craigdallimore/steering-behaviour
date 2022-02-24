@@ -1,10 +1,8 @@
-import { initialState } from "@domain/initialState";
+import { getState } from "@domain/initialState";
 import { reducer } from "@domain/reducer";
 import { Vector } from "@domain/types";
 import getFocussedCharacter from "@lib/getFocussedCharacter";
 import * as steering from "@steering/index";
-
-Object.freeze(initialState);
 
 /*
 describe('TICK', () => {});
@@ -12,6 +10,7 @@ describe('TICK', () => {});
 
 describe("PLAY_BUTTON_CLICKED", () => {
   it("changes the play state from false to true", () => {
+    const initialState = getState();
     const changedState = {
       ...initialState,
       ui: {
@@ -26,6 +25,7 @@ describe("PLAY_BUTTON_CLICKED", () => {
     expect(nextState.ui.isPaused).toEqual(true);
   });
   it("changes the play state from true to false", () => {
+    const initialState = getState();
     const changedState = {
       ...initialState,
       ui: {
@@ -43,6 +43,7 @@ describe("PLAY_BUTTON_CLICKED", () => {
 
 describe("RESET_BUTTON_CLICKED", () => {
   it("restores initial value of the scenario", () => {
+    const initialState = getState();
     const changedState = {
       ...initialState,
       scenario: null,
@@ -55,6 +56,7 @@ describe("RESET_BUTTON_CLICKED", () => {
     expect(nextState.scenario).not.toBe(null);
   });
   it("pauses the scenario", () => {
+    const initialState = getState();
     const changedState = {
       ...initialState,
       ui: {
@@ -71,6 +73,7 @@ describe("RESET_BUTTON_CLICKED", () => {
 });
 describe("DEBUG_MODE_CHANGED", () => {
   it("inverts the value of the debug mode", () => {
+    const initialState = getState();
     expect(initialState.ui.isDebugMode).toBe(false);
     const nextState = reducer(initialState, {
       type: "DEBUG_MODE_CHANGED",
@@ -79,8 +82,9 @@ describe("DEBUG_MODE_CHANGED", () => {
   });
 });
 
-describe.skip("SCENARIO_CHANGED", () => {
-  it("replaces the current scenario and focussed scenario id", () => {
+describe("SCENARIO_CHANGED", () => {
+  it.skip("replaces the current scenario and focussed scenario id", () => {
+    const initialState = getState();
     const nextState = reducer(initialState, {
       type: "SCENARIO_CHANGED",
       payload: "SC_WANDER",
@@ -97,6 +101,7 @@ describe('CANVAS_CLICKED', () => {});
 */
 describe("CANVAS_RESIZED", () => {
   it("updates the stored dimensions of the canvas", () => {
+    const initialState = getState();
     const newDimensions: Vector = [120, 320];
     const nextState = reducer(initialState, {
       type: "CANVAS_RESIZED",
@@ -107,6 +112,7 @@ describe("CANVAS_RESIZED", () => {
 });
 describe("BEHAVIOUR_ADDED", () => {
   it("adds the new behaviour to the focussed character", () => {
+    const initialState = getState();
     const behaviour = new steering.Wander();
     const char = getFocussedCharacter(initialState);
     expect(char?.behaviours).not.toContain(behaviour);
@@ -119,6 +125,7 @@ describe("BEHAVIOUR_ADDED", () => {
     expect(nextChar?.behaviours).toContain(behaviour);
   });
   it("does not put the ui into isSettingTarget mode, for a non-targetting behaviour", () => {
+    const initialState = getState();
     const behaviour = new steering.Wander();
     expect(behaviour).not.toHaveProperty("targetId");
 
@@ -130,6 +137,7 @@ describe("BEHAVIOUR_ADDED", () => {
     expect(nextState.ui.isSettingTarget).toBe(false);
   });
   it("puts the ui into isSettingTarget mode, for a targetting behaviour", () => {
+    const initialState = getState();
     const behaviour = new steering.Seek("");
     expect(behaviour).toHaveProperty("targetId");
 
@@ -143,6 +151,7 @@ describe("BEHAVIOUR_ADDED", () => {
 });
 describe("BEHAVIOUR_CHANGED", () => {
   it("replaces an existing instance of a characters behaviour with a new instance", () => {
+    const initialState = getState();
     const seek1 = new steering.Seek("a");
     const seek2 = new steering.Seek("b");
     const char = getFocussedCharacter(initialState);
@@ -159,7 +168,8 @@ describe("BEHAVIOUR_CHANGED", () => {
 
     expect(nextChar?.behaviours[0]).toBe(seek2);
   });
-  it.skip("does not put the ui into isSettingTarget mode, for a non-targetting behaviour", () => {
+  it("does not put the ui into isSettingTarget mode, for a non-targetting behaviour", () => {
+    const initialState = getState();
     const behaviour = new steering.Wander();
     expect(behaviour).not.toHaveProperty("targetId");
 
@@ -170,7 +180,8 @@ describe("BEHAVIOUR_CHANGED", () => {
     });
     expect(nextState.ui.isSettingTarget).toBe(false);
   });
-  it.skip("puts the UI into isSettingTarget mode, for targetting behaviours", () => {
+  it("puts the UI into isSettingTarget mode, for targetting behaviours", () => {
+    const initialState = getState();
     const behaviour = new steering.Seek("");
     expect(behaviour).toHaveProperty("targetId");
 
@@ -218,6 +229,7 @@ describe("BEHAVIOUR_REMOVED", () => {
 */
 describe("ORIENTATION_CHANGED", () => {
   it("updates the orientation of the focussed character", () => {
+    const initialState = getState();
     const nextOrientation = 3;
     const char = getFocussedCharacter(initialState);
     expect(char?.kinematic.orientation).not.toEqual(nextOrientation);
@@ -233,6 +245,7 @@ describe("ORIENTATION_CHANGED", () => {
 });
 describe("ROTATION_CHANGED", () => {
   it("updates the rotation of the focussed character", () => {
+    const initialState = getState();
     const nextRotation = 3;
     const char = getFocussedCharacter(initialState);
     expect(char?.kinematic.rotation).not.toEqual(nextRotation);
@@ -248,6 +261,7 @@ describe("ROTATION_CHANGED", () => {
 });
 describe("POSX_CHANGED", () => {
   it("updates the x position of the focussed character", () => {
+    const initialState = getState();
     const nextPosition = 3;
     const char = getFocussedCharacter(initialState);
     expect(char?.kinematic.position[0]).not.toEqual(nextPosition);
@@ -263,6 +277,7 @@ describe("POSX_CHANGED", () => {
 });
 describe("POSZ_CHANGED", () => {
   it("updates the z position of the focussed character", () => {
+    const initialState = getState();
     const nextPosition = 3;
     const char = getFocussedCharacter(initialState);
     expect(char?.kinematic.position[1]).not.toEqual(nextPosition);
@@ -278,6 +293,7 @@ describe("POSZ_CHANGED", () => {
 });
 describe("VELX_CHANGED", () => {
   it("updates the x velocity of the focussed character", () => {
+    const initialState = getState();
     const nextVelocity = 3;
     const char = getFocussedCharacter(initialState);
     expect(char?.kinematic.velocity[0]).not.toEqual(nextVelocity);
@@ -293,6 +309,7 @@ describe("VELX_CHANGED", () => {
 });
 describe("VELZ_CHANGED", () => {
   it("updates the z velocity of the focussed character", () => {
+    const initialState = getState();
     const nextVelocity = 3;
     const char = getFocussedCharacter(initialState);
     expect(char?.kinematic.velocity[1]).not.toEqual(nextVelocity);
@@ -308,6 +325,7 @@ describe("VELZ_CHANGED", () => {
 });
 describe("MAX_ACCELERATION_CHANGED", () => {
   it("updates the max acceleration of the focussed character", () => {
+    const initialState = getState();
     const nextMaxAcceleration = 3;
     const char = getFocussedCharacter(initialState);
     expect(char?.kinematic.maxAcceleration).not.toEqual(nextMaxAcceleration);
@@ -323,6 +341,7 @@ describe("MAX_ACCELERATION_CHANGED", () => {
 });
 describe("MAX_ANGULAR_ACCELERATION_CHANGED", () => {
   it("updates the max angular acceleration of the focussed character", () => {
+    const initialState = getState();
     const nextMaxAngularAcceleration = 3;
     const char = getFocussedCharacter(initialState);
     expect(char?.kinematic.maxAngularAcceleration).not.toEqual(
