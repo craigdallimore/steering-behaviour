@@ -160,9 +160,114 @@ describe("SCENARIO_CHANGED", () => {
   });
 });
 
-/*
-describe('CANVAS_CLICKED', () => {});
-*/
+describe("CANVAS_CLICKED", () => {
+  test("given no scenario, it returns the unchanced state", () => {
+    const initialState = getState();
+
+    initialState.scenario = null;
+
+    const nextState = reducer(initialState, {
+      type: "CANVAS_CLICKED",
+      payload: [0, 0],
+    });
+
+    // TODO this test is not strong
+    expect(nextState.ui).toEqual(initialState.ui);
+  });
+  test("given no characeters, it returns the unchanced state", () => {
+    const initialState = getState();
+
+    if (initialState.scenario) {
+      initialState.scenario.characters = new Map();
+    }
+
+    const nextState = reducer(initialState, {
+      type: "CANVAS_CLICKED",
+      payload: [0, 0],
+    });
+
+    // TODO this test is not strong
+    expect(nextState.ui).toEqual(initialState.ui);
+  });
+
+  it("unfocusses the focussed character, given the clickis not close to any character", () => {
+    const initialState = getState();
+
+    expect(initialState.ui.focussedCharacterId).not.toBe(null);
+
+    const nextState = reducer(initialState, {
+      type: "CANVAS_CLICKED",
+      payload: [0, 0],
+    });
+
+    expect(nextState.ui.focussedCharacterId).toBe(null);
+  });
+
+  it("focusses a character, given it is not selecting a target and a character is close to the click", () => {
+    const initialState = getState();
+
+    if (initialState.scenario) {
+      const character = new Character();
+      character.kinematic.position = [1, 1];
+      initialState.scenario.characters.set("_x", character);
+    }
+
+    const nextState = reducer(initialState, {
+      type: "CANVAS_CLICKED",
+      payload: [0, 0],
+    });
+
+    expect(nextState.ui.focussedCharacterId).toBe("_x");
+  });
+  it("does nothing, given the click targets an already focussed character", () => {
+    const initialState = getState();
+    initialState.ui.isSettingTarget = true;
+
+    if (initialState.scenario) {
+      const character = new Character();
+      character.kinematic.position = [1, 1];
+      initialState.scenario.characters.set("_x", character);
+    }
+
+    initialState.ui.focussedCharacterId = "_x";
+
+    const nextState = reducer(initialState, {
+      type: "CANVAS_CLICKED",
+      payload: [0, 0],
+    });
+
+    // expect(nextState.ui.isSettingTarget).toBe(true); // TODO
+    expect(nextState.ui.focussedCharacterId).toBe("_x"); // no change
+  });
+  it("makes a character a target of the focussed characters behaviour, given the UI is in targeting mode", () => {
+    const initialState = getState();
+    initialState.ui.isSettingTarget = true;
+
+    const behaviour = new steering.Seek("");
+
+    const focussedCharacter = getFocussedCharacter(initialState);
+    if (focussedCharacter) {
+      focussedCharacter.behaviours = [behaviour];
+    }
+
+    if (initialState.scenario) {
+      const character = new Character();
+      character.kinematic.position = [1, 1];
+      initialState.scenario.characters.set("_x", character);
+    }
+
+    expect(initialState.ui.focussedCharacterId).not.toBe("_x");
+
+    const nextState = reducer(initialState, {
+      type: "CANVAS_CLICKED",
+      payload: [0, 0],
+    });
+
+    expect(behaviour.targetId).toBe("_x");
+
+    expect(nextState.ui.focussedCharacterId).toBe("_1"); // no change
+  });
+});
 describe("CANVAS_RESIZED", () => {
   it("updates the stored dimensions of the canvas", () => {
     const initialState = getState();

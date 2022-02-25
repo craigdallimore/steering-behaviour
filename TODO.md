@@ -8,7 +8,6 @@
 
 ## Test debt
 
-- [ ] domain/reducer
 - [ ] components
 - [ ] steering
 
