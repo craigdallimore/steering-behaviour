@@ -13,8 +13,8 @@
   - [x] AssignedTarget.tsx
   - [ ] Behaviours.tsx
   - [ ] CharacterSidebar.tsx
-  - [ ] NumericField.tsx
-  - [ ] RemoveBehaviour.tsx
+  - [x] NumericField.tsx
+  - [x] RemoveBehaviour.tsx
   - [ ] Align.tsx
   - [ ] Arrive.tsx
   - [ ] BehaviourSwitch.tsx
