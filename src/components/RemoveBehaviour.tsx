@@ -10,6 +10,7 @@ const RemoveBehaviour = (props: Props) => {
   const dispatch = React.useContext(DispatchContext);
   return (
     <button
+      data-id="remove-behaviour"
       className="button-cross"
       aria-label="Remove behaviour"
       role="button"

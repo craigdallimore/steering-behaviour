@@ -10,15 +10,11 @@
 
 - [ ] components
   - [x] AddBehaviour.tsx
-  - [ ] AssignedTarget.tsx
+  - [x] AssignedTarget.tsx
   - [ ] Behaviours.tsx
-  - [ ] Canvas.tsx
   - [ ] CharacterSidebar.tsx
-  - [ ] DispatchContext.ts
-  - [ ] Layout.tsx
   - [ ] NumericField.tsx
   - [ ] RemoveBehaviour.tsx
-  - [ ] StateContext.ts
   - [ ] Align.tsx
   - [ ] Arrive.tsx
   - [ ] BehaviourSwitch.tsx
