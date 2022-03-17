@@ -1,5 +1,5 @@
 import React from "react";
-import { render, userEvent } from "@test-utils";
+import { render } from "@test-utils";
 import AssignedTarget from "../AssignedTarget";
 
 describe("AssignedTarget", () => {
