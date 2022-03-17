@@ -2,7 +2,7 @@ import React from "react";
 import { CharacterId } from "@domain/types";
 
 type Props = {
-  targetId: CharacterId;
+  targetId: CharacterId | null;
 };
 
 const AssignedTarget = (props: Props) => {
