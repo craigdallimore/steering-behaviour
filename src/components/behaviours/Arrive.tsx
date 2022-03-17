@@ -1,5 +1,5 @@
 import React from "react";
-import NumericField from "components/NumericField";
+import NumericField from "@components/NumericField";
 import Arrive from "@steering/arrive";
 import makeUpdatedClone from "@lib/makeUpdatedClone";
 

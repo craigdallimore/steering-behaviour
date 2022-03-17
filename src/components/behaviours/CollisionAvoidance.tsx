@@ -1,5 +1,5 @@
 import React from "react";
-import NumericField from "components/NumericField";
+import NumericField from "@components/NumericField";
 import CollisionAvoidance from "@steering/collisionAvoidance";
 import makeUpdatedClone from "@lib/makeUpdatedClone";
 

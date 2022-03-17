@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import NumericField from "components/NumericField";
+import NumericField from "@components/NumericField";
 import FollowPathPredict from "@steering/followPathPredict";
 import makeUpdatedClone from "@lib/makeUpdatedClone";
 import SelectPath from "@components/SelectPath";
