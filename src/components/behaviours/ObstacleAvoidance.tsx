@@ -37,9 +37,9 @@ const ObstacleAvoidanceControls = (props: Props) => {
         id="look-ahead-size"
         label="Lookahead Side"
         value={behaviour.lookaheadSide}
-        onChange={(lookaheadSide) => {
+        onChange={(lookaheadSize) => {
           props.onBehaviourChange(
-            makeUpdatedClone(behaviour, "lookaheadSide", lookaheadSide)
+            makeUpdatedClone(behaviour, "lookaheadSize", lookaheadSize)
           );
         }}
       />

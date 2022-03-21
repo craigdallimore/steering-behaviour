@@ -8,27 +8,6 @@
 
 ## Test debt
 
-- [ ] components
-  - [x] AddBehaviour.tsx
-  - [x] AssignedTarget.tsx
-  - [x] Behaviours.tsx
-  - [x] CharacterSidebar.tsx
-  - [x] NumericField.tsx
-  - [x] RemoveBehaviour.tsx
-  - [x] Align.tsx
-  - [x] Arrive.tsx
-  - [ ] BehaviourSwitch.tsx
-  - [ ] CollisionAvoidance.tsx
-  - [ ] Evade.tsx
-  - [ ] Face.tsx
-  - [ ] FollowPathChaseRabbit.tsx
-  - [ ] FollowPathPredict.tsx
-  - [ ] LookWhereYouAreGoing.tsx
-  - [ ] MatchVelocity.tsx
-  - [ ] ObstacleAvoidance.tsx
-  - [ ] Pursue.tsx
-  - [ ] Separation.tsx
-  - [ ] Wander.tsx
 - [ ] steering
   - [ ] align.ts
   - [ ] arrive.ts
