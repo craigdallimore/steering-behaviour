@@ -1,7 +1,8 @@
 import React from "react";
-import { render } from "@test-utils";
+import { render, fireEvent, userEvent } from "@test-utils";
 import Behaviours from "../Behaviours";
 import Character from "@domain/character";
+import * as steering from "@steering/index";
 
 describe("Behaviours", () => {
   const getProps = (changes = {}) => {
@@ -22,10 +23,56 @@ describe("Behaviours", () => {
     expect(items.length).toBe(0);
   });
 
-  /*
-  test.each([])(
-    "it shows %s UI given the %s character has the %s behaviour",
-    () => {}
-  );
-  */
+  test.each([
+    new steering.Align(""),
+    new steering.Arrive(""),
+    new steering.CollisionAvoidance(),
+    new steering.Evade(""),
+    new steering.Face(""),
+    new steering.Flee(""),
+    new steering.FollowPathChaseRabbit("P"),
+    new steering.FollowPathPredict("P"),
+    new steering.LookWhereYouAreGoing(),
+    new steering.MatchVelocity(""),
+    new steering.ObstacleAvoidance(),
+    new steering.Pursue(""),
+    new steering.Seek(""),
+    new steering.Separation(),
+    new steering.Wander(),
+  ])("it shows $name UI given the character has the $name behaviour", (s) => {
+    const props = getProps();
+    props.character.behaviours = [s];
+    const { getByDataId } = render(<Behaviours {...props} />);
+    const item = getByDataId(s.name);
+
+    expect(item).not.toBeNull();
+  });
+
+  test("changing a behaviour will dispatch changes ", () => {
+    const props = getProps();
+    props.character.behaviours = [new steering.Separation()];
+    const { getByDataId } = render(<Behaviours {...props} />);
+
+    const thresholdInput = getByDataId("SEPARATION").querySelector(
+      "#threshold"
+    ) as HTMLInputElement;
+
+    expect(thresholdInput).not.toBeNull();
+
+    fireEvent.change(thresholdInput, { target: { value: 10 } });
+
+    expect(props.dispatch.mock.calls[0][0].type).toBe("BEHAVIOUR_CHANGED");
+  });
+
+  test("adding a behaviour will dispatch changes", () => {
+    const props = getProps();
+    const { container, getByText } = render(<Behaviours {...props} />);
+
+    userEvent.click(getByText("Add behaviour"));
+
+    const select = container.querySelector("select") as HTMLSelectElement;
+    userEvent.selectOptions(select, ["SEPARATION"]);
+
+    expect(props.dispatch.mock.calls[0][0].type).toBe("BEHAVIOUR_ADDED");
+  });
 });

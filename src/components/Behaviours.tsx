@@ -54,7 +54,7 @@ const Behaviours = (props: Props) => {
       <legend>Behaviours</legend>
       <ul data-id="behaviour-list">
         {props.character.behaviours.map((behaviour) => (
-          <li key={behaviour.name}>
+          <li key={behaviour.name} data-id={behaviour.name}>
             <header>
               <h3>{getName(behaviour.name)}</h3>
               <RemoveBehaviour name={behaviour.name} />
