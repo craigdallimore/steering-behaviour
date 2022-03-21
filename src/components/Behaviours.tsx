@@ -52,7 +52,7 @@ const Behaviours = (props: Props) => {
   return (
     <fieldset className="behaviours">
       <legend>Behaviours</legend>
-      <ul>
+      <ul data-id="behaviour-list">
         {props.character.behaviours.map((behaviour) => (
           <li key={behaviour.name}>
             <header>
