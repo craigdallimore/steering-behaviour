@@ -11,12 +11,12 @@
 - [ ] components
   - [x] AddBehaviour.tsx
   - [x] AssignedTarget.tsx
-  - [ ] Behaviours.tsx
-  - [ ] CharacterSidebar.tsx
+  - [x] Behaviours.tsx
+  - [x] CharacterSidebar.tsx
   - [x] NumericField.tsx
   - [x] RemoveBehaviour.tsx
-  - [ ] Align.tsx
-  - [ ] Arrive.tsx
+  - [x] Align.tsx
+  - [x] Arrive.tsx
   - [ ] BehaviourSwitch.tsx
   - [ ] CollisionAvoidance.tsx
   - [ ] Evade.tsx
