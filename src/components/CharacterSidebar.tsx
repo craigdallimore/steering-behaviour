@@ -21,7 +21,7 @@ const CharacterSidebar = () => {
       {focussedCharacter && (
         <form>
           <fieldset>
-            <legend>
+            <legend data-id="kinematic-id">
               Kinematic <code>{idText}</code>
             </legend>
 
