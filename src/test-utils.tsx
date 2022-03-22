@@ -73,3 +73,22 @@ const customRender = (ui: ReactElement, options?: Options) => {
 
 export * from "@testing-library/react";
 export { customRender as render, userEvent, fc };
+
+export const arbitraryVector = () => fc.tuple(fc.float(), fc.float());
+
+export const arbitraryKinematic = () =>
+  fc.record({
+    maxAcceleration: fc.float(),
+    maxAngularAcceleration: fc.float(),
+    maxSpeed: fc.float(),
+    position: arbitraryVector(),
+    rotation: fc.float(),
+    orientation: fc.float(),
+    velocity: arbitraryVector(),
+  });
+
+export const arbitrarySteering = () =>
+  fc.record({
+    linear: fc.tuple(fc.float(), fc.float()),
+    angular: fc.float(),
+  });

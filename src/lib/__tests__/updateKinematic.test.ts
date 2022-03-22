@@ -1,26 +1,7 @@
 import { Kinematic, Steering, Vector } from "@domain/types";
 import updateKinematic from "@lib/updateKinematic";
 import { length } from "@lib/vector";
-import { fc } from "@test-utils";
-
-const arbitraryVector = () => fc.tuple(fc.float(), fc.float());
-
-const arbitraryKinematic = () =>
-  fc.record({
-    maxAcceleration: fc.float(),
-    maxAngularAcceleration: fc.float(),
-    maxSpeed: fc.float(),
-    position: arbitraryVector(),
-    rotation: fc.float(),
-    orientation: fc.float(),
-    velocity: arbitraryVector(),
-  });
-
-const arbitrarySteering = () =>
-  fc.record({
-    linear: fc.tuple(fc.float(), fc.float()),
-    angular: fc.float(),
-  });
+import { fc, arbitraryKinematic, arbitrarySteering } from "@test-utils";
 
 describe("updateKinematic", () => {
   test("given no steering and no velocity, a change it time does not affect the next position", () => {
