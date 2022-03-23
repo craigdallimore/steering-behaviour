@@ -1,36 +1,33 @@
-//import Align from "../align";
-//import { fc } from "@test-utils";
+import Align from "../align";
+import { fc, arbitraryKinematic } from "@test-utils";
+
+const arbitraryAlignConfig = fc.record({
+  targetId: fc.string(),
+  maxRotation: fc.float(),
+  decelerationTolerance: fc.float(),
+  alignTolerance: fc.float(),
+  timeToTarget: fc.float(),
+});
 
 describe("Align", () => {
-  it("tmp", () => {
-    expect(true).toBe(true);
+  it("does not provide linear steering at all", () => {
+    fc.assert(
+      fc.property(
+        arbitraryAlignConfig,
+        arbitraryKinematic(),
+        fc.float(),
+        (config, kinematic, orientation) => {
+          const align = new Align(
+            "",
+            config.maxRotation,
+            config.decelerationTolerance,
+            config.alignTolerance,
+            config.timeToTarget
+          );
+          const steering = align.calculate(kinematic, orientation);
+          return steering.linear[0] === 0 && steering.linear[1] === 0;
+        }
+      )
+    );
   });
-  /*
-  const arbitraryAlign = () =>
-    it("does not provide linear steering", () => {
-      fc.assert(
-        fc.property(
-          fc.float(),
-          fc.float(),
-          fc.float(),
-          fc.float(),
-          (
-            maxRotation,
-            decelerationTolerance,
-            alignTolerance,
-            timeToTarget
-          ) => {
-            const align = new Align(
-              "",
-              maxRotation,
-              decelerationTolerance,
-              alignTolerance,
-              timeToTarget
-            );
-            const steering = align.calculate(kinematic, orientation);
-          }
-        )
-      );
-    });
-  */
 });
