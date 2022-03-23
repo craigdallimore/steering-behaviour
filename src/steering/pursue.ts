@@ -10,7 +10,7 @@ export default class Pursue extends AbstractBehaviour {
   seek: Seek;
   constructor(targetId: CharacterId, maxPrediction?: number) {
     super();
-    this.maxPrediction = maxPrediction || 1;
+    this.maxPrediction = maxPrediction ?? 1;
     this.seek = new Seek(targetId);
     this.targetId = targetId;
   }

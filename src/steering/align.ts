@@ -37,10 +37,10 @@ export default class Align extends AbstractBehaviour {
   ) {
     super();
     this.targetId = targetId;
-    this.maxRotation = maxRotation || 120;
-    this.decelerationTolerance = decelerationTolerance || 2;
-    this.alignTolerance = alignTolerance || 0.01;
-    this.timeToTarget = timeToTarget || 0.1;
+    this.maxRotation = maxRotation ?? 120;
+    this.decelerationTolerance = decelerationTolerance ?? 2;
+    this.alignTolerance = alignTolerance ?? 0.01;
+    this.timeToTarget = timeToTarget ?? 0.1;
   }
 
   calculate(kinematic: Kinematic, orientation: number): Steering {

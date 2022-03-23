@@ -9,7 +9,7 @@ export default class MatchVelocity extends AbstractBehaviour {
   constructor(targetId: CharacterId, timeToTarget?: number) {
     super();
     this.targetId = targetId;
-    this.timeToTarget = timeToTarget || 0.1;
+    this.timeToTarget = timeToTarget ?? 0.1;
   }
   calculate(kinematic: Kinematic, target: Kinematic): Steering {
     const angular = 0;

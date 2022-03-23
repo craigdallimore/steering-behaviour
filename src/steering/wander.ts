@@ -16,10 +16,10 @@ export default class Wander extends AbstractBehaviour {
     super();
 
     // The offset and radius of the wander circle
-    this.wanderOffset = wanderOffset || 40;
-    this.wanderRadius = wanderRadius || 20;
+    this.wanderOffset = wanderOffset ?? 40;
+    this.wanderRadius = wanderRadius ?? 20;
 
-    this.wanderRate = wanderRate || 0.4;
+    this.wanderRate = wanderRate ?? 0.4;
 
     this.wanderOrientation = 0;
   }

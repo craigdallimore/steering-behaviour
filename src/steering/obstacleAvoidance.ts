@@ -40,11 +40,11 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
     super();
     // Holds the minimum distance to a wall (i.e., how far to avoid collision)
     // should be greater than the radius of the character
-    this.avoidDistance = avoidDistance || 50;
+    this.avoidDistance = avoidDistance ?? 50;
     // Holds the distance to look ahead for a collision
     // (i.e., the length of the collision ray)
-    this.lookaheadMain = lookaheadMain || 150;
-    this.lookaheadSide = lookaheadSide || 85;
+    this.lookaheadMain = lookaheadMain ?? 150;
+    this.lookaheadSide = lookaheadSide ?? 85;
 
     this.seek = new Seek("");
   }

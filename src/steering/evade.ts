@@ -12,7 +12,7 @@ export default class Evade extends AbstractBehaviour {
     super();
     this.targetId = targetId;
     this.flee = new Flee(targetId);
-    this.maxPrediction = maxPrediction || 1;
+    this.maxPrediction = maxPrediction ?? 1;
   }
   calculate(kinematic: Kinematic, target: Kinematic): Steering {
     const direction = subtract(target.position, kinematic.position);

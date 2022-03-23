@@ -9,9 +9,9 @@ export default class Separation extends AbstractBehaviour {
   constructor(threshold?: number, decayCoefficient?: number) {
     super();
     // The threshold to take action
-    this.threshold = threshold || 250;
+    this.threshold = threshold ?? 250;
     // Holds the constant coefficient of decay for the inverse square law force
-    this.decayCoefficient = decayCoefficient || 1500;
+    this.decayCoefficient = decayCoefficient ?? 1500;
   }
   calculate(kinematic: Kinematic, targets: Array<Kinematic>): Steering {
     return targets.reduce(

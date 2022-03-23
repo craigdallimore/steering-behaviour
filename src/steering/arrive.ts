@@ -16,9 +16,9 @@ export default class Arrive extends AbstractBehaviour {
   ) {
     super();
     this.targetId = targetId;
-    this.timeToTarget = timeToTarget || 3;
-    this.targetRadius = targetRadius || 5;
-    this.slowRadius = slowRadius || 60;
+    this.timeToTarget = timeToTarget ?? 3;
+    this.targetRadius = targetRadius ?? 5;
+    this.slowRadius = slowRadius ?? 60;
   }
   calculate(kinematic: Kinematic, targetPosition: Vector): Steering | null {
     const distanceToTarget = distance(kinematic.position, targetPosition);

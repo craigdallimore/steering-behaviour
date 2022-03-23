@@ -15,9 +15,9 @@ export default class FollowPathPredict extends AbstractBehaviour {
     this.pathId = pathId;
     // Holds the distance along the path to generate the target. Can be negative
     // if the character is to move along the reverse direction
-    this.pathOffset = pathOffset || 30;
+    this.pathOffset = pathOffset ?? 30;
     // Holds the time in the future to predict the character position
-    this.predictTime = predictTime || 0.1;
+    this.predictTime = predictTime ?? 0.1;
     this.seek = new Seek("");
   }
   calculate(kinematic: Kinematic, path: Path): Steering {
