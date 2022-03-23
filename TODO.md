@@ -8,23 +8,6 @@
 
 ## Test debt
 
-- [ ] steering
-  - [ ] align.ts
-  - [ ] arrive.ts
-  - [ ] collisionAvoidance.ts
-  - [ ] evade.ts
-  - [ ] face.ts
-  - [ ] flee.ts
-  - [ ] followPathChaseRabbit.ts
-  - [ ] followPathPredict.ts
-  - [ ] index.ts
-  - [ ] lookWhereYouAreGoing.ts
-  - [ ] matchVelocity.ts
-  - [ ] obstacleAvoidance.ts
-  - [ ] pursue.ts
-  - [ ] seek.ts
-  - [ ] separation.ts
-  - [ ] wander.ts
 - [ ] TODOs in some tests
 
 ## Features

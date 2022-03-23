@@ -92,3 +92,15 @@ export const arbitrarySteering = () =>
     linear: fc.tuple(fc.float(), fc.float()),
     angular: fc.float(),
   });
+
+export const arbitraryPath = () =>
+  fc.record({
+    label: fc.string(),
+    position: arbitraryVector(),
+    points: fc.array(fc.tuple(fc.float(), fc.float()), { minLength: 2 }),
+  });
+
+export const arbitraryShape = () =>
+  fc.record({
+    path: arbitraryPath(),
+  });
