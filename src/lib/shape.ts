@@ -5,7 +5,7 @@ import type {
   Vector,
   Shape,
 } from "@domain/types";
-import { add, subtract, normalise, distance } from "./vector";
+import { add, subtract, normalise, distance } from "@decoy9697/vector";
 import { findEdgeIntersection } from "./path";
 
 type Init = {

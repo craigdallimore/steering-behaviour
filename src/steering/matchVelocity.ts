@@ -1,5 +1,5 @@
 import { AbstractBehaviour } from "./abstractBehaviour";
-import { length, subtract, multiply, normalise } from "@lib/vector";
+import { length, subtract, multiply, normalise } from "@decoy9697/vector";
 import type { Kinematic, CharacterId, Steering } from "@domain/types";
 
 export default class MatchVelocity extends AbstractBehaviour {

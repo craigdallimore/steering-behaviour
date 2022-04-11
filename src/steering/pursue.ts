@@ -1,5 +1,5 @@
 import { AbstractBehaviour } from "./abstractBehaviour";
-import { subtract, multiply, add, length } from "@lib/vector";
+import { subtract, multiply, add, length } from "@decoy9697/vector";
 import type { Kinematic, CharacterId, Steering } from "@domain/types";
 import Seek from "./seek";
 

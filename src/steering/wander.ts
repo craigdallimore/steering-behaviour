@@ -1,5 +1,5 @@
 import { AbstractBehaviour } from "./abstractBehaviour";
-import { multiply, radiansToVector, add } from "@lib/vector";
+import { multiply, radiansToVector, add } from "@decoy9697/vector";
 import type { Kinematic, Vector, Steering } from "@domain/types";
 
 export default class Wander extends AbstractBehaviour {

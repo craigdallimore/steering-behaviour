@@ -1,6 +1,6 @@
 import { Kinematic, Steering, Vector } from "@domain/types";
 import updateKinematic from "@lib/updateKinematic";
-import { length } from "@lib/vector";
+import { length } from "@decoy9697/vector";
 import { fc, arbitraryKinematic, arbitrarySteering } from "@test-utils";
 
 describe("updateKinematic", () => {

@@ -1,5 +1,5 @@
 import type { Edge, Vector, Path } from "@domain/types";
-import { distance, subtract, multiply, normalise } from "./vector";
+import { distance, subtract, multiply, normalise } from "@decoy9697/vector";
 
 const zero2D: Vector = [0, 0];
 

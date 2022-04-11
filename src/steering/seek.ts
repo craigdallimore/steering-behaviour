@@ -1,5 +1,5 @@
 import { AbstractBehaviour } from "./abstractBehaviour";
-import { subtract, multiply, normalise } from "@lib/vector";
+import { subtract, multiply, normalise } from "@decoy9697/vector";
 import type { Kinematic, Vector, Steering, CharacterId } from "@domain/types";
 
 export default class Seek extends AbstractBehaviour {
