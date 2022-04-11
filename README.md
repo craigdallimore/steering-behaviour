@@ -1,6 +1,7 @@
 # Steering behaviours
 
 [![Build][build-badge]][build]
+[![Coverage][coverage-badge]][coverage]
 
 Based on _Artificial Intelligence for Games_ by Ian Millington and John Funge.
 
@@ -26,3 +27,5 @@ This project uses [nix](https://nixos.org/) to install dependencies for the deve
 
 [build-badge]: https://github.com/craigdallimore/steering-behaviour/workflows/main/badge.svg
 [build]: https://github.com/craigdallimore/steering-behaviour/actions
+[coverage-badge]: https://img.shields.io/codecov/c/github/craigdallimore/steering-behaviour.svg
+[coverage]: https://codecov.io/github/craigdallimore/steering-behaviour
