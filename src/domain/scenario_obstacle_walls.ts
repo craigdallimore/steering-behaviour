@@ -15,11 +15,14 @@ export default function initScenario(): Scenario {
             maxAngularAcceleration: 140,
             maxSpeed: 45,
             position: [300, 25],
-            velocity: [2, 10],
+            velocity: [-2, 10],
             orientation: 1.5,
             rotation: 0,
           },
-          [new steering.ObstacleAvoidance()]
+          [
+            new steering.ObstacleAvoidance(),
+            new steering.LookWhereYouAreGoing(),
+          ]
         ),
       ],
     ]),

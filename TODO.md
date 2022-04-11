@@ -4,7 +4,7 @@
 
 - [ ] Buttons feel really gummy
 - [ ] OBSTACLE_AVOIDANCE still clips when entering from right.
-- [ ] Resizing canvas makes it disappear
+- [ ] Resizing canvas makes it disappear (HiDPI only?)
 
 ## Test debt
 
@@ -12,9 +12,23 @@
 
 ## Features
 
+- [ ] Modal: Add behaviour
+- [ ] Modal: Adjust blending
+- [ ] Add behaviour: should not permit already selected behaviours to be added
+- [ ] Add behaviour: should not permit incompatible behaviours to be added (which?)
 - [ ] Debug
   - [ ] Improve colouring
   - [ ] Add to all behaviours
+    - [ ] align
+    - [ ] arrive
+    - [ ] evade
+    - [ ] face
+    - [ ] flee
+    - [ ] lookWhereYouAreGoing
+    - [ ] matchVelocity
+    - [ ] pursue
+    - [ ] seek
+    - [ ] separation
 - [ ] Paths
   - [ ] Are path offsets respected?
   - [ ] Make it possible to draw paths
@@ -35,7 +49,6 @@
 - [ ] Store selected scenario in page url
 - [ ] Cat and mouse characters
 - [ ] Characters should not be able to leave the canvas. Bounce off the sides maybe?
-- [ ] Add Art Deco styling
 - [ ] Make it possible to dynamically add characters to a scenario
 - [ ] Convert behaviour classes back to regular objects
 - [ ] Add a button to stop a kinematic from moving
