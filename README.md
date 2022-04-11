@@ -1,25 +1,31 @@
 # Steering behaviours
 
+[![Build][build-badge]][build]
+[![Coverage][coverage-badge]][coverage]
+
 Based on _Artificial Intelligence for Games_ by Ian Millington and John Funge.
 
 ## Development
 
-### To start shell
+This project uses [nix](https://nixos.org/) to install dependencies for the development shell.
 
-`nix-shell`
+### Commands
 
-### Development
+`nix-shell` - starts a development shell with system dependencies
 
-```shell
-# install deps
-yarn
-# start a server (inc. livereload)
-# start watching files for changes
-yarn dev
-```
+#### Within the shell
 
-### Testing
+`yarn` - install project dependencies
 
-```
-yarn test
-```
+`yarn test` - run the tests
+
+`yarn dev` - start a dev server, and start watching files for changes
+
+`yarn build` - deploy a bundle to `/dist`
+
+<!-- Definitions -->
+
+[build-badge]: https://github.com/craigdallimore/steering-behaviour/workflows/main/badge.svg
+[build]: https://github.com/craigdallimore/steering-behaviour/actions
+[coverage-badge]: https://img.shields.io/codecov/c/github/craigdallimore/steering-behaviour.svg
+[coverage]: https://codecov.io/github/craigdallimore/steering-behaviour

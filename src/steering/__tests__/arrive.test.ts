@@ -1,6 +1,6 @@
 import Arrive from "../arrive";
 import { fc, arbitraryKinematic, arbitraryVector } from "@test-utils";
-import { distance } from "@lib/vector";
+import { distance } from "@decoy9697/vector";
 
 const arbitraryArriveConfig = fc.record({
   targetId: fc.string(),

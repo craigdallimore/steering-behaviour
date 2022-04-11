@@ -7,7 +7,7 @@ import {
   ScenarioId,
   SteeringBehaviourName,
 } from "@domain/types";
-import { distance } from "@lib/vector";
+import { distance } from "@decoy9697/vector";
 import updateFocussedCharacter from "@lib/updateFocussedCharacter";
 import applyBehaviours from "@lib/applyBehaviours";
 import getFirstTargetId from "@lib/getFirstTargetId";

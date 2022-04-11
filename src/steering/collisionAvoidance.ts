@@ -1,5 +1,12 @@
 import { AbstractBehaviour } from "./abstractBehaviour";
-import { add, dot, length, subtract, multiply, normalise } from "@lib/vector";
+import {
+  add,
+  dot,
+  length,
+  subtract,
+  multiply,
+  normalise,
+} from "@decoy9697/vector";
 import type { Kinematic, Vector, Steering } from "@domain/types";
 
 type Acc = {

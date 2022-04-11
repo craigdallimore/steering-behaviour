@@ -1,5 +1,5 @@
 import { AbstractBehaviour } from "./abstractBehaviour";
-import { length, subtract } from "@lib/vector";
+import { length, subtract } from "@decoy9697/vector";
 import type { CharacterId, Kinematic, Vector, Steering } from "@domain/types";
 import Align from "./align";
 

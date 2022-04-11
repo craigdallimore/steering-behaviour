@@ -32,7 +32,7 @@
 - [ ] Paths
   - [ ] Are path offsets respected?
   - [ ] Make it possible to draw paths
-  - [ ] Path should be closable?
+  - [ ] Path should be closable? / loopable
 - [ ] Move helpers out from class files
 - [ ] Reducer can be more imperative
 - [ ] Should be possible to make the mouse a target
@@ -55,6 +55,7 @@
 - [ ] Add a button to match the velocity to the orientation
 - [ ] Reset button on scenario picker should not be present until the scenario has been started
 - [ ] Filter available behaviours based on the assigned behaviours
+- [ ] Pause animation like youtube
 
 ## Steering pipeline
 

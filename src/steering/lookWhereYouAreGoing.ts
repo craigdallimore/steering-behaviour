@@ -1,6 +1,6 @@
 import { AbstractBehaviour } from "./abstractBehaviour";
 import Align from "./align";
-import { length, vectorToRadians } from "@lib/vector";
+import { length, vectorToRadians } from "@decoy9697/vector";
 import type { Kinematic, Steering } from "@domain/types";
 
 export default class LookWhereYouAreGoing extends AbstractBehaviour {

@@ -1,5 +1,11 @@
 import { AbstractBehaviour } from "./abstractBehaviour";
-import { length, distance, subtract, multiply, normalise } from "@lib/vector";
+import {
+  length,
+  distance,
+  subtract,
+  multiply,
+  normalise,
+} from "@decoy9697/vector";
 import type { CharacterId, Kinematic, Steering, Vector } from "@domain/types";
 
 export default class Arrive extends AbstractBehaviour {

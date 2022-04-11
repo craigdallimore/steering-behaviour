@@ -7,7 +7,7 @@ import {
   Scenario,
   Steering,
 } from "@domain/types";
-import { add, multiply, length, normalise } from "./vector";
+import { add, multiply, length, normalise } from "@decoy9697/vector";
 
 function getSteering(
   char: Character,

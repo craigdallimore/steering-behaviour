@@ -6,7 +6,7 @@ import {
   radiansToVector,
   subtract,
   vectorToRadians,
-} from "@lib/vector";
+} from "@decoy9697/vector";
 import type {
   Collision,
   Edge,

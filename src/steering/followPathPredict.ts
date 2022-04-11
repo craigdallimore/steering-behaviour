@@ -1,7 +1,7 @@
 import { AbstractBehaviour } from "./abstractBehaviour";
 import { getParam, getPosition } from "@lib/path";
 import { Kinematic, Path, PathId, Steering } from "@domain/types";
-import { add, multiply } from "@lib/vector";
+import { add, multiply } from "@decoy9697/vector";
 import Seek from "./seek";
 
 export default class FollowPathPredict extends AbstractBehaviour {

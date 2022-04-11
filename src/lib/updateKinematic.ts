@@ -1,5 +1,5 @@
 import type { Kinematic, Steering } from "@domain/types";
-import { add, length, multiply, normalise } from "./vector";
+import { add, length, multiply, normalise } from "@decoy9697/vector";
 import limitOrientation from "./limitOrientation";
 
 export default function updateKinematic(
