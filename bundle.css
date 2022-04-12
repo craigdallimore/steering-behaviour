@@ -1,0 +1,229 @@
+@import url("https://fonts.googleapis.com/css?family=Kaushan Script&display=swap");
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+body {
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  margin: 0;
+}
+#root {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: 18rem 1fr 18rem;
+  grid-template-areas: "scenario canvas character";
+}
+:root {
+  /* Nova by George Essig (https://github.com/gessig), Trevor D. Miller (https://trevordmiller.com) */
+  --base00: #3c4c55; /* dark grey */
+  --base01: #556873;
+  --base02: #6a7d89;
+  --base03: #899ba6;
+  --base04: #899ba6;
+  --base05: #c5d4dd; /* light grey */
+  --base06: #899ba6;
+  --base07: #556873;
+
+  --base08: #83afe5; /* blueish */
+  --base09: #7fc1ca; /* teal 1 */
+  --base0A: #a8ce93; /* greenish */
+  --base0B: #7fc1ca; /* teal 2 */
+  --base0C: #f2c38f; /* tan */
+  --base0D: #83afe5; /* also blueish */
+  --base0E: #9a93e1; /* lavendar */
+  --base0F: #f2c38f; /* different tan */
+}
+h1 {
+  font-family: Kaushan Script;
+}
+.behaviours {
+}
+.behaviours h3 {
+  font-weight: normal;
+  font-size: 1rem;
+  padding: 0;
+  margin: 0 0 1rem;
+}
+.behaviours ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.behaviours ul:not(:empty) + * {
+  margin-top: 1rem;
+}
+.behaviours li {
+  display: flex;
+  flex-direction: column;
+}
+.behaviours li + li {
+  margin-top: 2rem;
+}
+.behaviours header {
+  display: flex;
+  align-items: baseline;
+}
+.behaviours header .button-cross {
+  margin-left: auto;
+}
+.label-target-id {
+  display: flex;
+}
+.label-target-id code {
+  font-weight: bold;
+  font-size: 13px;
+  height: 1.125rem;
+}
+.label-target-id.no-target {
+  color: black;
+  background: var(--base0F);
+  border: 1px solid var(--base0C);
+  padding: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+#btn-set-target {
+  align-self: start;
+}
+.button-cross {
+  border: 0;
+  padding: 0 0 0 1px;
+  background: white;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: none;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+}
+.button-cancel {
+  align-self: start;
+  margin-top: 1rem;
+}
+.scenario-sidebar {
+  grid-area: scenario;
+  background-color: var(--base05);
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+h1 {
+  margin: 1rem 1rem 0.5rem;
+}
+.scenario-sidebar span {
+  margin: 1rem 0;
+}
+.scenario-sidebar button {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+.scenario-sidebar button + button {
+  margin-top: 1rem;
+}
+.scenario-sidebar fieldset {
+  display: flex;
+  flex-direction: column;
+}
+.scenario-sidebar select {
+  margin-top: 0.25rem;
+}
+h2 {
+  padding: 1rem;
+  text-transform: uppercase;
+  font-size: 1rem;
+  text-align: center;
+  color: black;
+  letter-spacing: 1px;
+}
+.character-sidebar {
+  grid-area: character;
+  background-color: var(--base05);
+  overflow-y: auto;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.character-sidebar fieldset {
+  display: flex;
+  flex-direction: column;
+}
+.character-sidebar label {
+  padding-bottom: 0.25rem;
+}
+.character-sidebar input + label {
+  margin-top: 0.5rem;
+}
+.character-sidebar legend {
+  display: flex;
+}
+.character-sidebar code {
+  margin-left: auto;
+  background: var(--base04);
+  padding: 1px 3px 0;
+  border-radius: 2px;
+}
+main {
+  grid-area: canvas;
+  overflow: hidden;
+  border-left: 1px solid var(--base06);
+  border-right: 1px solid var(--base06);
+}
+legend {
+  padding: 0.5rem 0;
+  width: 100%;
+  font-weight: bold;
+  border-bottom: 2px solid var(--base06);
+  margin-bottom: 0.5rem;
+}
+label {
+  font-size: 0.8rem;
+}
+fieldset {
+  border: 0;
+}
+select {
+  padding: 0.25rem 0.5rem;
+  border: 2px solid var(--base00);
+  letter-spacing: 1px;
+}
+button {
+  position: relative;
+  background-color: var(--base01);
+  color: white;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.5rem;
+  border: 2px solid var(--base00);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+}
+button:hover {
+  background-color: var(--base02);
+  cursor: pointer;
+}
+button:active {
+  top: 3px;
+  left: 3px;
+  box-shadow: none;
+}
+[type="number"] {
+  padding: 0.25rem 0.5rem;
+  letter-spacing: 1px;
+  border: 2px solid var(--base00);
+}
+.checkbox-pair {
+  display: flex;
+}
+.checkbox-pair input {
+  margin-left: auto;
+}
