@@ -909,6 +909,24 @@ function findClosestPointOnEdge([[ax, az], [bx, bz]], [px, pz]) {
     ]));
     return g0 <= g1 ? [ax, az] : [bx, bz];
 }
+function isBetween([ax, az], [bx, bz], [cx, cz], tolerance) {
+    //test if the point c is inside a pre-defined distance (tolerance) from the line
+    const distance = Math.abs((cz - bz) * ax - (cx - bx) * az + cx * bz - cz * bx) /
+        Math.sqrt(Math.pow(cz - bz, 2) + Math.pow(cx - bx, 2));
+    if (distance > tolerance) {
+        return false;
+    }
+    //test if the point c is between a and b
+    const dotproduct = (cx - ax) * (bx - ax) + (cz - az) * (bz - az);
+    if (dotproduct < 0) {
+        return false;
+    }
+    const squaredlengthba = (bx - ax) * (bx - ax) + (bz - az) * (bz - az);
+    if (dotproduct > squaredlengthba) {
+        return false;
+    }
+    return true;
+}
 function getParam(path, characterPosition) {
     const closestPoint = findClosestPointOnPath(path, characterPosition);
     const init = {
@@ -916,23 +934,23 @@ function getParam(path, characterPosition) {
         node: path.points[0],
         done: false,
     };
-    return path.points.reduce((acc, node) => {
+    const points = path.isClosed ? [...path.points, path.points[0]] : path.points;
+    return points.reduce((acc, node) => {
         if (acc.done) {
             return acc;
         }
-        const distanceToNextNode = distance_1(acc.node, node);
-        const distanceToClosestPoint = distance_1(acc.node, closestPoint);
-        if (distanceToClosestPoint < distanceToNextNode) {
+        const isBetweenPoints = isBetween(acc.node, node, closestPoint, 0.1);
+        if (acc.node !== node && isBetweenPoints) {
             return {
                 done: true,
-                distance: acc.distance + distanceToClosestPoint,
+                distance: acc.distance + distance_1(acc.node, closestPoint),
                 node: closestPoint,
             };
         }
         return {
             done: false,
             node,
-            distance: acc.distance + distanceToNextNode,
+            distance: acc.distance + distance_1(acc.node, node),
         };
     }, init).distance;
 }
@@ -943,7 +961,8 @@ function getPosition(path, param) {
         node: path.points[0],
         done: false,
     };
-    return path.points.reduce((acc, node) => {
+    const points = path.isClosed ? [...path.points, path.points[0]] : path.points;
+    return points.reduce((acc, node) => {
         if (acc.done) {
             return acc;
         }
@@ -990,7 +1009,11 @@ function distanceToEdge([[ax, az], [bx, bz]], [px, pz] // point
     return Math.sqrt(dx ** 2 + dy ** 2);
 }
 function findClosestEdgeToPoint(point, path) {
-    const initialEdges = [];
+    const closingEdge = [
+        path.points[path.points.length - 1],
+        path.points[0],
+    ];
+    const initialEdges = path.isClosed ? [closingEdge] : [];
     const edges = path.points.reduce((acc, vecB, index) => {
         if (index === 0) {
             return acc;
@@ -1508,6 +1531,7 @@ function makePair(x, z) {
     const shape = {
         path: {
             label: id,
+            isClosed: false,
             position: [x, z],
             points: [
                 [-10, -10],
@@ -1575,6 +1599,7 @@ function initScenario$3() {
                 {
                     path: {
                         label: "wall1path",
+                        isClosed: false,
                         position: [200, 40],
                         points: [
                             [0, 0],
@@ -1590,6 +1615,7 @@ function initScenario$3() {
                 {
                     path: {
                         label: "wall2path",
+                        isClosed: false,
                         position: [340, 40],
                         points: [
                             [0, 0],
@@ -1605,6 +1631,7 @@ function initScenario$3() {
                 {
                     path: {
                         label: "wall2path",
+                        isClosed: false,
                         position: [315, 240],
                         points: [
                             [0, 0],
@@ -1670,7 +1697,42 @@ function initScenario$1() {
                     velocity: [0, 0],
                     orientation: 0,
                     rotation: 0,
-                }, [new FollowPathPredict("p1")]),
+                }, [
+                    new FollowPathPredict("p1"),
+                    new LookWhereYouAreGoing(),
+                ]),
+            ],
+            [
+                "_2",
+                new Character({
+                    maxAcceleration: 20,
+                    maxAngularAcceleration: 140,
+                    maxSpeed: 60,
+                    position: [120, 320],
+                    velocity: [0, 0],
+                    orientation: 0,
+                    rotation: 0,
+                }, [
+                    new Pursue("_1"),
+                    new Separation(),
+                    new LookWhereYouAreGoing(),
+                ]),
+            ],
+            [
+                "_3",
+                new Character({
+                    maxAcceleration: 20,
+                    maxAngularAcceleration: 140,
+                    maxSpeed: 40,
+                    position: [120, 140],
+                    velocity: [0, 0],
+                    orientation: 0,
+                    rotation: 0,
+                }, [
+                    new Pursue("_1"),
+                    new Separation(),
+                    new LookWhereYouAreGoing(),
+                ]),
             ],
         ]),
         shapes: new Map(),
@@ -1678,16 +1740,17 @@ function initScenario$1() {
             [
                 "p1",
                 {
-                    label: "Main path",
+                    label: "Closed path",
                     position: [20, 20],
+                    isClosed: true,
                     points: [
-                        [50, 50],
-                        [50, 240],
-                        [150, 480],
-                        [300, 600],
-                        [450, 480],
-                        [600, 240],
-                        [600, 50],
+                        [150, 50],
+                        [150, 240],
+                        [250, 480],
+                        [400, 600],
+                        [550, 480],
+                        [700, 240],
+                        [700, 50],
                     ],
                 },
             ],
@@ -1851,7 +1914,7 @@ function getScenario(id) {
             return null;
     }
 }
-const focussedScenarioId = "SC_BLANK";
+const focussedScenarioId = "SC_PATH";
 function getState() {
     return {
         ui: {
@@ -1960,6 +2023,7 @@ function drawPath(ctx, path, strokeStyle) {
     ctx.setLineDash([5, 3]);
     ctx.strokeStyle = strokeStyle;
     ctx.moveTo(path.position[0], path.position[1]);
+    ctx.beginPath();
     for (let i = 0; i < path.points.length; i++) {
         const point = path.points[i];
         if (i === 0) {
@@ -1971,6 +2035,13 @@ function drawPath(ctx, path, strokeStyle) {
         }
     }
     ctx.stroke();
+    if (path.isClosed) {
+        ctx.beginPath();
+        ctx.moveTo(...path.points[path.points.length - 1]);
+        ctx.lineTo(...path.points[0]);
+        ctx.closePath();
+        ctx.stroke();
+    }
     ctx.restore();
     return ctx;
 }
@@ -2082,7 +2153,12 @@ function drawDebug(ctx, debug, kinematic) {
         drawVector(ctx, kinematic.position, vector, "red");
     });
     debug.edges.forEach((edge) => {
-        drawPath(ctx, { position: kinematic.position, points: edge, label: "Debug" }, "silver");
+        drawPath(ctx, {
+            position: kinematic.position,
+            points: edge,
+            label: "Debug",
+            isClosed: false,
+        }, "silver");
     });
     debug.circles.forEach(({ position, radius, fillStyle }) => {
         drawCircle(ctx, position, radius, fillStyle);
