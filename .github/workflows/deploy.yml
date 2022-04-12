@@ -19,6 +19,7 @@ jobs:
       - name: Build
         run: |
           mkdir -p dist
+          rm .gitignore
           yarn build
 
       - name: Deploy
