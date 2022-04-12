@@ -17,7 +17,9 @@ jobs:
           cmd: test --coverage
       - uses: codecov/codecov-action@v2
       - name: Build
-        run: yarn build
+        run: |
+          mkdir -p dist
+          yarn build
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.3.0
         with:
