@@ -5,6 +5,7 @@ import { Path, PathId } from "@domain/types";
 
 const path1: Path = {
   label: "Path 1",
+  isClosed: false,
   position: [0, 0],
   points: [
     [0, 0],
@@ -15,6 +16,7 @@ const path1: Path = {
 };
 const path2: Path = {
   label: "Path 2",
+  isClosed: false,
   position: [20, 20],
   points: [
     [0, 0],
@@ -25,6 +27,7 @@ const path2: Path = {
 };
 const path3: Path = {
   label: "Path 3",
+  isClosed: false,
   position: [40, 40],
   points: [
     [0, 0],

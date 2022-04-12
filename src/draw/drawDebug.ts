@@ -19,7 +19,12 @@ export default function drawDebug(
   debug.edges.forEach((edge) => {
     drawPath(
       ctx,
-      { position: kinematic.position, points: edge, label: "Debug" },
+      {
+        position: kinematic.position,
+        points: edge,
+        label: "Debug",
+        isClosed: false,
+      },
       "silver"
     );
   });

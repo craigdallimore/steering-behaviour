@@ -93,6 +93,7 @@ describe("applyBehaviours", () => {
       const scenario = makeScenario();
       scenario.paths.set("P", {
         label: "Test path",
+        isClosed: false,
         position: [20, 20],
         points: [
           [50, 50],

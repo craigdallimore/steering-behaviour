@@ -32,6 +32,7 @@ export default function initScenario(): Scenario {
         {
           path: {
             label: "wall1path",
+            isClosed: false,
             position: [200, 40],
             points: [
               [0, 0],
@@ -47,6 +48,7 @@ export default function initScenario(): Scenario {
         {
           path: {
             label: "wall2path",
+            isClosed: false,
             position: [340, 40],
             points: [
               [0, 0],
@@ -62,6 +64,7 @@ export default function initScenario(): Scenario {
         {
           path: {
             label: "wall2path",
+            isClosed: false,
             position: [315, 240],
             points: [
               [0, 0],

@@ -18,6 +18,7 @@ describe("findFirstIntersection", () => {
       {
         path: {
           label: "A",
+          isClosed: false,
           position: [0, 0],
           points: [
             [0, 0],
@@ -30,6 +31,7 @@ describe("findFirstIntersection", () => {
       {
         path: {
           label: "B",
+          isClosed: false,
           position: [0, 0],
           points: [
             [3, 0],
@@ -63,6 +65,7 @@ describe("findFirstIntersection", () => {
       {
         path: {
           label: "A",
+          isClosed: false,
           position: [0, 0],
           points: [
             [2, 1],
@@ -75,6 +78,7 @@ describe("findFirstIntersection", () => {
       {
         path: {
           label: "B",
+          isClosed: false,
           position: [0, 0],
           points: [
             [4, 1],
@@ -113,6 +117,7 @@ describe("findFirstIntersection", () => {
       {
         path: {
           label: "A",
+          isClosed: false,
           position: [0, 0],
           points: [
             [2, 1],
@@ -125,6 +130,7 @@ describe("findFirstIntersection", () => {
       {
         path: {
           label: "B",
+          isClosed: false,
           position: [0, 0],
           points: [
             [4, 1],
@@ -165,6 +171,7 @@ describe("getCollision", () => {
       {
         path: {
           label: "A",
+          isClosed: false,
           position: [0, 0],
           points: [
             [0, 0],
@@ -177,6 +184,7 @@ describe("getCollision", () => {
       {
         path: {
           label: "B",
+          isClosed: false,
           position: [0, 0],
           points: [
             [3, 0],
@@ -210,6 +218,7 @@ describe("getCollision", () => {
         path: {
           label: "A",
           position: [0, 0],
+          isClosed: false,
           points: [
             [2, 1], // a
             [3, 1], // b
@@ -221,6 +230,7 @@ describe("getCollision", () => {
       {
         path: {
           label: "B",
+          isClosed: false,
           position: [0, 0],
           points: [
             [4, 1],
@@ -256,6 +266,7 @@ describe("getCollision", () => {
       {
         path: {
           label: "A",
+          isClosed: false,
           position: [0, 0],
           points: [
             [2, 1],
@@ -268,6 +279,7 @@ describe("getCollision", () => {
       {
         path: {
           label: "B",
+          isClosed: false,
           position: [0, 0],
           points: [
             [4, 1], // a

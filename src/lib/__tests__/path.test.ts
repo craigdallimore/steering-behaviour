@@ -2,16 +2,74 @@ import { Edge, Path, Vector } from "@domain/types";
 import {
   distanceToEdge,
   findClosestPointOnPath,
+  findClosestEdgeToPoint,
   findEdgeIntersection,
   getPosition,
   getParam,
 } from "@lib/path";
+
+describe("findClosestEdgeToPoint", () => {
+  it("finds an edge 00", () => {
+    //   0  1  2  3  4  5  6
+    // 0          *
+    // 1
+    // 2
+    // 3 *--------+--------*
+    // 4 |                 |
+    // 5 *                 *
+    const point: Vector = [3, 0];
+    const path: Path = {
+      label: "A",
+      isClosed: false,
+      position: [0, 0],
+      points: [
+        [0, 5],
+        [0, 3],
+        [6, 3],
+        [6, 5],
+      ],
+    };
+    const expected = [
+      [0, 3],
+      [6, 3],
+    ];
+
+    expect(findClosestEdgeToPoint(point, path)).toEqual(expected);
+  });
+  it("finds an edge 01 (treat path as closed)", () => {
+    //   0  1  2  3  4  5  6
+    // 0          *
+    // 1 *
+    // 2 |        +
+    // 3 *-----------------*
+    // 4
+    // 5
+    const point: Vector = [3, 0];
+    const path: Path = {
+      label: "A",
+      isClosed: true,
+      position: [0, 0],
+      points: [
+        [0, 1],
+        [0, 3],
+        [6, 3],
+      ],
+    };
+    const expected = [
+      [6, 3],
+      [0, 1],
+    ];
+
+    expect(findClosestEdgeToPoint(point, path)).toEqual(expected);
+  });
+});
 
 describe("findClosestPointOnPath", () => {
   it("gives back the target point, given the path has fewer than two points", () => {
     const point: Vector = [0, 0];
     const path: Path = {
       label: "A",
+      isClosed: false,
       position: [0, 0],
       points: [[1, 1]],
     };
@@ -30,6 +88,7 @@ describe("findClosestPointOnPath", () => {
     const point: Vector = [3, 0];
     const path: Path = {
       label: "A",
+      isClosed: false,
       position: [0, 0],
       points: [
         [0, 3],
@@ -52,6 +111,7 @@ describe("findClosestPointOnPath", () => {
     const point: Vector = [0, 0];
     const path: Path = {
       label: "A",
+      isClosed: false,
       position: [0, 0],
       points: [
         [0, 3],
@@ -74,6 +134,7 @@ describe("findClosestPointOnPath", () => {
     const point: Vector = [3, 4];
     const path: Path = {
       label: "A",
+      isClosed: false,
       position: [0, 0],
       points: [
         [0, 3],
@@ -88,14 +149,15 @@ describe("findClosestPointOnPath", () => {
   it("finds a point 03", () => {
     //   0  1  2  3  4  5  6
     // 0 *--------x--------*
-    // 1 |                 |
-    // 2 |        *        |
+    // 1 |        *        |
+    // 2 |                 |
     // 3 *                 *
     // 4
     // 5
-    const point: Vector = [3, 2];
+    const point: Vector = [3, 1];
     const path: Path = {
       label: "A",
+      isClosed: false,
       position: [0, 0],
       points: [
         [0, 3],
@@ -274,6 +336,7 @@ describe("getPosition", () => {
     const param = 3;
     const path: Path = {
       label: "A",
+      isClosed: false,
       position: [0, 0],
       points: [
         [0, 3],
@@ -295,6 +358,7 @@ describe("getPosition", () => {
     const param = 0;
     const path: Path = {
       label: "A",
+      isClosed: false,
       position: [0, 0],
       points: [
         [0, 3],
@@ -316,6 +380,7 @@ describe("getPosition", () => {
     const param = -10;
     const path: Path = {
       label: "A",
+      isClosed: false,
       position: [0, 0],
       points: [
         [0, 3],
@@ -329,14 +394,15 @@ describe("getPosition", () => {
   it("finds a point 03", () => {
     //   0  1  2  3  4  5  6
     // 0          *
-    // 1          |
-    // 2          x
-    // 3          |
+    // 1        . |
+    // 2     .    x
+    // 3  .       |
     // 4 *--------*
     // 5
     const param = 5;
     const path: Path = {
       label: "A",
+      isClosed: false,
       position: [0, 0],
       points: [
         [0, 4],
@@ -362,6 +428,7 @@ describe("getParam", () => {
     const point: Vector = [3, 0];
     const path: Path = {
       label: "A",
+      isClosed: false,
       position: [3, 0],
       points: [
         [0, 3],
@@ -383,6 +450,7 @@ describe("getParam", () => {
     const point: Vector = [0, 0];
     const path: Path = {
       label: "A",
+      isClosed: false,
       position: [0, 0],
       points: [
         [0, 3],
@@ -404,6 +472,7 @@ describe("getParam", () => {
     const point: Vector = [3, 4];
     const path: Path = {
       label: "A",
+      isClosed: false,
       position: [0, 0],
       points: [
         [0, 3],
@@ -417,14 +486,15 @@ describe("getParam", () => {
   it("finds the distance 03", () => {
     //   0  1  2  3  4  5  6
     // 0 *--------x--------*
-    // 1 |                 |
-    // 2 |        *        |
-    // 3 *                 *
+    // 1 |        *        |
+    // 2 |                 |
+    // 3 *.................*
     // 4
     // 5
-    const point: Vector = [3, 2];
+    const point: Vector = [3, 1];
     const path: Path = {
       label: "A",
+      isClosed: false,
       position: [0, 0],
       points: [
         [0, 3],
@@ -443,20 +513,45 @@ describe("getParam", () => {
     // 1    *-----x-----------*
     // 2    |     o           |
     // 3    |                 |
-    // 4    *                 *
+    // 4    *.................*
     // 5
     const point: Vector = [3, 2];
     const path: Path = {
       label: "p",
-      position: [1, 1],
+      isClosed: false,
+      position: [0, 0],
       points: [
-        [0, 3],
-        [0, 0],
-        [6, 0],
-        [6, 3],
+        [1, 4],
+        [1, 1],
+        [7, 1],
+        [7, 4],
       ],
     };
-    const expected = 6;
+    const expected = 5;
+
+    expect(getParam(path, point)).toEqual(expected);
+  });
+  it("finds the distance 05 (path is closed)", () => {
+    //   0  1  2  3  4  5  6  7
+    // 0
+    // 1    *-----------------*
+    // 2    |                 |
+    // 3    |     o           |
+    // 4    *.....x...........*
+    // 5
+    const point: Vector = [3, 3];
+    const path: Path = {
+      label: "p",
+      isClosed: true,
+      position: [0, 0],
+      points: [
+        [1, 4],
+        [1, 1],
+        [7, 1],
+        [7, 4],
+      ],
+    };
+    const expected = 16;
 
     expect(getParam(path, point)).toEqual(expected);
   });

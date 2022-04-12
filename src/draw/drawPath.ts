@@ -14,6 +14,7 @@ export default function drawPath(
   ctx.strokeStyle = strokeStyle;
   ctx.moveTo(path.position[0], path.position[1]);
 
+  ctx.beginPath();
   for (let i = 0; i < path.points.length; i++) {
     const point = path.points[i];
 
@@ -24,8 +25,16 @@ export default function drawPath(
       ctx.lineTo(point[0], point[1]);
     }
   }
-
   ctx.stroke();
+
+  if (path.isClosed) {
+    ctx.beginPath();
+    ctx.moveTo(...path.points[path.points.length - 1]);
+    ctx.lineTo(...path.points[0]);
+    ctx.closePath();
+    ctx.stroke();
+  }
+
   ctx.restore();
   return ctx;
 }

@@ -97,6 +97,7 @@ export const arbitraryPath = () =>
   fc.record({
     label: fc.string(),
     position: arbitraryVector(),
+    isClosed: fc.boolean(),
     points: fc.array(fc.tuple(fc.float(), fc.float()), { minLength: 2 }),
   });
 

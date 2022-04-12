@@ -20,7 +20,48 @@ export default function initScenario(): Scenario {
             orientation: 0,
             rotation: 0,
           },
-          [new steering.FollowPathPredict("p1")]
+          [
+            new steering.FollowPathPredict("p1"),
+            new steering.LookWhereYouAreGoing(),
+          ]
+        ),
+      ],
+      [
+        "_2",
+        new Character(
+          {
+            maxAcceleration: 20,
+            maxAngularAcceleration: 140,
+            maxSpeed: 60,
+            position: [120, 320],
+            velocity: [0, 0],
+            orientation: 0,
+            rotation: 0,
+          },
+          [
+            new steering.Pursue("_1"),
+            new steering.Separation(),
+            new steering.LookWhereYouAreGoing(),
+          ]
+        ),
+      ],
+      [
+        "_3",
+        new Character(
+          {
+            maxAcceleration: 20,
+            maxAngularAcceleration: 140,
+            maxSpeed: 40,
+            position: [120, 140],
+            velocity: [0, 0],
+            orientation: 0,
+            rotation: 0,
+          },
+          [
+            new steering.Pursue("_1"),
+            new steering.Separation(),
+            new steering.LookWhereYouAreGoing(),
+          ]
         ),
       ],
     ]),
@@ -29,16 +70,17 @@ export default function initScenario(): Scenario {
       [
         "p1",
         {
-          label: "Main path",
+          label: "Closed path",
           position: [20, 20],
+          isClosed: true,
           points: [
-            [50, 50],
-            [50, 240],
-            [150, 480],
-            [300, 600],
-            [450, 480],
-            [600, 240],
-            [600, 50],
+            [150, 50],
+            [150, 240],
+            [250, 480],
+            [400, 600],
+            [550, 480],
+            [700, 240],
+            [700, 50],
           ],
         },
       ],

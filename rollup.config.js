@@ -13,7 +13,9 @@ import replace from "@rollup/plugin-replace";
 import livereload from "rollup-plugin-livereload";
 
 const envPlugins =
-  process.env.NODE_ENV === "development" ? [serve("dist"), livereload()] : [];
+  process.env.NODE_ENV === "development"
+    ? [serve({ contentBase: "dist", port: 9999 }), livereload()]
+    : [];
 
 function buildHTML() {
   return {

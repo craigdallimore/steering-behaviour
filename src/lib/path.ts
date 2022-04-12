@@ -78,6 +78,34 @@ function findClosestPointOnEdge(
   return g0 <= g1 ? [ax, az] : [bx, bz];
 }
 
+function isBetween(
+  [ax, az]: Vector,
+  [bx, bz]: Vector,
+  [cx, cz]: Vector,
+  tolerance: number
+) {
+  //test if the point c is inside a pre-defined distance (tolerance) from the line
+  const distance =
+    Math.abs((cz - bz) * ax - (cx - bx) * az + cx * bz - cz * bx) /
+    Math.sqrt(Math.pow(cz - bz, 2) + Math.pow(cx - bx, 2));
+  if (distance > tolerance) {
+    return false;
+  }
+
+  //test if the point c is between a and b
+  const dotproduct = (cx - ax) * (bx - ax) + (cz - az) * (bz - az);
+  if (dotproduct < 0) {
+    return false;
+  }
+
+  const squaredlengthba = (bx - ax) * (bx - ax) + (bz - az) * (bz - az);
+  if (dotproduct > squaredlengthba) {
+    return false;
+  }
+
+  return true;
+}
+
 export function getParam(path: Path, characterPosition: Vector): number {
   const closestPoint = findClosestPointOnPath(path, characterPosition);
 
@@ -87,18 +115,19 @@ export function getParam(path: Path, characterPosition: Vector): number {
     done: false,
   };
 
-  return path.points.reduce((acc, node) => {
+  const points = path.isClosed ? [...path.points, path.points[0]] : path.points;
+
+  return points.reduce((acc, node) => {
     if (acc.done) {
       return acc;
     }
 
-    const distanceToNextNode = distance(acc.node, node);
-    const distanceToClosestPoint = distance(acc.node, closestPoint);
+    const isBetweenPoints = isBetween(acc.node, node, closestPoint, 0.1);
 
-    if (distanceToClosestPoint < distanceToNextNode) {
+    if (acc.node !== node && isBetweenPoints) {
       return {
         done: true,
-        distance: acc.distance + distanceToClosestPoint,
+        distance: acc.distance + distance(acc.node, closestPoint),
         node: closestPoint,
       };
     }
@@ -106,7 +135,7 @@ export function getParam(path: Path, characterPosition: Vector): number {
     return {
       done: false,
       node,
-      distance: acc.distance + distanceToNextNode,
+      distance: acc.distance + distance(acc.node, node),
     };
   }, init).distance;
 }
@@ -119,7 +148,9 @@ export function getPosition(path: Path, param: number): Vector {
     done: false,
   };
 
-  return path.points.reduce((acc, node) => {
+  const points = path.isClosed ? [...path.points, path.points[0]] : path.points;
+
+  return points.reduce((acc, node) => {
     if (acc.done) {
       return acc;
     }
@@ -185,7 +216,12 @@ export function findClosestEdgeToPoint(
   point: Vector,
   path: Path
 ): [Vector, Vector] {
-  const initialEdges: Edge[] = [];
+  const closingEdge: Edge = [
+    path.points[path.points.length - 1],
+    path.points[0],
+  ];
+
+  const initialEdges: Edge[] = path.isClosed ? [closingEdge] : [];
 
   const edges: Edge[] = path.points.reduce(
     (acc: Edge[], vecB: Vector, index: number): Edge[] => {

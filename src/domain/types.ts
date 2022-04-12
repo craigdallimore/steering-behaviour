@@ -69,6 +69,7 @@ export type Kinematic = {
 export type Path = {
   label: string;
   position: Vector;
+  isClosed: boolean;
   points: Array<[number, number]>;
 };
 
