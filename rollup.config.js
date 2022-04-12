@@ -12,7 +12,8 @@ import external from "rollup-plugin-peer-deps-external";
 import replace from "@rollup/plugin-replace";
 import livereload from "rollup-plugin-livereload";
 
-const envPlugins = process.env.NODE_ENV === "development" ? [livereload()] : [];
+const envPlugins =
+  process.env.NODE_ENV === "development" ? [serve("dist"), livereload()] : [];
 
 function buildHTML() {
   return {
@@ -54,7 +55,6 @@ export default [
         writeDefinitions: false, // true -> generate .css.d.ts files
       }),
       typescript({ tsconfig: "./tsconfig.json" }),
-      serve("dist"),
       sourcemaps(),
       buildHTML(),
     ].concat(envPlugins),
