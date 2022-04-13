@@ -15,50 +15,49 @@ const Canvas = (props: {
   }
 
   function onResize() {
-    const p = canvasRef.current?.parentNode;
-    if (p instanceof HTMLElement) {
-      const rect = p.getBoundingClientRect();
-      props.dispatch({
-        type: "CANVAS_RESIZED",
-        payload: [rect.width, rect.height],
-      });
+    const p = canvasRef.current?.parentNode as HTMLElement;
+    const { width, height } = p.getBoundingClientRect();
+
+    const wd = width * devicePixelRatio;
+    const hd = height * devicePixelRatio;
+
+    if (ctxRef.current) {
+      const ctx = ctxRef.current;
+      ctx.canvas.width = wd;
+      ctx.canvas.height = hd;
+      // To get crisp lines on high DPI screens, we set the dimensions of the
+      // canvas proportionate to the devicePixelRatio, then use inline CSS to
+      // keep it the correct fit for the layout.
+      // This causes the drawn area to be too small on high DPI screens, so we
+      // scale the drawn area based on the device pixel ratio.
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+      ctx.translate(0.5, 0.5);
     }
+
+    props.dispatch({
+      type: "CANVAS_RESIZED",
+      payload: [wd, hd],
+    });
   }
 
-  React.useEffect(() => {
-    if (canvasRef.current) {
+  React.useLayoutEffect(() => {
+    if (canvasRef.current && !ctxRef.current) {
       const ctx = canvasRef.current.getContext("2d");
-      if (ctx) {
-        ctx.translate(0.5, 0.5);
-
-        // To get crisp lines on high DPI screens, we set the dimensions of the
-        // canvas proportionate to the devicePixelRatio, then use inline CSS to
-        // keep it the correct fit for the layout.
-        // This causes the drawn area to be too small on high DPI screens, so we
-        // scale the drawn area based on the device pixel ratio.
-        ctx.scale(devicePixelRatio, devicePixelRatio);
-        ctxRef.current = ctx;
-      }
+      ctxRef.current = ctx;
     }
   }, [canvasRef.current]);
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
+    window.requestAnimationFrame(onResize);
     window.addEventListener("resize", onResize);
-    onResize();
     return () => {
       window.removeEventListener("resize", onResize);
     };
-  }, [canvasRef.current]);
+  }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      width={props.state.ui.canvasDimensions[0] * devicePixelRatio}
-      height={props.state.ui.canvasDimensions[1] * devicePixelRatio}
-      style={{
-        width: `${props.state.ui.canvasDimensions[0]}px`,
-        height: `${props.state.ui.canvasDimensions[1]}px`,
-      }}
       id="canvas-main"
       onClick={(e) => {
         const target = e.target as HTMLCanvasElement;
