@@ -2,8 +2,6 @@
 
 ## Priority
 
-- [ ] Resizing canvas makes it disappear (HiDPI only?)
-- [ ] Pause animation like youtube
 - [ ] Feature: Add behaviour: should not permit already selected behaviours to be added
 - [ ] Feature: Add behaviour: should not permit incompatible behaviours to be added (which?)
 - [ ] Feature: Filter available behaviours based on the assigned behaviours

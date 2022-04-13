@@ -57,6 +57,7 @@ const Canvas = (props: {
 
   return (
     <canvas
+      className={props.state.ui.isPaused ? "paused" : "playing"}
       ref={canvasRef}
       id="canvas-main"
       onClick={(e) => {
