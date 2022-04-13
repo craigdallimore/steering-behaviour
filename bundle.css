@@ -177,6 +177,10 @@ main {
   overflow: hidden;
   border-left: 1px solid var(--base06);
   border-right: 1px solid var(--base06);
+  display: flex;
+}
+main canvas {
+  flex: 1 0 100%;
 }
 legend {
   padding: 0.5rem 0;
