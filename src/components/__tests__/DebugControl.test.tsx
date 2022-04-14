@@ -6,7 +6,7 @@ import { getState as getInitialState } from "@domain/initialState";
 describe("Debug Control", () => {
   const getState = (changes = {}) => {
     return {
-      ...getInitialState(),
+      ...getInitialState("SC_BLANK"),
       ...changes,
     };
   };

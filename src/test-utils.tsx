@@ -64,7 +64,7 @@ const customRender = (ui: ReactElement, options?: Options) => {
   return render(ui, {
     wrapper: AllTheProviders({
       dispatch: options?.dispatch ?? jest.fn(),
-      state: options?.state ?? getState(),
+      state: options?.state ?? getState("SC_BLANK"),
     }),
     queries: { ...queries, ...customQueries },
     ...options,

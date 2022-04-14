@@ -4,7 +4,7 @@ import * as steering from "@steering/index";
 
 describe("updateFocussedCharacter", () => {
   const getState = (changes = {}) => {
-    const initialState = getInitialState();
+    const initialState = getInitialState("SC_BLANK");
     const scenario = initialState.ui.focussedCharacterId
       ? getScenario(initialState.ui.focussedCharacterId)
       : null;
@@ -19,7 +19,7 @@ describe("updateFocussedCharacter", () => {
   test("nothing is changed given no character is focussed", () => {
     const state = getState({
       ui: {
-        ...getInitialState().ui,
+        ...getInitialState("SC_BLANK").ui,
         focussedCharacterId: null,
       },
     });
@@ -35,7 +35,7 @@ describe("updateFocussedCharacter", () => {
   test("nothing is changed given the id is invalid", () => {
     const state = getState({
       ui: {
-        ...getInitialState().ui,
+        ...getInitialState("SC_BLANK").ui,
         focussedCharacterId: "NO_MATCH",
       },
     });
@@ -50,9 +50,10 @@ describe("updateFocussedCharacter", () => {
   });
   test("only the focussed character is changed", () => {
     const state = getState({
-      ...getInitialState().ui,
-      focussedCharacterId: getInitialState().scenario?.characters.keys().next()
-        .value,
+      ...getInitialState("SC_BLANK").ui,
+      focussedCharacterId: getInitialState("SC_BLANK")
+        .scenario?.characters.keys()
+        .next().value,
     });
     const nextState = updateFocussedCharacter(state, (char) => {
       char.behaviours = [new steering.Wander()];

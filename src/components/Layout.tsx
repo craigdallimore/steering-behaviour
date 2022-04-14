@@ -14,7 +14,10 @@ import CharacterSidebar from "./CharacterSidebar";
 enableMapSet(); // immer can understand Map and Set
 
 const Main = () => {
-  const [state, dispatch] = useImmerReducer(reducer, getState());
+  const [state, dispatch] = useImmerReducer(
+    reducer,
+    getState(window.location.hash.slice(1) || "SC_BLANK")
+  );
 
   useRAF((tick: number) => {
     dispatch({ type: "TICK", payload: tick });

@@ -24,6 +24,7 @@ const ScenarioSidebar = () => {
               type: "SCENARIO_CHANGED",
               payload: e.target.value as ScenarioId,
             });
+            window.location.hash = e.target.value;
           }}
         >
           {...state.scenarioIds.map((id: ScenarioId) => (

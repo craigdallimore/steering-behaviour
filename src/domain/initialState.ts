@@ -34,9 +34,7 @@ export function getScenario(id: ScenarioId): Scenario | null {
   }
 }
 
-const focussedScenarioId = "SC_PATH";
-
-export function getState(): State {
+export function getState(focussedScenarioId: string): State {
   return {
     ui: {
       actionFeedbackCount: -1,
