@@ -226,6 +226,7 @@ describe("CANVAS_CLICKED", () => {
     if (initialState.scenario) {
       const character = new Character();
       character.kinematic.position = [1, 1];
+      character.behaviours.push(new steering.Align("_y"));
       initialState.scenario.characters.set("_x", character);
     }
 
@@ -236,7 +237,7 @@ describe("CANVAS_CLICKED", () => {
       payload: [0, 0],
     });
 
-    // expect(nextState.ui.isSettingTarget).toBe(true); // TODO
+    expect(nextState.ui.isSettingTarget).toBe(true);
     expect(nextState.ui.focussedCharacterId).toBe("_x"); // no change
   });
   it("makes a character a target of the focussed characters behaviour, given the UI is in targeting mode", () => {
