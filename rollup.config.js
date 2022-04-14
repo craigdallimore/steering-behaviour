@@ -22,14 +22,7 @@ function buildHTML() {
     name: "build-html",
     buildStart: async function buildStart() {
       const content = await fs.promises.readFile("./html/index.html", "utf-8");
-      const nextHtml =
-        process.env.NODE_ENV === "development"
-          ? content
-          : content.replace(
-              '<script src="http://localhost:35729/livereload.js"></script>',
-              ""
-            );
-      return await fs.promises.writeFile("./dist/index.html", nextHtml);
+      return await fs.promises.writeFile("./dist/index.html", content);
     },
   };
 }
