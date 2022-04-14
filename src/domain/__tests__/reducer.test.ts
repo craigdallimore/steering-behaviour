@@ -32,13 +32,14 @@ describe("TICK", () => {
     initialState.scenario = null;
     initialState.ui.isPaused = false;
 
+    const initialUI = { ...initialState.ui };
+
     const nextState = reducer(initialState, {
       type: "TICK",
       payload: 1,
     });
 
-    nextState.ui.isPaused = true; // TODO this test is not strong
-    expect(nextState.ui).toEqual(initialState.ui);
+    expect(nextState.ui).toEqual(initialUI);
   });
   it("updates the characters by applying behaviour", () => {
     const initialState = getState();
@@ -161,8 +162,9 @@ describe("SCENARIO_CHANGED", () => {
 });
 
 describe("CANVAS_CLICKED", () => {
-  test("given no scenario, it returns the unchanced state", () => {
+  test("given no scenario, it returns the unchanged state", () => {
     const initialState = getState();
+    const initialUI = { ...initialState.ui };
 
     initialState.scenario = null;
 
@@ -171,11 +173,11 @@ describe("CANVAS_CLICKED", () => {
       payload: [0, 0],
     });
 
-    // TODO this test is not strong
-    expect(nextState.ui).toEqual(initialState.ui);
+    expect(nextState.ui).toEqual(initialUI);
   });
-  test("given no characeters, it returns the unchanced state", () => {
+  test("given no characters, it returns the unchanged state", () => {
     const initialState = getState();
+    const initialUI = { ...initialState.ui };
 
     if (initialState.scenario) {
       initialState.scenario.characters = new Map();
@@ -186,11 +188,10 @@ describe("CANVAS_CLICKED", () => {
       payload: [0, 0],
     });
 
-    // TODO this test is not strong
-    expect(nextState.ui).toEqual(initialState.ui);
+    expect(nextState.ui).toEqual(initialUI);
   });
 
-  it("unfocusses the focussed character, given the clickis not close to any character", () => {
+  it("unfocusses the focussed character, given the click is not close to any character", () => {
     const initialState = getState();
 
     expect(initialState.ui.focussedCharacterId).not.toBe(null);
