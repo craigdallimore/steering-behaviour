@@ -1915,8 +1915,7 @@ function getScenario(id) {
             return null;
     }
 }
-const focussedScenarioId = "SC_PATH";
-function getState() {
+function getState(focussedScenarioId) {
     return {
         ui: {
             actionFeedbackCount: -1,
@@ -1941,7 +1940,8 @@ function getState() {
     };
 }
 
-var StateContext = React.createContext(getState());
+const focussedScenarioId = window.location.hash.slice(1) || "SC_BLANK";
+var StateContext = React.createContext(getState(focussedScenarioId));
 
 const DebugControl = () => {
     const state = react.exports.useContext(StateContext);
@@ -1966,6 +1966,7 @@ const ScenarioSidebar = () => {
                         type: "SCENARIO_CHANGED",
                         payload: e.target.value,
                     });
+                    window.location.hash = e.target.value;
                 } }, ...state.scenarioIds.map((id) => {
                 var _a;
                 return (React.createElement("option", { key: id, value: id }, (_a = getScenario(id)) === null || _a === void 0 ? void 0 : _a.name));
@@ -3050,7 +3051,7 @@ const CharacterSidebar = () => {
 
 C(); // immer can understand Map and Set
 const Main = () => {
-    const [state, dispatch] = e(reducer, getState());
+    const [state, dispatch] = e(reducer, getState(window.location.hash.slice(1) || "SC_BLANK"));
     useAnimationFrame((tick) => {
         dispatch({ type: "TICK", payload: tick });
     });
