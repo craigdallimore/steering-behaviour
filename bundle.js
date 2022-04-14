@@ -566,12 +566,6 @@ class AbstractBehaviour {
 }
 _a = L;
 
-/*
- * Aims to match a given orientation.
- * Increases rotation speed
- * Backs off based on timeToTarget
- * Stops within alignTolerance
- */
 function mapToRange(orientation) {
     // To rotate all the way clockwise, use the value 6.283
     // 6.3 is (I expect) NE 0.01...
@@ -580,6 +574,13 @@ function mapToRange(orientation) {
         : orientation;
     return nextOrientation % (Math.PI * 2);
 }
+
+/*
+ * Aims to match a given orientation.
+ * Increases rotation speed
+ * Backs off based on timeToTarget
+ * Stops within alignTolerance
+ */
 class Align extends AbstractBehaviour {
     constructor(targetId, maxRotation, decelerationTolerance, alignTolerance, timeToTarget) {
         super();
@@ -2255,7 +2256,7 @@ const Canvas = (props) => {
             window.removeEventListener("resize", onResize);
         };
     }, []);
-    return (React.createElement("canvas", { ref: canvasRef, id: "canvas-main", onClick: (e) => {
+    return (React.createElement("canvas", { className: props.state.ui.isPaused ? "paused" : "playing", ref: canvasRef, id: "canvas-main", onClick: (e) => {
             const target = e.target;
             const { top, left } = target.getBoundingClientRect();
             props.dispatch({
@@ -3053,12 +3054,24 @@ const Main = () => {
     useAnimationFrame((tick) => {
         dispatch({ type: "TICK", payload: tick });
     });
+    const [animation, setAnimation] = React.useState(false);
+    function onAnimationEnd() {
+        setAnimation(false);
+    }
+    React.useEffect(() => {
+        setAnimation(true);
+    }, [state.ui.isPaused]);
     return (React.createElement(React.StrictMode, null,
         React.createElement(DispatchContext.Provider, { value: dispatch },
             React.createElement(StateContext.Provider, { value: state },
                 React.createElement(ScenarioSidebar, null))),
         React.createElement("main", null,
-            React.createElement(Canvas, { state: state, dispatch: dispatch })),
+            React.createElement(Canvas, { state: state, dispatch: dispatch }),
+            React.createElement("div", { className: animation ? "x" : "", id: "play-status", "aria-label": state.ui.isPaused ? "pause" : "play", role: "status", onAnimationEnd: onAnimationEnd },
+                React.createElement("svg", { viewBox: "0 0 70 70" },
+                    React.createElement("path", { d: state.ui.isPaused
+                            ? "M 20,20 30,20 30,50 20,50 z M 40,20 50,20 50,50 40,50"
+                            : "M 30,25 45,35 30, 45" })))),
         React.createElement(DispatchContext.Provider, { value: dispatch },
             React.createElement(StateContext.Provider, { value: state },
                 React.createElement(CharacterSidebar, null)))));
