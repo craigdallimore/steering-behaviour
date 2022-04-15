@@ -233,7 +233,7 @@ describe("Behaviour controls", () => {
     const fields = [
       ["avoid-distance", "avoidDistance"],
       ["look-ahead-main", "lookaheadMain"],
-      ["look-ahead-size", "lookaheadSize"],
+      ["look-ahead-side", "lookaheadSide"],
     ];
     expect.assertions(fields.length * 2);
 

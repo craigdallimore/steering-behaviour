@@ -34,12 +34,12 @@ const ObstacleAvoidanceControls = (props: Props) => {
         }}
       />
       <NumericField
-        id="look-ahead-size"
+        id="look-ahead-side"
         label="Lookahead Side"
         value={behaviour.lookaheadSide}
         onChange={(lookaheadSize) => {
           props.onBehaviourChange(
-            makeUpdatedClone(behaviour, "lookaheadSize", lookaheadSize)
+            makeUpdatedClone(behaviour, "lookaheadSide", lookaheadSize)
           );
         }}
       />
