@@ -243,7 +243,7 @@ describe("getCollision", () => {
     ];
     const expected = {
       position: [2, 4],
-      normal: [-1, -0],
+      normal: [1, 0],
     };
 
     expect(getCollision(edge, shapes)).toEqual(expected);
@@ -292,7 +292,7 @@ describe("getCollision", () => {
     ];
     const expected = {
       position: [5, 4],
-      normal: [1, -0],
+      normal: [-1, 0], // Huh.
     };
 
     expect(getCollision(edge, shapes)).toEqual(expected);

@@ -13,9 +13,9 @@ export default function initScenario(): Scenario {
           {
             maxAcceleration: 25,
             maxAngularAcceleration: 140,
-            maxSpeed: 45,
-            position: [300, 25],
-            velocity: [-2, 10],
+            maxSpeed: 25,
+            position: [200, 65],
+            velocity: [-12, 10],
             orientation: 1.5,
             rotation: 0,
           },
@@ -33,12 +33,12 @@ export default function initScenario(): Scenario {
           path: {
             label: "wall1path",
             isClosed: false,
-            position: [200, 40],
+            position: [40, 40],
             points: [
               [0, 0],
               [10, 0],
-              [10, 700],
-              [0, 700],
+              [10, 400],
+              [0, 400],
             ],
           },
         },
@@ -49,12 +49,44 @@ export default function initScenario(): Scenario {
           path: {
             label: "wall2path",
             isClosed: false,
-            position: [340, 40],
+            position: [450, 40],
             points: [
               [0, 0],
               [10, 0],
-              [10, 700],
-              [0, 700],
+              [10, 400],
+              [0, 400],
+            ],
+          },
+        },
+      ],
+      [
+        "wall--top",
+        {
+          path: {
+            label: "wall3path",
+            isClosed: false,
+            position: [50, 30],
+            points: [
+              [0, 0],
+              [400, 0],
+              [400, 10],
+              [0, 10],
+            ],
+          },
+        },
+      ],
+      [
+        "wall--bottom",
+        {
+          path: {
+            label: "wall4path",
+            isClosed: false,
+            position: [50, 440],
+            points: [
+              [0, 0],
+              [400, 0],
+              [400, 10],
+              [0, 10],
             ],
           },
         },

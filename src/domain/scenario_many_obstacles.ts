@@ -14,7 +14,10 @@ function makePair(x: number, z: number): Pair {
     path: {
       label: id,
       isClosed: false,
-      position: [x, z],
+      position: [
+        x + (-10 + Math.round(Math.random() * 20)),
+        z + (-10 + Math.round(Math.random() * 20)),
+      ],
       points: [
         [-10, -10], // TL
         [10, -10], // TR
@@ -47,12 +50,31 @@ export default function initScenario(): Scenario {
             maxAcceleration: 25,
             maxAngularAcceleration: 140,
             maxSpeed: 45,
-            position: [300, 25],
+            position: [150, 25],
             velocity: [2, 10],
             orientation: 1.5,
             rotation: 0,
           },
-          [new steering.ObstacleAvoidance()]
+          [
+            new steering.ObstacleAvoidance(),
+            new steering.LookWhereYouAreGoing(),
+            new steering.Arrive("_2"),
+          ]
+        ),
+      ],
+      [
+        "_2",
+        new Character(
+          {
+            maxAcceleration: 25,
+            maxAngularAcceleration: 140,
+            maxSpeed: 45,
+            position: [350, 655],
+            velocity: [0, 0],
+            orientation: 1.5,
+            rotation: 0,
+          },
+          []
         ),
       ],
     ]),

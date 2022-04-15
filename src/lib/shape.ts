@@ -88,18 +88,9 @@ export default function getCollision(
     // Here we get the normals for the intersected edge
     const normals = getNormals(intersection.edge);
 
-    // We want the normal on the same side as the kinematic
-    const closestNormal =
-      distance(normals[0], edge[0]) < distance(normals[1], edge[0])
-        ? normals[0]
-        : normals[1];
-
-    // Let's define the normal as a vector relative to the intersection point,
-    // with a distance of 1, on the kinematic side of the intersection.
-
     return {
       position: intersection.point,
-      normal: normalise(closestNormal),
+      normal: normalise(normals[0]),
     };
   }
 

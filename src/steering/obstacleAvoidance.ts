@@ -43,15 +43,15 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
     this.avoidDistance = avoidDistance ?? 50;
     // Holds the distance to look ahead for a collision
     // (i.e., the length of the collision ray)
-    this.lookaheadMain = lookaheadMain ?? 150;
-    this.lookaheadSide = lookaheadSide ?? 85;
+    this.lookaheadMain = lookaheadMain ?? 50;
+    this.lookaheadSide = lookaheadSide ?? 25;
 
     this.seek = new Seek("");
   }
   calculate(kinematic: Kinematic, shapes: Array<Shape>): Steering {
     const w0 = getWhiskerRay(kinematic, 0, this.lookaheadMain);
-    const w1 = getWhiskerRay(kinematic, 0.1, this.lookaheadSide);
-    const w2 = getWhiskerRay(kinematic, -0.1, this.lookaheadSide);
+    const w1 = getWhiskerRay(kinematic, 0.3, this.lookaheadSide);
+    const w2 = getWhiskerRay(kinematic, -0.3, this.lookaheadSide);
 
     // find the nearest collision to the kinematic
     const collision: Collision | null = [w0, w1, w2].reduce(
