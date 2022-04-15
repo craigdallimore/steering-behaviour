@@ -707,6 +707,13 @@ class Arrive extends AbstractBehaviour {
         const finalLinear = length_1(linear) > kinematic.maxAcceleration
             ? multiply_1(normalise_1(linear), kinematic.maxAcceleration)
             : linear;
+        this.debug.circles = [
+            {
+                position: targetPosition,
+                radius: 2,
+                fillStyle: "rgba(0, 0,255, 0.5)",
+            },
+        ];
         return {
             angular: 0,
             linear: finalLinear,
@@ -1242,6 +1249,8 @@ class ObstacleAvoidance extends AbstractBehaviour {
         this.debug.edges = [w0, w1, w2];
         // If have no collision, do nothing
         if (!collision) {
+            this.debug.points = [];
+            this.debug.circles = [];
             return {
                 angular: 0,
                 linear: [0, 0],
