@@ -1193,15 +1193,9 @@ function getCollision(edge, shapes) {
     if (intersection) {
         // Here we get the normals for the intersected edge
         const normals = getNormals(intersection.edge);
-        // We want the normal on the same side as the kinematic
-        const closestNormal = distance_1(normals[0], edge[0]) < distance_1(normals[1], edge[0])
-            ? normals[0]
-            : normals[1];
-        // Let's define the normal as a vector relative to the intersection point,
-        // with a distance of 1, on the kinematic side of the intersection.
         return {
             position: intersection.point,
-            normal: normalise_1(closestNormal),
+            normal: normalise_1(normals[0]),
         };
     }
     return null;
@@ -1223,14 +1217,14 @@ class ObstacleAvoidance extends AbstractBehaviour {
         this.avoidDistance = avoidDistance !== null && avoidDistance !== void 0 ? avoidDistance : 50;
         // Holds the distance to look ahead for a collision
         // (i.e., the length of the collision ray)
-        this.lookaheadMain = lookaheadMain !== null && lookaheadMain !== void 0 ? lookaheadMain : 150;
-        this.lookaheadSide = lookaheadSide !== null && lookaheadSide !== void 0 ? lookaheadSide : 85;
+        this.lookaheadMain = lookaheadMain !== null && lookaheadMain !== void 0 ? lookaheadMain : 50;
+        this.lookaheadSide = lookaheadSide !== null && lookaheadSide !== void 0 ? lookaheadSide : 25;
         this.seek = new Seek("");
     }
     calculate(kinematic, shapes) {
         const w0 = getWhiskerRay(kinematic, 0, this.lookaheadMain);
-        const w1 = getWhiskerRay(kinematic, 0.1, this.lookaheadSide);
-        const w2 = getWhiskerRay(kinematic, -0.1, this.lookaheadSide);
+        const w1 = getWhiskerRay(kinematic, 0.3, this.lookaheadSide);
+        const w2 = getWhiskerRay(kinematic, -0.3, this.lookaheadSide);
         // find the nearest collision to the kinematic
         const collision = [w0, w1, w2].reduce((acc, edge) => {
             const collision = getCollision(edge, shapes);
@@ -1533,7 +1527,10 @@ function makePair(x, z) {
         path: {
             label: id,
             isClosed: false,
-            position: [x, z],
+            position: [
+                x + (-10 + Math.round(Math.random() * 20)),
+                z + (-10 + Math.round(Math.random() * 20)),
+            ],
             points: [
                 [-10, -10],
                 [10, -10],
@@ -1561,11 +1558,27 @@ function initScenario$4() {
                     maxAcceleration: 25,
                     maxAngularAcceleration: 140,
                     maxSpeed: 45,
-                    position: [300, 25],
+                    position: [150, 25],
                     velocity: [2, 10],
                     orientation: 1.5,
                     rotation: 0,
-                }, [new ObstacleAvoidance()]),
+                }, [
+                    new ObstacleAvoidance(),
+                    new LookWhereYouAreGoing(),
+                    new Arrive("_2"),
+                ]),
+            ],
+            [
+                "_2",
+                new Character({
+                    maxAcceleration: 25,
+                    maxAngularAcceleration: 140,
+                    maxSpeed: 45,
+                    position: [350, 655],
+                    velocity: [0, 0],
+                    orientation: 1.5,
+                    rotation: 0,
+                }, []),
             ],
         ]),
         shapes: new Map([...pairs1, ...pairs2]),
@@ -1583,9 +1596,9 @@ function initScenario$3() {
                 new Character({
                     maxAcceleration: 25,
                     maxAngularAcceleration: 140,
-                    maxSpeed: 45,
-                    position: [300, 25],
-                    velocity: [-2, 10],
+                    maxSpeed: 25,
+                    position: [200, 65],
+                    velocity: [-12, 10],
                     orientation: 1.5,
                     rotation: 0,
                 }, [
@@ -1601,12 +1614,12 @@ function initScenario$3() {
                     path: {
                         label: "wall1path",
                         isClosed: false,
-                        position: [200, 40],
+                        position: [40, 40],
                         points: [
                             [0, 0],
                             [10, 0],
-                            [10, 700],
-                            [0, 700],
+                            [10, 400],
+                            [0, 400],
                         ],
                     },
                 },
@@ -1617,12 +1630,44 @@ function initScenario$3() {
                     path: {
                         label: "wall2path",
                         isClosed: false,
-                        position: [340, 40],
+                        position: [450, 40],
                         points: [
                             [0, 0],
                             [10, 0],
-                            [10, 700],
-                            [0, 700],
+                            [10, 400],
+                            [0, 400],
+                        ],
+                    },
+                },
+            ],
+            [
+                "wall--top",
+                {
+                    path: {
+                        label: "wall3path",
+                        isClosed: false,
+                        position: [50, 30],
+                        points: [
+                            [0, 0],
+                            [400, 0],
+                            [400, 10],
+                            [0, 10],
+                        ],
+                    },
+                },
+            ],
+            [
+                "wall--bottom",
+                {
+                    path: {
+                        label: "wall4path",
+                        isClosed: false,
+                        position: [50, 440],
+                        points: [
+                            [0, 0],
+                            [400, 0],
+                            [400, 10],
+                            [0, 10],
                         ],
                     },
                 },
@@ -2741,8 +2786,8 @@ const ObstacleAvoidanceControls = (props) => {
         React.createElement(NumericField, { id: "look-ahead-main", label: "Lookahead Main", value: behaviour.lookaheadMain, onChange: (lookaheadMain) => {
                 props.onBehaviourChange(makeUpdatedClone(behaviour, "lookaheadMain", lookaheadMain));
             } }),
-        React.createElement(NumericField, { id: "look-ahead-size", label: "Lookahead Side", value: behaviour.lookaheadSide, onChange: (lookaheadSize) => {
-                props.onBehaviourChange(makeUpdatedClone(behaviour, "lookaheadSize", lookaheadSize));
+        React.createElement(NumericField, { id: "look-ahead-side", label: "Lookahead Side", value: behaviour.lookaheadSide, onChange: (lookaheadSize) => {
+                props.onBehaviourChange(makeUpdatedClone(behaviour, "lookaheadSide", lookaheadSize));
             } })));
 };
 
