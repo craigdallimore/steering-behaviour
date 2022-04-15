@@ -53,6 +53,14 @@ export default class Arrive extends AbstractBehaviour {
         ? multiply(normalise(linear), kinematic.maxAcceleration)
         : linear;
 
+    this.debug.circles = [
+      {
+        position: targetPosition,
+        radius: 2,
+        fillStyle: "rgba(0, 0,255, 0.5)",
+      },
+    ];
+
     return {
       angular: 0,
       linear: finalLinear,

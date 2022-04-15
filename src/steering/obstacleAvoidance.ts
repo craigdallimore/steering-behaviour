@@ -81,6 +81,8 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
 
     // If have no collision, do nothing
     if (!collision) {
+      this.debug.points = [];
+      this.debug.circles = [];
       return {
         angular: 0,
         linear: [0, 0],
