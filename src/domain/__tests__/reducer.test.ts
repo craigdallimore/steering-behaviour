@@ -8,7 +8,7 @@ import Character from "@domain/character";
 
 describe("TICK", () => {
   it("does nothing, given the UI is paused", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
 
     const character = new Character();
     character.kinematic.velocity = [10, 10];
@@ -27,7 +27,7 @@ describe("TICK", () => {
     expect(nextCharacter?.kinematic.position).toStrictEqual([0, 0]);
   });
   it("does nothing, given no scenario is present", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
 
     initialState.scenario = null;
     initialState.ui.isPaused = false;
@@ -42,7 +42,7 @@ describe("TICK", () => {
     expect(nextState.ui).toEqual(initialUI);
   });
   it("updates the characters by applying behaviour", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
 
     const character = new Character();
     character.kinematic.velocity = [10, 10];
@@ -61,7 +61,7 @@ describe("TICK", () => {
     expect(nextCharacter?.kinematic.position).toStrictEqual([10, 10]);
   });
   it("adances the animation of action feeback", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     initialState.ui.actionFeedbackCount = 5;
     initialState.ui.isPaused = false;
 
@@ -76,7 +76,7 @@ describe("TICK", () => {
 
 describe("PLAY_BUTTON_CLICKED", () => {
   it("changes the play state from false to true", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const changedState = {
       ...initialState,
       ui: {
@@ -91,7 +91,7 @@ describe("PLAY_BUTTON_CLICKED", () => {
     expect(nextState.ui.isPaused).toEqual(true);
   });
   it("changes the play state from true to false", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const changedState = {
       ...initialState,
       ui: {
@@ -108,7 +108,7 @@ describe("PLAY_BUTTON_CLICKED", () => {
 });
 describe("RESET_BUTTON_CLICKED", () => {
   it("restores initial value of the scenario", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const changedState = {
       ...initialState,
       scenario: null,
@@ -121,7 +121,7 @@ describe("RESET_BUTTON_CLICKED", () => {
     expect(nextState.scenario).not.toBe(null);
   });
   it("pauses the scenario", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const changedState = {
       ...initialState,
       ui: {
@@ -138,7 +138,7 @@ describe("RESET_BUTTON_CLICKED", () => {
 });
 describe("DEBUG_MODE_CHANGED", () => {
   it("inverts the value of the debug mode", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     expect(initialState.ui.isDebugMode).toBe(false);
     const nextState = reducer(initialState, {
       type: "DEBUG_MODE_CHANGED",
@@ -148,21 +148,23 @@ describe("DEBUG_MODE_CHANGED", () => {
 });
 describe("SCENARIO_CHANGED", () => {
   it("replaces the current scenario and focussed scenario id", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const initialScenarioName = initialState.scenario?.name;
     const nextState = reducer(initialState, {
       type: "SCENARIO_CHANGED",
       payload: "SC_WANDER",
     });
     expect(nextState.ui.focussedScenarioId).toBe("SC_WANDER");
-    expect(nextState.ui.focussedScenarioId).not.toBe("SC_BLANK");
+    expect(nextState.ui.focussedScenarioId).not.toBe({
+      scenarioId: "SC_BLANK",
+    });
     expect(nextState.scenario?.name).not.toBe(initialScenarioName);
   });
 });
 
 describe("CANVAS_CLICKED", () => {
   test("given no scenario, it returns the unchanged state", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const initialUI = { ...initialState.ui };
 
     initialState.scenario = null;
@@ -175,7 +177,7 @@ describe("CANVAS_CLICKED", () => {
     expect(nextState.ui).toEqual(initialUI);
   });
   test("given no characters, it returns the unchanged state", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const initialUI = { ...initialState.ui };
 
     if (initialState.scenario) {
@@ -191,7 +193,7 @@ describe("CANVAS_CLICKED", () => {
   });
 
   it("unfocusses the focussed character, given the click is not close to any character", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
 
     expect(initialState.ui.focussedCharacterId).not.toBe(null);
 
@@ -204,7 +206,7 @@ describe("CANVAS_CLICKED", () => {
   });
 
   it("focusses a character, given it is not selecting a target and a character is close to the click", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
 
     if (initialState.scenario) {
       const character = new Character();
@@ -220,7 +222,7 @@ describe("CANVAS_CLICKED", () => {
     expect(nextState.ui.focussedCharacterId).toBe("_x");
   });
   it("does nothing, given the click targets an already focussed character", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     initialState.ui.isSettingTarget = true;
 
     if (initialState.scenario) {
@@ -241,7 +243,7 @@ describe("CANVAS_CLICKED", () => {
     expect(nextState.ui.focussedCharacterId).toBe("_x"); // no change
   });
   it("makes a character a target of the focussed characters behaviour, given the UI is in targeting mode", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     initialState.ui.isSettingTarget = true;
 
     const behaviour = new steering.Seek("");
@@ -271,7 +273,7 @@ describe("CANVAS_CLICKED", () => {
 });
 describe("CANVAS_RESIZED", () => {
   it("updates the stored dimensions of the canvas", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const newDimensions: Vector = [120, 320];
     const nextState = reducer(initialState, {
       type: "CANVAS_RESIZED",
@@ -282,7 +284,7 @@ describe("CANVAS_RESIZED", () => {
 });
 describe("BEHAVIOUR_ADDED", () => {
   it("adds the new behaviour to the focussed character", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const behaviour = new steering.Wander();
     const char = getFocussedCharacter(initialState);
     expect(char?.behaviours).not.toContain(behaviour);
@@ -295,7 +297,7 @@ describe("BEHAVIOUR_ADDED", () => {
     expect(nextChar?.behaviours).toContain(behaviour);
   });
   it("does not put the ui into isSettingTarget mode, for a non-targetting behaviour", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const behaviour = new steering.Wander();
     expect(behaviour).not.toHaveProperty("targetId");
 
@@ -307,7 +309,7 @@ describe("BEHAVIOUR_ADDED", () => {
     expect(nextState.ui.isSettingTarget).toBe(false);
   });
   it("puts the ui into isSettingTarget mode, for a targetting behaviour", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const behaviour = new steering.Seek("");
     expect(behaviour).toHaveProperty("targetId");
 
@@ -321,7 +323,7 @@ describe("BEHAVIOUR_ADDED", () => {
 });
 describe("BEHAVIOUR_CHANGED", () => {
   it("replaces an existing instance of a characters behaviour with a new instance", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const seek1 = new steering.Seek("a");
     const seek2 = new steering.Seek("b");
     const char = getFocussedCharacter(initialState);
@@ -339,7 +341,7 @@ describe("BEHAVIOUR_CHANGED", () => {
     expect(nextChar?.behaviours[0]).toBe(seek2);
   });
   it("does not put the ui into isSettingTarget mode, for a non-targetting behaviour", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const behaviour = new steering.Wander();
     expect(behaviour).not.toHaveProperty("targetId");
 
@@ -351,7 +353,7 @@ describe("BEHAVIOUR_CHANGED", () => {
     expect(nextState.ui.isSettingTarget).toBe(false);
   });
   it("puts the UI into isSettingTarget mode, for targetting behaviours", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const behaviour = new steering.Seek("");
     expect(behaviour).toHaveProperty("targetId");
 
@@ -365,7 +367,7 @@ describe("BEHAVIOUR_CHANGED", () => {
 });
 describe("BEHAVIOUR_REMOVED", () => {
   it("given the last behaviour is removed, the character will stop moving", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const scenario = initBlankScenario();
 
     const character = new Character();
@@ -390,7 +392,7 @@ describe("BEHAVIOUR_REMOVED", () => {
 });
 describe("ORIENTATION_CHANGED", () => {
   it("updates the orientation of the focussed character", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const nextOrientation = 3;
     const char = getFocussedCharacter(initialState);
     expect(char?.kinematic.orientation).not.toEqual(nextOrientation);
@@ -406,7 +408,7 @@ describe("ORIENTATION_CHANGED", () => {
 });
 describe("ROTATION_CHANGED", () => {
   it("updates the rotation of the focussed character", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const nextRotation = 3;
     const char = getFocussedCharacter(initialState);
     expect(char?.kinematic.rotation).not.toEqual(nextRotation);
@@ -422,7 +424,7 @@ describe("ROTATION_CHANGED", () => {
 });
 describe("POSX_CHANGED", () => {
   it("updates the x position of the focussed character", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const nextPosition = 3;
     const char = getFocussedCharacter(initialState);
     expect(char?.kinematic.position[0]).not.toEqual(nextPosition);
@@ -438,7 +440,7 @@ describe("POSX_CHANGED", () => {
 });
 describe("POSZ_CHANGED", () => {
   it("updates the z position of the focussed character", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const nextPosition = 3;
     const char = getFocussedCharacter(initialState);
     expect(char?.kinematic.position[1]).not.toEqual(nextPosition);
@@ -454,7 +456,7 @@ describe("POSZ_CHANGED", () => {
 });
 describe("VELX_CHANGED", () => {
   it("updates the x velocity of the focussed character", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const nextVelocity = 3;
     const char = getFocussedCharacter(initialState);
     expect(char?.kinematic.velocity[0]).not.toEqual(nextVelocity);
@@ -470,7 +472,7 @@ describe("VELX_CHANGED", () => {
 });
 describe("VELZ_CHANGED", () => {
   it("updates the z velocity of the focussed character", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const nextVelocity = 3;
     const char = getFocussedCharacter(initialState);
     expect(char?.kinematic.velocity[1]).not.toEqual(nextVelocity);
@@ -486,7 +488,7 @@ describe("VELZ_CHANGED", () => {
 });
 describe("MAX_ACCELERATION_CHANGED", () => {
   it("updates the max acceleration of the focussed character", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const nextMaxAcceleration = 3;
     const char = getFocussedCharacter(initialState);
     expect(char?.kinematic.maxAcceleration).not.toEqual(nextMaxAcceleration);
@@ -502,7 +504,7 @@ describe("MAX_ACCELERATION_CHANGED", () => {
 });
 describe("MAX_ANGULAR_ACCELERATION_CHANGED", () => {
   it("updates the max angular acceleration of the focussed character", () => {
-    const initialState = getState("SC_BLANK");
+    const initialState = getState({ scenarioId: "SC_BLANK" });
     const nextMaxAngularAcceleration = 3;
     const char = getFocussedCharacter(initialState);
     expect(char?.kinematic.maxAngularAcceleration).not.toEqual(

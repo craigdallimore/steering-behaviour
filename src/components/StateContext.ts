@@ -1,6 +1,8 @@
 import { getState } from "@domain/initialState";
+import { StateConfig } from "@domain/types";
 import React from "react";
+import qs from "query-string";
 
-const focussedScenarioId = window.location.hash.slice(1) || "SC_BLANK";
+const config: StateConfig = qs.parse(window.location.hash);
 
-export default React.createContext(getState(focussedScenarioId));
+export default React.createContext(getState(config));

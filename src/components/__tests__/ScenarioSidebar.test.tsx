@@ -6,7 +6,7 @@ import { getScenario, getState as getInitialState } from "@domain/initialState";
 describe("Scenario sidebar", () => {
   const getState = (changes = {}) => {
     return {
-      ...getInitialState("SC_BLANK"),
+      ...getInitialState({ scenarioId: "SC_BLANK" }),
       ...changes,
     };
   };
@@ -59,7 +59,7 @@ describe("Scenario sidebar", () => {
   it("shows a description of the selected scenario", () => {
     const state = getState({
       ui: {
-        ...getInitialState("SC_WANDER").ui,
+        ...getInitialState({ scenarioId: "SC_WANDER" }).ui,
       },
       scenario: getScenario("SC_WANDER"),
     });
@@ -79,7 +79,7 @@ describe("Scenario sidebar", () => {
     const dispatch = jest.fn();
     const state = getState({
       ui: {
-        ...getInitialState("SC_BLANK").ui,
+        ...getInitialState({ scenarioId: "SC_BLANK" }).ui,
         isPaused: true,
       },
     });
@@ -100,7 +100,7 @@ describe("Scenario sidebar", () => {
     const dispatch = jest.fn();
     const state = getState({
       ui: {
-        ...getInitialState("SC_BLANK").ui,
+        ...getInitialState({ scenarioId: "SC_BLANK" }).ui,
         isPaused: false,
       },
     });

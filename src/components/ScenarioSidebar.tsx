@@ -1,9 +1,10 @@
 import React from "react";
 import DispatchContext from "@components/DispatchContext";
 import StateContext from "@components/StateContext";
-import { ScenarioId } from "@domain/types";
+import { ScenarioId, StateConfig } from "@domain/types";
 import { getScenario } from "@domain/initialState";
 import DebugControl from "./DebugControl";
+import qs from "query-string";
 
 const ScenarioSidebar = () => {
   const dispatch = React.useContext(DispatchContext);
@@ -24,7 +25,11 @@ const ScenarioSidebar = () => {
               type: "SCENARIO_CHANGED",
               payload: e.target.value as ScenarioId,
             });
-            window.location.hash = e.target.value;
+            const config: StateConfig = qs.parse(window.location.hash);
+            window.location.hash = qs.stringify({
+              ...config,
+              scenarioId: e.target.value,
+            });
           }}
         >
           {...state.scenarioIds.map((id: ScenarioId) => (

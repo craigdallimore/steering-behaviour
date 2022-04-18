@@ -1,4 +1,4 @@
-import type { Scenario, ScenarioId, State } from "@domain/types";
+import type { Scenario, ScenarioId, State, StateConfig } from "@domain/types";
 import initBlank from "./scenario_blank";
 import initWander from "./scenario_wander";
 import initColl from "./scenario_collision";
@@ -11,7 +11,7 @@ import initSeparation from "./scenario_separation";
 // The scenarios use stateful class instances to represent various items.
 // It is not straightforward to make these immutable; for simplicities sake
 // we will reinitialise each scenario when we switch to it.
-export function getScenario(id: ScenarioId): Scenario | null {
+export function getScenario(id?: ScenarioId): Scenario | null {
   switch (id) {
     case "SC_BLANK":
       return initBlank();
@@ -34,16 +34,16 @@ export function getScenario(id: ScenarioId): Scenario | null {
   }
 }
 
-export function getState(focussedScenarioId: string): State {
+export function getState(config: StateConfig): State {
   return {
     ui: {
       actionFeedbackCount: -1,
       canvasDimensions: [800, 800],
-      isDebugMode: false,
+      isDebugMode: config?.debug ?? false,
       isPaused: true,
       isSettingTarget: false,
       focussedCharacterId: "_1",
-      focussedScenarioId,
+      focussedScenarioId: config.scenarioId ?? null,
     },
     scenarioIds: [
       "SC_BLANK",
@@ -55,6 +55,6 @@ export function getState(focussedScenarioId: string): State {
       "SC_PATH",
       "SC_SEPARATION",
     ],
-    scenario: getScenario(focussedScenarioId),
+    scenario: getScenario(config.scenarioId),
   };
 }

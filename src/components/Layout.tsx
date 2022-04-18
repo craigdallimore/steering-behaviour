@@ -10,14 +10,15 @@ import DispatchContext from "./DispatchContext";
 import StateContext from "./StateContext";
 import "../css/main.css";
 import CharacterSidebar from "./CharacterSidebar";
+import qs from "query-string";
+import { StateConfig } from "@domain/types";
 
 enableMapSet(); // immer can understand Map and Set
 
 const Main = () => {
-  const [state, dispatch] = useImmerReducer(
-    reducer,
-    getState(window.location.hash.slice(1) || "SC_BLANK")
-  );
+  const config: StateConfig = qs.parse(window.location.hash);
+
+  const [state, dispatch] = useImmerReducer(reducer, getState(config));
 
   useRAF((tick: number) => {
     dispatch({ type: "TICK", payload: tick });

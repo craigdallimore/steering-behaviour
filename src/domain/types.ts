@@ -119,6 +119,11 @@ export type Scenario = {
 
 export type ScenarioMap = Map<ScenarioId, Scenario>;
 
+export type StateConfig = {
+  scenarioId?: ScenarioId;
+  debug?: boolean;
+};
+
 export type Steering = {
   // Negative x is Left
   // Negative z is Up
