@@ -35,6 +35,7 @@ export type Behaviour =
   | Wander;
 
 export type Debug = {
+  text?: string;
   edges: Array<Edge>;
   points: Array<Vector>;
   vectors: Array<Vector>;

@@ -25,12 +25,21 @@ export default function drawDebug(
         label: "Debug",
         isClosed: false,
       },
-      "silver"
+      "silver",
+      [2, 2]
     );
   });
 
   debug.circles.forEach(({ position, radius, fillStyle }) => {
     drawCircle(ctx, position, radius, fillStyle);
   });
+
+  if (debug.text && debug.text.length > 0) {
+    ctx.fillText(
+      debug.text,
+      kinematic.position[0] + 15,
+      kinematic.position[1] + 10
+    );
+  }
   return ctx;
 }

@@ -3,14 +3,15 @@ import type { Path } from "@domain/types";
 export default function drawPath(
   ctx: CanvasRenderingContext2D,
   path: Path,
-  strokeStyle: string
+  strokeStyle: string,
+  lineDash: [number, number] = [5, 3]
 ): CanvasRenderingContext2D {
   if (path.points.length < 2) {
     return ctx;
   }
 
   ctx.save();
-  ctx.setLineDash([5, 3]);
+  ctx.setLineDash(lineDash);
   ctx.strokeStyle = strokeStyle;
   ctx.moveTo(path.position[0], path.position[1]);
 
