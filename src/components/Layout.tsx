@@ -16,7 +16,9 @@ import { StateConfig } from "@domain/types";
 enableMapSet(); // immer can understand Map and Set
 
 const Main = () => {
-  const config: StateConfig = qs.parse(window.location.hash);
+  const config: StateConfig = qs.parse(window.location.hash, {
+    parseBooleans: true,
+  });
 
   const [state, dispatch] = useImmerReducer(reducer, getState(config));
 

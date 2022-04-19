@@ -3,6 +3,8 @@ import { StateConfig } from "@domain/types";
 import React from "react";
 import qs from "query-string";
 
-const config: StateConfig = qs.parse(window.location.hash);
+const config: StateConfig = qs.parse(window.location.hash, {
+  parseBooleans: true,
+});
 
 export default React.createContext(getState(config));
