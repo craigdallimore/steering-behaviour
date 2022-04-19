@@ -27,13 +27,13 @@ Schneider and Eberly [2003].
 
 ## Unit circle, radians
 
->        PI/2
+>       0.5PI
 >         |
 >         |
 > PI -----+---- 0, 2PI
 >         |
 >         |
->       3PI/2
+>       1.5PI
 
 ## Orientations
 
