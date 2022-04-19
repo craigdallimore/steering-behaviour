@@ -1,10 +1,8 @@
 import { AbstractBehaviour } from "./abstractBehaviour";
 import {
   add,
-  cross,
   length,
   multiply,
-  normalise,
   radiansToVector,
   subtract,
   vectorToRadians,
