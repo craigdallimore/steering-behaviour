@@ -19,6 +19,7 @@ import type {
 
 import Seek from "./seek";
 import getCollision from "@lib/shape";
+import mapToRange from "@lib/mapToRange";
 
 function getWhiskerRay(k: Kinematic, radians: number, magnitude: number): Edge {
   const bearing = vectorToRadians(k.velocity) - radians;
@@ -53,13 +54,15 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
   }
 
   calculate(kinematic: Kinematic, shapes: Array<Shape>): Steering {
+    const speed = length(kinematic.velocity);
+
     const rays = [
-      getWhiskerRay(kinematic, -0.9, 10),
-      getWhiskerRay(kinematic, -0.4, 20),
-      getWhiskerRay(kinematic, -0.1, 30),
-      getWhiskerRay(kinematic, 0.1, 30),
-      getWhiskerRay(kinematic, 0.4, 20),
-      getWhiskerRay(kinematic, 0.9, 10),
+      getWhiskerRay(kinematic, -0.9, 0.3 * speed),
+      getWhiskerRay(kinematic, -0.3, 1 * speed),
+      getWhiskerRay(kinematic, -0.1, 2.1 * speed),
+      getWhiskerRay(kinematic, 0.1, 2.1 * speed),
+      getWhiskerRay(kinematic, 0.3, 1 * speed),
+      getWhiskerRay(kinematic, 0.9, 0.3 * speed),
     ];
 
     // find the nearest collision to the kinematic
@@ -92,6 +95,7 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
     if (!collision) {
       this.debug.points = [];
       this.debug.circles = [];
+      delete this.debug.text;
       return {
         angular: 0,
         linear: [0, 0],
@@ -101,29 +105,28 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
     // Show collision points
     this.debug.points = [collision.position];
 
-    const relativeColl = subtract(kinematic.position, collision.position);
+    const projectedPosition = kinematic.velocity;
+    const relPos = subtract(kinematic.position, collision.position);
     // Find whether the collision is to the left or right of the kinematics direction of travel
-    const isLeftOfBearing = cross(kinematic.position, relativeColl) > 0;
+    const isLeftOfBearing =
+      -projectedPosition[0] * relPos[1] + projectedPosition[1] * relPos[0] < 0;
+    this.debug.text = isLeftOfBearing ? "LEFT" : "RIGHT";
+
+    const charBearing = vectorToRadians(kinematic.velocity);
+
+    const adjustment = isLeftOfBearing ? (-2 * Math.PI) / 9 : (2 * Math.PI) / 9;
+    const nextBearing = mapToRange(charBearing - Math.PI + adjustment);
 
     const distanceFromCollision = length(
       subtract(kinematic.position, collision.position)
     );
 
-    const collBearing = vectorToRadians(relativeColl);
-    const charBearing = vectorToRadians(kinematic.velocity);
+    const magnitude = Math.max(distanceFromCollision * 0.8, 5);
 
-    const difference = Math.abs(charBearing - collBearing);
-
-    const nextBearing = isLeftOfBearing
-      ? charBearing - difference
-      : charBearing + difference;
-
-    const targetOffset = multiply(
-      normalise(radiansToVector(nextBearing)),
-      distanceFromCollision
+    const targetPosition = add(
+      kinematic.position,
+      multiply(radiansToVector(nextBearing), magnitude)
     );
-
-    const targetPosition = subtract(kinematic.position, targetOffset);
 
     this.debug.circles = [
       {
