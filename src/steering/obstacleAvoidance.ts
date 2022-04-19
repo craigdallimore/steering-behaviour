@@ -1,8 +1,10 @@
 import { AbstractBehaviour } from "./abstractBehaviour";
 import {
   add,
+  cross,
   length,
   multiply,
+  normalise,
   radiansToVector,
   subtract,
   vectorToRadians,
@@ -30,31 +32,38 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
   readonly name = "OBSTACLE_AVOIDANCE";
   seek: Seek;
   avoidDistance: number;
-  lookaheadMain: number;
+  lookaheadMain: number; // TODO remove?
   lookaheadSide: number;
+
   constructor(
     avoidDistance?: number,
-    lookaheadMain?: number,
+    lookaheadMain?: number, // TODO remove?
     lookaheadSide?: number
   ) {
     super();
     // Holds the minimum distance to a wall (i.e., how far to avoid collision)
     // should be greater than the radius of the character
-    this.avoidDistance = avoidDistance ?? 50;
+    this.avoidDistance = avoidDistance ?? 10;
     // Holds the distance to look ahead for a collision
     // (i.e., the length of the collision ray)
-    this.lookaheadMain = lookaheadMain ?? 50;
-    this.lookaheadSide = lookaheadSide ?? 25;
+    this.lookaheadMain = lookaheadMain ?? 50; // TODO remove?
+    this.lookaheadSide = lookaheadSide ?? 25; // TODO remove?
 
     this.seek = new Seek("");
   }
+
   calculate(kinematic: Kinematic, shapes: Array<Shape>): Steering {
-    const w0 = getWhiskerRay(kinematic, 0, this.lookaheadMain);
-    const w1 = getWhiskerRay(kinematic, 0.3, this.lookaheadSide);
-    const w2 = getWhiskerRay(kinematic, -0.3, this.lookaheadSide);
+    const rays = [
+      getWhiskerRay(kinematic, -0.9, 10),
+      getWhiskerRay(kinematic, -0.4, 20),
+      getWhiskerRay(kinematic, -0.1, 30),
+      getWhiskerRay(kinematic, 0.1, 30),
+      getWhiskerRay(kinematic, 0.4, 20),
+      getWhiskerRay(kinematic, 0.9, 10),
+    ];
 
     // find the nearest collision to the kinematic
-    const collision: Collision | null = [w0, w1, w2].reduce(
+    const collision: Collision | null = rays.reduce(
       (acc: Collision | null, edge: Edge) => {
         const collision = getCollision(edge, shapes);
         if (!acc) {
@@ -77,7 +86,7 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
     );
 
     // Show the whiskers
-    this.debug.edges = [w0, w1, w2];
+    this.debug.edges = rays;
 
     // If have no collision, do nothing
     if (!collision) {
@@ -92,11 +101,29 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
     // Show collision points
     this.debug.points = [collision.position];
 
-    // Otherwise create a target
-    const targetPosition = add(
-      collision.position,
-      multiply(collision.normal, 0 - this.avoidDistance)
+    const relativeColl = subtract(kinematic.position, collision.position);
+    // Find whether the collision is to the left or right of the kinematics direction of travel
+    const isLeftOfBearing = cross(kinematic.position, relativeColl) > 0;
+
+    const distanceFromCollision = length(
+      subtract(kinematic.position, collision.position)
     );
+
+    const collBearing = vectorToRadians(relativeColl);
+    const charBearing = vectorToRadians(kinematic.velocity);
+
+    const difference = Math.abs(charBearing - collBearing);
+
+    const nextBearing = isLeftOfBearing
+      ? charBearing - difference
+      : charBearing + difference;
+
+    const targetOffset = multiply(
+      normalise(radiansToVector(nextBearing)),
+      distanceFromCollision
+    );
+
+    const targetPosition = subtract(kinematic.position, targetOffset);
 
     this.debug.circles = [
       {

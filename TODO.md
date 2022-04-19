@@ -2,33 +2,31 @@
 
 ## Priority
 
+- [ ] Obstacle avoidance
+  - [ ] Maybe raycasts can flip side each iteration, e.g. 1degR, 1degL, 2degR, 2degL
+  - [ ] you could potentially also do a boolean search in each space, so do
+    - a max angle raycast on the right and on the left
+    - if one (or both) of them hit
+      - do a raycast at the halfway mark on both / either side, and
+      - keep halving until you have a good approximation of where the obstacles are on one or both sides
+  - [ ] OPTION one way is to cycle one ray per tick and when done a full cycle the shortest ray win and gets the most (or all) the influence.
+  - [ ] OPTION You could also make it so the top n rays wins and influence (weight) it by distance to rayhit \* "PriorityWinFactor" (the shortest ray gets higher priority/weight).
+
+Then you can make a decision about what to do - there's an obstacle 15 degrees
+right and 3 degrees left, so we probably turn right a bit and move a tick
+forward, re-assess from there. Generally searching by halving the search space
+each iteration is quite fast and if you're not too fussed about getting the
+super precise answer (like within 0.1 degree is fine) it shouldn't take many
+iterations to get a decently useful answer.
+
+- [ ] Culling
+  - Maybe you can do a broad fulcrum culling style selector to only consider
+    candidates that are in the view cone. But again, that process would need
+    to be faster than just doing the naïve test to be worth doing.
+
 ## Backlog
 
 - [ ] Bug: Buttons feel really gummy
-- [ ] Bug: OBSTACLE_AVOIDANCE still clips when entering from right.
-
-The target position comes from adding the collision position to
-`multiply(collision.normal, 0 - this.avoidDistance)`;
-
-suppose the collision position is [100, 200]
-the `avoidDistance` is 50
-
-### A
-
-the normal is [-1, 0]
-then the target will be -50 \* [-1, 0] ~> [150, 200]
-
-### B
-
-the normal is [1, 0]
-then the target will be 50 \* [-1, 0] ~> [50, 200]
-
-With the problem direction, the selected normal is [1, -0] (normal 1);
-
-With the working direction, the selected normal is [1, 0] (normal 0)
-
----
-
 - [ ] Feature: Add behaviour: should not permit already selected behaviours to be added
 - [ ] Feature: Add behaviour: should not permit incompatible behaviours to be added (which?)
 - [ ] Feature: Filter available behaviours based on the assigned behaviours
