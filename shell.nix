@@ -10,7 +10,7 @@ in pkgs.mkShell {
       alias gd='git diff'
       alias gc='git commit'
       alias gb='git branch'
-      alias gco='git checkoout'
+      alias gco='git checkout'
       :q() {
         exit
       }
