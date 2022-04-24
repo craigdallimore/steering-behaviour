@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { FC, ReactElement } from "react";
+import React, { ReactElement } from "react";
 import {
   queryHelpers,
   buildQueries,
@@ -44,7 +44,10 @@ const customQueries = {
 };
 
 const AllTheProviders =
-  (defaults: { dispatch: () => void; state: State }): FC =>
+  (defaults: {
+    dispatch: () => void;
+    state: State;
+  }): React.JSXElementConstructor<{ children: React.ReactNode }> =>
   ({ children }) => {
     return (
       <DispatchContext.Provider value={defaults.dispatch}>
