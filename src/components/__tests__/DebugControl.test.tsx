@@ -11,7 +11,7 @@ describe("Debug Control", () => {
     };
   };
 
-  it("dispatches an action when clicked", () => {
+  it("dispatches an action when clicked", async () => {
     const dispatch = jest.fn();
     const state = getState();
     const { container } = render(<DebugControl />, {
@@ -20,7 +20,7 @@ describe("Debug Control", () => {
     });
     const input = container.querySelector("input") as HTMLInputElement;
 
-    userEvent.click(input);
+    await userEvent.click(input);
 
     expect(dispatch).toBeCalledWith({
       type: "DEBUG_MODE_CHANGED",

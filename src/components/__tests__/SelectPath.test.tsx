@@ -61,7 +61,7 @@ describe("SelectPath", () => {
     expect(options[3].textContent).toBe(path3.label);
   });
 
-  test("Selecting a path will call a callback with the pathId", () => {
+  test("Selecting a path will call a callback with the pathId", async () => {
     const props = {
       pathId: undefined,
       onSelectPath: jest.fn(),
@@ -75,7 +75,7 @@ describe("SelectPath", () => {
     const { container } = render(<SelectPath {...props} />);
     const select = container.querySelector("select") as HTMLSelectElement;
 
-    userEvent.selectOptions(select, ["p2"]);
+    await userEvent.selectOptions(select, ["p2"]);
 
     expect(props.onSelectPath).toBeCalledWith("p2");
   });

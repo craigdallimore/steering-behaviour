@@ -64,14 +64,14 @@ describe("Behaviours", () => {
     expect(props.dispatch.mock.calls[0][0].type).toBe("BEHAVIOUR_CHANGED");
   });
 
-  test("adding a behaviour will dispatch changes", () => {
+  test("adding a behaviour will dispatch changes", async () => {
     const props = getProps();
     const { container, getByText } = render(<Behaviours {...props} />);
 
-    userEvent.click(getByText("Add behaviour"));
+    await userEvent.click(getByText("Add behaviour"));
 
     const select = container.querySelector("select") as HTMLSelectElement;
-    userEvent.selectOptions(select, ["SEPARATION"]);
+    await userEvent.selectOptions(select, ["SEPARATION"]);
 
     expect(props.dispatch.mock.calls[0][0].type).toBe("BEHAVIOUR_ADDED");
   });

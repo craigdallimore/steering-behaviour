@@ -11,7 +11,7 @@ describe("Scenario sidebar", () => {
     };
   };
 
-  it("dispatches an action identifying the chosen scenario", () => {
+  it("dispatches an action identifying the chosen scenario", async () => {
     const dispatch = jest.fn();
     const state = getState();
     const { getByDataId } = render(<ScenarioSidebar />, {
@@ -20,7 +20,7 @@ describe("Scenario sidebar", () => {
     });
     const select = getByDataId("pick-scenario");
 
-    userEvent.selectOptions(select, ["SC_WANDER"]);
+    await userEvent.selectOptions(select, ["SC_WANDER"]);
 
     expect(dispatch).toBeCalledWith({
       type: "SCENARIO_CHANGED",
@@ -28,14 +28,14 @@ describe("Scenario sidebar", () => {
     });
   });
 
-  it("dispatches an action when the reset button is pressed", () => {
+  it("dispatches an action when the reset button is pressed", async () => {
     const dispatch = jest.fn();
     const { getByDataId } = render(<ScenarioSidebar />, {
       dispatch,
     });
     const resetButton = getByDataId("reset-button");
 
-    userEvent.click(resetButton);
+    await userEvent.click(resetButton);
 
     expect(dispatch).toBeCalledWith({
       type: "RESET_BUTTON_CLICKED",
@@ -75,7 +75,7 @@ describe("Scenario sidebar", () => {
 
   test(`given the scenario is paused
 - the play/pause button will indicate that clicking it will unpause
-- clicking the play/pause button will unpause the scenario`, () => {
+- clicking the play/pause button will unpause the scenario`, async () => {
     const dispatch = jest.fn();
     const state = getState({
       ui: {
@@ -89,14 +89,14 @@ describe("Scenario sidebar", () => {
     });
     const playPauseButton = getByDataId("play-pause-button");
     expect(playPauseButton.textContent).toBe("Start");
-    userEvent.click(playPauseButton);
+    await userEvent.click(playPauseButton);
     expect(dispatch).toBeCalledWith({
       type: "PLAY_BUTTON_CLICKED",
     });
   });
   test(`given the scenario is running
 - the play/pause button will indicate that clicking it will pause
-- clicking the play/pause button will pause the scenario`, () => {
+- clicking the play/pause button will pause the scenario`, async () => {
     const dispatch = jest.fn();
     const state = getState({
       ui: {
@@ -110,7 +110,7 @@ describe("Scenario sidebar", () => {
     });
     const playPauseButton = getByDataId("play-pause-button");
     expect(playPauseButton.textContent).toBe("Pause");
-    userEvent.click(playPauseButton);
+    await userEvent.click(playPauseButton);
     expect(dispatch).toBeCalledWith({
       type: "PLAY_BUTTON_CLICKED",
     });
