@@ -87,7 +87,10 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
     );
 
     // Show the whiskers
-    this.debug.edges = rays;
+    this.debug.edges = rays.map((edge) => ({
+      edge,
+      strokeStyle: "rgb(141, 110, 99)",
+    }));
 
     // If have no collision, do nothing
     if (!collision) {
@@ -101,7 +104,12 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
     }
 
     // Show collision points
-    this.debug.points = [collision.position];
+    this.debug.points = [
+      {
+        fillStyle: "rgba(245, 0, 87)",
+        position: collision.position,
+      },
+    ];
 
     const projectedPosition = kinematic.velocity;
     const relPos = subtract(kinematic.position, collision.position);

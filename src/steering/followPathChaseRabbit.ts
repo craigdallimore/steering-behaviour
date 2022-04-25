@@ -26,7 +26,15 @@ export default class FollowPathChaseRabbit extends AbstractBehaviour {
     // Get the target position
     const targetPosition = getPosition(path, targetParam);
 
-    this.debug.points = [targetPosition];
+    this.debug.edges = [
+      {
+        strokeStyle: "rgb(0, 105, 92)",
+        edge: [kinematic.position, targetPosition],
+      },
+    ];
+    this.debug.points = [
+      { position: targetPosition, fillStyle: "rgb(0, 105, 92)" },
+    ];
 
     const { linear } = this.seek.calculate(kinematic, targetPosition);
     return { angular: 0, linear };

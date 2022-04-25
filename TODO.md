@@ -3,13 +3,17 @@
 ## Priority
 
 - [ ] Obstacle avoidance
+
+  - [ ] OPTION one way is to cycle one ray per tick and when done a full cycle
+        the shortest ray win and gets the most (or all) the influence.
+        you keep that "winning" influence through out that cycle and update it after next cycle determines the new winner(s). That means if you have 6 rays you will keep that influence for 6 ticks.
+
   - [ ] Maybe raycasts can flip side each iteration, e.g. 1degR, 1degL, 2degR, 2degL
   - [ ] you could potentially also do a boolean search in each space, so do
     - a max angle raycast on the right and on the left
     - if one (or both) of them hit
       - do a raycast at the halfway mark on both / either side, and
       - keep halving until you have a good approximation of where the obstacles are on one or both sides
-  - [ ] OPTION one way is to cycle one ray per tick and when done a full cycle the shortest ray win and gets the most (or all) the influence.
   - [ ] OPTION You could also make it so the top n rays wins and influence (weight) it by distance to rayhit \* "PriorityWinFactor" (the shortest ray gets higher priority/weight).
 
 Then you can make a decision about what to do - there's an obstacle 15 degrees

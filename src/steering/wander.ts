@@ -43,7 +43,9 @@ export default class Wander extends AbstractBehaviour {
     );
 
     const linear = multiply(nextTargetPosition, kinematic.maxAcceleration);
-    this.debug.vectors = [nextTargetPosition];
+    this.debug.vectors = [
+      { position: nextTargetPosition, fillStyle: "rgb(191, 54, 12)" },
+    ];
 
     return {
       angular: 0,

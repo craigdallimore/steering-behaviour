@@ -8,15 +8,15 @@ export default function drawDebug(
   debug: Debug,
   kinematic: Kinematic
 ): CanvasRenderingContext2D {
-  debug.points.forEach((point) => {
-    drawCircle(ctx, point, 2, "cyan");
+  debug.points.forEach(({ fillStyle, position }) => {
+    drawCircle(ctx, position, 2, fillStyle);
   });
 
-  debug.vectors.forEach((vector) => {
-    drawVector(ctx, kinematic.position, vector, "red");
+  debug.vectors.forEach(({ fillStyle, position }) => {
+    drawVector(ctx, kinematic.position, position, fillStyle);
   });
 
-  debug.edges.forEach((edge) => {
+  debug.edges.forEach(({ strokeStyle, edge }) => {
     drawPath(
       ctx,
       {
@@ -25,7 +25,7 @@ export default function drawDebug(
         label: "Debug",
         isClosed: false,
       },
-      "silver",
+      strokeStyle,
       [2, 2]
     );
   });

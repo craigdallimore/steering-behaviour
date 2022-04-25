@@ -36,8 +36,10 @@ export default class FollowPathPredict extends AbstractBehaviour {
     // Get the target position
     const targetPosition = getPosition(path, targetParam);
 
-    this.debug.edges = [[futurePos, targetPosition]];
-    this.debug.points = [futurePos];
+    this.debug.edges = [
+      { strokeStyle: "rgb(0, 105, 92)", edge: [futurePos, targetPosition] },
+    ];
+    this.debug.points = [{ position: futurePos, fillStyle: "rgb(0, 105, 92)" }];
 
     const { linear } = this.seek.calculate(kinematic, targetPosition);
     return { angular: 0, linear };

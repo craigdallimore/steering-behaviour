@@ -18,10 +18,10 @@ export default function drawVector(
   ctx.beginPath();
   ctx.moveTo(distance, 0);
   ctx.lineTo(distance - 5, 5);
-  ctx.lineTo(distance - 5, 1.5);
-  ctx.lineTo(0, 1.5);
-  ctx.lineTo(0, -1.5);
-  ctx.lineTo(distance - 5, -1.5);
+  ctx.lineTo(distance - 5, 0.5);
+  ctx.lineTo(0, 0.5);
+  ctx.lineTo(0, -0.5);
+  ctx.lineTo(distance - 5, -0.5);
   ctx.lineTo(distance - 5, -5);
   ctx.lineTo(distance, 0);
   ctx.fill();

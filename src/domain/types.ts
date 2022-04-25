@@ -36,9 +36,9 @@ export type Behaviour =
 
 export type Debug = {
   text?: string;
-  edges: Array<Edge>;
-  points: Array<Vector>;
-  vectors: Array<Vector>;
+  edges: Array<{ strokeStyle: string; edge: Edge }>;
+  points: Array<{ fillStyle: string; position: Vector }>;
+  vectors: Array<{ fillStyle: string; position: Vector }>;
   circles: Array<{
     position: Vector;
     radius: number;
