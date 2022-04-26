@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@decoy9697/vector": "^1.0.2",
+    "@reach/dialog": "^0.17.0",
     "@rollup/plugin-commonjs": "^22.0.0",
     "@rollup/plugin-node-resolve": "^13.2.1",
     "@rollup/plugin-replace": "^4.0.0",

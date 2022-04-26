@@ -2,6 +2,7 @@
 @import "./behaviours.css";
 @import "./scenario-sidebar.css";
 @import "./character-sidebar.css";
+@import "@reach/dialog/styles.css";
 
 main {
   grid-area: canvas;

@@ -1,4 +1,5 @@
 import React from "react";
+import { Dialog } from "@reach/dialog";
 import DispatchContext from "@components/DispatchContext";
 import StateContext from "@components/StateContext";
 import { ScenarioId, StateConfig } from "@domain/types";
@@ -7,6 +8,7 @@ import DebugControl from "./DebugControl";
 import qs from "query-string";
 
 const ScenarioSidebar = () => {
+  const [showDialog, setShowDialog] = React.useState(false);
   const dispatch = React.useContext(DispatchContext);
   const state = React.useContext(StateContext);
 
@@ -64,6 +66,25 @@ const ScenarioSidebar = () => {
       >
         Reset
       </button>
+
+      <button
+        data-id="about-dialog-button"
+        id="about"
+        type="button"
+        onClick={() => {
+          setShowDialog(true);
+        }}
+      >
+        About this app
+      </button>
+      <Dialog
+        isOpen={showDialog}
+        onDismiss={() => {
+          setShowDialog(false);
+        }}
+      >
+        <h1>hi</h1>
+      </Dialog>
     </aside>
   );
 };
