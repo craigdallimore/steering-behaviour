@@ -42,3 +42,6 @@ body {
 h1 {
   font-family: Kaushan Script;
 }
+a {
+  color: hsl(213, 65%, 40%);
+}

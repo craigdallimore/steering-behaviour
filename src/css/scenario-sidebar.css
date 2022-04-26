@@ -26,3 +26,7 @@ h1 {
 .scenario-sidebar select {
   margin-top: 0.25rem;
 }
+.scenario-sidebar button:last-of-type {
+  margin-top: auto;
+  margin-bottom: 1rem;
+}

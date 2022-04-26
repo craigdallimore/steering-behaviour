@@ -1,0 +1,32 @@
+@import "@reach/dialog/styles.css";
+
+[aria-modal] {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-left: 3rem;
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.1);
+}
+[aria-modal]::before {
+  display: block;
+  content: "";
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1rem;
+  background: linear-gradient(to bottom, var(--base05), var(--base01));
+  position: absolute;
+}
+
+[aria-modal] h2 {
+  margin: 0;
+  text-align: initial;
+  padding: 0;
+}
+
+[aria-modal] header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
