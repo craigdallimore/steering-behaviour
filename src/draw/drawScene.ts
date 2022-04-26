@@ -9,6 +9,7 @@ import type { State, Character, Path, Shape } from "@domain/types";
 import getFocussedCharacter from "@lib/getFocussedCharacter";
 import drawDebug from "./drawDebug";
 import getFirstTargetId from "@lib/getFirstTargetId";
+import drawCharacter from "./drawCharacter";
 
 export default function drawScene(
   ctx: CanvasRenderingContext2D,
@@ -49,7 +50,7 @@ export default function drawScene(
   }
 
   state.scenario.characters.forEach((cha: Character) => {
-    drawArrow(ctx, cha.kinematic);
+    drawCharacter(ctx, cha);
     if (state.ui.isDebugMode) {
       cha.behaviours.forEach((behaviour) => {
         drawDebug(ctx, behaviour.debug, cha.kinematic);

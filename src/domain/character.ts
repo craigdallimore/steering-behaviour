@@ -3,7 +3,12 @@ import { immerable } from "immer";
 
 export default class Character {
   [immerable] = true;
-  constructor(kinematic?: Kinematic, behaviours?: Array<Behaviour>) {
+  constructor(
+    kinematic?: Kinematic,
+    behaviours?: Array<Behaviour>,
+    // Suggested: a single emoji
+    label?: string
+  ) {
     this.kinematic = kinematic || {
       maxAcceleration: 25,
       maxAngularAcceleration: 140,
@@ -14,7 +19,9 @@ export default class Character {
       rotation: 0,
     };
     this.behaviours = behaviours || [];
+    this.label = label;
   }
+  label?: string;
   kinematic: Kinematic;
   behaviours: Array<Behaviour>;
 }

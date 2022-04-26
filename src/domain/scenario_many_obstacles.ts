@@ -59,7 +59,8 @@ export default function initScenario(): Scenario {
             new steering.ObstacleAvoidance(),
             new steering.LookWhereYouAreGoing(),
             new steering.Arrive("_2"),
-          ]
+          ],
+          "🐭"
         ),
       ],
       [
@@ -69,7 +70,7 @@ export default function initScenario(): Scenario {
             maxAcceleration: 25,
             maxAngularAcceleration: 300,
             maxSpeed: 45,
-            position: [425, 480],
+            position: [325, 680],
             velocity: [0, 0],
             orientation: 0,
             rotation: 0,
@@ -77,7 +78,8 @@ export default function initScenario(): Scenario {
           [
             new steering.ObstacleAvoidance(),
             new steering.LookWhereYouAreGoing(),
-          ]
+          ],
+          "🧀"
         ),
       ],
     ]),

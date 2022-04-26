@@ -2,12 +2,13 @@
 
 ## Priority
 
+- [ ] Add github link
+- [ ] Add license modal
 - [ ] Obstacle avoidance
   - [ ] Update configuration UI
 
 ## Backlog
 
-- [ ] Feature: Cat and mouse characters
 - [ ] Feature: Add behaviour: should not permit already selected behaviours to be added
 - [ ] Feature: Add behaviour: should not permit incompatible behaviours to be added (which?)
 - [ ] Feature: Filter available behaviours based on the assigned behaviours
