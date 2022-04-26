@@ -457,12 +457,2311 @@ const useAnimationFrame = (callback) => {
     }, []);
 };
 
+function canUseDOM() {
+  return !!(typeof window !== "undefined" && window.document && window.document.createElement);
+}
+
+/**
+ * React currently throws a warning when using useLayoutEffect on the server. To
+ * get around it, we can conditionally useEffect on the server (no-op) and
+ * useLayoutEffect in the browser. We occasionally need useLayoutEffect to
+ * ensure we don't get a render flash for certain operations, but we may also
+ * need affected components to render on the server. One example is when setting
+ * a component's descendants to retrieve their index values.
+ *
+ * Important to note that using this hook as an escape hatch will break the
+ * eslint dependency warnings unless you rename the import to `useLayoutEffect`.
+ * Use sparingly only when the effect won't effect the rendered HTML to avoid
+ * any server/client mismatch.
+ *
+ * If a useLayoutEffect is needed and the result would create a mismatch, it's
+ * likely that the component in question shouldn't be rendered on the server at
+ * all, so a better approach would be to lazily render those in a parent
+ * component after client-side hydration.
+ *
+ * https://gist.github.com/gaearon/e7d97cdf38a2907924ea12e4ebdf3c85
+ * https://github.com/reduxjs/react-redux/blob/master/src/utils/useIsomorphicLayoutEffect.js
+ *
+ * @param effect
+ * @param deps
+ */
+
+var useIsomorphicLayoutEffect = /*#__PURE__*/canUseDOM() ? react.exports.useLayoutEffect : react.exports.useEffect;
+
+/**
+ * Forces a re-render, similar to `forceUpdate` in class components.
+ */
+
+function useForceUpdate() {
+  var _useState = react.exports.useState(Object.create(null)),
+      dispatch = _useState[1];
+
+  return react.exports.useCallback(function () {
+    dispatch(Object.create(null));
+  }, []);
+}
+
+function _objectWithoutPropertiesLoose$2(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+var _excluded$1 = ["unstable_skipInitialRender"];
+/**
+ * Portal
+ *
+ * @see Docs https://reach.tech/portal#portal
+ */
+
+var PortalImpl = function PortalImpl(_ref) {
+  var children = _ref.children,
+      _ref$type = _ref.type,
+      type = _ref$type === void 0 ? "reach-portal" : _ref$type,
+      containerRef = _ref.containerRef;
+  var mountNode = react.exports.useRef(null);
+  var portalNode = react.exports.useRef(null);
+  var forceUpdate = useForceUpdate();
+
+  useIsomorphicLayoutEffect(function () {
+    // This ref may be null when a hot-loader replaces components on the page
+    if (!mountNode.current) return; // It's possible that the content of the portal has, itself, been portaled.
+    // In that case, it's important to append to the correct document element.
+
+    var ownerDocument = mountNode.current.ownerDocument;
+    var body = (containerRef == null ? void 0 : containerRef.current) || ownerDocument.body;
+    portalNode.current = ownerDocument == null ? void 0 : ownerDocument.createElement(type);
+    body.appendChild(portalNode.current);
+    forceUpdate();
+    return function () {
+      if (portalNode.current && body) {
+        body.removeChild(portalNode.current);
+      }
+    };
+  }, [type, forceUpdate, containerRef]);
+  return portalNode.current ? /*#__PURE__*/reactDom.exports.createPortal(children, portalNode.current) : /*#__PURE__*/react.exports.createElement("span", {
+    ref: mountNode
+  });
+};
+
+var Portal = function Portal(_ref2) {
+  var unstable_skipInitialRender = _ref2.unstable_skipInitialRender,
+      props = _objectWithoutPropertiesLoose$2(_ref2, _excluded$1);
+
+  var _React$useState = react.exports.useState(false),
+      hydrated = _React$useState[0],
+      setHydrated = _React$useState[1];
+
+  react.exports.useEffect(function () {
+    if (unstable_skipInitialRender) {
+      setHydrated(true);
+    }
+  }, [unstable_skipInitialRender]);
+
+  if (unstable_skipInitialRender && !hydrated) {
+    return null;
+  }
+
+  return /*#__PURE__*/react.exports.createElement(PortalImpl, props);
+};
+
+/**
+ * Get an element's owner document. Useful when components are used in iframes
+ * or other environments like dev tools.
+ *
+ * @param element
+ */
+
+function getOwnerDocument(element) {
+  return canUseDOM() ? element ? element.ownerDocument : document : null;
+}
+
+/**
+ * Checks whether or not a value is a boolean.
+ *
+ * @param value
+ */
+/**
+ * Checks whether or not a value is a function.
+ *
+ * @param value
+ */
+
+function isFunction(value) {
+  // eslint-disable-next-line eqeqeq
+  return !!(value && {}.toString.call(value) == "[object Function]");
+}
+
+function noop() {}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _createForOfIteratorHelperLoose(o, allowArrayLike) {
+  var it;
+
+  if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
+    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+      if (it) o = it;
+      var i = 0;
+      return function () {
+        if (i >= o.length) return {
+          done: true
+        };
+        return {
+          done: false,
+          value: o[i++]
+        };
+      };
+    }
+
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  it = o[Symbol.iterator]();
+  return it.next.bind(it);
+}
+
+/**
+ * Passes or assigns an arbitrary value to a ref function or object.
+ *
+ * @param ref
+ * @param value
+ */
+function assignRef$1(ref, value) {
+  if (ref == null) return;
+
+  if (isFunction(ref)) {
+    ref(value);
+  } else {
+    try {
+      ref.current = value;
+    } catch (error) {
+      throw new Error("Cannot assign value \"" + value + "\" to ref \"" + ref + "\"");
+    }
+  }
+}
+/**
+ * Passes or assigns a value to multiple refs (typically a DOM node). Useful for
+ * dealing with components that need an explicit ref for DOM calculations but
+ * also forwards refs assigned by an app.
+ *
+ * @param refs Refs to fork
+ */
+
+function useComposedRefs() {
+  for (var _len = arguments.length, refs = new Array(_len), _key = 0; _key < _len; _key++) {
+    refs[_key] = arguments[_key];
+  }
+
+  return react.exports.useCallback(function (node) {
+    for (var _iterator = _createForOfIteratorHelperLoose(refs), _step; !(_step = _iterator()).done;) {
+      var ref = _step.value;
+      assignRef$1(ref, node);
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  }, refs);
+}
+
+/**
+ * Wraps a lib-defined event handler and a user-defined event handler, returning
+ * a single handler that allows a user to prevent lib-defined handlers from
+ * firing.
+ *
+ * @param theirHandler User-supplied event handler
+ * @param ourHandler Library-supplied event handler
+ */
+function composeEventHandlers(theirHandler, ourHandler) {
+  return function (event) {
+    theirHandler && theirHandler(event);
+
+    if (!event.defaultPrevented) {
+      return ourHandler(event);
+    }
+  };
+}
+
+function _objectWithoutPropertiesLoose$1(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+function _extends$1() {
+  _extends$1 = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends$1.apply(this, arguments);
+}
+
+var propTypes = {exports: {}};
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+var ReactPropTypesSecret$1 = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+
+var ReactPropTypesSecret_1 = ReactPropTypesSecret$1;
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+var ReactPropTypesSecret = ReactPropTypesSecret_1;
+
+function emptyFunction() {}
+function emptyFunctionWithReset() {}
+emptyFunctionWithReset.resetWarningCache = emptyFunction;
+
+var factoryWithThrowingShims = function() {
+  function shim(props, propName, componentName, location, propFullName, secret) {
+    if (secret === ReactPropTypesSecret) {
+      // It is still safe when called from React.
+      return;
+    }
+    var err = new Error(
+      'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
+      'Use PropTypes.checkPropTypes() to call them. ' +
+      'Read more at http://fb.me/use-check-prop-types'
+    );
+    err.name = 'Invariant Violation';
+    throw err;
+  }  shim.isRequired = shim;
+  function getShim() {
+    return shim;
+  }  // Important!
+  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
+  var ReactPropTypes = {
+    array: shim,
+    bigint: shim,
+    bool: shim,
+    func: shim,
+    number: shim,
+    object: shim,
+    string: shim,
+    symbol: shim,
+
+    any: shim,
+    arrayOf: getShim,
+    element: shim,
+    elementType: shim,
+    instanceOf: getShim,
+    node: shim,
+    objectOf: getShim,
+    oneOf: getShim,
+    oneOfType: getShim,
+    shape: getShim,
+    exact: getShim,
+
+    checkPropTypes: emptyFunctionWithReset,
+    resetWarningCache: emptyFunction
+  };
+
+  ReactPropTypes.PropTypes = ReactPropTypes;
+
+  return ReactPropTypes;
+};
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+{
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  propTypes.exports = factoryWithThrowingShims();
+}
+
+var FOCUS_GROUP = 'data-focus-lock';
+var FOCUS_DISABLED = 'data-focus-lock-disabled';
+var FOCUS_ALLOW = 'data-no-focus-lock';
+var FOCUS_AUTO = 'data-autofocus-inside';
+
+/**
+ * Assigns a value for a given ref, no matter of the ref format
+ * @param {RefObject} ref - a callback function or ref object
+ * @param value - a new value
+ *
+ * @see https://github.com/theKashey/use-callback-ref#assignref
+ * @example
+ * const refObject = useRef();
+ * const refFn = (ref) => {....}
+ *
+ * assignRef(refObject, "refValue");
+ * assignRef(refFn, "refValue");
+ */
+function assignRef(ref, value) {
+    if (typeof ref === 'function') {
+        ref(value);
+    }
+    else if (ref) {
+        ref.current = value;
+    }
+    return ref;
+}
+
+/**
+ * creates a MutableRef with ref change callback
+ * @param initialValue - initial ref value
+ * @param {Function} callback - a callback to run when value changes
+ *
+ * @example
+ * const ref = useCallbackRef(0, (newValue, oldValue) => console.log(oldValue, '->', newValue);
+ * ref.current = 1;
+ * // prints 0 -> 1
+ *
+ * @see https://reactjs.org/docs/hooks-reference.html#useref
+ * @see https://github.com/theKashey/use-callback-ref#usecallbackref---to-replace-reactuseref
+ * @returns {MutableRefObject}
+ */
+function useCallbackRef(initialValue, callback) {
+    var ref = react.exports.useState(function () { return ({
+        // value
+        value: initialValue,
+        // last callback
+        callback: callback,
+        // "memoized" public interface
+        facade: {
+            get current() {
+                return ref.value;
+            },
+            set current(value) {
+                var last = ref.value;
+                if (last !== value) {
+                    ref.value = value;
+                    ref.callback(value, last);
+                }
+            },
+        },
+    }); })[0];
+    // update callback
+    ref.callback = callback;
+    return ref.facade;
+}
+
+/**
+ * Merges two or more refs together providing a single interface to set their value
+ * @param {RefObject|Ref} refs
+ * @returns {MutableRefObject} - a new ref, which translates all changes to {refs}
+ *
+ * @see {@link mergeRefs} a version without buit-in memoization
+ * @see https://github.com/theKashey/use-callback-ref#usemergerefs
+ * @example
+ * const Component = React.forwardRef((props, ref) => {
+ *   const ownRef = useRef();
+ *   const domRef = useMergeRefs([ref, ownRef]); // 👈 merge together
+ *   return <div ref={domRef}>...</div>
+ * }
+ */
+function useMergeRefs(refs, defaultValue) {
+    return useCallbackRef(defaultValue || null, function (newValue) { return refs.forEach(function (ref) { return assignRef(ref, newValue); }); });
+}
+
+var hiddenGuard = {
+  width: '1px',
+  height: '0px',
+  padding: 0,
+  overflow: 'hidden',
+  position: 'fixed',
+  top: '1px',
+  left: '1px'
+};
+
+/******************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
+
+function __spreadArray(to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+}
+
+// Only Node.JS has a process variable that is of [[Class]] process
+Object.prototype.toString.call(typeof process !== 'undefined' ? process : 0) === '[object process]';
+
+function ItoI(a) {
+    return a;
+}
+function innerCreateMedium(defaults, middleware) {
+    if (middleware === void 0) { middleware = ItoI; }
+    var buffer = [];
+    var assigned = false;
+    var medium = {
+        read: function () {
+            if (assigned) {
+                throw new Error('Sidecar: could not `read` from an `assigned` medium. `read` could be used only with `useMedium`.');
+            }
+            if (buffer.length) {
+                return buffer[buffer.length - 1];
+            }
+            return defaults;
+        },
+        useMedium: function (data) {
+            var item = middleware(data, assigned);
+            buffer.push(item);
+            return function () {
+                buffer = buffer.filter(function (x) { return x !== item; });
+            };
+        },
+        assignSyncMedium: function (cb) {
+            assigned = true;
+            while (buffer.length) {
+                var cbs = buffer;
+                buffer = [];
+                cbs.forEach(cb);
+            }
+            buffer = {
+                push: function (x) { return cb(x); },
+                filter: function () { return buffer; },
+            };
+        },
+        assignMedium: function (cb) {
+            assigned = true;
+            var pendingQueue = [];
+            if (buffer.length) {
+                var cbs = buffer;
+                buffer = [];
+                cbs.forEach(cb);
+                pendingQueue = buffer;
+            }
+            var executeQueue = function () {
+                var cbs = pendingQueue;
+                pendingQueue = [];
+                cbs.forEach(cb);
+            };
+            var cycle = function () { return Promise.resolve().then(executeQueue); };
+            cycle();
+            buffer = {
+                push: function (x) {
+                    pendingQueue.push(x);
+                    cycle();
+                },
+                filter: function (filter) {
+                    pendingQueue = pendingQueue.filter(filter);
+                    return buffer;
+                },
+            };
+        },
+    };
+    return medium;
+}
+function createMedium(defaults, middleware) {
+    if (middleware === void 0) { middleware = ItoI; }
+    return innerCreateMedium(defaults, middleware);
+}
+// eslint-disable-next-line @typescript-eslint/ban-types
+function createSidecarMedium(options) {
+    if (options === void 0) { options = {}; }
+    var medium = innerCreateMedium(null);
+    medium.options = __assign({ async: true, ssr: false }, options);
+    return medium;
+}
+
+var SideCar$1 = function (_a) {
+    var sideCar = _a.sideCar, rest = __rest(_a, ["sideCar"]);
+    if (!sideCar) {
+        throw new Error('Sidecar: please provide `sideCar` property to import the right car');
+    }
+    var Target = sideCar.read();
+    if (!Target) {
+        throw new Error('Sidecar medium not found');
+    }
+    return react.exports.createElement(Target, __assign({}, rest));
+};
+SideCar$1.isSideCarExport = true;
+function exportSidecar(medium, exported) {
+    medium.useMedium(exported);
+    return SideCar$1;
+}
+
+var mediumFocus = createMedium({}, function (_ref) {
+  var target = _ref.target,
+      currentTarget = _ref.currentTarget;
+  return {
+    target: target,
+    currentTarget: currentTarget
+  };
+});
+var mediumBlur = createMedium();
+var mediumEffect = createMedium();
+var mediumSidecar = createSidecarMedium({
+  async: true
+});
+
+var emptyArray = [];
+var FocusLock = /*#__PURE__*/react.exports.forwardRef(function FocusLockUI(props, parentRef) {
+  var _extends2;
+
+  var _React$useState = react.exports.useState(),
+      realObserved = _React$useState[0],
+      setObserved = _React$useState[1];
+
+  var observed = react.exports.useRef();
+  var isActive = react.exports.useRef(false);
+  var originalFocusedElement = react.exports.useRef(null);
+  var children = props.children,
+      disabled = props.disabled,
+      noFocusGuards = props.noFocusGuards,
+      persistentFocus = props.persistentFocus,
+      crossFrame = props.crossFrame,
+      autoFocus = props.autoFocus;
+      props.allowTextSelection;
+      var group = props.group,
+      className = props.className,
+      whiteList = props.whiteList,
+      hasPositiveIndices = props.hasPositiveIndices,
+      _props$shards = props.shards,
+      shards = _props$shards === void 0 ? emptyArray : _props$shards,
+      _props$as = props.as,
+      Container = _props$as === void 0 ? 'div' : _props$as,
+      _props$lockProps = props.lockProps,
+      containerProps = _props$lockProps === void 0 ? {} : _props$lockProps,
+      SideCar = props.sideCar,
+      shouldReturnFocus = props.returnFocus,
+      focusOptions = props.focusOptions,
+      onActivationCallback = props.onActivation,
+      onDeactivationCallback = props.onDeactivation;
+
+  var _React$useState2 = react.exports.useState({}),
+      id = _React$useState2[0]; // SIDE EFFECT CALLBACKS
+
+
+  var onActivation = react.exports.useCallback(function () {
+    originalFocusedElement.current = originalFocusedElement.current || document && document.activeElement;
+
+    if (observed.current && onActivationCallback) {
+      onActivationCallback(observed.current);
+    }
+
+    isActive.current = true;
+  }, [onActivationCallback]);
+  var onDeactivation = react.exports.useCallback(function () {
+    isActive.current = false;
+
+    if (onDeactivationCallback) {
+      onDeactivationCallback(observed.current);
+    }
+  }, [onDeactivationCallback]);
+  react.exports.useEffect(function () {
+    if (!disabled) {
+      // cleanup return focus on trap deactivation
+      // sideEffect/returnFocus should happen by this time
+      originalFocusedElement.current = null;
+    }
+  }, []);
+  var returnFocus = react.exports.useCallback(function (allowDefer) {
+    var returnFocusTo = originalFocusedElement.current;
+
+    if (returnFocusTo && returnFocusTo.focus) {
+      var howToReturnFocus = typeof shouldReturnFocus === 'function' ? shouldReturnFocus(returnFocusTo) : shouldReturnFocus;
+
+      if (howToReturnFocus) {
+        var returnFocusOptions = typeof howToReturnFocus === 'object' ? howToReturnFocus : undefined;
+        originalFocusedElement.current = null;
+
+        if (allowDefer) {
+          // React might return focus after update
+          // it's safer to defer the action
+          Promise.resolve().then(function () {
+            return returnFocusTo.focus(returnFocusOptions);
+          });
+        } else {
+          returnFocusTo.focus(returnFocusOptions);
+        }
+      }
+    }
+  }, [shouldReturnFocus]); // MEDIUM CALLBACKS
+
+  var onFocus = react.exports.useCallback(function (event) {
+    if (isActive.current) {
+      mediumFocus.useMedium(event);
+    }
+  }, []);
+  var onBlur = mediumBlur.useMedium; // REF PROPAGATION
+  // not using real refs due to race conditions
+
+  var setObserveNode = react.exports.useCallback(function (newObserved) {
+    if (observed.current !== newObserved) {
+      observed.current = newObserved;
+      setObserved(newObserved);
+    }
+  }, []);
+
+  var lockProps = _extends$1((_extends2 = {}, _extends2[FOCUS_DISABLED] = disabled && 'disabled', _extends2[FOCUS_GROUP] = group, _extends2), containerProps);
+
+  var hasLeadingGuards = noFocusGuards !== true;
+  var hasTailingGuards = hasLeadingGuards && noFocusGuards !== 'tail';
+  var mergedRef = useMergeRefs([parentRef, setObserveNode]);
+  return /*#__PURE__*/react.exports.createElement(react.exports.Fragment, null, hasLeadingGuards && [
+  /*#__PURE__*/
+  // nearest focus guard
+  react.exports.createElement("div", {
+    key: "guard-first",
+    "data-focus-guard": true,
+    tabIndex: disabled ? -1 : 0,
+    style: hiddenGuard
+  }), // first tabbed element guard
+  hasPositiveIndices ? /*#__PURE__*/react.exports.createElement("div", {
+    key: "guard-nearest",
+    "data-focus-guard": true,
+    tabIndex: disabled ? -1 : 1,
+    style: hiddenGuard
+  }) : null], !disabled && /*#__PURE__*/react.exports.createElement(SideCar, {
+    id: id,
+    sideCar: mediumSidecar,
+    observed: realObserved,
+    disabled: disabled,
+    persistentFocus: persistentFocus,
+    crossFrame: crossFrame,
+    autoFocus: autoFocus,
+    whiteList: whiteList,
+    shards: shards,
+    onActivation: onActivation,
+    onDeactivation: onDeactivation,
+    returnFocus: returnFocus,
+    focusOptions: focusOptions
+  }), /*#__PURE__*/react.exports.createElement(Container, _extends$1({
+    ref: mergedRef
+  }, lockProps, {
+    className: className,
+    onBlur: onBlur,
+    onFocus: onFocus
+  }), children), hasTailingGuards && /*#__PURE__*/react.exports.createElement("div", {
+    "data-focus-guard": true,
+    tabIndex: disabled ? -1 : 0,
+    style: hiddenGuard
+  }));
+});
+FocusLock.propTypes = {};
+FocusLock.defaultProps = {
+  children: undefined,
+  disabled: false,
+  returnFocus: false,
+  focusOptions: undefined,
+  noFocusGuards: false,
+  autoFocus: true,
+  persistentFocus: false,
+  crossFrame: true,
+  hasPositiveIndices: undefined,
+  allowTextSelection: undefined,
+  group: undefined,
+  className: undefined,
+  whiteList: undefined,
+  shards: undefined,
+  as: 'div',
+  lockProps: {},
+  onActivation: undefined,
+  onDeactivation: undefined
+};
+
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  _setPrototypeOf(subClass, superClass);
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function withSideEffect(reducePropsToState, handleStateChangeOnClient) {
+
+  function getDisplayName(WrappedComponent) {
+    return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+  }
+
+  return function wrap(WrappedComponent) {
+
+    var mountedInstances = [];
+    var state;
+
+    function emitChange() {
+      state = reducePropsToState(mountedInstances.map(function (instance) {
+        return instance.props;
+      }));
+      handleStateChangeOnClient(state);
+    }
+
+    var SideEffect = /*#__PURE__*/function (_PureComponent) {
+      _inheritsLoose(SideEffect, _PureComponent);
+
+      function SideEffect() {
+        return _PureComponent.apply(this, arguments) || this;
+      }
+
+      // Try to use displayName of wrapped component
+      SideEffect.peek = function peek() {
+        return state;
+      };
+
+      var _proto = SideEffect.prototype;
+
+      _proto.componentDidMount = function componentDidMount() {
+        mountedInstances.push(this);
+        emitChange();
+      };
+
+      _proto.componentDidUpdate = function componentDidUpdate() {
+        emitChange();
+      };
+
+      _proto.componentWillUnmount = function componentWillUnmount() {
+        var index = mountedInstances.indexOf(this);
+        mountedInstances.splice(index, 1);
+        emitChange();
+      };
+
+      _proto.render = function render() {
+        return /*#__PURE__*/React.createElement(WrappedComponent, this.props);
+      };
+
+      return SideEffect;
+    }(react.exports.PureComponent);
+
+    _defineProperty(SideEffect, "displayName", "SideEffect(" + getDisplayName(WrappedComponent) + ")");
+
+    return SideEffect;
+  };
+}
+
+var toArray = function (a) {
+    var ret = Array(a.length);
+    for (var i = 0; i < a.length; ++i) {
+        ret[i] = a[i];
+    }
+    return ret;
+};
+var asArray = function (a) { return (Array.isArray(a) ? a : [a]); };
+
+var filterNested = function (nodes) {
+    var contained = new Set();
+    var l = nodes.length;
+    for (var i = 0; i < l; i += 1) {
+        for (var j = i + 1; j < l; j += 1) {
+            var position = nodes[i].compareDocumentPosition(nodes[j]);
+            if ((position & Node.DOCUMENT_POSITION_CONTAINED_BY) > 0) {
+                contained.add(j);
+            }
+            if ((position & Node.DOCUMENT_POSITION_CONTAINS) > 0) {
+                contained.add(i);
+            }
+        }
+    }
+    return nodes.filter(function (_, index) { return !contained.has(index); });
+};
+var getTopParent = function (node) {
+    return node.parentNode ? getTopParent(node.parentNode) : node;
+};
+var getAllAffectedNodes = function (node) {
+    var nodes = asArray(node);
+    return nodes.filter(Boolean).reduce(function (acc, currentNode) {
+        var group = currentNode.getAttribute(FOCUS_GROUP);
+        acc.push.apply(acc, (group
+            ? filterNested(toArray(getTopParent(currentNode).querySelectorAll("[".concat(FOCUS_GROUP, "=\"").concat(group, "\"]:not([").concat(FOCUS_DISABLED, "=\"disabled\"])"))))
+            : [currentNode]));
+        return acc;
+    }, []);
+};
+
+var getActiveElement = function () {
+    return (document.activeElement
+        ? document.activeElement.shadowRoot
+            ? document.activeElement.shadowRoot.activeElement
+            : document.activeElement
+        : undefined);
+};
+
+var focusInFrame = function (frame) { return frame === document.activeElement; };
+var focusInsideIframe = function (topNode) {
+    return Boolean(toArray(topNode.querySelectorAll('iframe')).some(function (node) { return focusInFrame(node); }));
+};
+var focusInside = function (topNode) {
+    var activeElement = document && getActiveElement();
+    if (!activeElement || (activeElement.dataset && activeElement.dataset.focusGuard)) {
+        return false;
+    }
+    return getAllAffectedNodes(topNode).reduce(function (result, node) { return result || node.contains(activeElement) || focusInsideIframe(node); }, false);
+};
+
+var focusIsHidden = function () {
+    var activeElement = document && getActiveElement();
+    if (!activeElement) {
+        return false;
+    }
+    return toArray(document.querySelectorAll("[".concat(FOCUS_ALLOW, "]"))).some(function (node) { return node.contains(activeElement); });
+};
+
+var isElementHidden = function (node) {
+    if (node.nodeType !== Node.ELEMENT_NODE) {
+        return false;
+    }
+    var computedStyle = window.getComputedStyle(node, null);
+    if (!computedStyle || !computedStyle.getPropertyValue) {
+        return false;
+    }
+    return (computedStyle.getPropertyValue('display') === 'none' || computedStyle.getPropertyValue('visibility') === 'hidden');
+};
+var isVisibleUncached = function (node, checkParent) {
+    return !node ||
+        node === document ||
+        (node && node.nodeType === Node.DOCUMENT_NODE) ||
+        (!isElementHidden(node) &&
+            checkParent(node.parentNode && node.parentNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE
+                ?
+                    node.parentNode.host
+                : node.parentNode));
+};
+var isVisibleCached = function (visibilityCache, node) {
+    var cached = visibilityCache.get(node);
+    if (cached !== undefined) {
+        return cached;
+    }
+    var result = isVisibleUncached(node, isVisibleCached.bind(undefined, visibilityCache));
+    visibilityCache.set(node, result);
+    return result;
+};
+var getDataset = function (node) {
+    return node.dataset;
+};
+var isHTMLButtonElement = function (node) { return node.tagName === 'BUTTON'; };
+var isHTMLInputElement = function (node) { return node.tagName === 'INPUT'; };
+var isRadioElement = function (node) {
+    return isHTMLInputElement(node) && node.type === 'radio';
+};
+var notHiddenInput = function (node) {
+    return !((isHTMLInputElement(node) || isHTMLButtonElement(node)) && (node.type === 'hidden' || node.disabled)) &&
+        !node.ariaDisabled;
+};
+var isGuard = function (node) { var _a; return Boolean(node && ((_a = getDataset(node)) === null || _a === void 0 ? void 0 : _a.focusGuard)); };
+var isNotAGuard = function (node) { return !isGuard(node); };
+var isDefined = function (x) { return Boolean(x); };
+
+var findSelectedRadio = function (node, nodes) {
+    return nodes
+        .filter(isRadioElement)
+        .filter(function (el) { return el.name === node.name; })
+        .filter(function (el) { return el.checked; })[0] || node;
+};
+var correctNode = function (node, nodes) {
+    if (isRadioElement(node) && node.name) {
+        return findSelectedRadio(node, nodes);
+    }
+    return node;
+};
+var correctNodes = function (nodes) {
+    var resultSet = new Set();
+    nodes.forEach(function (node) { return resultSet.add(correctNode(node, nodes)); });
+    return nodes.filter(function (node) { return resultSet.has(node); });
+};
+
+var pickFirstFocus = function (nodes) {
+    if (nodes[0] && nodes.length > 1) {
+        return correctNode(nodes[0], nodes);
+    }
+    return nodes[0];
+};
+var pickFocusable = function (nodes, index) {
+    if (nodes.length > 1) {
+        return nodes.indexOf(correctNode(nodes[index], nodes));
+    }
+    return index;
+};
+
+var NEW_FOCUS = 'NEW_FOCUS';
+var newFocus = function (innerNodes, outerNodes, activeElement, lastNode) {
+    var cnt = innerNodes.length;
+    var firstFocus = innerNodes[0];
+    var lastFocus = innerNodes[cnt - 1];
+    var isOnGuard = isGuard(activeElement);
+    if (activeElement && innerNodes.indexOf(activeElement) >= 0) {
+        return undefined;
+    }
+    var activeIndex = activeElement !== undefined ? outerNodes.indexOf(activeElement) : -1;
+    var lastIndex = lastNode ? outerNodes.indexOf(lastNode) : activeIndex;
+    var lastNodeInside = lastNode ? innerNodes.indexOf(lastNode) : -1;
+    var indexDiff = activeIndex - lastIndex;
+    var firstNodeIndex = outerNodes.indexOf(firstFocus);
+    var lastNodeIndex = outerNodes.indexOf(lastFocus);
+    var correctedNodes = correctNodes(outerNodes);
+    var correctedIndex = activeElement !== undefined ? correctedNodes.indexOf(activeElement) : -1;
+    var correctedIndexDiff = correctedIndex - (lastNode ? correctedNodes.indexOf(lastNode) : activeIndex);
+    var returnFirstNode = pickFocusable(innerNodes, 0);
+    var returnLastNode = pickFocusable(innerNodes, cnt - 1);
+    if (activeIndex === -1 || lastNodeInside === -1) {
+        return NEW_FOCUS;
+    }
+    if (!indexDiff && lastNodeInside >= 0) {
+        return lastNodeInside;
+    }
+    if (activeIndex <= firstNodeIndex && isOnGuard && Math.abs(indexDiff) > 1) {
+        return returnLastNode;
+    }
+    if (activeIndex >= lastNodeIndex && isOnGuard && Math.abs(indexDiff) > 1) {
+        return returnFirstNode;
+    }
+    if (indexDiff && Math.abs(correctedIndexDiff) > 1) {
+        return lastNodeInside;
+    }
+    if (activeIndex <= firstNodeIndex) {
+        return returnLastNode;
+    }
+    if (activeIndex > lastNodeIndex) {
+        return returnFirstNode;
+    }
+    if (indexDiff) {
+        if (Math.abs(indexDiff) > 1) {
+            return lastNodeInside;
+        }
+        return (cnt + lastNodeInside + indexDiff) % cnt;
+    }
+    return undefined;
+};
+
+var tabSort = function (a, b) {
+    var tabDiff = a.tabIndex - b.tabIndex;
+    var indexDiff = a.index - b.index;
+    if (tabDiff) {
+        if (!a.tabIndex) {
+            return 1;
+        }
+        if (!b.tabIndex) {
+            return -1;
+        }
+    }
+    return tabDiff || indexDiff;
+};
+var orderByTabIndex = function (nodes, filterNegative, keepGuards) {
+    return toArray(nodes)
+        .map(function (node, index) { return ({
+        node: node,
+        index: index,
+        tabIndex: keepGuards && node.tabIndex === -1 ? ((node.dataset || {}).focusGuard ? 0 : -1) : node.tabIndex,
+    }); })
+        .filter(function (data) { return !filterNegative || data.tabIndex >= 0; })
+        .sort(tabSort);
+};
+
+var tabbables = [
+    'button:enabled',
+    'select:enabled',
+    'textarea:enabled',
+    'input:enabled',
+    'a[href]',
+    'area[href]',
+    'summary',
+    'iframe',
+    'object',
+    'embed',
+    'audio[controls]',
+    'video[controls]',
+    '[tabindex]',
+    '[contenteditable]',
+    '[autofocus]',
+];
+
+var queryTabbables = tabbables.join(',');
+var queryGuardTabbables = "".concat(queryTabbables, ", [data-focus-guard]");
+var getFocusables = function (parents, withGuards) {
+    return parents.reduce(function (acc, parent) {
+        return acc.concat(toArray(parent.querySelectorAll(withGuards ? queryGuardTabbables : queryTabbables)), parent.parentNode
+            ? toArray(parent.parentNode.querySelectorAll(queryTabbables)).filter(function (node) { return node === parent; })
+            : []);
+    }, []);
+};
+var getParentAutofocusables = function (parent) {
+    var parentFocus = parent.querySelectorAll("[".concat(FOCUS_AUTO, "]"));
+    return toArray(parentFocus)
+        .map(function (node) { return getFocusables([node]); })
+        .reduce(function (acc, nodes) { return acc.concat(nodes); }, []);
+};
+
+var filterFocusable = function (nodes, visibilityCache) {
+    return toArray(nodes)
+        .filter(function (node) { return isVisibleCached(visibilityCache, node); })
+        .filter(function (node) { return notHiddenInput(node); });
+};
+var getTabbableNodes = function (topNodes, visibilityCache, withGuards) {
+    return orderByTabIndex(filterFocusable(getFocusables(topNodes, withGuards), visibilityCache), true, withGuards);
+};
+var getAllTabbableNodes = function (topNodes, visibilityCache) {
+    return orderByTabIndex(filterFocusable(getFocusables(topNodes), visibilityCache), false);
+};
+var parentAutofocusables = function (topNode, visibilityCache) {
+    return filterFocusable(getParentAutofocusables(topNode), visibilityCache);
+};
+
+var getParents = function (node, parents) {
+    if (parents === void 0) { parents = []; }
+    parents.push(node);
+    if (node.parentNode) {
+        getParents(node.parentNode, parents);
+    }
+    return parents;
+};
+var getCommonParent = function (nodeA, nodeB) {
+    var parentsA = getParents(nodeA);
+    var parentsB = getParents(nodeB);
+    for (var i = 0; i < parentsA.length; i += 1) {
+        var currentParent = parentsA[i];
+        if (parentsB.indexOf(currentParent) >= 0) {
+            return currentParent;
+        }
+    }
+    return false;
+};
+var getTopCommonParent = function (baseActiveElement, leftEntry, rightEntries) {
+    var activeElements = asArray(baseActiveElement);
+    var leftEntries = asArray(leftEntry);
+    var activeElement = activeElements[0];
+    var topCommon = false;
+    leftEntries.filter(Boolean).forEach(function (entry) {
+        topCommon = getCommonParent(topCommon || entry, entry) || topCommon;
+        rightEntries.filter(Boolean).forEach(function (subEntry) {
+            var common = getCommonParent(activeElement, subEntry);
+            if (common) {
+                if (!topCommon || common.contains(topCommon)) {
+                    topCommon = common;
+                }
+                else {
+                    topCommon = getCommonParent(common, topCommon);
+                }
+            }
+        });
+    });
+    return topCommon;
+};
+var allParentAutofocusables = function (entries, visibilityCache) {
+    return entries.reduce(function (acc, node) { return acc.concat(parentAutofocusables(node, visibilityCache)); }, []);
+};
+
+var findAutoFocused = function (autoFocusables) {
+    return function (node) { var _a; return node.autofocus || !!((_a = getDataset(node)) === null || _a === void 0 ? void 0 : _a.autofocus) || autoFocusables.indexOf(node) >= 0; };
+};
+var reorderNodes = function (srcNodes, dstNodes) {
+    var remap = new Map();
+    dstNodes.forEach(function (entity) { return remap.set(entity.node, entity); });
+    return srcNodes.map(function (node) { return remap.get(node); }).filter(isDefined);
+};
+var getFocusMerge = function (topNode, lastNode) {
+    var activeElement = document && getActiveElement();
+    var entries = getAllAffectedNodes(topNode).filter(isNotAGuard);
+    var commonParent = getTopCommonParent(activeElement || topNode, topNode, entries);
+    var visibilityCache = new Map();
+    var anyFocusable = getAllTabbableNodes(entries, visibilityCache);
+    var innerElements = getTabbableNodes(entries, visibilityCache).filter(function (_a) {
+        var node = _a.node;
+        return isNotAGuard(node);
+    });
+    if (!innerElements[0]) {
+        innerElements = anyFocusable;
+        if (!innerElements[0]) {
+            return undefined;
+        }
+    }
+    var outerNodes = getAllTabbableNodes([commonParent], visibilityCache).map(function (_a) {
+        var node = _a.node;
+        return node;
+    });
+    var orderedInnerElements = reorderNodes(outerNodes, innerElements);
+    var innerNodes = orderedInnerElements.map(function (_a) {
+        var node = _a.node;
+        return node;
+    });
+    var newId = newFocus(innerNodes, outerNodes, activeElement, lastNode);
+    if (newId === NEW_FOCUS) {
+        var autoFocusable = anyFocusable
+            .map(function (_a) {
+            var node = _a.node;
+            return node;
+        })
+            .filter(findAutoFocused(allParentAutofocusables(entries, visibilityCache)));
+        return {
+            node: autoFocusable && autoFocusable.length ? pickFirstFocus(autoFocusable) : pickFirstFocus(innerNodes),
+        };
+    }
+    if (newId === undefined) {
+        return newId;
+    }
+    return orderedInnerElements[newId];
+};
+
+var getFocusabledIn = function (topNode) {
+    var entries = getAllAffectedNodes(topNode).filter(isNotAGuard);
+    var commonParent = getTopCommonParent(topNode, topNode, entries);
+    var visibilityCache = new Map();
+    var outerNodes = getTabbableNodes([commonParent], visibilityCache, true);
+    var innerElements = getTabbableNodes(entries, visibilityCache)
+        .filter(function (_a) {
+        var node = _a.node;
+        return isNotAGuard(node);
+    })
+        .map(function (_a) {
+        var node = _a.node;
+        return node;
+    });
+    return outerNodes.map(function (_a) {
+        var node = _a.node, index = _a.index;
+        return ({
+            node: node,
+            index: index,
+            lockItem: innerElements.indexOf(node) >= 0,
+            guard: isGuard(node),
+        });
+    });
+};
+
+var focusOn = function (target, focusOptions) {
+    if ('focus' in target) {
+        target.focus(focusOptions);
+    }
+    if ('contentWindow' in target && target.contentWindow) {
+        target.contentWindow.focus();
+    }
+};
+var guardCount = 0;
+var lockDisabled = false;
+var setFocus = function (topNode, lastNode, options) {
+    if (options === void 0) { options = {}; }
+    var focusable = getFocusMerge(topNode, lastNode);
+    if (lockDisabled) {
+        return;
+    }
+    if (focusable) {
+        if (guardCount > 2) {
+            console.error('FocusLock: focus-fighting detected. Only one focus management system could be active. ' +
+                'See https://github.com/theKashey/focus-lock/#focus-fighting');
+            lockDisabled = true;
+            setTimeout(function () {
+                lockDisabled = false;
+            }, 1);
+            return;
+        }
+        guardCount++;
+        focusOn(focusable.node, options.focusOptions);
+        guardCount--;
+    }
+};
+
+function deferAction(action) {
+  // Hidding setImmediate from Webpack to avoid inserting polyfill
+  var _window = window,
+      setImmediate = _window.setImmediate;
+
+  if (typeof setImmediate !== 'undefined') {
+    setImmediate(action);
+  } else {
+    setTimeout(action, 1);
+  }
+}
+
+var focusOnBody = function focusOnBody() {
+  return document && document.activeElement === document.body;
+};
+
+var isFreeFocus = function isFreeFocus() {
+  return focusOnBody() || focusIsHidden();
+};
+
+var lastActiveTrap = null;
+var lastActiveFocus = null;
+var lastPortaledElement = null;
+var focusWasOutsideWindow = false;
+
+var defaultWhitelist = function defaultWhitelist() {
+  return true;
+};
+
+var focusWhitelisted = function focusWhitelisted(activeElement) {
+  return (lastActiveTrap.whiteList || defaultWhitelist)(activeElement);
+};
+
+var recordPortal = function recordPortal(observerNode, portaledElement) {
+  lastPortaledElement = {
+    observerNode: observerNode,
+    portaledElement: portaledElement
+  };
+};
+
+var focusIsPortaledPair = function focusIsPortaledPair(element) {
+  return lastPortaledElement && lastPortaledElement.portaledElement === element;
+};
+
+function autoGuard(startIndex, end, step, allNodes) {
+  var lastGuard = null;
+  var i = startIndex;
+
+  do {
+    var item = allNodes[i];
+
+    if (item.guard) {
+      if (item.node.dataset.focusAutoGuard) {
+        lastGuard = item;
+      }
+    } else if (item.lockItem) {
+      if (i !== startIndex) {
+        // we will tab to the next element
+        return;
+      }
+
+      lastGuard = null;
+    } else {
+      break;
+    }
+  } while ((i += step) !== end);
+
+  if (lastGuard) {
+    lastGuard.node.tabIndex = 0;
+  }
+}
+
+var extractRef$1 = function extractRef(ref) {
+  return ref && 'current' in ref ? ref.current : ref;
+};
+
+var focusWasOutside = function focusWasOutside(crossFrameOption) {
+  if (crossFrameOption) {
+    // with cross frame return true for any value
+    return Boolean(focusWasOutsideWindow);
+  } // in other case return only of focus went a while aho
+
+
+  return focusWasOutsideWindow === 'meanwhile';
+};
+
+var checkInHost = function checkInHost(check, el, boundary) {
+  return el // find host equal to active element and check nested active element
+  && (el.host === check && (!el.activeElement || boundary.contains(el.activeElement)) // dive up
+  || el.parentNode && checkInHost(check, el.parentNode, boundary));
+};
+
+var withinHost = function withinHost(activeElement, workingArea) {
+  return workingArea.some(function (area) {
+    return checkInHost(activeElement, area, area);
+  });
+};
+
+var activateTrap = function activateTrap() {
+  var result = false;
+
+  if (lastActiveTrap) {
+    var _lastActiveTrap = lastActiveTrap,
+        observed = _lastActiveTrap.observed,
+        persistentFocus = _lastActiveTrap.persistentFocus,
+        autoFocus = _lastActiveTrap.autoFocus,
+        shards = _lastActiveTrap.shards,
+        crossFrame = _lastActiveTrap.crossFrame,
+        focusOptions = _lastActiveTrap.focusOptions;
+    var workingNode = observed || lastPortaledElement && lastPortaledElement.portaledElement;
+    var activeElement = document && document.activeElement;
+
+    if (workingNode) {
+      var workingArea = [workingNode].concat(shards.map(extractRef$1).filter(Boolean));
+
+      if (!activeElement || focusWhitelisted(activeElement)) {
+        if (persistentFocus || focusWasOutside(crossFrame) || !isFreeFocus() || !lastActiveFocus && autoFocus) {
+          if (workingNode && !( // active element is "inside" working area
+          focusInside(workingArea) || // check for shadow-dom contained elements
+          activeElement && withinHost(activeElement, workingArea) || focusIsPortaledPair(activeElement))) {
+            if (document && !lastActiveFocus && activeElement && !autoFocus) {
+              // Check if blur() exists, which is missing on certain elements on IE
+              if (activeElement.blur) {
+                activeElement.blur();
+              }
+
+              document.body.focus();
+            } else {
+              result = setFocus(workingArea, lastActiveFocus, {
+                focusOptions: focusOptions
+              });
+              lastPortaledElement = {};
+            }
+          }
+
+          focusWasOutsideWindow = false;
+          lastActiveFocus = document && document.activeElement;
+        }
+      }
+
+      if (document) {
+        var newActiveElement = document && document.activeElement;
+        var allNodes = getFocusabledIn(workingArea);
+        var focusedIndex = allNodes.map(function (_ref) {
+          var node = _ref.node;
+          return node;
+        }).indexOf(newActiveElement);
+
+        if (focusedIndex > -1) {
+          // remove old focus
+          allNodes.filter(function (_ref2) {
+            var guard = _ref2.guard,
+                node = _ref2.node;
+            return guard && node.dataset.focusAutoGuard;
+          }).forEach(function (_ref3) {
+            var node = _ref3.node;
+            return node.removeAttribute('tabIndex');
+          });
+          autoGuard(focusedIndex, allNodes.length, +1, allNodes);
+          autoGuard(focusedIndex, -1, -1, allNodes);
+        }
+      }
+    }
+  }
+
+  return result;
+};
+
+var onTrap = function onTrap(event) {
+  if (activateTrap() && event) {
+    // prevent scroll jump
+    event.stopPropagation();
+    event.preventDefault();
+  }
+};
+
+var onBlur = function onBlur() {
+  return deferAction(activateTrap);
+};
+
+var onFocus = function onFocus(event) {
+  // detect portal
+  var source = event.target;
+  var currentNode = event.currentTarget;
+
+  if (!currentNode.contains(source)) {
+    recordPortal(currentNode, source);
+  }
+};
+
+var FocusWatcher = function FocusWatcher() {
+  return null;
+};
+
+var onWindowBlur = function onWindowBlur() {
+  focusWasOutsideWindow = 'just'; // using setTimeout to set  this variable after React/sidecar reaction
+
+  setTimeout(function () {
+    focusWasOutsideWindow = 'meanwhile';
+  }, 0);
+};
+
+var attachHandler = function attachHandler() {
+  document.addEventListener('focusin', onTrap);
+  document.addEventListener('focusout', onBlur);
+  window.addEventListener('blur', onWindowBlur);
+};
+
+var detachHandler = function detachHandler() {
+  document.removeEventListener('focusin', onTrap);
+  document.removeEventListener('focusout', onBlur);
+  window.removeEventListener('blur', onWindowBlur);
+};
+
+function reducePropsToState(propsList) {
+  return propsList.filter(function (_ref5) {
+    var disabled = _ref5.disabled;
+    return !disabled;
+  });
+}
+
+function handleStateChangeOnClient(traps) {
+  var trap = traps.slice(-1)[0];
+
+  if (trap && !lastActiveTrap) {
+    attachHandler();
+  }
+
+  var lastTrap = lastActiveTrap;
+  var sameTrap = lastTrap && trap && trap.id === lastTrap.id;
+  lastActiveTrap = trap;
+
+  if (lastTrap && !sameTrap) {
+    lastTrap.onDeactivation(); // return focus only of last trap was removed
+
+    if (!traps.filter(function (_ref6) {
+      var id = _ref6.id;
+      return id === lastTrap.id;
+    }).length) {
+      // allow defer is no other trap is awaiting restore
+      lastTrap.returnFocus(!trap);
+    }
+  }
+
+  if (trap) {
+    lastActiveFocus = null;
+
+    if (!sameTrap || lastTrap.observed !== trap.observed) {
+      trap.onActivation();
+    }
+
+    activateTrap();
+    deferAction(activateTrap);
+  } else {
+    detachHandler();
+    lastActiveFocus = null;
+  }
+} // bind medium
+
+
+mediumFocus.assignSyncMedium(onFocus);
+mediumBlur.assignMedium(onBlur);
+mediumEffect.assignMedium(function (cb) {
+  return cb({
+    moveFocusInside: setFocus,
+    focusInside: focusInside
+  });
+});
+var FocusTrap = withSideEffect(reducePropsToState, handleStateChangeOnClient)(FocusWatcher);
+
+/* that would be a BREAKING CHANGE!
+// delaying sidecar execution till the first usage
+const RequireSideCar = (props) => {
+  // eslint-disable-next-line global-require
+  const SideCar = require('./Trap').default;
+  return <SideCar {...props} />;
+};
+*/
+
+var FocusLockCombination = /*#__PURE__*/react.exports.forwardRef(function FocusLockUICombination(props, ref) {
+  return /*#__PURE__*/react.exports.createElement(FocusLock, _extends$1({
+    sideCar: FocusTrap,
+    ref: ref
+  }, props));
+});
+
+var _ref = FocusLock.propTypes || {};
+    _ref.sideCar;
+    _objectWithoutPropertiesLoose$1(_ref, ["sideCar"]);
+
+FocusLockCombination.propTypes = {};
+
+var zeroRightClassName = 'right-scroll-bar-position';
+var fullWidthClassName = 'width-before-scroll-bar';
+var noScrollbarsClassName = 'with-scroll-bars-hidden';
+/**
+ * Name of a CSS variable containing the amount of "hidden" scrollbar
+ * ! might be undefined ! use will fallback!
+ */
+var removedBarSizeVariable = '--removed-body-scroll-bar-size';
+
+var effectCar = createSidecarMedium();
+
+var nothing = function () {
+    return;
+};
+/**
+ * Removes scrollbar from the page and contain the scroll within the Lock
+ */
+var RemoveScroll = react.exports.forwardRef(function (props, parentRef) {
+    var ref = react.exports.useRef(null);
+    var _a = react.exports.useState({
+        onScrollCapture: nothing,
+        onWheelCapture: nothing,
+        onTouchMoveCapture: nothing,
+    }), callbacks = _a[0], setCallbacks = _a[1];
+    var forwardProps = props.forwardProps, children = props.children, className = props.className, removeScrollBar = props.removeScrollBar, enabled = props.enabled, shards = props.shards, sideCar = props.sideCar, noIsolation = props.noIsolation, inert = props.inert, allowPinchZoom = props.allowPinchZoom, _b = props.as, Container = _b === void 0 ? 'div' : _b, rest = __rest(props, ["forwardProps", "children", "className", "removeScrollBar", "enabled", "shards", "sideCar", "noIsolation", "inert", "allowPinchZoom", "as"]);
+    var SideCar = sideCar;
+    var containerRef = useMergeRefs([ref, parentRef]);
+    var containerProps = __assign(__assign({}, rest), callbacks);
+    return (react.exports.createElement(react.exports.Fragment, null,
+        enabled && (react.exports.createElement(SideCar, { sideCar: effectCar, removeScrollBar: removeScrollBar, shards: shards, noIsolation: noIsolation, inert: inert, setCallbacks: setCallbacks, allowPinchZoom: !!allowPinchZoom, lockRef: ref })),
+        forwardProps ? (react.exports.cloneElement(react.exports.Children.only(children), __assign(__assign({}, containerProps), { ref: containerRef }))) : (react.exports.createElement(Container, __assign({}, containerProps, { className: className, ref: containerRef }), children))));
+});
+RemoveScroll.defaultProps = {
+    enabled: true,
+    removeScrollBar: true,
+    inert: false,
+};
+RemoveScroll.classNames = {
+    fullWidth: fullWidthClassName,
+    zeroRight: zeroRightClassName,
+};
+
+var getNonce = function () {
+    if (typeof __webpack_nonce__ !== 'undefined') {
+        return __webpack_nonce__;
+    }
+    return undefined;
+};
+
+function makeStyleTag() {
+    if (!document)
+        return null;
+    var tag = document.createElement('style');
+    tag.type = 'text/css';
+    var nonce = getNonce();
+    if (nonce) {
+        tag.setAttribute('nonce', nonce);
+    }
+    return tag;
+}
+function injectStyles(tag, css) {
+    // @ts-ignore
+    if (tag.styleSheet) {
+        // @ts-ignore
+        tag.styleSheet.cssText = css;
+    }
+    else {
+        tag.appendChild(document.createTextNode(css));
+    }
+}
+function insertStyleTag(tag) {
+    var head = document.head || document.getElementsByTagName('head')[0];
+    head.appendChild(tag);
+}
+var stylesheetSingleton = function () {
+    var counter = 0;
+    var stylesheet = null;
+    return {
+        add: function (style) {
+            if (counter == 0) {
+                if ((stylesheet = makeStyleTag())) {
+                    injectStyles(stylesheet, style);
+                    insertStyleTag(stylesheet);
+                }
+            }
+            counter++;
+        },
+        remove: function () {
+            counter--;
+            if (!counter && stylesheet) {
+                stylesheet.parentNode && stylesheet.parentNode.removeChild(stylesheet);
+                stylesheet = null;
+            }
+        },
+    };
+};
+
+var styleHookSingleton = function () {
+    var sheet = stylesheetSingleton();
+    return function (styles) {
+        react.exports.useEffect(function () {
+            sheet.add(styles);
+            return function () {
+                sheet.remove();
+            };
+        }, [styles]);
+    };
+};
+
+var styleSingleton = function () {
+    var useStyle = styleHookSingleton();
+    var Sheet = function (_a) {
+        var styles = _a.styles;
+        useStyle(styles);
+        return null;
+    };
+    return Sheet;
+};
+
+var zeroGap = {
+    left: 0,
+    top: 0,
+    right: 0,
+    gap: 0,
+};
+var parse = function (x) { return parseInt(x || '', 10) || 0; };
+var getOffset = function (gapMode) {
+    var cs = window.getComputedStyle(document.body);
+    var left = cs[gapMode === 'padding' ? 'paddingLeft' : 'marginLeft'];
+    var top = cs[gapMode === 'padding' ? 'paddingTop' : 'marginTop'];
+    var right = cs[gapMode === 'padding' ? 'paddingRight' : 'marginRight'];
+    return [parse(left), parse(top), parse(right)];
+};
+var getGapWidth = function (gapMode) {
+    if (gapMode === void 0) { gapMode = 'margin'; }
+    if (typeof window === 'undefined') {
+        return zeroGap;
+    }
+    var offsets = getOffset(gapMode);
+    var documentWidth = document.documentElement.clientWidth;
+    var windowWidth = window.innerWidth;
+    return {
+        left: offsets[0],
+        top: offsets[1],
+        right: offsets[2],
+        gap: Math.max(0, windowWidth - documentWidth + offsets[2] - offsets[0]),
+    };
+};
+
+var Style = styleSingleton();
+// important tip - once we measure scrollBar width and remove them
+// we could not repeat this operation
+// thus we are using style-singleton - only the first "yet correct" style will be applied.
+var getStyles = function (_a, allowRelative, gapMode, important) {
+    var left = _a.left, top = _a.top, right = _a.right, gap = _a.gap;
+    if (gapMode === void 0) { gapMode = 'margin'; }
+    return "\n  .".concat(noScrollbarsClassName, " {\n   overflow: hidden ").concat(important, ";\n   padding-right: ").concat(gap, "px ").concat(important, ";\n  }\n  body {\n    overflow: hidden ").concat(important, ";\n    ").concat([
+        allowRelative && "position: relative ".concat(important, ";"),
+        gapMode === 'margin' &&
+            "\n    padding-left: ".concat(left, "px;\n    padding-top: ").concat(top, "px;\n    padding-right: ").concat(right, "px;\n    margin-left:0;\n    margin-top:0;\n    margin-right: ").concat(gap, "px ").concat(important, ";\n    "),
+        gapMode === 'padding' && "padding-right: ".concat(gap, "px ").concat(important, ";"),
+    ]
+        .filter(Boolean)
+        .join(''), "\n  }\n  \n  .").concat(zeroRightClassName, " {\n    right: ").concat(gap, "px ").concat(important, ";\n  }\n  \n  .").concat(fullWidthClassName, " {\n    margin-right: ").concat(gap, "px ").concat(important, ";\n  }\n  \n  .").concat(zeroRightClassName, " .").concat(zeroRightClassName, " {\n    right: 0 ").concat(important, ";\n  }\n  \n  .").concat(fullWidthClassName, " .").concat(fullWidthClassName, " {\n    margin-right: 0 ").concat(important, ";\n  }\n  \n  body {\n    ").concat(removedBarSizeVariable, ": ").concat(gap, "px;\n  }\n");
+};
+/**
+ * Removes page scrollbar and blocks page scroll when mounted
+ */
+var RemoveScrollBar = function (props) {
+    var _a = react.exports.useState(getGapWidth(props.gapMode)), gap = _a[0], setGap = _a[1];
+    react.exports.useEffect(function () {
+        setGap(getGapWidth(props.gapMode));
+    }, [props.gapMode]);
+    var noRelative = props.noRelative, noImportant = props.noImportant, _b = props.gapMode, gapMode = _b === void 0 ? 'margin' : _b;
+    return react.exports.createElement(Style, { styles: getStyles(gap, !noRelative, gapMode, !noImportant ? '!important' : '') });
+};
+
+var passiveSupported = false;
+if (typeof window !== 'undefined') {
+    try {
+        var options = Object.defineProperty({}, 'passive', {
+            get: function () {
+                passiveSupported = true;
+                return true;
+            },
+        });
+        // @ts-ignore
+        window.addEventListener('test', options, options);
+        // @ts-ignore
+        window.removeEventListener('test', options, options);
+    }
+    catch (err) {
+        passiveSupported = false;
+    }
+}
+var nonPassive = passiveSupported ? { passive: false } : false;
+
+var elementCouldBeVScrolled = function (node) {
+    var styles = window.getComputedStyle(node);
+    return (styles.overflowY !== 'hidden' && // not-not-scrollable
+        !(styles.overflowY === styles.overflowX && styles.overflowY === 'visible') // scrollable
+    );
+};
+var elementCouldBeHScrolled = function (node) {
+    var styles = window.getComputedStyle(node);
+    return (styles.overflowX !== 'hidden' && // not-not-scrollable
+        !(styles.overflowY === styles.overflowX && styles.overflowX === 'visible') // scrollable
+    );
+};
+var locationCouldBeScrolled = function (axis, node) {
+    var current = node;
+    do {
+        // Skip over shadow root
+        if (typeof ShadowRoot !== 'undefined' && current instanceof ShadowRoot) {
+            current = current.host;
+        }
+        var isScrollable = elementCouldBeScrolled(axis, current);
+        if (isScrollable) {
+            var _a = getScrollVariables(axis, current), s = _a[1], d = _a[2];
+            if (s > d) {
+                return true;
+            }
+        }
+        current = current.parentNode;
+    } while (current && current !== document.body);
+    return false;
+};
+var getVScrollVariables = function (_a) {
+    var scrollTop = _a.scrollTop, scrollHeight = _a.scrollHeight, clientHeight = _a.clientHeight;
+    return [
+        scrollTop,
+        scrollHeight,
+        clientHeight,
+    ];
+};
+var getHScrollVariables = function (_a) {
+    var scrollLeft = _a.scrollLeft, scrollWidth = _a.scrollWidth, clientWidth = _a.clientWidth;
+    return [
+        scrollLeft,
+        scrollWidth,
+        clientWidth,
+    ];
+};
+var elementCouldBeScrolled = function (axis, node) {
+    return axis === 'v' ? elementCouldBeVScrolled(node) : elementCouldBeHScrolled(node);
+};
+var getScrollVariables = function (axis, node) {
+    return axis === 'v' ? getVScrollVariables(node) : getHScrollVariables(node);
+};
+var getDirectionFactor = function (axis, direction) {
+    /**
+     * If the element's direction is rtl (right-to-left), then scrollLeft is 0 when the scrollbar is at its rightmost position,
+     * and then increasingly negative as you scroll towards the end of the content.
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollLeft
+     */
+    return axis === 'h' && direction === 'rtl' ? -1 : 1;
+};
+var handleScroll = function (axis, endTarget, event, sourceDelta, noOverscroll) {
+    var directionFactor = getDirectionFactor(axis, window.getComputedStyle(endTarget).direction);
+    var delta = directionFactor * sourceDelta;
+    // find scrollable target
+    var target = event.target;
+    var targetInLock = endTarget.contains(target);
+    var shouldCancelScroll = false;
+    var isDeltaPositive = delta > 0;
+    var availableScroll = 0;
+    var availableScrollTop = 0;
+    do {
+        var _a = getScrollVariables(axis, target), position = _a[0], scroll_1 = _a[1], capacity = _a[2];
+        var elementScroll = scroll_1 - capacity - directionFactor * position;
+        if (position || elementScroll) {
+            if (elementCouldBeScrolled(axis, target)) {
+                availableScroll += elementScroll;
+                availableScrollTop += position;
+            }
+        }
+        target = target.parentNode;
+    } while (
+    // portaled content
+    (!targetInLock && target !== document.body) ||
+        // self content
+        (targetInLock && (endTarget.contains(target) || endTarget === target)));
+    if (isDeltaPositive && ((noOverscroll && availableScroll === 0) || (!noOverscroll && delta > availableScroll))) {
+        shouldCancelScroll = true;
+    }
+    else if (!isDeltaPositive &&
+        ((noOverscroll && availableScrollTop === 0) || (!noOverscroll && -delta > availableScrollTop))) {
+        shouldCancelScroll = true;
+    }
+    return shouldCancelScroll;
+};
+
+var getTouchXY = function (event) {
+    return 'changedTouches' in event ? [event.changedTouches[0].clientX, event.changedTouches[0].clientY] : [0, 0];
+};
+var getDeltaXY = function (event) { return [event.deltaX, event.deltaY]; };
+var extractRef = function (ref) {
+    return ref && 'current' in ref ? ref.current : ref;
+};
+var deltaCompare = function (x, y) { return x[0] === y[0] && x[1] === y[1]; };
+var generateStyle = function (id) { return "\n  .block-interactivity-".concat(id, " {pointer-events: none;}\n  .allow-interactivity-").concat(id, " {pointer-events: all;}\n"); };
+var idCounter = 0;
+var lockStack = [];
+function RemoveScrollSideCar(props) {
+    var shouldPreventQueue = react.exports.useRef([]);
+    var touchStartRef = react.exports.useRef([0, 0]);
+    var activeAxis = react.exports.useRef();
+    var id = react.exports.useState(idCounter++)[0];
+    var Style = react.exports.useState(function () { return styleSingleton(); })[0];
+    var lastProps = react.exports.useRef(props);
+    react.exports.useEffect(function () {
+        lastProps.current = props;
+    }, [props]);
+    react.exports.useEffect(function () {
+        if (props.inert) {
+            document.body.classList.add("block-interactivity-".concat(id));
+            var allow_1 = __spreadArray([props.lockRef.current], (props.shards || []).map(extractRef), true).filter(Boolean);
+            allow_1.forEach(function (el) { return el.classList.add("allow-interactivity-".concat(id)); });
+            return function () {
+                document.body.classList.remove("block-interactivity-".concat(id));
+                allow_1.forEach(function (el) { return el.classList.remove("allow-interactivity-".concat(id)); });
+            };
+        }
+        return;
+    }, [props.inert, props.lockRef.current, props.shards]);
+    var shouldCancelEvent = react.exports.useCallback(function (event, parent) {
+        if ('touches' in event && event.touches.length === 2) {
+            return !lastProps.current.allowPinchZoom;
+        }
+        var touch = getTouchXY(event);
+        var touchStart = touchStartRef.current;
+        var deltaX = 'deltaX' in event ? event.deltaX : touchStart[0] - touch[0];
+        var deltaY = 'deltaY' in event ? event.deltaY : touchStart[1] - touch[1];
+        var currentAxis;
+        var target = event.target;
+        var moveDirection = Math.abs(deltaX) > Math.abs(deltaY) ? 'h' : 'v';
+        // allow horizontal touch move on Range inputs. They will not cause any scroll
+        if ('touches' in event && moveDirection === 'h' && target.type === 'range') {
+            return false;
+        }
+        var canBeScrolledInMainDirection = locationCouldBeScrolled(moveDirection, target);
+        if (!canBeScrolledInMainDirection) {
+            return true;
+        }
+        if (canBeScrolledInMainDirection) {
+            currentAxis = moveDirection;
+        }
+        else {
+            currentAxis = moveDirection === 'v' ? 'h' : 'v';
+            canBeScrolledInMainDirection = locationCouldBeScrolled(moveDirection, target);
+            // other axis might be not scrollable
+        }
+        if (!canBeScrolledInMainDirection) {
+            return false;
+        }
+        if (!activeAxis.current && 'changedTouches' in event && (deltaX || deltaY)) {
+            activeAxis.current = currentAxis;
+        }
+        if (!currentAxis) {
+            return true;
+        }
+        var cancelingAxis = activeAxis.current || currentAxis;
+        return handleScroll(cancelingAxis, parent, event, cancelingAxis === 'h' ? deltaX : deltaY, true);
+    }, []);
+    var shouldPrevent = react.exports.useCallback(function (_event) {
+        var event = _event;
+        if (!lockStack.length || lockStack[lockStack.length - 1] !== Style) {
+            // not the last active
+            return;
+        }
+        var delta = 'deltaY' in event ? getDeltaXY(event) : getTouchXY(event);
+        var sourceEvent = shouldPreventQueue.current.filter(function (e) { return e.name === event.type && e.target === event.target && deltaCompare(e.delta, delta); })[0];
+        // self event, and should be canceled
+        if (sourceEvent && sourceEvent.should) {
+            event.preventDefault();
+            return;
+        }
+        // outside or shard event
+        if (!sourceEvent) {
+            var shardNodes = (lastProps.current.shards || [])
+                .map(extractRef)
+                .filter(Boolean)
+                .filter(function (node) { return node.contains(event.target); });
+            var shouldStop = shardNodes.length > 0 ? shouldCancelEvent(event, shardNodes[0]) : !lastProps.current.noIsolation;
+            if (shouldStop) {
+                event.preventDefault();
+            }
+        }
+    }, []);
+    var shouldCancel = react.exports.useCallback(function (name, delta, target, should) {
+        var event = { name: name, delta: delta, target: target, should: should };
+        shouldPreventQueue.current.push(event);
+        setTimeout(function () {
+            shouldPreventQueue.current = shouldPreventQueue.current.filter(function (e) { return e !== event; });
+        }, 1);
+    }, []);
+    var scrollTouchStart = react.exports.useCallback(function (event) {
+        touchStartRef.current = getTouchXY(event);
+        activeAxis.current = undefined;
+    }, []);
+    var scrollWheel = react.exports.useCallback(function (event) {
+        shouldCancel(event.type, getDeltaXY(event), event.target, shouldCancelEvent(event, props.lockRef.current));
+    }, []);
+    var scrollTouchMove = react.exports.useCallback(function (event) {
+        shouldCancel(event.type, getTouchXY(event), event.target, shouldCancelEvent(event, props.lockRef.current));
+    }, []);
+    react.exports.useEffect(function () {
+        lockStack.push(Style);
+        props.setCallbacks({
+            onScrollCapture: scrollWheel,
+            onWheelCapture: scrollWheel,
+            onTouchMoveCapture: scrollTouchMove,
+        });
+        document.addEventListener('wheel', shouldPrevent, nonPassive);
+        document.addEventListener('touchmove', shouldPrevent, nonPassive);
+        document.addEventListener('touchstart', scrollTouchStart, nonPassive);
+        return function () {
+            lockStack = lockStack.filter(function (inst) { return inst !== Style; });
+            document.removeEventListener('wheel', shouldPrevent, nonPassive);
+            document.removeEventListener('touchmove', shouldPrevent, nonPassive);
+            document.removeEventListener('touchstart', scrollTouchStart, nonPassive);
+        };
+    }, []);
+    var removeScrollBar = props.removeScrollBar, inert = props.inert;
+    return (react.exports.createElement(react.exports.Fragment, null,
+        inert ? react.exports.createElement(Style, { styles: generateStyle(id) }) : null,
+        removeScrollBar ? react.exports.createElement(RemoveScrollBar, { gapMode: "margin" }) : null));
+}
+
+var SideCar = exportSidecar(effectCar, RemoveScrollSideCar);
+
+var ReactRemoveScroll = react.exports.forwardRef(function (props, ref) { return (react.exports.createElement(RemoveScroll, __assign({}, props, { ref: ref, sideCar: SideCar }))); });
+ReactRemoveScroll.classNames = RemoveScroll.classNames;
+
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+var _excluded = ["as", "isOpen"],
+    _excluded2 = ["allowPinchZoom", "as", "dangerouslyBypassFocusLock", "dangerouslyBypassScrollLock", "initialFocusRef", "onClick", "onDismiss", "onKeyDown", "onMouseDown", "unstable_lockFocusAcrossFrames"],
+    _excluded3 = ["as", "onClick", "onKeyDown"],
+    _excluded4 = ["allowPinchZoom", "initialFocusRef", "isOpen", "onDismiss"];
+({
+  allowPinchZoom: propTypes.exports.bool,
+  dangerouslyBypassFocusLock: propTypes.exports.bool,
+  dangerouslyBypassScrollLock: propTypes.exports.bool,
+  // TODO:
+  initialFocusRef: function initialFocusRef() {
+    return null;
+  },
+  onDismiss: propTypes.exports.func
+}); ////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * DialogOverlay
+ *
+ * Low-level component if you need more control over the styles or rendering of
+ * the dialog overlay.
+ *
+ * Note: You must render a `DialogContent` inside.
+ *
+ * @see Docs https://reach.tech/dialog#dialogoverlay
+ */
+
+var DialogOverlay = /*#__PURE__*/react.exports.forwardRef(function DialogOverlay(_ref, forwardedRef) {
+  var _ref$as = _ref.as,
+      Comp = _ref$as === void 0 ? "div" : _ref$as,
+      _ref$isOpen = _ref.isOpen,
+      isOpen = _ref$isOpen === void 0 ? true : _ref$isOpen,
+      props = _objectWithoutPropertiesLoose(_ref, _excluded);
+  // up again when the menu closes, only pops up when focus returns again
+  // to the tooltip (like native OS tooltips).
+
+  react.exports.useEffect(function () {
+    if (isOpen) {
+      // @ts-ignore
+      window.__REACH_DISABLE_TOOLTIPS = true;
+    } else {
+      window.requestAnimationFrame(function () {
+        // Wait a frame so that this doesn't fire before tooltip does
+        // @ts-ignore
+        window.__REACH_DISABLE_TOOLTIPS = false;
+      });
+    }
+  }, [isOpen]);
+  return isOpen ? /*#__PURE__*/react.exports.createElement(Portal, {
+    "data-reach-dialog-wrapper": ""
+  }, /*#__PURE__*/react.exports.createElement(DialogInner, _extends({
+    ref: forwardedRef,
+    as: Comp
+  }, props))) : null;
+});
+
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * DialogInner
+ */
+var DialogInner = /*#__PURE__*/react.exports.forwardRef(function DialogInner(_ref2, forwardedRef) {
+  var allowPinchZoom = _ref2.allowPinchZoom,
+      _ref2$as = _ref2.as,
+      Comp = _ref2$as === void 0 ? "div" : _ref2$as,
+      _ref2$dangerouslyBypa = _ref2.dangerouslyBypassFocusLock,
+      dangerouslyBypassFocusLock = _ref2$dangerouslyBypa === void 0 ? false : _ref2$dangerouslyBypa,
+      _ref2$dangerouslyBypa2 = _ref2.dangerouslyBypassScrollLock,
+      dangerouslyBypassScrollLock = _ref2$dangerouslyBypa2 === void 0 ? false : _ref2$dangerouslyBypa2,
+      initialFocusRef = _ref2.initialFocusRef,
+      onClick = _ref2.onClick,
+      _ref2$onDismiss = _ref2.onDismiss,
+      onDismiss = _ref2$onDismiss === void 0 ? noop : _ref2$onDismiss,
+      onKeyDown = _ref2.onKeyDown,
+      onMouseDown = _ref2.onMouseDown,
+      unstable_lockFocusAcrossFrames = _ref2.unstable_lockFocusAcrossFrames,
+      props = _objectWithoutPropertiesLoose(_ref2, _excluded2);
+
+  var mouseDownTarget = react.exports.useRef(null);
+  var overlayNode = react.exports.useRef(null);
+  var ref = useComposedRefs(overlayNode, forwardedRef);
+  var activateFocusLock = react.exports.useCallback(function () {
+    if (initialFocusRef && initialFocusRef.current) {
+      initialFocusRef.current.focus();
+    }
+  }, [initialFocusRef]);
+
+  function handleClick(event) {
+    if (mouseDownTarget.current === event.target) {
+      event.stopPropagation();
+      onDismiss(event);
+    }
+  }
+
+  function handleKeyDown(event) {
+    if (event.key === "Escape") {
+      event.stopPropagation();
+      onDismiss(event);
+    }
+  }
+
+  function handleMouseDown(event) {
+    mouseDownTarget.current = event.target;
+  }
+
+  react.exports.useEffect(function () {
+    return overlayNode.current ? createAriaHider(overlayNode.current) : void null;
+  }, []);
+  return /*#__PURE__*/react.exports.createElement(FocusLockCombination, {
+    autoFocus: true,
+    returnFocus: true,
+    onActivation: activateFocusLock,
+    disabled: dangerouslyBypassFocusLock,
+    crossFrame: unstable_lockFocusAcrossFrames != null ? unstable_lockFocusAcrossFrames : true
+  }, /*#__PURE__*/react.exports.createElement(ReactRemoveScroll, {
+    allowPinchZoom: allowPinchZoom,
+    enabled: !dangerouslyBypassScrollLock
+  }, /*#__PURE__*/react.exports.createElement(Comp, _extends({}, props, {
+    ref: ref,
+    "data-reach-dialog-overlay": ""
+    /*
+     * We can ignore the `no-static-element-interactions` warning here
+     * because our overlay is only designed to capture any outside
+     * clicks, not to serve as a clickable element itself.
+     */
+    ,
+    onClick: composeEventHandlers(onClick, handleClick),
+    onKeyDown: composeEventHandlers(onKeyDown, handleKeyDown),
+    onMouseDown: composeEventHandlers(onMouseDown, handleMouseDown)
+  }))));
+});
+
+/**
+ * DialogContent
+ *
+ * Low-level component if you need more control over the styles or rendering of
+ * the dialog content.
+ *
+ * Note: Must be a child of `DialogOverlay`.
+ *
+ * Note: You only need to use this when you are also styling `DialogOverlay`,
+ * otherwise you can use the high-level `Dialog` component and pass the props
+ * to it. Any props passed to `Dialog` component (besides `isOpen` and
+ * `onDismiss`) will be spread onto `DialogContent`.
+ *
+ * @see Docs https://reach.tech/dialog#dialogcontent
+ */
+
+
+var DialogContent = /*#__PURE__*/react.exports.forwardRef(function DialogContent(_ref3, forwardedRef) {
+  var _ref3$as = _ref3.as,
+      Comp = _ref3$as === void 0 ? "div" : _ref3$as,
+      onClick = _ref3.onClick;
+      _ref3.onKeyDown;
+      var props = _objectWithoutPropertiesLoose(_ref3, _excluded3);
+
+  return /*#__PURE__*/react.exports.createElement(Comp, _extends({
+    "aria-modal": "true",
+    role: "dialog",
+    tabIndex: -1
+  }, props, {
+    ref: forwardedRef,
+    "data-reach-dialog-content": "",
+    onClick: composeEventHandlers(onClick, function (event) {
+      event.stopPropagation();
+    })
+  }));
+});
+
+/**
+ * Dialog
+ *
+ * High-level component to render a modal dialog window over the top of the page
+ * (or another dialog).
+ *
+ * @see Docs https://reach.tech/dialog#dialog
+ */
+
+
+var Dialog = /*#__PURE__*/react.exports.forwardRef(function Dialog(_ref4, forwardedRef) {
+  var _ref4$allowPinchZoom = _ref4.allowPinchZoom,
+      allowPinchZoom = _ref4$allowPinchZoom === void 0 ? false : _ref4$allowPinchZoom,
+      initialFocusRef = _ref4.initialFocusRef,
+      isOpen = _ref4.isOpen,
+      _ref4$onDismiss = _ref4.onDismiss,
+      onDismiss = _ref4$onDismiss === void 0 ? noop : _ref4$onDismiss,
+      props = _objectWithoutPropertiesLoose(_ref4, _excluded4);
+
+  return /*#__PURE__*/react.exports.createElement(DialogOverlay, {
+    allowPinchZoom: allowPinchZoom,
+    initialFocusRef: initialFocusRef,
+    isOpen: isOpen,
+    onDismiss: onDismiss
+  }, /*#__PURE__*/react.exports.createElement(DialogContent, _extends({
+    ref: forwardedRef
+  }, props)));
+});
+
+
+function createAriaHider(dialogNode) {
+  var originalValues = [];
+  var rootNodes = [];
+  var ownerDocument = getOwnerDocument(dialogNode);
+
+  if (!dialogNode) {
+
+    return noop;
+  }
+
+  Array.prototype.forEach.call(ownerDocument.querySelectorAll("body > *"), function (node) {
+    var _dialogNode$parentNod, _dialogNode$parentNod2;
+
+    var portalNode = (_dialogNode$parentNod = dialogNode.parentNode) == null ? void 0 : (_dialogNode$parentNod2 = _dialogNode$parentNod.parentNode) == null ? void 0 : _dialogNode$parentNod2.parentNode;
+
+    if (node === portalNode) {
+      return;
+    }
+
+    var attr = node.getAttribute("aria-hidden");
+    var alreadyHidden = attr !== null && attr !== "false";
+
+    if (alreadyHidden) {
+      return;
+    }
+
+    originalValues.push(attr);
+    rootNodes.push(node);
+    node.setAttribute("aria-hidden", "true");
+  });
+  return function () {
+    rootNodes.forEach(function (node, index) {
+      var originalValue = originalValues[index];
+
+      if (originalValue === null) {
+        node.removeAttribute("aria-hidden");
+      } else {
+        node.setAttribute("aria-hidden", originalValue);
+      }
+    });
+  };
+}
+
 const defaultValue = () => { }; // eslint-disable-line @typescript-eslint/no-empty-function
 var DispatchContext = React.createContext(defaultValue);
 
 var _a$1;
 class Character {
-    constructor(kinematic, behaviours) {
+    constructor(kinematic, behaviours, 
+    // Suggested: a single emoji
+    label) {
         this[_a$1] = true;
         this.kinematic = kinematic || {
             maxAcceleration: 25,
@@ -474,6 +2773,7 @@ class Character {
             rotation: 0,
         };
         this.behaviours = behaviours || [];
+        this.label = label;
     }
 }
 _a$1 = L;
@@ -1029,7 +3329,15 @@ class FollowPathChaseRabbit extends AbstractBehaviour {
         const targetParam = currentParam + this.pathOffset;
         // Get the target position
         const targetPosition = getPosition(path, targetParam);
-        this.debug.points = [targetPosition];
+        this.debug.edges = [
+            {
+                strokeStyle: "rgb(0, 105, 92)",
+                edge: [kinematic.position, targetPosition],
+            },
+        ];
+        this.debug.points = [
+            { position: targetPosition, fillStyle: "rgb(0, 105, 92)" },
+        ];
         const { linear } = this.seek.calculate(kinematic, targetPosition);
         return { angular: 0, linear };
     }
@@ -1056,8 +3364,10 @@ class FollowPathPredict extends AbstractBehaviour {
         const targetParam = currentParam + this.pathOffset;
         // Get the target position
         const targetPosition = getPosition(path, targetParam);
-        this.debug.edges = [[futurePos, targetPosition]];
-        this.debug.points = [futurePos];
+        this.debug.edges = [
+            { strokeStyle: "rgb(0, 105, 92)", edge: [futurePos, targetPosition] },
+        ];
+        this.debug.points = [{ position: futurePos, fillStyle: "rgb(0, 105, 92)" }];
         const { linear } = this.seek.calculate(kinematic, targetPosition);
         return { angular: 0, linear };
     }
@@ -1167,7 +3477,8 @@ function getWhiskerRay(k, radians, magnitude) {
 }
 class ObstacleAvoidance extends AbstractBehaviour {
     constructor(avoidDistance, lookaheadMain, // TODO remove?
-    lookaheadSide) {
+    lookaheadSide // TODO remove
+    ) {
         super();
         this.name = "OBSTACLE_AVOIDANCE";
         // Holds the minimum distance to a wall (i.e., how far to avoid collision)
@@ -1178,6 +3489,27 @@ class ObstacleAvoidance extends AbstractBehaviour {
         this.lookaheadMain = lookaheadMain !== null && lookaheadMain !== void 0 ? lookaheadMain : 50; // TODO remove?
         this.lookaheadSide = lookaheadSide !== null && lookaheadSide !== void 0 ? lookaheadSide : 25; // TODO remove?
         this.seek = new Seek("");
+        this.rayIndex = 0;
+        this.collisionIndex = -1;
+        this.incrementing = true;
+        this.collisions = [null, null, null, null, null, null];
+    }
+    // This selects a ray, such that we sweep back and forth between selected rays
+    // on each tick.
+    updateRayIndex() {
+        if (this.incrementing) {
+            this.rayIndex++;
+            if (this.rayIndex === 5) {
+                this.incrementing = false;
+            }
+            return;
+        }
+        if (!this.incrementing) {
+            this.rayIndex--;
+            if (this.rayIndex === 0) {
+                this.incrementing = true;
+            }
+        }
     }
     calculate(kinematic, shapes) {
         const speed = length_1(kinematic.velocity);
@@ -1189,21 +3521,49 @@ class ObstacleAvoidance extends AbstractBehaviour {
             getWhiskerRay(kinematic, 0.3, 1 * speed),
             getWhiskerRay(kinematic, 0.9, 0.3 * speed),
         ];
-        // find the nearest collision to the kinematic
-        const collision = rays.reduce((acc, edge) => {
-            const collision = getCollision(edge, shapes);
-            if (!acc) {
-                return collision;
-            }
-            if (!collision) {
-                return acc;
-            }
-            const distanceFromCollision = length_1(subtract_1(kinematic.position, collision.position));
-            const distanceFromAcc = length_1(subtract_1(kinematic.position, acc.position));
-            return distanceFromCollision < distanceFromAcc ? collision : acc;
-        }, null);
+        // We have a set of "rays", like whiskers that extend from the character.
+        // We sweep across the rays, checking one ray on each tick for a collision.
+        // For each sweep we select the ray with the closest collision, and given
+        // such a ray exists, we halt sweeping and continue to check that ray for
+        // collisions on each tick until they no longer are present.
+        // Sweeping then resumes.
+        const hasRayWithCollision = this.collisionIndex > -1 &&
+            !!getCollision(rays[this.collisionIndex], shapes);
+        if (!hasRayWithCollision) {
+            this.collisionIndex = -1;
+            this.updateRayIndex();
+        }
+        this.collisions[this.rayIndex] = getCollision(rays[this.rayIndex], shapes);
+        if (this.rayIndex === 0 || this.rayIndex === 5) {
+            // find the nearest collision to the kinematic
+            this.collisionIndex = this.collisions.reduce((acc, item, index) => {
+                if (!item) {
+                    return acc;
+                }
+                const accCollision = this.collisions[acc];
+                if (!accCollision) {
+                    return index;
+                }
+                const distanceFromCollision = length_1(subtract_1(kinematic.position, item.position));
+                const distanceFromAcc = length_1(subtract_1(kinematic.position, accCollision.position));
+                return distanceFromCollision < distanceFromAcc ? index : acc;
+            }, -1);
+        }
+        const collision = this.collisions[this.collisionIndex];
         // Show the whiskers
-        this.debug.edges = rays;
+        this.debug.edges = rays.map((edge, index) => {
+            let strokeStyle = "rgb(224, 224, 224)";
+            if (index === this.rayIndex) {
+                strokeStyle = "rgb(191, 54, 12)";
+            }
+            if (index === this.collisionIndex) {
+                strokeStyle = "rgb(68, 138, 255)";
+            }
+            return {
+                edge,
+                strokeStyle,
+            };
+        });
         // If have no collision, do nothing
         if (!collision) {
             this.debug.points = [];
@@ -1215,12 +3575,19 @@ class ObstacleAvoidance extends AbstractBehaviour {
             };
         }
         // Show collision points
-        this.debug.points = [collision.position];
+        this.debug.points = [
+            {
+                fillStyle: "rgba(245, 0, 87)",
+                position: collision.position,
+            },
+        ];
+        // Given a collision, we make the steering seek a target such that the character
+        // steers away from the side with the collision, and change velocity relative to
+        // the collision proximity.
         const projectedPosition = kinematic.velocity;
         const relPos = subtract_1(kinematic.position, collision.position);
         // Find whether the collision is to the left or right of the kinematics direction of travel
         const isLeftOfBearing = -projectedPosition[0] * relPos[1] + projectedPosition[1] * relPos[0] < 0;
-        this.debug.text = isLeftOfBearing ? "LEFT" : "RIGHT";
         const charBearing = vectorToRadians_1(kinematic.velocity);
         const adjustment = isLeftOfBearing ? (-2 * Math.PI) / 9 : (2 * Math.PI) / 9;
         const nextBearing = mapToRange(charBearing - Math.PI + adjustment);
@@ -1308,7 +3675,9 @@ class Wander extends AbstractBehaviour {
         const circleCentrePosition = multiply_1(radiansToVector_1(kinematic.orientation), this.wanderOffset);
         const nextTargetPosition = add_1(circleCentrePosition, multiply_1(targetOrientationAsVector, this.wanderRadius));
         const linear = multiply_1(nextTargetPosition, kinematic.maxAcceleration);
-        this.debug.vectors = [nextTargetPosition];
+        this.debug.vectors = [
+            { position: nextTargetPosition, fillStyle: "rgb(191, 54, 12)" },
+        ];
         return {
             angular: 0,
             linear,
@@ -1534,27 +3903,30 @@ function initScenario$4() {
                     maxAcceleration: 25,
                     maxAngularAcceleration: 300,
                     maxSpeed: 45,
-                    position: [150, 25],
-                    velocity: [2, 10],
-                    orientation: 1.5,
+                    position: [55, 20],
+                    velocity: [40, 0],
+                    orientation: 0,
                     rotation: 0,
                 }, [
                     new ObstacleAvoidance(),
                     new LookWhereYouAreGoing(),
                     new Arrive("_2"),
-                ]),
+                ], "🐭"),
             ],
             [
                 "_2",
                 new Character({
                     maxAcceleration: 25,
-                    maxAngularAcceleration: 140,
+                    maxAngularAcceleration: 300,
                     maxSpeed: 45,
-                    position: [350, 655],
+                    position: [325, 680],
                     velocity: [0, 0],
-                    orientation: 1.5,
+                    orientation: 0,
                     rotation: 0,
-                }, []),
+                }, [
+                    new ObstacleAvoidance(),
+                    new LookWhereYouAreGoing(),
+                ], "🧀"),
             ],
         ]),
         shapes: new Map([...pairs1, ...pairs2]),
@@ -2600,6 +4972,7 @@ const DebugControl = () => {
 };
 
 const ScenarioSidebar = () => {
+    const [showDialog, setShowDialog] = React.useState(false);
     const dispatch = React.useContext(DispatchContext);
     const state = React.useContext(StateContext);
     const focussedScenario = state.scenario;
@@ -2625,25 +4998,43 @@ const ScenarioSidebar = () => {
             } }, state.ui.isPaused ? "Start" : "Pause"),
         React.createElement("button", { "data-id": "reset-button", type: "button", id: "reset", onClick: () => {
                 dispatch({ type: "RESET_BUTTON_CLICKED" });
-            } }, "Reset")));
+            } }, "Reset"),
+        React.createElement("button", { "data-id": "about-dialog-button", id: "about", type: "button", onClick: () => {
+                setShowDialog(true);
+            } }, "About this app"),
+        React.createElement(Dialog, { "data-id": "about-dialog", "aria-label": "About this app dialog", isOpen: showDialog, onDismiss: () => {
+                setShowDialog(false);
+            } },
+            React.createElement("header", null,
+                React.createElement("h2", null, "About"),
+                React.createElement("button", { type: "button", onClick: () => {
+                        setShowDialog(false);
+                    } }, "Close")),
+            React.createElement("p", null,
+                React.createElement("em", null, "Steering Behaviours!"),
+                " is a zoo and playground for exploring steering behaviours as described in the book",
+                " ",
+                React.createElement("a", { target: "_blank", href: "https://isbnsearch.org/isbn/0367670569" }, "AI for Games"),
+                " ",
+                "by Ian Millington."),
+            React.createElement("p", null,
+                "This project uses the",
+                " ",
+                React.createElement("a", { href: "https://opensource.org/licenses/MIT", target: "_blank" }, "MIT License"),
+                " ",
+                "and includes code from",
+                " ",
+                React.createElement("a", { href: "https://github.com/craigdallimore/steering-behaviour/blob/main/package.json", target: "_blank" }, "other open source projects"),
+                " ",
+                "which carry their respective licenses."),
+            React.createElement("p", null,
+                React.createElement("a", { href: "https://github.com/craigdallimore/steering-behaviour", target: "_blank" }, "Github")),
+            React.createElement("p", null,
+                "Copyright \u00A9 2022",
+                " ",
+                React.createElement("a", { href: "mailto:decoy9697@gmail.com" }, "Craig Dallimore"),
+                "."))));
 };
-
-function drawArrow(ctx, c) {
-    const [x, z] = c.position;
-    ctx.save();
-    ctx.transform(1, 0, 0, 1, x, z);
-    ctx.fillStyle = "rgb(240, 98, 146)";
-    ctx.rotate(c.orientation);
-    ctx.moveTo(10, 0);
-    ctx.beginPath();
-    ctx.lineTo(-10, 5);
-    ctx.lineTo(-5, 0);
-    ctx.lineTo(-10, -5);
-    ctx.lineTo(10, 0);
-    ctx.fill();
-    ctx.restore();
-    return ctx;
-}
 
 function drawGrid(ctx, v) {
     ctx.save();
@@ -2782,10 +5173,10 @@ function drawVector(ctx, from, to, fillStyle) {
     ctx.beginPath();
     ctx.moveTo(distance, 0);
     ctx.lineTo(distance - 5, 5);
-    ctx.lineTo(distance - 5, 1.5);
-    ctx.lineTo(0, 1.5);
-    ctx.lineTo(0, -1.5);
-    ctx.lineTo(distance - 5, -1.5);
+    ctx.lineTo(distance - 5, 0.5);
+    ctx.lineTo(0, 0.5);
+    ctx.lineTo(0, -0.5);
+    ctx.lineTo(distance - 5, -0.5);
     ctx.lineTo(distance - 5, -5);
     ctx.lineTo(distance, 0);
     ctx.fill();
@@ -2795,19 +5186,19 @@ function drawVector(ctx, from, to, fillStyle) {
 }
 
 function drawDebug(ctx, debug, kinematic) {
-    debug.points.forEach((point) => {
-        drawCircle(ctx, point, 2, "cyan");
+    debug.points.forEach(({ fillStyle, position }) => {
+        drawCircle(ctx, position, 2, fillStyle);
     });
-    debug.vectors.forEach((vector) => {
-        drawVector(ctx, kinematic.position, vector, "red");
+    debug.vectors.forEach(({ fillStyle, position }) => {
+        drawVector(ctx, kinematic.position, position, fillStyle);
     });
-    debug.edges.forEach((edge) => {
+    debug.edges.forEach(({ strokeStyle, edge }) => {
         drawPath(ctx, {
             position: kinematic.position,
             points: edge,
             label: "Debug",
             isClosed: false,
-        }, "silver", [2, 2]);
+        }, strokeStyle, [2, 2]);
     });
     debug.circles.forEach(({ position, radius, fillStyle }) => {
         drawCircle(ctx, position, radius, fillStyle);
@@ -2830,6 +5221,36 @@ function getFirstTargetId(behaviours) {
     }, null);
 }
 
+function drawArrow(ctx, c) {
+    const [x, z] = c.position;
+    ctx.save();
+    ctx.transform(1, 0, 0, 1, x, z);
+    ctx.fillStyle = "rgb(240, 98, 146)";
+    ctx.rotate(c.orientation);
+    ctx.moveTo(10, 0);
+    ctx.beginPath();
+    ctx.lineTo(-10, 5);
+    ctx.lineTo(-5, 0);
+    ctx.lineTo(-10, -5);
+    ctx.lineTo(10, 0);
+    ctx.fill();
+    ctx.restore();
+    return ctx;
+}
+
+function drawCharacter(ctx, c) {
+    ctx.save();
+    if (c.label) {
+        ctx.font = "20px sans-serif";
+        ctx.fillText(c.label, c.kinematic.position[0] - 10, c.kinematic.position[1] + 7);
+    }
+    else {
+        drawArrow(ctx, c.kinematic);
+    }
+    ctx.restore();
+    return ctx;
+}
+
 function drawScene(ctx, state) {
     ctx.clearRect(0, 0, state.ui.canvasDimensions[0], state.ui.canvasDimensions[1]);
     drawGrid(ctx, state.ui.canvasDimensions);
@@ -2850,7 +5271,7 @@ function drawScene(ctx, state) {
         }
     }
     state.scenario.characters.forEach((cha) => {
-        drawArrow(ctx, cha.kinematic);
+        drawCharacter(ctx, cha);
         if (state.ui.isDebugMode) {
             cha.behaviours.forEach((behaviour) => {
                 drawDebug(ctx, behaviour.debug, cha.kinematic);

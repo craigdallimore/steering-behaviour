@@ -42,6 +42,9 @@ body {
 h1 {
   font-family: Kaushan Script;
 }
+a {
+  color: hsl(213, 65%, 40%);
+}
 .behaviours {
 }
 .behaviours h3 {
@@ -137,6 +140,10 @@ h1 {
 .scenario-sidebar select {
   margin-top: 0.25rem;
 }
+.scenario-sidebar button:last-of-type {
+  margin-top: auto;
+  margin-bottom: 1rem;
+}
 h2 {
   padding: 1rem;
   text-transform: uppercase;
@@ -171,6 +178,55 @@ h2 {
   background: var(--base04);
   padding: 1px 3px 0;
   border-radius: 2px;
+}
+/* This code is subject to LICENSE in root of this repository */
+/* Used to detect in JavaScript if apps have loaded styles or not. */
+:root {
+  --reach-dialog: 1;
+}
+[data-reach-dialog-overlay] {
+  background: hsla(0, 0%, 0%, 0.33);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+}
+[data-reach-dialog-content] {
+  width: 50vw;
+  margin: 10vh auto;
+  background: white;
+  padding: 2rem;
+  outline: none;
+}
+[aria-modal] {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-left: 3rem;
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.1);
+}
+[aria-modal]::before {
+  display: block;
+  content: "";
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1rem;
+  background: linear-gradient(to bottom, var(--base05), var(--base01));
+  position: absolute;
+}
+[aria-modal] h2 {
+  margin: 0;
+  text-align: initial;
+  padding: 0;
+}
+[aria-modal] header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
 main {
   grid-area: canvas;
