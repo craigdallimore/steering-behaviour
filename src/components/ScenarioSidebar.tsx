@@ -85,7 +85,52 @@ const ScenarioSidebar = () => {
           setShowDialog(false);
         }}
       >
-        <h1>hi</h1>
+        <header>
+          <h2>About</h2>
+          <button
+            type="button"
+            onClick={() => {
+              setShowDialog(false);
+            }}
+          >
+            Close
+          </button>
+        </header>
+
+        <p>
+          <em>Steering Behaviours!</em> is a zoo and playground for exploring
+          steering behaviours as described in the book{" "}
+          <a target="_blank" href="https://isbnsearch.org/isbn/0367670569">
+            AI for Games
+          </a>{" "}
+          by Ian Millington.
+        </p>
+        <p>
+          This project uses the{" "}
+          <a href="https://opensource.org/licenses/MIT" target="_blank">
+            MIT License
+          </a>{" "}
+          and includes code from{" "}
+          <a
+            href="https://github.com/craigdallimore/steering-behaviour/blob/main/package.json"
+            target="_blank"
+          >
+            other open source projects
+          </a>{" "}
+          which carry their respective licenses.
+        </p>
+        <p>
+          <a
+            href="https://github.com/craigdallimore/steering-behaviour"
+            target="_blank"
+          >
+            Github
+          </a>
+        </p>
+        <p>
+          Copyright &copy; 2022{" "}
+          <a href="mailto:decoy9697@gmail.com">Craig Dallimore</a>.
+        </p>
       </Dialog>
     </aside>
   );
