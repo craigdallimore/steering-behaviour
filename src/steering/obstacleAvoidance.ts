@@ -32,12 +32,17 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
   seek: Seek;
   avoidDistance: number;
   lookaheadMain: number; // TODO remove?
-  lookaheadSide: number;
+  lookaheadSide: number; // TODO remove?
+
+  rayIndex: number;
+  collisionIndex: number;
+  incrementing: boolean;
+  collisions: Array<Collision | null>;
 
   constructor(
     avoidDistance?: number,
     lookaheadMain?: number, // TODO remove?
-    lookaheadSide?: number
+    lookaheadSide?: number // TODO remove
   ) {
     super();
     // Holds the minimum distance to a wall (i.e., how far to avoid collision)
@@ -49,6 +54,29 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
     this.lookaheadSide = lookaheadSide ?? 25; // TODO remove?
 
     this.seek = new Seek("");
+
+    this.rayIndex = 0;
+    this.collisionIndex = -1;
+    this.incrementing = true;
+    this.collisions = [null, null, null, null, null, null];
+  }
+
+  // This selects a ray, such that we sweep back and forth between selected rays
+  // on each tick.
+  updateRayIndex() {
+    if (this.incrementing) {
+      this.rayIndex++;
+      if (this.rayIndex === 5) {
+        this.incrementing = false;
+      }
+      return;
+    }
+    if (!this.incrementing) {
+      this.rayIndex--;
+      if (this.rayIndex === 0) {
+        this.incrementing = true;
+      }
+    }
   }
 
   calculate(kinematic: Kinematic, shapes: Array<Shape>): Steering {
@@ -63,34 +91,67 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
       getWhiskerRay(kinematic, 0.9, 0.3 * speed),
     ];
 
-    // find the nearest collision to the kinematic
-    const collision: Collision | null = rays.reduce(
-      (acc: Collision | null, edge: Edge) => {
-        const collision = getCollision(edge, shapes);
-        if (!acc) {
-          return collision;
-        }
-        if (!collision) {
-          return acc;
-        }
+    // We have a set of "rays", like whiskers that extend from the character.
+    // We sweep across the rays, checking one ray on each tick for a collision.
+    // For each sweep we select the ray with the closest collision, and given
+    // such a ray exists, we halt sweeping and continue to check that ray for
+    // collisions on each tick until they no longer are present.
+    // Sweeping then resumes.
+    const hasRayWithCollision: boolean =
+      this.collisionIndex > -1 &&
+      !!getCollision(rays[this.collisionIndex], shapes);
 
-        const distanceFromCollision = length(
-          subtract(kinematic.position, collision.position)
-        );
-        const distanceFromAcc = length(
-          subtract(kinematic.position, acc.position)
-        );
+    if (!hasRayWithCollision) {
+      this.collisionIndex = -1;
+      this.updateRayIndex();
+    }
 
-        return distanceFromCollision < distanceFromAcc ? collision : acc;
-      },
-      null
-    );
+    this.collisions[this.rayIndex] = getCollision(rays[this.rayIndex], shapes);
+
+    if (this.rayIndex === 0 || this.rayIndex === 5) {
+      // find the nearest collision to the kinematic
+      this.collisionIndex = this.collisions.reduce(
+        (acc: number, item: Collision | null, index: number): number => {
+          if (!item) {
+            return acc;
+          }
+
+          const accCollision: Collision | null = this.collisions[acc];
+
+          if (!accCollision) {
+            return index;
+          }
+
+          const distanceFromCollision = length(
+            subtract(kinematic.position, item.position)
+          );
+          const distanceFromAcc = length(
+            subtract(kinematic.position, accCollision.position)
+          );
+
+          return distanceFromCollision < distanceFromAcc ? index : acc;
+        },
+        -1
+      );
+    }
+
+    const collision: Collision | null = this.collisions[this.collisionIndex];
 
     // Show the whiskers
-    this.debug.edges = rays.map((edge) => ({
-      edge,
-      strokeStyle: "rgb(141, 110, 99)",
-    }));
+    this.debug.edges = rays.map((edge, index) => {
+      let strokeStyle = "rgb(224, 224, 224)";
+      if (index === this.rayIndex) {
+        strokeStyle = "rgb(191, 54, 12)";
+      }
+      if (index === this.collisionIndex) {
+        strokeStyle = "rgb(68, 138, 255)";
+      }
+
+      return {
+        edge,
+        strokeStyle,
+      };
+    });
 
     // If have no collision, do nothing
     if (!collision) {
@@ -111,12 +172,15 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
       },
     ];
 
+    // Given a collision, we make the steering seek a target such that the character
+    // steers away from the side with the collision, and change velocity relative to
+    // the collision proximity.
+
     const projectedPosition = kinematic.velocity;
     const relPos = subtract(kinematic.position, collision.position);
     // Find whether the collision is to the left or right of the kinematics direction of travel
     const isLeftOfBearing =
       -projectedPosition[0] * relPos[1] + projectedPosition[1] * relPos[0] < 0;
-    this.debug.text = isLeftOfBearing ? "LEFT" : "RIGHT";
 
     const charBearing = vectorToRadians(kinematic.velocity);
 

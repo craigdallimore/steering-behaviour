@@ -50,9 +50,9 @@ export default function initScenario(): Scenario {
             maxAcceleration: 25,
             maxAngularAcceleration: 300,
             maxSpeed: 45,
-            position: [150, 25],
-            velocity: [2, 10],
-            orientation: 1.5,
+            position: [55, 20],
+            velocity: [40, 0],
+            orientation: 0,
             rotation: 0,
           },
           [
@@ -67,14 +67,17 @@ export default function initScenario(): Scenario {
         new Character(
           {
             maxAcceleration: 25,
-            maxAngularAcceleration: 140,
+            maxAngularAcceleration: 300,
             maxSpeed: 45,
-            position: [350, 655],
+            position: [425, 480],
             velocity: [0, 0],
-            orientation: 1.5,
+            orientation: 0,
             rotation: 0,
           },
-          []
+          [
+            new steering.ObstacleAvoidance(),
+            new steering.LookWhereYouAreGoing(),
+          ]
         ),
       ],
     ]),
