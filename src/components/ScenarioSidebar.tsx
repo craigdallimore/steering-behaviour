@@ -78,12 +78,13 @@ const ScenarioSidebar = () => {
         About this app
       </button>
       <Dialog
+        aria-label="About this app dialog"
         isOpen={showDialog}
         onDismiss={() => {
           setShowDialog(false);
         }}
       >
-        <h1>hi</h1>
+        <h1 aria-content="TODO">hi</h1>
       </Dialog>
     </aside>
   );
