@@ -115,4 +115,19 @@ describe("Scenario sidebar", () => {
       type: "PLAY_BUTTON_CLICKED",
     });
   });
+  test('clicking the "About" button will reveal a modal', async () => {
+    const dispatch = jest.fn();
+    const state = getState();
+    const { getByDataId, queryByDataId } = render(<ScenarioSidebar />, {
+      dispatch,
+      state,
+    });
+    const aboutButton = getByDataId("about-dialog-button");
+
+    expect(queryByDataId("about-dialog")).toBe(null);
+
+    await userEvent.click(aboutButton);
+
+    expect(getByDataId("about-dialog")).not.toBe(null);
+  });
 });
