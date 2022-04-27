@@ -3476,9 +3476,7 @@ function getWhiskerRay(k, radians, magnitude) {
     ];
 }
 class ObstacleAvoidance extends AbstractBehaviour {
-    constructor(avoidDistance, lookaheadMain, // TODO remove?
-    lookaheadSide // TODO remove
-    ) {
+    constructor(avoidDistance) {
         super();
         this.name = "OBSTACLE_AVOIDANCE";
         // Holds the minimum distance to a wall (i.e., how far to avoid collision)
@@ -3486,8 +3484,6 @@ class ObstacleAvoidance extends AbstractBehaviour {
         this.avoidDistance = avoidDistance !== null && avoidDistance !== void 0 ? avoidDistance : 10;
         // Holds the distance to look ahead for a collision
         // (i.e., the length of the collision ray)
-        this.lookaheadMain = lookaheadMain !== null && lookaheadMain !== void 0 ? lookaheadMain : 50; // TODO remove?
-        this.lookaheadSide = lookaheadSide !== null && lookaheadSide !== void 0 ? lookaheadSide : 25; // TODO remove?
         this.seek = new Seek("");
         this.rayIndex = 0;
         this.collisionIndex = -1;
@@ -5805,16 +5801,9 @@ const MatchVelocityControls = (props) => {
 
 const ObstacleAvoidanceControls = (props) => {
     const { behaviour } = props;
-    return (React.createElement(React.Fragment, null,
-        React.createElement(NumericField, { id: "avoid-distance", label: "Avoid Distance", value: behaviour.avoidDistance, onChange: (avoidDistance) => {
-                props.onBehaviourChange(makeUpdatedClone(behaviour, "avoidDistance", avoidDistance));
-            } }),
-        React.createElement(NumericField, { id: "look-ahead-main", label: "Lookahead Main", value: behaviour.lookaheadMain, onChange: (lookaheadMain) => {
-                props.onBehaviourChange(makeUpdatedClone(behaviour, "lookaheadMain", lookaheadMain));
-            } }),
-        React.createElement(NumericField, { id: "look-ahead-side", label: "Lookahead Side", value: behaviour.lookaheadSide, onChange: (lookaheadSize) => {
-                props.onBehaviourChange(makeUpdatedClone(behaviour, "lookaheadSide", lookaheadSize));
-            } })));
+    return (React.createElement(NumericField, { id: "avoid-distance", label: "Avoid Distance", value: behaviour.avoidDistance, onChange: (avoidDistance) => {
+            props.onBehaviourChange(makeUpdatedClone(behaviour, "avoidDistance", avoidDistance));
+        } }));
 };
 
 const PursueControls = (props) => {
@@ -5838,11 +5827,14 @@ const SeparationControls = (props) => {
 const WanderControls = (props) => {
     const { behaviour } = props;
     return (React.createElement(React.Fragment, null,
-        React.createElement(NumericField, { id: "wander-offset", label: "Wander offset", value: behaviour.wanderOffset, onChange: (wanderOffset) => {
+        React.createElement(NumericField, { id: "wander-offset", label: "Offset", value: behaviour.wanderOffset, onChange: (wanderOffset) => {
                 props.onBehaviourChange(makeUpdatedClone(behaviour, "wanderOffset", wanderOffset));
             } }),
-        React.createElement(NumericField, { id: "wander-radius", label: "Wander Radius", value: behaviour.wanderRadius, onChange: (wanderRadius) => {
+        React.createElement(NumericField, { id: "wander-radius", label: "Radius", value: behaviour.wanderRadius, onChange: (wanderRadius) => {
                 props.onBehaviourChange(makeUpdatedClone(behaviour, "wanderRadius", wanderRadius));
+            } }),
+        React.createElement(NumericField, { id: "wander-rate", label: "Rate", value: behaviour.wanderRate, onChange: (wanderRate) => {
+                props.onBehaviourChange(makeUpdatedClone(behaviour, "wanderRate", wanderRate));
             } })));
 };
 
