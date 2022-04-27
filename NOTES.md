@@ -22,8 +22,6 @@ Schneider and Eberly [2003].
 >         |
 >         |
 >        270
->
->
 
 ## Unit circle, radians
 
@@ -60,24 +58,99 @@ Negative increments are anticlockwise
 | `1.75 * Math.PI`  | North East     | 5.4   |
 | `2 * Math.PI`     | East           | 6.2   |
 
-## Dependent behaviours
+## Behaviours
 
-Evade uses Flee
-Face uses Align
-FPCR uses Seek
-FPP uses Seek
-LWYAG uses Align
-ObstacleAvoidance uses Seek
-Pursue uses Seek
-Wander uses Face uses Seek
-
-## Behaviours with targets
+### Angular
 
 Align
-Arrive
-Evade
+
+- Field: Max. Rotation
+- Field: Deceleration tolerance
+- Field: Align tolerance
+- Field: Time to Target
+- [Target]
+
 Face
+
+- Dep: Align
+- Field: Max. Rotation
+- Field: Deceleration tolerance
+- Field: Align tolerance
+- Field: Time to Target
+- [Target]
+
+LookWhereYouAreGoing
+
+- Dep: Align
+- Field: Max. Rotation
+- Field: Deceleration tolerance
+- Field: Align tolerance
+- Field: Time to Target
+- [Target]
+
+### Linear
+
+Arrive
+
+- Field: Target Radius
+- Field: Slow Radius
+- Field: Time to Target
+- [Target]
+
+CollisionAvoidance
+
+- Field: Radius
+
+Evade
+
+- Dep: Flee
+- Field: Max Prediction
+- [Target]
+
 Flee
-Match Velocity
+
+- [Target]
+
+FollowPathChaseRabbit
+
+- Dep: Seek
+- Field: Path offset
+- [Path]
+
+FollowPathPredict
+
+- Dep: Seek
+- Field: Path offset
+- Field: Predict time
+- [Path]
+
+MatchVelocity
+
+- Field: Time to Target
+- [Target]
+
+ObstacleAvoidance
+
+- Field: Avoid Distance
+- Dep: Seek
+
 Pursue
+
+- Dep: Seek
+- Field: Max. prediction
+- [Target]
+
 Seek
+
+- [Target]
+
+Separation
+
+- Field: Threshold
+- Field: Decay coefficient
+
+Wander
+
+- Field: Offset
+- Field: Radius
+- Field: Rate 
