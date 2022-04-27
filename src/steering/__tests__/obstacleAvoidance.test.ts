@@ -3,8 +3,6 @@ import { fc, arbitraryKinematic, arbitraryShape } from "@test-utils";
 
 const arbitraryObstacleAvoidanceConfig = fc.record({
   avoidDistance: fc.float({ min: 0 }),
-  lookaheadMain: fc.float({ min: 0 }),
-  lookaheadSide: fc.float({ min: 0 }),
 });
 
 describe("ObstacleAvoidance", () => {
@@ -15,11 +13,7 @@ describe("ObstacleAvoidance", () => {
         arbitraryKinematic(),
         fc.array(arbitraryShape()),
         (config, kinematic, shapes) => {
-          const obstacleAvoidance = new ObstacleAvoidance(
-            config.avoidDistance,
-            config.lookaheadMain,
-            config.lookaheadSide
-          );
+          const obstacleAvoidance = new ObstacleAvoidance(config.avoidDistance);
           const steering = obstacleAvoidance.calculate(kinematic, shapes);
           return steering.angular === 0;
         }
@@ -32,11 +26,7 @@ describe("ObstacleAvoidance", () => {
         arbitraryObstacleAvoidanceConfig,
         arbitraryKinematic(),
         (config, kinematic) => {
-          const obstacleAvoidance = new ObstacleAvoidance(
-            config.avoidDistance,
-            config.lookaheadMain,
-            config.lookaheadSide
-          );
+          const obstacleAvoidance = new ObstacleAvoidance(config.avoidDistance);
           const steering = obstacleAvoidance.calculate(kinematic, []);
 
           return steering.linear[0] === 0 && steering.linear[1] === 0;

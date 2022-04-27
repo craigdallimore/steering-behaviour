@@ -12,38 +12,16 @@ const ObstacleAvoidanceControls = (props: Props) => {
   const { behaviour } = props;
 
   return (
-    <>
-      <NumericField
-        id="avoid-distance"
-        label="Avoid Distance"
-        value={behaviour.avoidDistance}
-        onChange={(avoidDistance) => {
-          props.onBehaviourChange(
-            makeUpdatedClone(behaviour, "avoidDistance", avoidDistance)
-          );
-        }}
-      />
-      <NumericField
-        id="look-ahead-main"
-        label="Lookahead Main"
-        value={behaviour.lookaheadMain}
-        onChange={(lookaheadMain) => {
-          props.onBehaviourChange(
-            makeUpdatedClone(behaviour, "lookaheadMain", lookaheadMain)
-          );
-        }}
-      />
-      <NumericField
-        id="look-ahead-side"
-        label="Lookahead Side"
-        value={behaviour.lookaheadSide}
-        onChange={(lookaheadSize) => {
-          props.onBehaviourChange(
-            makeUpdatedClone(behaviour, "lookaheadSide", lookaheadSize)
-          );
-        }}
-      />
-    </>
+    <NumericField
+      id="avoid-distance"
+      label="Avoid Distance"
+      value={behaviour.avoidDistance}
+      onChange={(avoidDistance) => {
+        props.onBehaviourChange(
+          makeUpdatedClone(behaviour, "avoidDistance", avoidDistance)
+        );
+      }}
+    />
   );
 };
 

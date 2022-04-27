@@ -15,7 +15,7 @@ const WanderControls = (props: Props) => {
     <>
       <NumericField
         id="wander-offset"
-        label="Wander offset"
+        label="Offset"
         value={behaviour.wanderOffset}
         onChange={(wanderOffset) => {
           props.onBehaviourChange(
@@ -25,11 +25,21 @@ const WanderControls = (props: Props) => {
       />
       <NumericField
         id="wander-radius"
-        label="Wander Radius"
+        label="Radius"
         value={behaviour.wanderRadius}
         onChange={(wanderRadius) => {
           props.onBehaviourChange(
             makeUpdatedClone(behaviour, "wanderRadius", wanderRadius)
+          );
+        }}
+      />
+      <NumericField
+        id="wander-rate"
+        label="Rate"
+        value={behaviour.wanderRate}
+        onChange={(wanderRate) => {
+          props.onBehaviourChange(
+            makeUpdatedClone(behaviour, "wanderRate", wanderRate)
           );
         }}
       />

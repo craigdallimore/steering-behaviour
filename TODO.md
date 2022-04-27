@@ -2,11 +2,6 @@
 
 ## Priority
 
-- [ ] Add github link
-- [ ] Add license modal
-- [ ] Obstacle avoidance
-  - [ ] Update configuration UI
-
 ## Backlog
 
 - [ ] Feature: Add behaviour: should not permit already selected behaviours to be added

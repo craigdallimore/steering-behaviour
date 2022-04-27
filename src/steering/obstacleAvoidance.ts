@@ -31,27 +31,19 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
   readonly name = "OBSTACLE_AVOIDANCE";
   seek: Seek;
   avoidDistance: number;
-  lookaheadMain: number; // TODO remove?
-  lookaheadSide: number; // TODO remove?
 
   rayIndex: number;
   collisionIndex: number;
   incrementing: boolean;
   collisions: Array<Collision | null>;
 
-  constructor(
-    avoidDistance?: number,
-    lookaheadMain?: number, // TODO remove?
-    lookaheadSide?: number // TODO remove
-  ) {
+  constructor(avoidDistance?: number) {
     super();
     // Holds the minimum distance to a wall (i.e., how far to avoid collision)
     // should be greater than the radius of the character
     this.avoidDistance = avoidDistance ?? 10;
     // Holds the distance to look ahead for a collision
     // (i.e., the length of the collision ray)
-    this.lookaheadMain = lookaheadMain ?? 50; // TODO remove?
-    this.lookaheadSide = lookaheadSide ?? 25; // TODO remove?
 
     this.seek = new Seek("");
 

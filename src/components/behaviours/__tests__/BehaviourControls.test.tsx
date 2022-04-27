@@ -230,11 +230,7 @@ describe("Behaviour controls", () => {
   });
 
   test('ObstacleAvoidance: changing each control will cause "onBehaviourChange" to be called', () => {
-    const fields = [
-      ["avoid-distance", "avoidDistance"],
-      ["look-ahead-main", "lookaheadMain"],
-      ["look-ahead-side", "lookaheadSide"],
-    ];
+    const fields = [["avoid-distance", "avoidDistance"]];
     expect.assertions(fields.length * 2);
 
     fields.forEach(([id, property]) => {
@@ -303,6 +299,7 @@ describe("Behaviour controls", () => {
     const fields = [
       ["wander-offset", "wanderOffset"],
       ["wander-radius", "wanderRadius"],
+      ["wander-rate", "wanderRate"],
     ];
     expect.assertions(fields.length * 2);
 
