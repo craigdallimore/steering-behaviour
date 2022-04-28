@@ -38,31 +38,38 @@ const pairs2: Array<Pair> = range2
   .map((x) => range3.map((z) => makePair(x, z)))
   .flat();
 
+const mice: Array<[string, Character]> = Array.from({ length: 50 }).map(
+  (_, index) => {
+    const x = index * 25 + 15;
+    const z = index % 2 === 0 ? 10 : 30;
+    const cha = new Character(
+      {
+        maxAcceleration: 25,
+        maxAngularAcceleration: 300,
+        maxSpeed: 45,
+        position: [x, z],
+        velocity: [40, 0],
+        orientation: 0,
+        rotation: 0,
+      },
+      [
+        new steering.ObstacleAvoidance(),
+        new steering.LookWhereYouAreGoing(),
+        new steering.Arrive("_2"),
+      ],
+      "🐭"
+    );
+
+    return [`_${index}`, cha];
+  }
+);
+
 export default function initScenario(): Scenario {
   return {
     name: "Obstacle Avoidance (many)",
     description: "This character exhibits the obstacle avoidance behaviour",
     characters: new Map([
-      [
-        "_1",
-        new Character(
-          {
-            maxAcceleration: 25,
-            maxAngularAcceleration: 300,
-            maxSpeed: 45,
-            position: [55, 20],
-            velocity: [40, 0],
-            orientation: 0,
-            rotation: 0,
-          },
-          [
-            new steering.ObstacleAvoidance(),
-            new steering.LookWhereYouAreGoing(),
-            new steering.Arrive("_2"),
-          ],
-          "🐭"
-        ),
-      ],
+      ...mice,
       [
         "_2",
         new Character(
