@@ -1,3 +1,4 @@
+import { current } from "immer";
 import updateKinematic from "@lib/updateKinematic";
 import getCharacter from "@lib/getCharacter";
 import {
@@ -82,7 +83,9 @@ function getSteering(
       return behaviour.calculate(char.kinematic, target.kinematic);
     }
     case "OBSTACLE_AVOIDANCE": {
-      return behaviour.calculate(char.kinematic, [...scenario.shapes.values()]);
+      return behaviour.calculate(char.kinematic, [
+        ...current(scenario.shapes).values(),
+      ]);
     }
     case "PURSUE": {
       const target = getCharacter(behaviour.targetId, scenario.characters);

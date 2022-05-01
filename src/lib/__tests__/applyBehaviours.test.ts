@@ -2,6 +2,9 @@ import applyBehaviours from "@lib/applyBehaviours";
 import makeScenario from "@domain/scenario_blank";
 import * as steering from "@steering/index";
 import Character from "@domain/character";
+import { createDraft, enableMapSet } from "immer";
+
+enableMapSet();
 
 describe("applyBehaviours", () => {
   test.each([
@@ -11,7 +14,7 @@ describe("applyBehaviours", () => {
     new steering.Separation(),
     new steering.Wander(),
   ])("it invokes the calculate method for the $name behaviour", (behaviour) => {
-    const scenario = makeScenario();
+    const scenario = createDraft(makeScenario());
     jest.spyOn(behaviour, "calculate");
     const character = scenario.characters.values().next().value;
     character.behaviours = [behaviour];
