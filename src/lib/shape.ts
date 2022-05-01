@@ -25,35 +25,37 @@ export function findAllIntersections(
   edge: Edge, // Edge, absolutely positioned
   shapes: Array<Shape>
 ): Array<Intersection> {
-  return shapes.reduce(
-    (acc: Array<Intersection>, shape: Shape): Array<Intersection> => {
-      return shape.path.points.reduce(
-        (innerAcc: Intersection[], point, index): Intersection[] => {
-          const lastIndex =
-            index === 0 ? shape.path.points.length - 1 : index - 1;
-          const [relA, relB]: Edge = [point, shape.path.points[lastIndex]];
-          const absoluteEdge: Edge = [
-            add(shape.path.position, relA),
-            add(shape.path.position, relB),
-          ];
+  return shapes.reduce(function shapesReducer(
+    acc: Array<Intersection>,
+    shape: Shape
+  ): Array<Intersection> {
+    return shape.path.points.reduce(function pointsReducer(
+      innerAcc: Intersection[],
+      point,
+      index
+    ): Intersection[] {
+      const lastIndex = index === 0 ? shape.path.points.length - 1 : index - 1;
+      const [relA, relB]: Edge = [point, shape.path.points[lastIndex]];
+      const absoluteEdge: Edge = [
+        add(shape.path.position, relA),
+        add(shape.path.position, relB),
+      ];
 
-          const p = findEdgeIntersection(edge, absoluteEdge);
+      const p = findEdgeIntersection(edge, absoluteEdge);
 
-          if (p) {
-            const inter: Intersection = {
-              point: p,
-              edge: absoluteEdge,
-            };
-            return [...innerAcc, inter];
-          }
+      if (p) {
+        const inter: Intersection = {
+          point: p,
+          edge: absoluteEdge,
+        };
+        return [...innerAcc, inter];
+      }
 
-          return innerAcc;
-        },
-        acc
-      );
+      return innerAcc;
     },
-    []
-  );
+    acc);
+  },
+  []);
 }
 
 // If the edge is from point A to point B, the first intersection is the one
@@ -72,10 +74,14 @@ export function findFirstIntersection(
 
   const init: Init = { int: null, dist: Infinity };
 
-  return intersections.reduce((acc, int: Intersection) => {
+  return intersections.reduce(function findFirstReducer(
+    acc,
+    int: Intersection
+  ) {
     const dist = distance(a, int.point);
     return dist < acc.dist ? { int, dist } : acc;
-  }, init).int;
+  },
+  init).int;
 }
 
 export default function getCollision(

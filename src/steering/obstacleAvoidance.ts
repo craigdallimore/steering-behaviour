@@ -129,13 +129,16 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
 
     const collision: Collision | null = this.collisions[this.collisionIndex];
 
+    const rayIndex = this.rayIndex;
+    const collisionIndex = this.collisionIndex;
+
     // Show the whiskers
-    this.debug.edges = rays.map((edge, index) => {
+    this.debug.edges = rays.map(function rayMap(edge, index) {
       let strokeStyle = "rgb(224, 224, 224)";
-      if (index === this.rayIndex) {
+      if (index === rayIndex) {
         strokeStyle = "rgb(191, 54, 12)";
       }
-      if (index === this.collisionIndex) {
+      if (index === collisionIndex) {
         strokeStyle = "rgb(68, 138, 255)";
       }
 
