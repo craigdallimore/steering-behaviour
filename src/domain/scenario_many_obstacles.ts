@@ -38,7 +38,7 @@ const pairs2: Array<Pair> = range2
   .map((x) => range3.map((z) => makePair(x, z)))
   .flat();
 
-const mice: Array<[string, Character]> = Array.from({ length: 50 }).map(
+const mice1: Array<[string, Character]> = Array.from({ length: 50 }).map(
   (_, index) => {
     const x = index * 25 + 15;
     const z = index % 2 === 0 ? 10 : 30;
@@ -48,7 +48,7 @@ const mice: Array<[string, Character]> = Array.from({ length: 50 }).map(
         maxAngularAcceleration: 300,
         maxSpeed: 45,
         position: [x, z],
-        velocity: [40, 0],
+        velocity: [0, 0],
         orientation: 0,
         rotation: 0,
       },
@@ -63,13 +63,12 @@ const mice: Array<[string, Character]> = Array.from({ length: 50 }).map(
     return [`_${index}`, cha];
   }
 );
-
 export default function initScenario(): Scenario {
   return {
     name: "Obstacle Avoidance (many)",
     description: "This character exhibits the obstacle avoidance behaviour",
     characters: new Map([
-      ...mice,
+      ...mice1,
       [
         "_2",
         new Character(
