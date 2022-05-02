@@ -37139,8 +37139,8 @@ function getNormals([a, b]) {
 }
 function findAllIntersections(edge, // Edge, absolutely positioned
 shapes) {
-    return shapes.reduce((acc, shape) => {
-        return shape.path.points.reduce((innerAcc, point, index) => {
+    return shapes.reduce(function shapesReducer(acc, shape) {
+        return shape.path.points.reduce(function pointsReducer(innerAcc, point, index) {
             const lastIndex = index === 0 ? shape.path.points.length - 1 : index - 1;
             const [relA, relB] = [point, shape.path.points[lastIndex]];
             const absoluteEdge = [
@@ -37168,7 +37168,7 @@ function findFirstIntersection(edge, shapes) {
     }
     const a = edge[0];
     const init = { int: null, dist: Infinity };
-    return intersections.reduce((acc, int) => {
+    return intersections.reduce(function findFirstReducer(acc, int) {
         const dist = distance_1(a, int.point);
         return dist < acc.dist ? { int, dist } : acc;
     }, init).int;
@@ -37188,10 +37188,7 @@ function getCollision(edge, shapes) {
 
 function getWhiskerRay(k, radians, magnitude) {
     const bearing = vectorToRadians_1(k.velocity) - radians;
-    return [
-        k.position,
-        add_1(k.position, multiply_1(radiansToVector_1(bearing), magnitude)),
-    ];
+    return add_1(k.position, multiply_1(radiansToVector_1(bearing), magnitude));
 }
 class ObstacleAvoidance extends AbstractBehaviour {
     constructor(avoidDistance) {
@@ -37207,6 +37204,22 @@ class ObstacleAvoidance extends AbstractBehaviour {
         this.collisionIndex = -1;
         this.incrementing = true;
         this.collisions = [null, null, null, null, null, null];
+        this.rays = Array.from({ length: 6 }).map(() => [
+            [0, 0],
+            [0, 0],
+        ]);
+    }
+    updateRays(kinematic) {
+        const speed = length_1(kinematic.velocity);
+        for (const ray of this.rays) {
+            ray[0] = kinematic.position;
+        }
+        this.rays[0][1] = getWhiskerRay(kinematic, -0.9, 0.3 * speed);
+        this.rays[1][1] = getWhiskerRay(kinematic, -0.3, 1 * speed);
+        this.rays[2][1] = getWhiskerRay(kinematic, -0.1, 2.1 * speed);
+        this.rays[3][1] = getWhiskerRay(kinematic, 0.1, 2.1 * speed);
+        this.rays[4][1] = getWhiskerRay(kinematic, 0.3, 1 * speed);
+        this.rays[5][1] = getWhiskerRay(kinematic, 0.9, 0.3 * speed);
     }
     // This selects a ray, such that we sweep back and forth between selected rays
     // on each tick.
@@ -37226,15 +37239,7 @@ class ObstacleAvoidance extends AbstractBehaviour {
         }
     }
     calculate(kinematic, shapes) {
-        const speed = length_1(kinematic.velocity);
-        const rays = [
-            getWhiskerRay(kinematic, -0.9, 0.3 * speed),
-            getWhiskerRay(kinematic, -0.3, 1 * speed),
-            getWhiskerRay(kinematic, -0.1, 2.1 * speed),
-            getWhiskerRay(kinematic, 0.1, 2.1 * speed),
-            getWhiskerRay(kinematic, 0.3, 1 * speed),
-            getWhiskerRay(kinematic, 0.9, 0.3 * speed),
-        ];
+        this.updateRays(kinematic);
         // We have a set of "rays", like whiskers that extend from the character.
         // We sweep across the rays, checking one ray on each tick for a collision.
         // For each sweep we select the ray with the closest collision, and given
@@ -37242,12 +37247,12 @@ class ObstacleAvoidance extends AbstractBehaviour {
         // collisions on each tick until they no longer are present.
         // Sweeping then resumes.
         const hasRayWithCollision = this.collisionIndex > -1 &&
-            !!getCollision(rays[this.collisionIndex], shapes);
+            !!getCollision(this.rays[this.collisionIndex], shapes);
         if (!hasRayWithCollision) {
             this.collisionIndex = -1;
             this.updateRayIndex();
         }
-        this.collisions[this.rayIndex] = getCollision(rays[this.rayIndex], shapes);
+        this.collisions[this.rayIndex] = getCollision(this.rays[this.rayIndex], shapes);
         if (this.rayIndex === 0 || this.rayIndex === 5) {
             // find the nearest collision to the kinematic
             this.collisionIndex = this.collisions.reduce((acc, item, index) => {
@@ -37264,13 +37269,15 @@ class ObstacleAvoidance extends AbstractBehaviour {
             }, -1);
         }
         const collision = this.collisions[this.collisionIndex];
+        const rayIndex = this.rayIndex;
+        const collisionIndex = this.collisionIndex;
         // Show the whiskers
-        this.debug.edges = rays.map((edge, index) => {
+        this.debug.edges = this.rays.map(function rayMap(edge, index) {
             let strokeStyle = "rgb(224, 224, 224)";
-            if (index === this.rayIndex) {
+            if (index === rayIndex) {
                 strokeStyle = "rgb(191, 54, 12)";
             }
-            if (index === this.collisionIndex) {
+            if (index === collisionIndex) {
                 strokeStyle = "rgb(68, 138, 255)";
             }
             return {
@@ -37606,27 +37613,30 @@ const pairs1 = range1
 const pairs2 = range2
     .map((x) => range3.map((z) => makePair(x, z)))
     .flat();
+const mice1 = Array.from({ length: 50 }).map((_, index) => {
+    const x = index * 25 + 15;
+    const z = index % 2 === 0 ? 10 : 30;
+    const cha = new Character({
+        maxAcceleration: 25,
+        maxAngularAcceleration: 300,
+        maxSpeed: 45,
+        position: [x, z],
+        velocity: [0, 0],
+        orientation: 0,
+        rotation: 0,
+    }, [
+        new ObstacleAvoidance(),
+        new LookWhereYouAreGoing(),
+        new Arrive("_2"),
+    ], "🐭");
+    return [`_${index}`, cha];
+});
 function initScenario$4() {
     return {
         name: "Obstacle Avoidance (many)",
         description: "This character exhibits the obstacle avoidance behaviour",
         characters: new Map([
-            [
-                "_1",
-                new Character({
-                    maxAcceleration: 25,
-                    maxAngularAcceleration: 300,
-                    maxSpeed: 45,
-                    position: [55, 20],
-                    velocity: [40, 0],
-                    orientation: 0,
-                    rotation: 0,
-                }, [
-                    new ObstacleAvoidance(),
-                    new LookWhereYouAreGoing(),
-                    new Arrive("_2"),
-                ], "🐭"),
-            ],
+            ...mice1,
             [
                 "_2",
                 new Character({
@@ -39163,7 +39173,9 @@ function getSteering(char, scenario, behaviour) {
             return behaviour.calculate(char.kinematic, target.kinematic);
         }
         case "OBSTACLE_AVOIDANCE": {
-            return behaviour.calculate(char.kinematic, [...scenario.shapes.values()]);
+            return behaviour.calculate(char.kinematic, [
+                ...D(scenario.shapes).values(),
+            ]);
         }
         case "PURSUE": {
             const target = getCharacter(behaviour.targetId, scenario.characters);
