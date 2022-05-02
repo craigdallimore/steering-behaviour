@@ -47,6 +47,7 @@ const ScenarioSidebar = () => {
       </fieldset>
 
       <button
+        className="button-primary"
         data-id="play-pause-button"
         type="button"
         id="play-pause"
@@ -57,6 +58,7 @@ const ScenarioSidebar = () => {
         {state.ui.isPaused ? "Start" : "Pause"}
       </button>
       <button
+        className="button-primary"
         data-id="reset-button"
         type="button"
         id="reset"
@@ -68,6 +70,7 @@ const ScenarioSidebar = () => {
       </button>
 
       <button
+        className="button-primary"
         data-id="about-dialog-button"
         id="about"
         type="button"
