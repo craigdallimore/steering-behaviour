@@ -12,6 +12,10 @@
 ## Backlog
 
 - [ ] Feature: The kinematic controls could be hidden until revealed
+
+## Backlog
+
+- [ ] Chore: Button focus/outlines are inadequate
 - [ ] Feature: Add behaviour: should not permit already selected behaviours to be added
 - [ ] Feature: Add behaviour: should not permit incompatible behaviours to be added (which?)
 - [ ] Feature: Filter available behaviours based on the assigned behaviours

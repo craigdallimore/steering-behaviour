@@ -18,6 +18,7 @@ h2 {
 .character-sidebar fieldset {
   display: flex;
   flex-direction: column;
+  padding: 0.5rem 0;
 }
 
 .character-sidebar label {
@@ -37,4 +38,8 @@ h2 {
   background: var(--base04);
   padding: 1px 3px 0;
   border-radius: 2px;
+}
+.character-sidebar form {
+  display: flex;
+  flex-direction: column;
 }

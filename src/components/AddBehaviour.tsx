@@ -85,7 +85,7 @@ const AddBehaviour = (props: Props) => {
           }}
         />
         <button
-          className="button-cancel"
+          className="button-primary button-cancel"
           type="button"
           onClick={() => {
             setIsAddingBehaviour(false);
@@ -99,6 +99,7 @@ const AddBehaviour = (props: Props) => {
 
   return (
     <button
+      className="button-primary"
       type="button"
       onClick={() => {
         setIsAddingBehaviour(true);

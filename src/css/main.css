@@ -3,6 +3,7 @@
 @import "./scenario-sidebar.css";
 @import "./character-sidebar.css";
 @import "./modal.css";
+@import "./button.css";
 
 main {
   grid-area: canvas;
@@ -76,28 +77,6 @@ select {
   padding: 0.25rem 0.5rem;
   border: 2px solid var(--base00);
   letter-spacing: 1px;
-}
-
-button {
-  position: relative;
-  background-color: var(--base01);
-  color: white;
-  font-size: 0.8rem;
-  padding: 0.25rem 0.5rem;
-  border: 2px solid var(--base00);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
-}
-
-button:hover {
-  background-color: var(--base02);
-  cursor: pointer;
-}
-button:active {
-  top: 3px;
-  left: 3px;
-  box-shadow: none;
 }
 
 [type="number"] {

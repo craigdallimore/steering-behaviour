@@ -1,23 +1,23 @@
 import React from "react";
 import { render, fireEvent, userEvent } from "@test-utils";
 import Behaviours from "../Behaviours";
-import Character from "@domain/character";
 import * as steering from "@steering/index";
+import { Behaviour } from "@domain/types";
 
 describe("Behaviours", () => {
   const getProps = (changes = {}) => {
     return {
       dispatch: jest.fn(),
-      character: new Character(),
+      behaviours: [] as Array<Behaviour>,
       ...changes,
     };
   };
 
-  it("shows no behaviour config UI, given the character has no assigned behaviours", () => {
+  it("shows no behaviour config UI, given no assigned behaviours", () => {
     const props = getProps();
     const { getByDataId } = render(<Behaviours {...props} />);
 
-    expect(props.character.behaviours.length).toBe(0); // sanity
+    expect(props.behaviours.length).toBe(0); // sanity
     const list = getByDataId("behaviour-list");
     const items = list.querySelectorAll("li");
     expect(items.length).toBe(0);
@@ -41,7 +41,7 @@ describe("Behaviours", () => {
     new steering.Wander(),
   ])("it shows $name UI given the character has the $name behaviour", (s) => {
     const props = getProps();
-    props.character.behaviours = [s];
+    props.behaviours = [s];
     const { getByDataId } = render(<Behaviours {...props} />);
     const item = getByDataId(s.name);
 
@@ -50,7 +50,7 @@ describe("Behaviours", () => {
 
   test("changing a behaviour will dispatch changes ", () => {
     const props = getProps();
-    props.character.behaviours = [new steering.Separation()];
+    props.behaviours = [new steering.Separation()];
     const { getByDataId } = render(<Behaviours {...props} />);
 
     const thresholdInput = getByDataId("SEPARATION").querySelector(

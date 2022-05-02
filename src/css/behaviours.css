@@ -55,20 +55,6 @@
 #btn-set-target {
   align-self: start;
 }
-.button-cross {
-  border: 0;
-  padding: 0 0 0 1px;
-  background: white;
-  height: 1rem;
-  width: 1rem;
-  border-radius: 0.5rem;
-  box-shadow: none;
-  color: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1rem;
-}
 .button-cancel {
   align-self: start;
   margin-top: 1rem;
