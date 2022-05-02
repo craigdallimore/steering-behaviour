@@ -5,7 +5,8 @@ import * as steering from "@steering/index";
 export default function initScenario(): Scenario {
   return {
     name: "Wander",
-    description: "This character exhibits the wander behaviour",
+    description:
+      "The wander behaviour is intended to simulate random-like motion without startling changes in direction. These characters are also given the 'look-where-you-are-going' behaviour, encouraging them to face their direction of travel.",
     characters: new Map([
       [
         "_1",

@@ -25,7 +25,7 @@ export default class CollisionAvoidance extends AbstractBehaviour {
     super();
     // Holds the collision radius of a character (we assume all characters have
     // the same radius here)
-    this.radius = radius || 10;
+    this.radius = radius || 5;
   }
   calculate(kinematic: Kinematic, targets: Array<Kinematic>): Steering {
     const init: Acc = {

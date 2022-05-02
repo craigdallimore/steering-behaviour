@@ -2,19 +2,16 @@
 
 ## Priority
 
-- [ ] Optimise obstacle avoidance
+- Add an intro modal
+
+## Backlog
+
+- [ ] Maintenance: Optimise obstacle avoidance
   - [ ] findAllIntersections taking 11.62ms
   - [ ] down to 2.5ms (still 15fps@100 mice, 25fps@50)
   - What is the anon function below it?
   - Lots of "Compile code" and "minor GC"
   - Massive memory sawtoothing
-
-## Backlog
-
-- [ ] Feature: The kinematic controls could be hidden until revealed
-
-## Backlog
-
 - [ ] Chore: Button focus/outlines are inadequate
 - [ ] Feature: Add behaviour: should not permit already selected behaviours to be added
 - [ ] Feature: Add behaviour: should not permit incompatible behaviours to be added (which?)

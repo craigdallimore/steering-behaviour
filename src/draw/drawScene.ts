@@ -1,4 +1,3 @@
-import drawArrow from "./drawArrow";
 import drawGrid from "./drawGrid";
 import drawPath from "./drawPath";
 import drawSelectionBox from "./drawSelectionBox";
@@ -49,6 +48,10 @@ export default function drawScene(
     }
   }
 
+  state.scenario.paths.forEach((p: Path) => {
+    drawPath(ctx, p, "rgba(224, 64, 251, 1)");
+  });
+
   state.scenario.characters.forEach((cha: Character) => {
     drawCharacter(ctx, cha);
     if (state.ui.isDebugMode) {
@@ -56,10 +59,6 @@ export default function drawScene(
         drawDebug(ctx, behaviour.debug, cha.kinematic);
       });
     }
-  });
-
-  state.scenario.paths.forEach((p: Path) => {
-    drawPath(ctx, p, "rgba(178, 223, 219, 1)");
   });
 
   if (focussedCharacter) {

@@ -23,8 +23,8 @@ export default class Arrive extends AbstractBehaviour {
     super();
     this.targetId = targetId;
     this.timeToTarget = timeToTarget ?? 3;
-    this.targetRadius = targetRadius ?? 5;
-    this.slowRadius = slowRadius ?? 60;
+    this.targetRadius = targetRadius ?? 15;
+    this.slowRadius = slowRadius ?? 50;
   }
   calculate(kinematic: Kinematic, targetPosition: Vector): Steering | null {
     const distanceToTarget = distance(kinematic.position, targetPosition);
@@ -56,8 +56,13 @@ export default class Arrive extends AbstractBehaviour {
     this.debug.circles = [
       {
         position: targetPosition,
-        radius: 2,
-        fillStyle: "rgba(0, 0,255, 0.5)",
+        radius: this.targetRadius,
+        fillStyle: "rgba(0, 0,255, 0.1)",
+      },
+      {
+        position: targetPosition,
+        radius: this.slowRadius,
+        fillStyle: "rgba(0, 0,255, 0.1)",
       },
     ];
 

@@ -55,7 +55,7 @@ const mice1: Array<[string, Character]> = Array.from({ length: 50 }).map(
       [
         new steering.ObstacleAvoidance(),
         new steering.LookWhereYouAreGoing(),
-        new steering.Arrive("_2"),
+        new steering.Arrive("cheese"),
       ],
       "🐭"
     );
@@ -65,12 +65,13 @@ const mice1: Array<[string, Character]> = Array.from({ length: 50 }).map(
 );
 export default function initScenario(): Scenario {
   return {
-    name: "Obstacle Avoidance (many)",
-    description: "This character exhibits the obstacle avoidance behaviour",
+    name: "Obstacle Avoidance",
+    description:
+      "These characters are attempting to avoid bumping into obstacles while moving towards their target.",
     characters: new Map([
       ...mice1,
       [
-        "_2",
+        "cheese",
         new Character(
           {
             maxAcceleration: 25,

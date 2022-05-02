@@ -6,24 +6,22 @@ export default function initScenario(): Scenario {
   return {
     name: "Follow path",
     description:
-      "There are two path following behaviours - chase rabbit, and predictive.",
+      "The mouse has the 'Follow Path' behaviour; it attempts to move towards the next point on the path. The cats are attempting to predict where the mouse will be next and intercept it, using the 'pursue' behaviour",
     characters: new Map([
       [
         "_1",
         new Character(
           {
-            maxAcceleration: 25,
+            maxAcceleration: 55,
             maxAngularAcceleration: 140,
-            maxSpeed: 45,
+            maxSpeed: 55,
             position: [20, 20],
             velocity: [0, 0],
             orientation: 0,
             rotation: 0,
           },
-          [
-            new steering.FollowPathPredict("p1"),
-            new steering.LookWhereYouAreGoing(),
-          ]
+          [new steering.FollowPathPredict("p1")],
+          "🐭"
         ),
       ],
       [
@@ -38,11 +36,8 @@ export default function initScenario(): Scenario {
             orientation: 0,
             rotation: 0,
           },
-          [
-            new steering.Pursue("_1"),
-            new steering.Separation(),
-            new steering.LookWhereYouAreGoing(),
-          ]
+          [new steering.Pursue("_1"), new steering.Separation()],
+          "😺"
         ),
       ],
       [
@@ -57,11 +52,8 @@ export default function initScenario(): Scenario {
             orientation: 0,
             rotation: 0,
           },
-          [
-            new steering.Pursue("_1"),
-            new steering.Separation(),
-            new steering.LookWhereYouAreGoing(),
-          ]
+          [new steering.Pursue("_1"), new steering.Separation()],
+          "😾"
         ),
       ],
     ]),
@@ -74,13 +66,13 @@ export default function initScenario(): Scenario {
           position: [20, 20],
           isClosed: true,
           points: [
-            [150, 50],
-            [150, 240],
-            [250, 480],
-            [400, 600],
-            [550, 480],
-            [700, 240],
-            [700, 50],
+            [50, 150],
+            [30, 240],
+            [250, 380],
+            [100, 500],
+            [350, 580],
+            [500, 240],
+            [400, 50],
           ],
         },
       ],

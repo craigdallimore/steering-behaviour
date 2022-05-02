@@ -3,7 +3,6 @@ import initBlank from "./scenario_blank";
 import initWander from "./scenario_wander";
 import initColl from "./scenario_collision";
 import initOb1 from "./scenario_many_obstacles";
-import initOb2 from "./scenario_obstacle_walls";
 import initEvade from "./scenario_evade";
 import initPath from "./scenario_path";
 import initSeparation from "./scenario_separation";
@@ -21,8 +20,6 @@ export function getScenario(id?: ScenarioId): Scenario | null {
       return initColl();
     case "SC_OB_1":
       return initOb1();
-    case "SC_OB_2":
-      return initOb2();
     case "SC_EVADE":
       return initEvade();
     case "SC_PATH":
@@ -50,7 +47,6 @@ export function getState(config: StateConfig): State {
       "SC_WANDER",
       "SC_COLL",
       "SC_OB_1",
-      "SC_OB_2",
       "SC_EVADE",
       "SC_PATH",
       "SC_SEPARATION",
