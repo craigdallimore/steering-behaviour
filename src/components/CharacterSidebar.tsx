@@ -8,6 +8,7 @@ import KinematicControls from "./KinematicControls";
 const CharacterSidebar = () => {
   const dispatch = React.useContext(DispatchContext);
   const state = React.useContext(StateContext);
+  const [isKinematicOpen, setIsKinematicOpen] = React.useState(false);
 
   const focussedCharacter = getFocussedCharacter(state);
 
@@ -23,9 +24,22 @@ const CharacterSidebar = () => {
           <legend data-id="kinematic-id">
             Kinematic <code>{idText}</code>
           </legend>
-          <KinematicControls character={focussedCharacter} />
+          <button
+            data-id="reveal-kinematic-controls"
+            className="button-secondary reveal-conceal"
+            type="button"
+            onClick={() => setIsKinematicOpen(!isKinematicOpen)}
+          >
+            {isKinematicOpen ? "Hide controls" : "Show controls"}
+          </button>
+          {isKinematicOpen && (
+            <KinematicControls character={focussedCharacter} />
+          )}
           <legend>Behaviours</legend>
-          <Behaviours dispatch={dispatch} character={focussedCharacter} />
+          <Behaviours
+            dispatch={dispatch}
+            behaviours={focussedCharacter.behaviours}
+          />
         </form>
       )}
     </aside>
