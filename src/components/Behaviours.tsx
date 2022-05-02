@@ -1,5 +1,5 @@
 import React from "react";
-import { Behaviour, Character, SteeringBehaviourName } from "@domain/types";
+import { Behaviour, SteeringBehaviourName } from "@domain/types";
 import BehaviourSwitch from "./behaviours/BehaviourSwitch";
 import AddBehaviour from "./AddBehaviour";
 import RemoveBehaviour from "./RemoveBehaviour";
@@ -7,7 +7,7 @@ import RemoveBehaviour from "./RemoveBehaviour";
 import { Action } from "@domain/reducer";
 
 type Props = {
-  character: Character;
+  behaviours: Array<Behaviour>;
   dispatch: (action: Action) => void;
 };
 
@@ -52,7 +52,7 @@ const Behaviours = (props: Props) => {
   return (
     <fieldset className="behaviours">
       <ul data-id="behaviour-list">
-        {props.character.behaviours.map((behaviour) => (
+        {props.behaviours.map((behaviour) => (
           <li key={behaviour.name} data-id={behaviour.name}>
             <header>
               <h3>{getName(behaviour.name)}</h3>
