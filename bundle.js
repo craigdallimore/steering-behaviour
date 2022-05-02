@@ -36496,7 +36496,7 @@ class Character {
 }
 _a$1 = L;
 
-function initScenario$7() {
+function initScenario$6() {
     return {
         name: "Blank",
         description: "Blank",
@@ -36654,8 +36654,8 @@ class Arrive extends AbstractBehaviour {
         this.name = "ARRIVE";
         this.targetId = targetId;
         this.timeToTarget = timeToTarget !== null && timeToTarget !== void 0 ? timeToTarget : 3;
-        this.targetRadius = targetRadius !== null && targetRadius !== void 0 ? targetRadius : 5;
-        this.slowRadius = slowRadius !== null && slowRadius !== void 0 ? slowRadius : 60;
+        this.targetRadius = targetRadius !== null && targetRadius !== void 0 ? targetRadius : 15;
+        this.slowRadius = slowRadius !== null && slowRadius !== void 0 ? slowRadius : 50;
     }
     calculate(kinematic, targetPosition) {
         const distanceToTarget = distance_1(kinematic.position, targetPosition);
@@ -36678,8 +36678,13 @@ class Arrive extends AbstractBehaviour {
         this.debug.circles = [
             {
                 position: targetPosition,
-                radius: 2,
-                fillStyle: "rgba(0, 0,255, 0.5)",
+                radius: this.targetRadius,
+                fillStyle: "rgba(0, 0,255, 0.1)",
+            },
+            {
+                position: targetPosition,
+                radius: this.slowRadius,
+                fillStyle: "rgba(0, 0,255, 0.1)",
             },
         ];
         return {
@@ -36695,7 +36700,7 @@ class CollisionAvoidance extends AbstractBehaviour {
         this.name = "COLLISION_AVOIDANCE";
         // Holds the collision radius of a character (we assume all characters have
         // the same radius here)
-        this.radius = radius || 10;
+        this.radius = radius || 5;
     }
     calculate(kinematic, targets) {
         const init = {
@@ -37352,7 +37357,7 @@ class Separation extends AbstractBehaviour {
         super();
         this.name = "SEPARATION";
         // The threshold to take action
-        this.threshold = threshold !== null && threshold !== void 0 ? threshold : 250;
+        this.threshold = threshold !== null && threshold !== void 0 ? threshold : 50;
         // Holds the constant coefficient of decay for the inverse square law force
         this.decayCoefficient = decayCoefficient !== null && decayCoefficient !== void 0 ? decayCoefficient : 1500;
     }
@@ -37406,10 +37411,10 @@ class Wander extends AbstractBehaviour {
     }
 }
 
-function initScenario$6() {
+function initScenario$5() {
     return {
         name: "Wander",
-        description: "This character exhibits the wander behaviour",
+        description: "The wander behaviour is intended to simulate random-like motion without startling changes in direction. These characters are also given the 'look-where-you-are-going' behaviour, encouraging them to face their direction of travel.",
         characters: new Map([
             [
                 "_1",
@@ -37465,10 +37470,10 @@ function initScenario$6() {
     };
 }
 
-function initScenario$5() {
+function initScenario$4() {
     return {
         name: "Collision Avoidance",
-        description: "This character exhibits the collision avoidance behaviour",
+        description: "The top character has been given the collision avoidance behaviour. It attempts to steer to avoid collisions with the other characters.",
         characters: new Map([
             [
                 "_1",
@@ -37476,11 +37481,14 @@ function initScenario$5() {
                     maxAcceleration: 25,
                     maxAngularAcceleration: 140,
                     maxSpeed: 45,
-                    position: [400, 280],
+                    position: [200, 80],
                     velocity: [0, 15],
                     orientation: 1.5,
                     rotation: 0,
-                }, [new CollisionAvoidance()]),
+                }, [
+                    new CollisionAvoidance(),
+                    new LookWhereYouAreGoing(),
+                ]),
             ],
             [
                 "_2",
@@ -37488,7 +37496,7 @@ function initScenario$5() {
                     maxAcceleration: 25,
                     maxAngularAcceleration: 140,
                     maxSpeed: 45,
-                    position: [380, 400],
+                    position: [180, 200],
                     velocity: [0, -10],
                     orientation: 1.5 * Math.PI,
                     rotation: 0,
@@ -37500,7 +37508,7 @@ function initScenario$5() {
                     maxAcceleration: 25,
                     maxAngularAcceleration: 140,
                     maxSpeed: 45,
-                    position: [402, 440],
+                    position: [202, 240],
                     velocity: [0, -8],
                     orientation: 1.5 * Math.PI,
                     rotation: 0,
@@ -37512,7 +37520,7 @@ function initScenario$5() {
                     maxAcceleration: 25,
                     maxAngularAcceleration: 140,
                     maxSpeed: 45,
-                    position: [420, 480],
+                    position: [220, 280],
                     velocity: [0, -12],
                     orientation: 1.5 * Math.PI,
                     rotation: 0,
@@ -37524,7 +37532,7 @@ function initScenario$5() {
                     maxAcceleration: 25,
                     maxAngularAcceleration: 140,
                     maxSpeed: 45,
-                    position: [340, 520],
+                    position: [140, 320],
                     velocity: [0, -12],
                     orientation: 1.5 * Math.PI,
                     rotation: 0,
@@ -37536,7 +37544,7 @@ function initScenario$5() {
                     maxAcceleration: 25,
                     maxAngularAcceleration: 140,
                     maxSpeed: 45,
-                    position: [360, 540],
+                    position: [160, 340],
                     velocity: [0, -8],
                     orientation: 1.5 * Math.PI,
                     rotation: 0,
@@ -37548,7 +37556,7 @@ function initScenario$5() {
                     maxAcceleration: 25,
                     maxAngularAcceleration: 140,
                     maxSpeed: 45,
-                    position: [380, 600],
+                    position: [180, 400],
                     velocity: [0, -15],
                     orientation: 1.5 * Math.PI,
                     rotation: 0,
@@ -37560,7 +37568,7 @@ function initScenario$5() {
                     maxAcceleration: 25,
                     maxAngularAcceleration: 140,
                     maxSpeed: 45,
-                    position: [400, 650],
+                    position: [200, 450],
                     velocity: [0, -8],
                     orientation: 1.5 * Math.PI,
                     rotation: 0,
@@ -37572,7 +37580,7 @@ function initScenario$5() {
                     maxAcceleration: 25,
                     maxAngularAcceleration: 140,
                     maxSpeed: 45,
-                    position: [420, 550],
+                    position: [220, 330],
                     velocity: [0, -10],
                     orientation: 1.5 * Math.PI,
                     rotation: 0,
@@ -37627,18 +37635,18 @@ const mice1 = Array.from({ length: 50 }).map((_, index) => {
     }, [
         new ObstacleAvoidance(),
         new LookWhereYouAreGoing(),
-        new Arrive("_2"),
+        new Arrive("cheese"),
     ], "🐭");
     return [`_${index}`, cha];
 });
-function initScenario$4() {
+function initScenario$3() {
     return {
-        name: "Obstacle Avoidance (many)",
-        description: "This character exhibits the obstacle avoidance behaviour",
+        name: "Obstacle Avoidance",
+        description: "These characters are attempting to avoid bumping into obstacles while moving towards their target.",
         characters: new Map([
             ...mice1,
             [
-                "_2",
+                "cheese",
                 new Character({
                     maxAcceleration: 25,
                     maxAngularAcceleration: 300,
@@ -37658,117 +37666,10 @@ function initScenario$4() {
     };
 }
 
-function initScenario$3() {
-    return {
-        name: "Obstacle Avoidance (walls)",
-        description: "This character exhibits the obstacle avoidance behaviour",
-        characters: new Map([
-            [
-                "_1",
-                new Character({
-                    maxAcceleration: 25,
-                    maxAngularAcceleration: 140,
-                    maxSpeed: 25,
-                    position: [200, 65],
-                    velocity: [-12, 10],
-                    orientation: 1.5,
-                    rotation: 0,
-                }, [
-                    new ObstacleAvoidance(),
-                    new LookWhereYouAreGoing(),
-                ]),
-            ],
-        ]),
-        shapes: new Map([
-            [
-                "wall--left",
-                {
-                    path: {
-                        label: "wall1path",
-                        isClosed: false,
-                        position: [40, 40],
-                        points: [
-                            [0, 0],
-                            [10, 0],
-                            [10, 400],
-                            [0, 400],
-                        ],
-                    },
-                },
-            ],
-            [
-                "wall--right",
-                {
-                    path: {
-                        label: "wall2path",
-                        isClosed: false,
-                        position: [450, 40],
-                        points: [
-                            [0, 0],
-                            [10, 0],
-                            [10, 400],
-                            [0, 400],
-                        ],
-                    },
-                },
-            ],
-            [
-                "wall--top",
-                {
-                    path: {
-                        label: "wall3path",
-                        isClosed: false,
-                        position: [50, 30],
-                        points: [
-                            [0, 0],
-                            [400, 0],
-                            [400, 10],
-                            [0, 10],
-                        ],
-                    },
-                },
-            ],
-            [
-                "wall--bottom",
-                {
-                    path: {
-                        label: "wall4path",
-                        isClosed: false,
-                        position: [50, 440],
-                        points: [
-                            [0, 0],
-                            [400, 0],
-                            [400, 10],
-                            [0, 10],
-                        ],
-                    },
-                },
-            ],
-            [
-                "box--top",
-                {
-                    path: {
-                        label: "wall2path",
-                        isClosed: false,
-                        position: [315, 240],
-                        points: [
-                            [0, 0],
-                            [30, 0],
-                            [30, 30],
-                            [0, 30],
-                        ],
-                    },
-                },
-            ],
-        ]),
-        paths: new Map(),
-    };
-}
-
 function initScenario$2() {
     return {
         name: "Evade",
-        description: "The evading character will attempt to flee the predicted future position of the pursuer",
+        description: "The cat has the 'wander' behaviour, so it is not attempting to catch the mouse. The mouse has the 'evade' behaviour. This causes it to guess where the cat is going and to distance itself from that position as fast as it can.",
         characters: new Map([
             [
                 "mouse",
@@ -37776,11 +37677,11 @@ function initScenario$2() {
                     maxAcceleration: 25,
                     maxAngularAcceleration: 140,
                     maxSpeed: 45,
-                    position: [150, 150],
+                    position: [300, 300],
                     velocity: [0, 0],
                     orientation: 2 * Math.PI,
                     rotation: 0,
-                }, []),
+                }, [new Evade("cat")], "🐭"),
             ],
             [
                 "cat",
@@ -37789,10 +37690,10 @@ function initScenario$2() {
                     maxAngularAcceleration: 140,
                     maxSpeed: 45,
                     position: [350, 350],
-                    velocity: [0, 0],
-                    orientation: 2 * Math.PI,
+                    velocity: [-10, -10],
+                    orientation: 1.25 * Math.PI,
                     rotation: 0,
-                }, [new Pursue("mouse")]),
+                }, [new Wander()], "😺"),
             ],
         ]),
         shapes: new Map(),
@@ -37803,22 +37704,19 @@ function initScenario$2() {
 function initScenario$1() {
     return {
         name: "Follow path",
-        description: "There are two path following behaviours - chase rabbit, and predictive.",
+        description: "The mouse has the 'Follow Path' behaviour; it attempts to move towards the next point on the path. The cats are attempting to predict where the mouse will be next and intercept it, using the 'pursue' behaviour",
         characters: new Map([
             [
                 "_1",
                 new Character({
-                    maxAcceleration: 25,
+                    maxAcceleration: 55,
                     maxAngularAcceleration: 140,
-                    maxSpeed: 45,
+                    maxSpeed: 55,
                     position: [20, 20],
                     velocity: [0, 0],
                     orientation: 0,
                     rotation: 0,
-                }, [
-                    new FollowPathPredict("p1"),
-                    new LookWhereYouAreGoing(),
-                ]),
+                }, [new FollowPathPredict("p1")], "🐭"),
             ],
             [
                 "_2",
@@ -37830,11 +37728,7 @@ function initScenario$1() {
                     velocity: [0, 0],
                     orientation: 0,
                     rotation: 0,
-                }, [
-                    new Pursue("_1"),
-                    new Separation(),
-                    new LookWhereYouAreGoing(),
-                ]),
+                }, [new Pursue("_1"), new Separation()], "😺"),
             ],
             [
                 "_3",
@@ -37846,11 +37740,7 @@ function initScenario$1() {
                     velocity: [0, 0],
                     orientation: 0,
                     rotation: 0,
-                }, [
-                    new Pursue("_1"),
-                    new Separation(),
-                    new LookWhereYouAreGoing(),
-                ]),
+                }, [new Pursue("_1"), new Separation()], "😾"),
             ],
         ]),
         shapes: new Map(),
@@ -37862,13 +37752,13 @@ function initScenario$1() {
                     position: [20, 20],
                     isClosed: true,
                     points: [
-                        [150, 50],
-                        [150, 240],
-                        [250, 480],
-                        [400, 600],
-                        [550, 480],
-                        [700, 240],
-                        [700, 50],
+                        [50, 150],
+                        [30, 240],
+                        [250, 380],
+                        [100, 500],
+                        [350, 580],
+                        [500, 240],
+                        [400, 50],
                     ],
                 },
             ],
@@ -37879,115 +37769,147 @@ function initScenario$1() {
 function initScenario() {
     return {
         name: "Separation",
-        description: "These characters move to separate themselves from each other",
+        description: "The 'separation' behaviour encourages these characters to stay apart from each other. The 'arrive' behaviour encourages the characters to move towards the light, and reduce speed on approach.",
         characters: new Map([
             [
                 "_0",
                 new Character({
-                    maxAcceleration: 25,
+                    maxAcceleration: 45,
                     maxAngularAcceleration: 140,
                     maxSpeed: 45,
-                    position: [400, 200],
-                    velocity: [0, 20],
+                    position: [100, 200],
+                    velocity: [0, 0],
                     orientation: 1.5,
                     rotation: 0,
-                }, [new Separation()]),
+                }, [], "💡"),
             ],
             [
                 "_1",
                 new Character({
-                    maxAcceleration: 25,
+                    maxAcceleration: 45,
                     maxAngularAcceleration: 140,
                     maxSpeed: 45,
-                    position: [399, 400],
+                    position: [20, 20],
                     velocity: [0, 0],
                     orientation: 1.5,
                     rotation: 0,
-                }, [new Separation()]),
+                }, [
+                    new Separation(),
+                    new Arrive("_0"),
+                    new LookWhereYouAreGoing(),
+                ]),
             ],
             [
                 "_2",
                 new Character({
-                    maxAcceleration: 25,
+                    maxAcceleration: 45,
                     maxAngularAcceleration: 140,
                     maxSpeed: 45,
-                    position: [399, 401],
+                    position: [30, 40],
                     velocity: [0, 0],
                     orientation: 1.5,
                     rotation: 0,
-                }, [new Separation()]),
+                }, [
+                    new Separation(),
+                    new Arrive("_0"),
+                    new LookWhereYouAreGoing(),
+                ]),
             ],
             [
                 "_3",
                 new Character({
-                    maxAcceleration: 25,
+                    maxAcceleration: 45,
                     maxAngularAcceleration: 140,
                     maxSpeed: 45,
-                    position: [399, 399],
+                    position: [40, 20],
                     velocity: [0, 0],
                     orientation: 1.5,
                     rotation: 0,
-                }, [new Separation()]),
+                }, [
+                    new Separation(),
+                    new Arrive("_0"),
+                    new LookWhereYouAreGoing(),
+                ]),
             ],
             [
                 "_4",
                 new Character({
-                    maxAcceleration: 25,
+                    maxAcceleration: 45,
                     maxAngularAcceleration: 140,
-                    maxSpeed: 45,
-                    position: [400, 400],
+                    maxSpeed: 25,
+                    position: [50, 40],
                     velocity: [0, 0],
                     orientation: 1.5,
                     rotation: 0,
-                }, [new Separation()]),
+                }, [
+                    new Separation(),
+                    new Arrive("_0"),
+                    new LookWhereYouAreGoing(),
+                ]),
             ],
             [
                 "_5",
                 new Character({
                     maxAcceleration: 25,
                     maxAngularAcceleration: 140,
-                    maxSpeed: 45,
-                    position: [400, 401],
+                    maxSpeed: 25,
+                    position: [60, 20],
                     velocity: [0, 0],
                     orientation: 1.5,
                     rotation: 0,
-                }, [new Separation()]),
+                }, [
+                    new Separation(),
+                    new Arrive("_0"),
+                    new LookWhereYouAreGoing(),
+                ]),
             ],
             [
                 "_6",
                 new Character({
                     maxAcceleration: 25,
                     maxAngularAcceleration: 140,
-                    maxSpeed: 45,
-                    position: [400, 399],
+                    maxSpeed: 25,
+                    position: [70, 40],
                     velocity: [0, 0],
                     orientation: 1.5,
                     rotation: 0,
-                }, [new Separation()]),
+                }, [
+                    new Separation(),
+                    new Arrive("_0"),
+                    new LookWhereYouAreGoing(),
+                ]),
             ],
             [
                 "_7",
                 new Character({
                     maxAcceleration: 25,
                     maxAngularAcceleration: 140,
-                    maxSpeed: 45,
-                    position: [401, 400],
+                    maxSpeed: 25,
+                    position: [80, 20],
                     velocity: [0, 0],
                     orientation: 1.5,
                     rotation: 0,
-                }, [new Separation()]),
+                }, [
+                    new Separation(),
+                    new Arrive("_0"),
+                    new LookWhereYouAreGoing(),
+                ]),
             ],
             [
                 "_8",
                 new Character({
                     maxAcceleration: 25,
                     maxAngularAcceleration: 140,
-                    maxSpeed: 45,
-                    position: [401, 399],
+                    maxSpeed: 25,
+                    position: [90, 40],
                     velocity: [0, 0],
                     orientation: 1.5,
                     rotation: 0,
-                }, [new Separation()]),
+                }, [
+                    new Separation(),
+                    new Arrive("_0"),
+                    new LookWhereYouAreGoing(),
+                ]),
             ],
             [
                 "_9",
@@ -37995,11 +37917,111 @@ function initScenario() {
                     maxAcceleration: 25,
                     maxAngularAcceleration: 140,
                     maxSpeed: 45,
-                    position: [401, 401],
+                    position: [100, 20],
                     velocity: [0, 0],
                     orientation: 1.5,
                     rotation: 0,
-                }, [new Separation()]),
+                }, [
+                    new Separation(),
+                    new Arrive("_0"),
+                    new LookWhereYouAreGoing(),
+                ]),
+            ],
+            [
+                "_10",
+                new Character({
+                    maxAcceleration: 25,
+                    maxAngularAcceleration: 140,
+                    maxSpeed: 45,
+                    position: [110, 40],
+                    velocity: [0, 0],
+                    orientation: 1.5,
+                    rotation: 0,
+                }, [
+                    new Separation(),
+                    new Arrive("_0"),
+                    new LookWhereYouAreGoing(),
+                ]),
+            ],
+            [
+                "_11",
+                new Character({
+                    maxAcceleration: 25,
+                    maxAngularAcceleration: 140,
+                    maxSpeed: 45,
+                    position: [120, 20],
+                    velocity: [0, 0],
+                    orientation: 1.5,
+                    rotation: 0,
+                }, [
+                    new Separation(),
+                    new Arrive("_0"),
+                    new LookWhereYouAreGoing(),
+                ]),
+            ],
+            [
+                "_12",
+                new Character({
+                    maxAcceleration: 25,
+                    maxAngularAcceleration: 140,
+                    maxSpeed: 45,
+                    position: [130, 40],
+                    velocity: [0, 0],
+                    orientation: 1.5,
+                    rotation: 0,
+                }, [
+                    new Separation(),
+                    new Arrive("_0"),
+                    new LookWhereYouAreGoing(),
+                ]),
+            ],
+            [
+                "_13",
+                new Character({
+                    maxAcceleration: 25,
+                    maxAngularAcceleration: 140,
+                    maxSpeed: 45,
+                    position: [140, 20],
+                    velocity: [0, 0],
+                    orientation: 1.5,
+                    rotation: 0,
+                }, [
+                    new Separation(),
+                    new Arrive("_0"),
+                    new LookWhereYouAreGoing(),
+                ]),
+            ],
+            [
+                "_14",
+                new Character({
+                    maxAcceleration: 25,
+                    maxAngularAcceleration: 140,
+                    maxSpeed: 45,
+                    position: [150, 40],
+                    velocity: [0, 0],
+                    orientation: 1.5,
+                    rotation: 0,
+                }, [
+                    new Separation(),
+                    new Arrive("_0"),
+                    new LookWhereYouAreGoing(),
+                ]),
+            ],
+            [
+                "_15",
+                new Character({
+                    maxAcceleration: 25,
+                    maxAngularAcceleration: 140,
+                    maxSpeed: 45,
+                    position: [100, 20],
+                    velocity: [0, 0],
+                    orientation: 1.5,
+                    rotation: 0,
+                }, [
+                    new Separation(),
+                    new Arrive("_0"),
+                    new LookWhereYouAreGoing(),
+                ]),
             ],
         ]),
         shapes: new Map(),
@@ -38013,14 +38035,12 @@ function initScenario() {
 function getScenario(id) {
     switch (id) {
         case "SC_BLANK":
-            return initScenario$7();
-        case "SC_WANDER":
             return initScenario$6();
-        case "SC_COLL":
+        case "SC_WANDER":
             return initScenario$5();
-        case "SC_OB_1":
+        case "SC_COLL":
             return initScenario$4();
-        case "SC_OB_2":
+        case "SC_OB_1":
             return initScenario$3();
         case "SC_EVADE":
             return initScenario$2();
@@ -38049,7 +38069,6 @@ function getState(config) {
             "SC_WANDER",
             "SC_COLL",
             "SC_OB_1",
-            "SC_OB_2",
             "SC_EVADE",
             "SC_PATH",
             "SC_SEPARATION",
@@ -38994,6 +39013,9 @@ function drawScene(ctx, state) {
             drawCircle(ctx, target.kinematic.position, 10, `rgba(255, 255, 0, ${Math.max(state.ui.actionFeedbackCount, 1) / 100})`);
         }
     }
+    state.scenario.paths.forEach((p) => {
+        drawPath(ctx, p, "rgba(224, 64, 251, 1)");
+    });
     state.scenario.characters.forEach((cha) => {
         drawCharacter(ctx, cha);
         if (state.ui.isDebugMode) {
@@ -39001,9 +39023,6 @@ function drawScene(ctx, state) {
                 drawDebug(ctx, behaviour.debug, cha.kinematic);
             });
         }
-    });
-    state.scenario.paths.forEach((p) => {
-        drawPath(ctx, p, "rgba(178, 223, 219, 1)");
     });
     if (focussedCharacter) {
         drawSelectionBox(ctx, focussedCharacter.kinematic.position);
