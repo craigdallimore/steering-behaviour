@@ -5,6 +5,7 @@ import {
   multiply,
   radiansToVector,
   subtract,
+  Vector,
   vectorToRadians,
 } from "@decoy9697/vector";
 import type {
@@ -19,12 +20,13 @@ import Seek from "./seek";
 import getCollision from "@lib/shape";
 import mapToRange from "@lib/mapToRange";
 
-function getWhiskerRay(k: Kinematic, radians: number, magnitude: number): Edge {
+function getWhiskerRay(
+  k: Kinematic,
+  radians: number,
+  magnitude: number
+): Vector {
   const bearing = vectorToRadians(k.velocity) - radians;
-  return [
-    k.position,
-    add(k.position, multiply(radiansToVector(bearing), magnitude)),
-  ];
+  return add(k.position, multiply(radiansToVector(bearing), magnitude));
 }
 
 export default class ObstacleAvoidance extends AbstractBehaviour {
@@ -36,6 +38,7 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
   collisionIndex: number;
   incrementing: boolean;
   collisions: Array<Collision | null>;
+  rays: Array<Edge>;
 
   constructor(avoidDistance?: number) {
     super();
@@ -51,6 +54,25 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
     this.collisionIndex = -1;
     this.incrementing = true;
     this.collisions = [null, null, null, null, null, null];
+
+    this.rays = Array.from({ length: 6 }).map(() => [
+      [0, 0],
+      [0, 0],
+    ]);
+  }
+
+  updateRays(kinematic: Kinematic) {
+    const speed = length(kinematic.velocity);
+
+    for (const ray of this.rays) {
+      ray[0] = kinematic.position;
+    }
+    this.rays[0][1] = getWhiskerRay(kinematic, -0.9, 0.3 * speed);
+    this.rays[1][1] = getWhiskerRay(kinematic, -0.3, 1 * speed);
+    this.rays[2][1] = getWhiskerRay(kinematic, -0.1, 2.1 * speed);
+    this.rays[3][1] = getWhiskerRay(kinematic, 0.1, 2.1 * speed);
+    this.rays[4][1] = getWhiskerRay(kinematic, 0.3, 1 * speed);
+    this.rays[5][1] = getWhiskerRay(kinematic, 0.9, 0.3 * speed);
   }
 
   // This selects a ray, such that we sweep back and forth between selected rays
@@ -72,16 +94,7 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
   }
 
   calculate(kinematic: Kinematic, shapes: Array<Shape>): Steering {
-    const speed = length(kinematic.velocity);
-
-    const rays = [
-      getWhiskerRay(kinematic, -0.9, 0.3 * speed),
-      getWhiskerRay(kinematic, -0.3, 1 * speed),
-      getWhiskerRay(kinematic, -0.1, 2.1 * speed),
-      getWhiskerRay(kinematic, 0.1, 2.1 * speed),
-      getWhiskerRay(kinematic, 0.3, 1 * speed),
-      getWhiskerRay(kinematic, 0.9, 0.3 * speed),
-    ];
+    this.updateRays(kinematic);
 
     // We have a set of "rays", like whiskers that extend from the character.
     // We sweep across the rays, checking one ray on each tick for a collision.
@@ -91,14 +104,17 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
     // Sweeping then resumes.
     const hasRayWithCollision: boolean =
       this.collisionIndex > -1 &&
-      !!getCollision(rays[this.collisionIndex], shapes);
+      !!getCollision(this.rays[this.collisionIndex], shapes);
 
     if (!hasRayWithCollision) {
       this.collisionIndex = -1;
       this.updateRayIndex();
     }
 
-    this.collisions[this.rayIndex] = getCollision(rays[this.rayIndex], shapes);
+    this.collisions[this.rayIndex] = getCollision(
+      this.rays[this.rayIndex],
+      shapes
+    );
 
     if (this.rayIndex === 0 || this.rayIndex === 5) {
       // find the nearest collision to the kinematic
@@ -133,7 +149,7 @@ export default class ObstacleAvoidance extends AbstractBehaviour {
     const collisionIndex = this.collisionIndex;
 
     // Show the whiskers
-    this.debug.edges = rays.map(function rayMap(edge, index) {
+    this.debug.edges = this.rays.map(function rayMap(edge, index) {
       let strokeStyle = "rgb(224, 224, 224)";
       if (index === rayIndex) {
         strokeStyle = "rgb(191, 54, 12)";
